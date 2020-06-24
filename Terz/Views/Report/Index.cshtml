@@ -1,0 +1,315 @@
+﻿@model Terz.Models.Report.ReportView
+
+<link rel="stylesheet" href="~/css/Report.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .checked {
+        color: orange;
+    }
+</style>
+
+
+<div id="header">
+    <div id="Avaliation" style="float:left;">
+        @if (Model.Report.Avaliacoes.Count > 0)
+        {
+            int i = 1;
+            while (i <= Model.Report.Avaliacoes.Select(a => a.Nota).Average())
+            {
+                <span class="fa fa-star checked"></span>
+                i++;
+            }
+
+            while (i <= 5)
+            {
+                <span class="fa fa-star"></span>
+                i++;
+            }
+        }
+
+        else
+        {
+            <label>Não Avaliado</label>
+        }
+
+        <a href="#" onclick="AvaliatePage()">Avaliar</a>
+    </div>
+    <div id="Pages">
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                Paginas
+                <span class="caret"></span>
+            </button>
+            <ul id="sheetList" class="dropdown-menu"></ul>
+        </div>
+    </div>
+</div>
+<div>
+    <div id="Filters">
+
+        <!--
+        <div class="dropdown">
+            <button onclick="showOptions('Year')" class="dropbtn">Dropdown</button>
+            <div id="Year" class="dropdown-content">
+                <input type="text" placeholder="Search.." id="Input-Year" onkeyup="filterFunction('Year')">
+                <a href="#about">About</a>
+
+            </div>
+        </div>
+        <br />
+        -->
+
+    </div>
+    <div id="Graphs">
+
+    </div>
+</div>
+<script>
+    /* When the user clicks on the button,
+    toggle between hiding and showing the dropdown content */
+    function showOptions(filterId) {
+        console.log(filterId);
+        document.getElementById(filterId).classList.toggle("show");
+    }
+
+    function filterFunction(filterId) {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById("Input-" + filterId);
+        filter = input.value.toUpperCase();
+        div = document.getElementById(filterId);
+        a = div.getElementsByTagName("a");
+        for (i = 0; i < a.length; i++) {
+            txtValue = a[i].textContent || a[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                a[i].style.display = "";
+            } else {
+                a[i].style.display = "none";
+            }
+        }
+    }
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://unpkg.com/mathjs/dist/math.min.js"></script>
+<script language="JavaScript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.2.1/math.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3plus/2.0.0-alpha.14/d3plus.full.js"></script>
+<script src="https://d3js.org/d3-hierarchy.v1.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+
+<script src="~/js/Operations.js"></script>
+<script src="~/js/Variables.js"></script>
+<script src="~/js/Filter.js"></script>
+<script src="~/js/Indicator.js"></script>
+<script src="~/js/Graph.js"></script>
+
+<script>
+    function AvaliatePage() {
+        var form;
+        $.ajax(
+            {
+                type: 'POST',
+                url: '../Report/AvaliatePage',
+                dataType: 'html',
+                cache: false,
+                async: true,
+
+                success: function (data) {
+                    form = data;
+                    bootbox.confirm(form, function (result) {
+                        if (result) {
+                            var score = 5;
+
+                            for (var i = 5; i > 0; i--) {
+                                 if (document.getElementById("rating-" + i).checked) {
+                                     score = i;
+                                     break;
+                                    }
+                                }
+
+                            Avaliate(score);
+
+
+                        }
+                    });
+
+                },
+
+
+            });
+    }
+    function Avaliate(score) {
+        $.ajax(
+            {
+                type: 'POST',
+                url: 'Report/Avaliate?id=@Model.Id&score=' + score,
+                dataType: 'json',
+                cache: false,
+                async: true,
+                success: function (data) {
+
+                    alert(data);
+                }
+
+            });
+    }
+    function init() {
+        loadUsingDataFrames();
+        buildSheetMenu();
+        buildFilter(currentSheet);
+        buildIndicators(currentSheet);
+        buildGraphs(currentSheet);
+
+    }
+
+    function buildSheetMenu() {
+        var sheets = reportData.config.sheets;
+        for (var i = 0; i < sheets.length; i++) {
+            var liSheet = document.createElement("li");
+            var aSheet = document.createElement("a");
+            aSheet.appendChild(document.createTextNode(sheets[i].name));
+            aSheet.setAttribute("href", "#");
+            aSheet.setAttribute("onclick", "changeSheet('" + sheets[i].order + "')");
+            liSheet.appendChild(aSheet);
+            document.getElementById("sheetList").appendChild(liSheet);
+
+        }
+    }
+
+    function filterValue(cellValue) {
+        if (document.getElementById(cellValue).style.backgroundColor == 'green') {
+            document.getElementById(cellValue).style.backgroundColor = 'white';
+            removeFilter(cellValue);
+            applySelections(cellValue.split(",")[0]);
+            reloadGraphs();
+        }
+        else {
+            document.getElementById(cellValue).style.backgroundColor = 'green';
+            addFilter(cellValue);
+            applySelections(cellValue.split(",")[0]);
+            reloadGraphs();
+        }
+    }
+
+    function addFilter(cellValue) {
+        var valueMap = cellValue.split(",");
+        var df = valueMap[0];
+        var field = valueMap[1];
+        var value = valueMap[2];
+        if (selections.filter(function (x) { return x.field == field }).length == 0) {
+            var filterBlock = { dataFrame: df, field: field, value: [] };
+            filterBlock.value.push(value);
+            selections.push(filterBlock);
+        }
+        else {
+            var pos = selections.map(function (e) { return e.field; }).indexOf(field);
+            selections[pos].value.push(value);
+        }
+    }
+
+    function removeFilter(cellValue) {
+        var valueMap = cellValue.split(",");
+        var df = valueMap[0];
+        var field = valueMap[1];
+        var value = valueMap[2];
+        var pos = selections.map(function (e) { return e.field; }).indexOf(field);
+        var posValue = selections[pos].value.indexOf(value);
+        selections[pos].value.splice(posValue, 1);
+    }
+
+    function loadUsingDataFrames() {
+
+
+        usingDataFrames = JSON.parse(JSON.stringify(reportData.dataFrames));
+    }
+
+    function reloadGraphs() {
+        var graphs = document.getElementById("Graphs");
+        while (graphs.firstChild) {
+            graphs.removeChild(graphs.lastChild);
+        }
+
+        buildIndicators(currentSheet);
+        buildGraphs(currentSheet);
+    }
+
+    function reloadSheet() {
+        var graphs = document.getElementById("Graphs");
+        while (graphs.firstChild) {
+            graphs.removeChild(graphs.lastChild);
+        }
+
+        var filters = document.getElementById("Filters");
+        while (filters.firstChild) {
+            filters.removeChild(filters.lastChild);
+        }
+        buildFilter(currentSheet);
+        buildIndicators(currentSheet);
+        buildGraphs(currentSheet);
+    }
+
+    function changeSheet(sheetOrder) {
+        currentSheet = sheetOrder;
+        reloadSheet();
+    }
+
+    function applySelections(name) {
+        var dfSelections = selections.filter(function (x) { return x.dataFrame == name });
+        var pos = usingDataFrames.map(function (e) { return e.name; }).indexOf(name);
+        var completeTable = reportData.dataFrames.filter(function (x) { return x.name == name })[0].table;
+        var filteredTable = [];
+        var headers = completeTable[0];
+        filteredTable.push(completeTable[0]);
+        for (var i = 1; i < completeTable.length; i++) {
+            var row = completeTable[i];
+            var selectRow = true;
+            for (j = 0; j < dfSelections.length; j++) {
+                var selection = dfSelections[j];
+                if (selection.value.length != 0) {
+                    var fieldPos = headers.indexOf(selection.field);
+                    if (!selection.value.includes(row[fieldPos])) {
+                        selectRow = false;
+                    }
+                }
+            }
+
+            if (selectRow) {
+                filteredTable.push(row);
+            }
+        }
+        console.log(filteredTable);
+        usingDataFrames[pos].table = filteredTable;
+
+    }
+
+
+
+
+    function GetReportData(){
+
+
+        $.ajax(
+            {
+                type: 'POST',
+                url: 'Report/GetReportData?id=@Model.Id',
+                dataType: 'json',
+                cache: false,
+                async: true,
+                success: function (data) {
+
+                    reportData = data;
+
+                    init();
+                }
+
+            });
+
+
+    }
+
+    GetReportData();
+
+</script>

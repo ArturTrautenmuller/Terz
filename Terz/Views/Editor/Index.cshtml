@@ -1,0 +1,515 @@
+﻿@model Terz.Models.Editor.EditorView
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<link rel="stylesheet" href="~/css/Editor.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<div id="Menu">
+    <button onclick="addIndicador()">Indicador</button>
+    <button onclick="AddGraph()">Grafico</button>
+    <button onclick="buildFilterSettings()">Filtros</button>
+</div>
+<div id="Pages">
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+            Paginas
+            <span class="caret"></span>
+        </button>
+        <ul id="sheetList" class="dropdown-menu"></ul>
+    </div>
+</div>
+<div>
+    <div id="Sheet" >
+        <div id="Graphs" class="resize-container"></div>
+    </div>
+    <div id="Settings" overflow-y: scroll; style="height:700px">
+
+    </div>
+</div>
+
+
+<script src="https://unpkg.com/mathjs/dist/math.min.js"></script>
+<script language="JavaScript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.2.1/math.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3plus/2.0.0-alpha.14/d3plus.full.js"></script>
+<script src="https://d3js.org/d3-hierarchy.v1.min.js"></script>
+
+<script src="~/js/Operations.js"></script>
+<script src="~/js/Variables.js"></script>
+<script src="~/js/Filter.js"></script>
+<script src="~/js/Indicator.js"></script>
+<script src="~/js/Graph.js"></script>
+<script src="~/js/Settings.js"></script>
+<script type="module">
+    import interact from
+        'https://cdn.interactjs.io/v1.9.19/interactjs/index.js'
+
+    function dragMoveListener(event) {
+        var target = event.target
+        // keep the dragged position in the data-x/data-y attributes
+        var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
+        var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+
+        // translate the element
+        target.style.webkitTransform =
+            target.style.transform =
+            'translate(' + x + 'px, ' + y + 'px)'
+
+        // update the posiion attributes
+        target.setAttribute('data-x', x)
+        target.setAttribute('data-y', y)
+    }
+
+    // this function is used later in the resizing and gesture demos
+    window.dragMoveListener = dragMoveListener;
+
+    interact('.resize-drag')
+        .draggable({
+            onmove: window.dragMoveListener
+        })
+        .resizable({
+            preserveAspectRatio: false,
+            edges: { left: true, right: true, bottom: true, top: true }
+        })
+        .on('resizemove', function (event) {
+            var target = event.target,
+                x = (parseFloat(target.getAttribute('data-x')) || 0),
+                y = (parseFloat(target.getAttribute('data-y')) || 0);
+
+            // update the element's style
+            target.style.width = event.rect.width + 'px';
+            target.style.height = event.rect.height + 'px';
+
+            // translate when resizing from top or left edges
+            x += event.deltaRect.left;
+            y += event.deltaRect.top;
+
+            target.style.webkitTransform = target.style.transform =
+                'translate(' + x + 'px,' + y + 'px)';
+
+            target.setAttribute('data-x', x);
+            target.setAttribute('data-y', y);
+           
+         //   target.textContent = event.rect.width + '×' + event.rect.height;
+        });
+
+
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+<script>
+    
+    function addIndicador() {
+        var form;
+        $.ajax(
+            {
+                type: 'POST',
+                url: '../Editor/AddIndicador',
+                dataType: 'html',
+                cache: false,
+                async: true,
+
+                success: function (data) {
+                    form = data;
+                    bootbox.confirm(form, function (result) {
+                        if (result)
+
+                        var indicador = {};
+                        indicador["id"] = Date.now().toString();
+                        indicador["dataFrameName"] = document.getElementById("DataFrameAdd").value;
+                        var style = {};
+                        style["id"] = Date.now().toString();
+                        style["width"] = document.getElementById("WidthAdd").value;
+                        style["height"] = document.getElementById("HeightAdd").value;
+                        style["x"] = document.getElementById("XAdd").value;
+                        style["y"] = document.getElementById("YAdd").value;
+                        style["backgroundColor"] = document.getElementById("BackgroundColorAdd").value;
+                        style["textColor"] = document.getElementById("TextColorAdd").value;
+                        style["fontSize"] = document.getElementById("FontSizeAdd").value;
+
+                        indicador["style"] = style;
+
+                        var measure = {};
+                        measure["id"] = Date.now().toString();
+                        measure["name"] = document.getElementById("MeasureNameAdd").value;
+                        measure["expresion"] = document.getElementById("ExpressionAdd").value;
+
+                        indicador["measure"] = measure;
+
+                        var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+                        reportData.config.sheets[sheetPos].indicators.push(indicador);
+
+                        reloadSheet();
+                        setObjEvents();
+                        
+
+
+                    });
+
+                },
+
+
+
+
+            });
+    }
+
+    function AddGraph() {
+        var form;
+        $.ajax(
+            {
+                type: 'POST',
+                url: '../Editor/AddGraph',
+                dataType: 'html',
+                cache: false,
+                async: true,
+
+                success: function (data) {
+                    form = data;
+                    bootbox.confirm(form, function (result) {
+                        if (result)
+
+                        var graph = {};
+                        graph["id"] = Date.now().toString();
+                        graph["dataFrameName"] = document.getElementById("DataFrameAdd").value;
+                        graph["title"] = document.getElementById("TitleAdd").value;
+                        graph["objectType"] = document.getElementById("TipoAdd").value;
+                        var style = {};
+                        style["id"] = Date.now().toString();
+                        style["width"] = document.getElementById("WidthAdd").value;
+                        style["height"] = document.getElementById("HeightAdd").value;
+                        style["x"] = document.getElementById("XAdd").value;
+                        style["y"] = document.getElementById("YAdd").value;
+                       
+
+                        graph["style"] = style;
+
+                        graph["measures"] = [];
+                        graph["dimensions"] = [];
+
+                       
+
+                        var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+                        reportData.config.sheets[sheetPos].graphs.push(graph);
+
+                        reloadSheet();
+                        setObjEvents();
+
+
+
+                    });
+
+                },
+
+
+
+
+            });
+    }
+
+    function AddSheet() {
+        var sheet = {}
+        sheet["id"] = Date.now().toString();
+        sheet["name"] = "Nova Pasta";
+        sheet["order"] = (reportData.config.sheets.length + 1).toString();
+        sheet["graphs"] = [];
+        sheet["indicators"] = [];
+        sheet["filters"] = [];
+
+        reportData.config.sheets.push(sheet);
+        buildSheetMenu();
+        changeSheet(sheet["order"]);
+
+    }
+
+    var ConfigBackup;
+
+      function init() {
+        loadUsingDataFrames();
+        buildSheetMenu();
+        buildIndicators(currentSheet);
+          buildGraphs(currentSheet);
+          setObjEvents();
+          ConfigBackup = JSON.parse(JSON.stringify(reportData.config));
+
+    }
+    function updateSheetConfig(id) {
+        var sheetPos = reportData.config.sheets.map(function (e) { return e.id; }).indexOf(id);
+        reportData.config.sheets[sheetPos].name = document.getElementById("sheetName").value;
+        buildSheetMenu();
+
+        
+    }
+
+    function updateFilterConfig(id) {
+        var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+        var filterPos = reportData.config.sheets[sheetPos].filters.map(function (e) { return e.id; }).indexOf(id);
+        reportData.config.sheets[sheetPos].filters[filterPos].dataFrameName = document.getElementById("DataFrame" + id).value;
+        reportData.config.sheets[sheetPos].filters[filterPos].dimension.name = document.getElementById("filterName" + id).value;
+        reportData.config.sheets[sheetPos].filters[filterPos].dimension.field = document.getElementById("filterField" + id).value;
+        buildFilterSettings();
+    }
+
+    function updateIndicatorConfig(id) {
+        var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+        var indicatorPos = reportData.config.sheets[sheetPos].indicators.map(function (e) { return e.id; }).indexOf(id);
+        reportData.config.sheets[sheetPos].indicators[indicatorPos].dataFrameName = document.getElementById("DataFrame").value;
+        reportData.config.sheets[sheetPos].indicators[indicatorPos].measure.name = document.getElementById("MeasureName").value;
+        reportData.config.sheets[sheetPos].indicators[indicatorPos].measure.expresion = document.getElementById("Expression").value;
+        reportData.config.sheets[sheetPos].indicators[indicatorPos].style.width = document.getElementById("Width").value;
+        reportData.config.sheets[sheetPos].indicators[indicatorPos].style.height = document.getElementById("Height").value;
+        reportData.config.sheets[sheetPos].indicators[indicatorPos].style.x = document.getElementById("X").value;
+        reportData.config.sheets[sheetPos].indicators[indicatorPos].style.y = document.getElementById("Y").value;
+        reportData.config.sheets[sheetPos].indicators[indicatorPos].style.backgroundColor = document.getElementById("BackgroundColor").value;
+        reportData.config.sheets[sheetPos].indicators[indicatorPos].style.textColor = document.getElementById("TextColor").value;
+        reportData.config.sheets[sheetPos].indicators[indicatorPos].style.fontSize = document.getElementById("FontSize").value;
+
+       
+
+        reloadSheet();
+        setObjEvents();
+    }
+
+    
+
+    function updadateIndicatorDimensions(id) {
+        var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+        var indicatorPos = reportData.config.sheets[sheetPos].indicators.map(function (e) { return e.id; }).indexOf(id);
+        var transform = document.getElementById("ind" + id).style.transform.replace('translate', '').replace('(', '').replace(')', '').replace('px', '').replace('px', '').split(',');
+       
+        reportData.config.sheets[sheetPos].indicators[indicatorPos].style.width = parseInt(document.getElementById("ind" + id).style.width);
+        reportData.config.sheets[sheetPos].indicators[indicatorPos].style.height = parseInt(document.getElementById("ind" + id).style.height);
+        if (transform != "" && transform != null) {
+            var x = parseInt(reportData.config.sheets[sheetPos].indicators[indicatorPos].style.x) + parseInt(transform[0]);
+            reportData.config.sheets[sheetPos].indicators[indicatorPos].style.x = x.toString();
+            var y = parseInt(reportData.config.sheets[sheetPos].indicators[indicatorPos].style.y) + parseInt(transform[1]);
+            reportData.config.sheets[sheetPos].indicators[indicatorPos].style.y = y.toString();
+        }
+       reloadSheet();
+        setObjEvents();
+        buildIndicatorSettings(id);
+    }
+
+    function updadateGraphDimensions(id) {
+        var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+        var graphPos = reportData.config.sheets[sheetPos].graphs.map(function (e) { return e.id; }).indexOf(id);
+        var transform = document.getElementById("gc" + id).style.transform.replace('translate', '').replace('(', '').replace(')', '').replace('px', '').replace('px', '').split(',');
+      
+        reportData.config.sheets[sheetPos].graphs[graphPos].style.width = parseInt(document.getElementById("gc" + id).style.width);
+        reportData.config.sheets[sheetPos].graphs[graphPos].style.height = parseInt(document.getElementById("gc" + id).style.height);
+        if (transform != "" && transform != null) {
+            var x = parseInt(reportData.config.sheets[sheetPos].graphs[graphPos].style.x) + parseInt(transform[0]);
+            reportData.config.sheets[sheetPos].graphs[graphPos].style.x = x.toString();
+            var y = parseInt(reportData.config.sheets[sheetPos].graphs[graphPos].style.y) + parseInt(transform[1]);
+            reportData.config.sheets[sheetPos].graphs[graphPos].style.y = y.toString();
+        }
+
+        reloadSheet();
+        setObjEvents();
+        buildGraphSettings(id);
+    }
+
+    function updateGraphConfig(id) {
+        var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+        var graphPos = reportData.config.sheets[sheetPos].graphs.map(function (e) { return e.id; }).indexOf(id);
+
+        reportData.config.sheets[sheetPos].graphs[graphPos].dataFrameName = document.getElementById("DataFrame").value;
+       
+        reportData.config.sheets[sheetPos].graphs[graphPos].style.width = document.getElementById("Width").value;
+        reportData.config.sheets[sheetPos].graphs[graphPos].style.height = document.getElementById("Height").value;
+        reportData.config.sheets[sheetPos].graphs[graphPos].style.x = document.getElementById("X").value;
+        reportData.config.sheets[sheetPos].graphs[graphPos].style.y = document.getElementById("Y").value;
+
+        for (var i = 0; i < reportData.config.sheets[sheetPos].graphs[graphPos].dimensions.length; i++) {
+            var dimId = reportData.config.sheets[sheetPos].graphs[graphPos].dimensions[i].id;
+            reportData.config.sheets[sheetPos].graphs[graphPos].dimensions[i].name = document.getElementById("dimname" + dimId).value;
+            reportData.config.sheets[sheetPos].graphs[graphPos].dimensions[i].field = document.getElementById("dimfield" + dimId).value;
+        }
+
+        for (var i = 0; i < reportData.config.sheets[sheetPos].graphs[graphPos].measures.length; i++) {
+            var measureId = reportData.config.sheets[sheetPos].graphs[graphPos].measures[i].id;
+            reportData.config.sheets[sheetPos].graphs[graphPos].measures[i].name = document.getElementById("measureName" + measureId).value;
+            reportData.config.sheets[sheetPos].graphs[graphPos].measures[i].expresion = document.getElementById("measureExp" + measureId).value;
+        }
+
+        switch (reportData.config.sheets[sheetPos].graphs[graphPos].objectType) {
+            case 'bar': { updateBarChart(sheetPos, graphPos); break; }
+            case 'pie': { updatePieChart(sheetPos, graphPos); break; }
+            case 'line': { updateLineChart(sheetPos, graphPos); break; }
+            case 'tree': { updateTreeMap(sheetPos, graphPos); break; }
+            default: break;
+        }
+
+        reloadSheet();
+        setObjEvents();
+    }
+
+    function updateBarChart(sheetPos, graphPos) {
+       
+
+    }
+
+    function updatePieChart(sheetPos, graphPos) {
+
+    }
+
+    function updateLineChart(sheetPos, graphPos) {
+
+    }
+
+    function updateTreeMap(sheetPos, graphPos) {
+
+    }
+
+
+    function setObjEvents() {
+        var sheets = reportData.config.sheets.filter(function (x) { return x.order == currentSheet });
+        for (var i = 0; i < sheets.length; i++) {
+            var sheet = sheets[i];
+            var indicators = sheet.indicators;
+            for (var j = 0; j < indicators.length; j++) {
+                var indicator = indicators[j];
+                document.getElementById("ind" + indicator.id).setAttribute("onclick", "indicatorSettings('" + indicator.id + "')");
+                document.getElementById("ind" + indicator.id).setAttribute("onmouseup", "updadateIndicatorDimensions('" + indicator.id + "')");
+            }
+
+            var graphs = sheet.graphs;
+            for (var j = 0; j < graphs.length; j++) {
+                var graph = graphs[j];
+                document.getElementById("gc" + graph.id).setAttribute("onclick", "graphSettings('" + graph.id + "')");
+                document.getElementById("gc" + graph.id).setAttribute("onmouseup", "updadateGraphDimensions('" + graph.id + "')");
+            }
+        }
+    }
+
+    function indicatorSettings(id) {
+        buildIndicatorSettings(id);
+    }
+    function graphSettings(id) {
+        buildGraphSettings(id);
+    }
+    function reloadGraph(id) {
+        var graphId = id.substr(2);
+        var graph = reportData.config.sheets.filter(function (x) { return x.order == sheetOrder })[0].graphs.filter(function (y) { return y.id == graphId })[0];
+        switch (graph.objectType) {
+
+            case 'bar': { buildBarChart(graph); break; }
+            case 'pie': { buildPieChart(graph); break; }
+            case 'line': { buildLineChart(graph); break; }
+            case 'tree': { buildTreeMap(graph); break; }
+            default: break;
+
+
+        }
+    }
+
+    function buildSheetMenu() {
+        var content = document.getElementById("sheetList");
+        while (content.firstChild) {
+            content.removeChild(content.lastChild);
+        }
+
+        var sheets = reportData.config.sheets;
+        for (var i = 0; i < sheets.length; i++) {
+            var liSheet = document.createElement("li");
+            var aSheet = document.createElement("a");
+            aSheet.appendChild(document.createTextNode(sheets[i].name));
+            aSheet.setAttribute("href", "#");
+            aSheet.setAttribute("onclick", "changeSheet('" + sheets[i].order + "')");
+            liSheet.appendChild(aSheet);
+            var editbutton = document.createElement("button");
+            editbutton.innerHTML = "Editar";
+            editbutton.setAttribute("onclick", "buildSheetSettings('" + sheets[i].id + "')");
+            liSheet.appendChild(editbutton);
+            document.getElementById("sheetList").appendChild(liSheet);
+
+        }
+
+        var liAddSheet = document.createElement("li");
+        var buttonSheet = document.createElement("button");
+        buttonSheet.appendChild(document.createTextNode("Nova Pasta"));
+        buttonSheet.setAttribute("href", "#");
+        buttonSheet.setAttribute("onclick", "AddSheet()");
+        liAddSheet.appendChild(buttonSheet);
+        document.getElementById("sheetList").appendChild(liAddSheet);
+
+
+    }
+
+
+
+
+
+
+
+    function loadUsingDataFrames() {
+
+
+        usingDataFrames = JSON.parse(JSON.stringify(reportData.dataFrames));
+    }
+
+
+    function reloadSheet() {
+        var graphs = document.getElementById("Graphs");
+        while (graphs.firstChild) {
+            graphs.removeChild(graphs.lastChild);
+        }
+
+
+        buildIndicators(currentSheet);
+        buildGraphs(currentSheet);
+    }
+
+    function changeSheet(sheetOrder) {
+        currentSheet = sheetOrder;
+        reloadSheet();
+        setObjEvents();
+    }
+
+
+
+
+
+
+    function GetReportData(){
+
+
+        $.ajax(
+            {
+                type: 'POST',
+                url: 'Report/GetReportData?id=@Model.Id',
+                dataType: 'json',
+                cache: false,
+                async: true,
+                success: function (data) {
+
+                    reportData = data;
+
+                    init();
+                }
+
+            });
+
+
+    }
+
+    function SaveReport() {
+        $.ajax(
+            {
+                type: 'POST',
+                url: 'Editor/UploadConfig?id=@Model.Id',
+                dataType: 'json',
+                cache: false,
+                async: true,
+                success: function (data) {
+
+                    alert(data);
+                },
+                data: reportData.config
+
+            });
+    }
+
+    GetReportData();
+</script>

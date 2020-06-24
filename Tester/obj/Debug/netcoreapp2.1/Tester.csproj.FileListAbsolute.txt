@@ -1,0 +1,14 @@
+C:\Users\artur\source\repos\Terz\Tester\bin\Debug\netcoreapp2.1\Terz_Core.dll
+C:\Users\artur\source\repos\Terz\Tester\obj\Debug\netcoreapp2.1\Tester.csprojAssemblyReference.cache
+C:\Users\artur\source\repos\Terz\Tester\obj\Debug\netcoreapp2.1\Tester.csproj.CoreCompileInputs.cache
+C:\Users\artur\source\repos\Terz\Tester\obj\Debug\netcoreapp2.1\Tester.AssemblyInfoInputs.cache
+C:\Users\artur\source\repos\Terz\Tester\obj\Debug\netcoreapp2.1\Tester.AssemblyInfo.cs
+C:\Users\artur\source\repos\Terz\Tester\bin\Debug\netcoreapp2.1\Tester.deps.json
+C:\Users\artur\source\repos\Terz\Tester\bin\Debug\netcoreapp2.1\Tester.runtimeconfig.json
+C:\Users\artur\source\repos\Terz\Tester\bin\Debug\netcoreapp2.1\Tester.runtimeconfig.dev.json
+C:\Users\artur\source\repos\Terz\Tester\bin\Debug\netcoreapp2.1\Tester.dll
+C:\Users\artur\source\repos\Terz\Tester\bin\Debug\netcoreapp2.1\Tester.pdb
+C:\Users\artur\source\repos\Terz\Tester\bin\Debug\netcoreapp2.1\Terz_Core.pdb
+C:\Users\artur\source\repos\Terz\Tester\obj\Debug\netcoreapp2.1\Tester.csproj.CopyComplete
+C:\Users\artur\source\repos\Terz\Tester\obj\Debug\netcoreapp2.1\Tester.dll
+C:\Users\artur\source\repos\Terz\Tester\obj\Debug\netcoreapp2.1\Tester.pdb

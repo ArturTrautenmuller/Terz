@@ -1,0 +1,105 @@
+﻿@model Terz.Models.Home.HomeView
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="colorlib.com">
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link href="~/css/main.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .checked {
+            color: orange;
+        }
+    </style>
+</head>
+<body>
+    <div class="s131">
+        <form>
+            <div class="inner-form">
+                <div class="input-field first-wrap">
+                    <input id="search" type="text" placeholder="What are you looking for?" />
+                </div>
+                <div class="input-field second-wrap">
+                    <div class="input-select">
+                        <select data-trigger="" name="choices-single-defaul" id="category">
+                            <option value="0" placeholder="">CATEGORY</option>
+                            @foreach (Terz_DataBaseLayer.Category category in Model.Categories.Categories)
+                            {
+                                <option value="@category.Id">@category.Descricao </option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="input-field third-wrap">
+                    <button class="btn-search" type="button" onclick="filterReport()">SEARCH</button>
+                </div>
+            </div>
+        </form>
+        <br />
+        
+        <div id="Reports" style="overflow-y:scroll; max-height:600px">
+            @foreach (Terz_DataBaseLayer.Report report in Model.Reports.Reports)
+            {
+            <div class="ReportSearch" id="Report" onclick="goToReport('@report.Id')">
+                @if (report.Imagem == "" || report.Imagem == null)
+                {
+                    <img width="100" height="77" class="FotoPerfil" src="~/images/app.png" />
+                }
+                else
+                {
+                    <img width="100" height="77" class="FotoPerfil" src="@report.Imagem" />
+                }
+                <label style="width:250px" class="LabelDesc">@report.Titulo</label>
+                <label style="width:175px; margin-right:25px;" class="LabelDesc">@report.Visualizacoes.Count Vizualizações</label>
+                @if (report.Avaliacoes.Count > 0)
+                {
+                    int i = 1;
+                    while (i <= report.Avaliacoes.Select(a => a.Nota).Average())
+                    {
+                        <span class="fa fa-star checked"></span>
+                        i++;
+                    }
+
+                    while (i <= 5)
+                    {
+                        <span class="fa fa-star"></span>
+                        i++;
+                    }
+                    <label style="width:75px"  >@report.Avaliacoes.Select(a => a.Nota).Average() / 5</label>
+                }
+                else
+                {
+                    <label style="width:75px">Não Avaliado</label>
+                }
+
+                
+            </div>
+            }
+        </div>
+    </div>
+    <script src="~/js/extension/choices.js"></script>
+    <script>
+      const choices = new Choices('[data-trigger]',
+      {
+        searchEnabled: false
+      });
+
+        function filterReport() {
+            var category = document.getElementById("category").value;
+            window.location.href = "?category=" + category;
+        }
+        function goToReport(id) {
+            window.location.href = "../Report?id=" + id;
+        }
+
+    </script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>
+

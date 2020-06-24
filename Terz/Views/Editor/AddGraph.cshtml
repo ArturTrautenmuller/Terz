@@ -1,0 +1,36 @@
+﻿<div id="GraphCreate">
+    <label>Titulo:</label><br>
+    <input id="TitleAdd" type="text" ><br>
+    <label>Tipo:</label><br>
+    <select id="TipoAdd">
+        <option value="bar">Barra</option>
+        <option value="line">Linha</option>
+        <option value="tree">Arvore</option>
+        <option value="pie">Pizza</option>
+    </select>
+    <br>
+    <hr>
+    <label>Data Frame:</label><br>
+    <select id="DataFrameAdd"></select><br>
+    <hr>
+
+    <label>Largura:</label><br>
+    <input id="WidthAdd" type="text" value="400"><br>
+    <label>Altura:</label><br>
+    <input id="HeightAdd" type="text" value="400"><br>
+    <label>X:</label><br>
+    <input id="XAdd" type="text" value="0"><br>
+    <label>Y:</label><br>
+    <input id="YAdd" type="text" value="0"><br>
+    <hr>
+
+</div>
+
+<script>
+    for (var i = 0; i < reportData.dataFrames.length; i++) {
+        var selectDFOption = document.createElement("option");
+        selectDFOption.innerHTML = reportData.dataFrames[i].name;
+        selectDFOption.value = reportData.dataFrames[i].name;
+        document.getElementById("DataFrameAdd").appendChild(selectDFOption);
+    }
+</script>

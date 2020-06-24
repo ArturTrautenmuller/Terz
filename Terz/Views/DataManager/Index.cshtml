@@ -1,0 +1,166 @@
+﻿@model Terz.Models.DataManager.DataManagerView
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+
+
+
+<link rel="stylesheet" href="~/LTE/plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="~/LTE/plugins/fontawesome-free/css/all.css">
+<!-- Ionicons -->
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="~/LTE/dist/css/adminlte.min.css">
+<!-- Google Font: Source Sans Pro -->
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+<link rel="stylesheet" href="~/css/DataManager.css" />
+
+
+<br />
+<div id="TableFiles">
+    <div class="card">
+        <div class="card-header border-0">
+            <h3 class="card-title">DataFrames</h3>
+            <div class="card-tools">
+                <a href="#" class="btn btn-tool btn-sm">
+                    <i class="fas fa-download"></i>
+                </a>
+                <a href="#" class="btn btn-tool btn-sm">
+                    <i class="fas fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div class="card-body table-responsive p-0">
+            <table class="table table-striped table-valign-middle">
+                <thead>
+                    <tr>
+                        <th class="cell100 column1">Arquivo</th>
+                        <th class="cell100 column2">Ações</th>
+
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (Terz.Models.DataManager.DataFrameInfo dataFrameInfo in Model.DataFrameInfos)
+                        {
+                            <tr>
+                                <td class="cell100 column1">
+                                    <label id="l-@dataFrameInfo.Name">@dataFrameInfo.Name</label>
+                                    <input id="t-@dataFrameInfo.Name" type="text" style="display:none" value="@dataFrameInfo.Name" onchange="carregarNome('@dataFrameInfo.Name')" />
+                                </td>
+                                <td class="cell100 column2">
+                                    <a href="#" onclick="mudarNome('@dataFrameInfo.Name')">Renomear</a>
+                                    <a href="#" onclick=" deletarDataFrame('@dataFrameInfo.Name')">Excluir</a>
+                                </td>
+
+
+
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <input type="file" id="dfFile" multiple />
+    <button onclick="uploadDataFrame()">Enviar</button>
+</div>
+<script src="~/LTE/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="~/LTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="~/LTE/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="~/LTE/dist/js/demo.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+<script>
+    function uploadDataFrame() {
+        var formData = new FormData();
+        var files = document.getElementById("dfFile").files;
+        for (var i = 0; i < files.length; i++) {
+            formData.append("dfFile", files[i]);
+        }
+
+
+        $.ajax(
+            {
+                type: 'POST',
+                url: '../DataManager/UploadDataFrame?id=' + @Model.Id,
+                dataType: 'html',
+                cache: false,
+                async: true,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+
+                    alert("Enviado Com Sucesso");
+                    location.reload();
+                },
+
+                data: formData
+
+            });
+    }
+
+    function mudarNome(name) {
+
+        document.getElementById("l-" + name).style.display = "none";
+        document.getElementById("t-" + name).style.display = "block";
+
+
+
+
+            
+
+    }
+   
+
+    function carregarNome(name) {
+    
+
+                 $.ajax(
+                    {
+                                type: 'POST',
+                                url: '../DataManager/RenameDataFrame?id=' + @Model.Id+'&name=' + name + '&newname=' + document.getElementById("t-" + name).value,
+                                dataType: 'html',
+                                cache: false,
+                                async: true,
+                                contentType: false,
+                                processData: false,
+                                success: function (data) {
+
+                                    console.log(data);
+                                    location.reload();
+                                }
+
+                            });
+    }
+
+   function deletarDataFrame(name){
+     $.ajax(
+                    {
+                                type: 'POST',
+                                url: '../DataManager/DeleteDataFrame?id=' + @Model.Id+'&name=' + name,
+                                dataType: 'html',
+                                cache: false,
+                                async: true,
+                                contentType: false,
+                                processData: false,
+                                success: function (data) {
+
+                                    console.log(data);
+                                    location.reload();
+                                }
+
+                            });
+    
+    }
+
+</script>
+

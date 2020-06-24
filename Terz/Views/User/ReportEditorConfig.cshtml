@@ -1,0 +1,53 @@
+﻿@model Terz_DataBaseLayer.Report
+<style>
+    .ImgPick {
+        width: 260px;
+        margin-left: 10px;
+        height: 40px;
+        font-size: 16px;
+        padding-top: 8px;
+        text-align: center;
+        background-color: lightseagreen;
+        color: white;
+        border-color: lightseagreen;
+        border: none;
+        margin-top: 15px;
+    }
+
+        .ImgPick:hover {
+            background-color: white;
+            color: lightseagreen;
+        }
+</style>
+<label>Report Name</label><br />
+<input type="text" id="appName" value="@Model.Titulo" />
+<input  type="file" id="ImagemApp" style="visibility:hidden; display:none" onchange="readURL(this);"><br /><br />
+@if (Model.Imagem == "" || Model.Imagem == null)
+{
+    <img style="padding-top:5px" id="imgApp" width="260" height="200" class="FotoPerfil" src="~/images/app.png" />
+}
+else
+{
+    <img style="padding-top:5px" id="imgApp"  width="260" height="200" class="FotoPerfil" src="@Model.Imagem" />
+}
+<br />
+<label class="ImgPick" for="ImagemApp"><a> Escolher Imagem</a></label>
+
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#imgApp')
+                    .attr('src', e.target.result)
+                    .width(260)
+                    .height(200);
+
+            };
+
+            reader.readAsDataURL(input.files[0]);
+            //document.getElementById("imgPost").style.display = "block";
+        }
+    }
+</script>
