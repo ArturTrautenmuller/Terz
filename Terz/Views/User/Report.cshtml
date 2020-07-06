@@ -62,11 +62,11 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="#" class="brand-link">
-                <img src="~/admin/images/Logo.png"
-                     alt="Unime Logo"
+                <img src="~/images/Terz_Logo.png"
+                     alt="Terz Logo"
                      class="brand-image img-circle elevation-3"
                      style="opacity: .8">
-                <span class="brand-text font-weight-light">Unimé</span>
+                <span class="brand-text font-weight-light">TERZ</span>
             </a>
 
             <!-- Sidebar -->
@@ -77,12 +77,22 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-                        with font-awesome or any other icon font library -->
+                with font-awesome or any other icon font library -->
 
 
                         <li class="nav-item has-treeview">
+                            <a href="@Url.Action("UserPage","User")" class="nav-link">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <p>
+                                    DashBoard
+
+                                </p>
+                            </a>
+
+                        </li>
+                        <li class="nav-item has-treeview">
                             <a href="@Url.Action("Report","User")" class="nav-link">
-                                <i class="fas fa-lock"></i>
+                                <i class="fas fa-chart-area"></i>
                                 <p>
                                     Meus Relatórios
 
@@ -90,7 +100,18 @@
                             </a>
 
                         </li>
-                        
+
+                        <li class="nav-item has-treeview">
+                            <a href="@Url.Action("Perfil","User")" class="nav-link">
+                                <i class="fas fa-user"></i>
+                                <p>
+                                    Perfil
+
+                                </p>
+                            </a>
+
+                        </li>
+
 
 
 
@@ -101,37 +122,68 @@
             <!-- /.sidebar -->
         </aside>
         <div class="content-wrapper" id="Conteudo" style="padding-left:10px">
+            <button class="ButtonNovo" onclick="novoRelatorio()">Novo Relatório</button>
+            <button class="ButtonNovo" onclick="importarRelatorio()">Importar Relatório</button>
 
             @foreach (Terz_DataBaseLayer.Report report in Model.Usuario.Reports)
             {
-            <div class="ReportDiv">
+                <div class="ReportDiv">
 
 
-                @if (report.Imagem == "" || report.Imagem == null)
-                {
-                    <img onclick="EditReport('@report.Id')" width="130" height="100" class="FotoPerfil" src="~/images/app.png" />
-                }
-                else
-                {
-                    <img onclick="EditReport('@report.Id')" width="130" height="100" class="FotoPerfil" src="@report.Imagem" />
-                }
-                <label class="LabelDesc">@report.Titulo</label>
-                <label style="margin-left:16px; font-size:22px"><a href="../Editor?id=@report.Id"><i class="fa fa-edit"></i></a></label>
-                <label style="margin-left:16px; font-size:22px"><a href="../DataManager?id=@report.Id"><i class="fas fa-table"></i> </a></label>
-                <label style="margin-left:16px; font-size:22px"><a href="../Report?id=@report.Id"><i class="fas fa-eye"></i></a></label>
+                    @if (report.Imagem == "" || report.Imagem == null)
+                    {
+                        <img onclick="EditReport('@report.Id')" width="130" height="100" class="FotoPerfil" src="~/images/app.png" />
+                    }
+                    else
+                    {
+                        <img onclick="EditReport('@report.Id')" width="130" height="100" class="FotoPerfil" src="@report.Imagem" />
+                    }
+                    <label class="LabelDesc">@report.Titulo</label>
+                    <label style="margin-left:16px; font-size:22px"><a href="../Editor?id=@report.Id"><i class="fa fa-edit"></i></a></label>
+                    <label style="margin-left:16px; font-size:22px"><a href="../DataManager?id=@report.Id"><i class="fas fa-table"></i> </a></label>
+                    <label style="margin-left:16px; font-size:22px"><a href="../Report?id=@report.Id"><i class="fas fa-eye"></i></a></label>
+                    <label style="margin-left:16px; font-size:22px"><a href="../User/ExportApp?id=@report.Id"><i class="fas fa-download"></i></a></label>
 
 
 
 
-            </div>
+                </div>
             }
 
-            <button class="ButtonNovo" onclick="novoRelatorio()">Novo Relatório</button>
+
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
             <script>
+
+                function importarRelatorio() {
+                    var form;
+                    $.ajax(
+                        {
+                            type: 'POST',
+                            url: '../User/ImportReport',
+                            dataType: 'html',
+                            cache: false,
+                            async: true,
+
+                            success: function (data) {
+                                form = data;
+                                bootbox.confirm(form, function (result) {
+                                    if (result)
+
+                                        var title = document.getElementById("Title").value;
+                                    var category = document.getElementById("category").value;
+                                    criarRelatorioImportado(title, category);
+
+                                });
+
+                            },
+
+
+                        });
+                }
+
                 function EditReport(id) {
                     var form;
                     $.ajax(
@@ -158,7 +210,7 @@
                         });
                 }
 
-                function AtualizarRelatorio(id,name) {
+                function AtualizarRelatorio(id, name) {
                     var formData = new FormData();
                     var file = document.getElementById("ImagemApp").files[0];
                     formData.append("ImagemApp", file);
@@ -182,11 +234,11 @@
                                 });
 
                             },
-                            
+
 
 
                         });
-                        
+
                 }
 
                 function novoRelatorio() {
@@ -205,8 +257,8 @@
                                     if (result)
 
                                         var title = document.getElementById("Title").value;
-                                    var category = document.getElementById("category").value; 
-                                    criarRelatorio(title,category);
+                                    var category = document.getElementById("category").value;
+                                    criarRelatorio(title, category);
 
                                 });
 
@@ -216,7 +268,7 @@
                         });
                 }
 
-                function criarRelatorio(title,category) {
+                function criarRelatorio(title, category) {
                     $.ajax(
                         {
                             type: 'POST',
@@ -235,6 +287,36 @@
                                 });
 
                             },
+
+                        });
+                }
+
+                function criarRelatorioImportado(title, category) {
+
+                    var formData = new FormData();
+                    var file = document.getElementById("reportConfig").files[0];
+                    formData.append("reportConfig", file);
+                    $.ajax(
+                        {
+                            type: 'POST',
+                            url: '../Report/ImportReport?title=' + title + '&category=' + category,
+                            dataType: 'html',
+                            contentType: false,
+                            processData: false,
+                            cache: false,
+                            async: true,
+
+                            success: function (data) {
+                                form = data;
+                                bootbox.confirm(form, function (result) {
+                                    if (result)
+
+                                        location.reload();
+
+                                });
+
+                            },
+                            data: formData
 
                         });
                 }

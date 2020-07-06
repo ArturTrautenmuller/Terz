@@ -11,8 +11,24 @@
 </style>
 
 
-<div id="header">
-    <div id="Avaliation" style="float:left;">
+<div id="header" style=" display:flex;background-color:#eee;border-bottom:2px solid #32bab6; margin-bottom:10px;">
+    <div style="width:38%;margin-left:2%">
+        <img width="117" height="90" src="@Model.Report.Imagem" />
+        <label style="margin-left:12px">@Model.Report.Titulo</label>
+    </div>
+   <div style="margin-left:5%">
+       <img height="90" width="90" src="~/images/Terz_Logo.png" />
+   </div>
+    <div id="Pages" style="margin-left:20%;margin-top:30px;">
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                Paginas
+                <span class="caret"></span>
+            </button>
+            <ul id="sheetList" class="dropdown-menu"></ul>
+        </div>
+    </div>
+    <div id="Avaliation" style="margin-left:5%;margin-top:37px;font-size:18px">
         @if (Model.Report.Avaliacoes.Count > 0)
         {
             int i = 1;
@@ -34,19 +50,11 @@
             <label>Não Avaliado</label>
         }
 
-        <a href="#" onclick="AvaliatePage()">Avaliar</a>
-    </div>
-    <div id="Pages">
-        <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                Paginas
-                <span class="caret"></span>
-            </button>
-            <ul id="sheetList" class="dropdown-menu"></ul>
-        </div>
+        <a href="#" style="color:gray;text-decoration:none" onclick="AvaliatePage()">Avaliar</a>
     </div>
 </div>
 <div>
+   
     <div id="Filters">
 
         <!--
@@ -66,6 +74,7 @@
 
     </div>
 </div>
+
 <script>
     /* When the user clicks on the button,
     toggle between hiding and showing the dropdown content */
@@ -105,7 +114,6 @@
 <script src="~/js/Filter.js"></script>
 <script src="~/js/Indicator.js"></script>
 <script src="~/js/Graph.js"></script>
-
 <script>
     function AvaliatePage() {
         var form;

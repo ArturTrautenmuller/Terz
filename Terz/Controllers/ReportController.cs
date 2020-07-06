@@ -8,6 +8,7 @@ using Terz_Core;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 using Terz_DataBaseLayer;
+using System.IO;
 
 namespace Terz.Controllers
 {
@@ -22,6 +23,7 @@ namespace Terz.Controllers
                 Visualizacao visualizacao = new Visualizacao();
                 visualizacao.ReportId = id;
                 visualizacao.UserId = userId;
+                visualizacao.Data = DateTime.Now.ToString("yy/MM/dd hh:mm:ss");
                 visualizacao.Insert();
             }
             Models.Report.ReportView reportView = new Models.Report.ReportView();
@@ -31,6 +33,9 @@ namespace Terz.Controllers
             report.getAvaliations();
             report.getViews();
             reportView.Report = report;
+            Usuario usuario = new Usuario();
+            usuario.Load(report.UserId);
+            reportView.Usuario = usuario;
             return PartialView(reportView);
         }
 
@@ -114,6 +119,35 @@ namespace Terz.Controllers
             string json_text = JsonConvert.SerializeObject(config, Formatting.Indented);
             string configFile = conf.ConfigPath + "/" + report.Id + "/config.json";
             System.IO.File.WriteAllText(configFile, json_text);
+
+
+
+
+            return "ok";
+        }
+
+        public async Task<string> ImportReport([FromQuery(Name = "title")] string title, [FromQuery(Name = "category")] string category)
+        {
+            string userId = HttpContext.Session.GetString("User");
+            Report report = new Report();
+            report.Imagem = "";
+            report.UserId = userId;
+            report.Titulo = title;
+            report.CategoriaId = category;
+            report.Insert();
+
+            
+            string text = System.IO.File.ReadAllText(Location.ConfLocation);
+            Conf conf = JsonConvert.DeserializeObject<Conf>(text);
+            System.IO.Directory.CreateDirectory(conf.DataFramePath + "/" + report.Id);
+            System.IO.Directory.CreateDirectory(conf.ConfigPath + "/" + report.Id);
+
+            var file = Request.Form.Files[0];
+            string configFile = conf.ConfigPath + "/" + report.Id + "/config.json";
+            using (var fileStream = new FileStream(configFile, FileMode.Create))
+            {
+                await file.CopyToAsync(fileStream);
+            }
 
 
 

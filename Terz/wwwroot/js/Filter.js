@@ -1,8 +1,15 @@
 ﻿function buildFilter(sheetOrder) {
     var sheet = reportData.config.sheets.filter(function (x) { return x.order == sheetOrder })[0];
     var filters = sheet.filters;
+    var fLenght;
+    if (filters == null) {
+        fLenght = 0;
+    }
+    else {
+        fLenght = filters.length;
+    }
     
-    for (var i = 0; i < filters.length; i++) {
+    for (var i = 0; i < fLenght; i++) {
         var filter = filters[i];
         console.log('filtro')
         console.log(filter);

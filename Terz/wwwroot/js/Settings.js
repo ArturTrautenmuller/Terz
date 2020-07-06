@@ -25,6 +25,7 @@
         selectDF.appendChild(selectDFOption);
     }
     selectDF.setAttribute("id", "DataFrame");
+    selectDF.setAttribute("class", "form-control");
     selectDF.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
     selectDFDiv.appendChild(selectDF);
     document.getElementById("Settings").appendChild(selectDFDiv);
@@ -41,6 +42,7 @@
     measureName.setAttribute("id", "MeasureName");
     measureName.setAttribute("type", "text");
     measureName.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
+    measureName.setAttribute("class", "form-control");
     measureName.value = indicator.measure.name;
     document.getElementById("Settings").appendChild(measureName);
     document.getElementById("Settings").appendChild(document.createElement("br"));
@@ -53,6 +55,7 @@
     measureExp.setAttribute("id", "Expression");
     measureExp.setAttribute("type", "text");
     measureExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
+    measureExp.setAttribute("class", "form-control");
     measureExp.value = indicator.measure.expresion;
     document.getElementById("Settings").appendChild(measureExp);
     document.getElementById("Settings").appendChild(document.createElement("br"));
@@ -68,6 +71,7 @@
     widthExp.setAttribute("id", "Width");
     widthExp.setAttribute("type", "text");
     widthExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
+    widthExp.setAttribute("class", "form-control");
     widthExp.value = indicator.style.width;
     document.getElementById("Settings").appendChild(widthExp);
     document.getElementById("Settings").appendChild(document.createElement("br"));
@@ -80,6 +84,7 @@
     heightExp.setAttribute("id", "Height");
     heightExp.setAttribute("type", "text");
     heightExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
+    heightExp.setAttribute("class", "form-control");
     heightExp.value = indicator.style.height;
     document.getElementById("Settings").appendChild(heightExp);
     document.getElementById("Settings").appendChild(document.createElement("br"));
@@ -92,6 +97,7 @@
     xExp.setAttribute("id", "X");
     xExp.setAttribute("type", "text");
     xExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
+    xExp.setAttribute("class", "form-control");
     xExp.value = indicator.style.x;
     document.getElementById("Settings").appendChild(xExp);
     document.getElementById("Settings").appendChild(document.createElement("br"));
@@ -104,6 +110,7 @@
     yExp.setAttribute("id", "Y");
     yExp.setAttribute("type", "text");
     yExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
+    yExp.setAttribute("class", "form-control");
     yExp.value = indicator.style.y;
     document.getElementById("Settings").appendChild(yExp);
     document.getElementById("Settings").appendChild(document.createElement("br"));
@@ -120,6 +127,7 @@
     bcExp.setAttribute("id", "BackgroundColor");
     bcExp.setAttribute("type", "color");
     bcExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
+    bcExp.setAttribute("class", "form-control");
     bcExp.value = indicator.style.backgroundColor;
     document.getElementById("Settings").appendChild(bcExp);
     document.getElementById("Settings").appendChild(document.createElement("br"));
@@ -133,6 +141,7 @@
     tcExp.setAttribute("id", "TextColor");
     tcExp.setAttribute("type", "color");
     tcExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
+    tcExp.setAttribute("class", "form-control");
     tcExp.value = indicator.style.textColor;
     document.getElementById("Settings").appendChild(tcExp);
     document.getElementById("Settings").appendChild(document.createElement("br"));
@@ -146,6 +155,7 @@
     fsExp.setAttribute("id", "FontSize");
     fsExp.setAttribute("type", "text");
     fsExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
+    fsExp.setAttribute("class", "form-control");
     fsExp.value = indicator.style.fontSize;
     document.getElementById("Settings").appendChild(fsExp);
     document.getElementById("Settings").appendChild(document.createElement("br"));
@@ -186,6 +196,7 @@ function buildGraphSettings(id) {
     }
     selectDF.setAttribute("id", "DataFrame");
     selectDF.setAttribute("onchange", "updateGraphConfig('" + id + "')");
+    selectDF.setAttribute("class", "form-control");
     selectDFDiv.appendChild(selectDF);
     document.getElementById("Settings").appendChild(selectDFDiv);
     document.getElementById("Settings").appendChild(document.createElement("br"));
@@ -209,6 +220,8 @@ function buildGraphSettings(id) {
         dimButton.setAttribute("class", "btn btn-primary dropdown-toggle");
         dimButton.setAttribute("type", "button");
         dimButton.setAttribute("data-toggle", "dropdown");
+        dimButton.style.width = "250";
+        dimButton.style.marginTop = "10";
         dimButton.appendChild(document.createTextNode(dimension.name));
         var span = document.createElement("span");
         span.setAttribute("class", "caret");
@@ -225,6 +238,7 @@ function buildGraphSettings(id) {
         dimNameExp.setAttribute("id", "dimname" + dimension.id);
         dimNameExp.setAttribute("type", "text");
         dimNameExp.setAttribute("onchange", "updateGraphConfig('" + id + "')");
+        dimNameExp.setAttribute("class", "form-control");
         dimNameExp.value = dimension.name;
         DimNameLi.appendChild(dimNameExp);
         DimNameLi.appendChild(document.createElement("br"));
@@ -236,6 +250,7 @@ function buildGraphSettings(id) {
         dimFieldExp.setAttribute("id", "dimfield" + dimension.id);
         dimFieldExp.setAttribute("type", "text");
         dimFieldExp.setAttribute("onchange", "updateGraphConfig('" + id + "')");
+        dimFieldExp.setAttribute("class", "form-control");
         dimFieldExp.value = dimension.field;
         DimNameLi.appendChild(dimFieldExp);
         DimNameLi.appendChild(document.createElement("br"));
@@ -256,8 +271,11 @@ function buildGraphSettings(id) {
     var addDimButton = document.createElement("button");
     addDimButton.innerHTML = "Novo Campo";
     addDimButton.setAttribute("onclick", "addDimension('" + id + "')");
+    addDimButton.style.width = "250";
+    addDimButton.style.marginTop = "10";
     document.getElementById("Settings").appendChild(addDimButton);
     document.getElementById("Settings").appendChild(document.createElement("br"));
+    document.getElementById("Settings").appendChild(document.createElement("hr"));
 
     for (var i = 0; i < graph.measures.length; i++) {
         var measure = graph.measures[i];
@@ -267,6 +285,8 @@ function buildGraphSettings(id) {
         measureButton.setAttribute("class", "btn btn-primary dropdown-toggle");
         measureButton.setAttribute("type", "button");
         measureButton.setAttribute("data-toggle", "dropdown");
+        measureButton.style.width = "250";
+        measureButton.style.marginTop = "10";
         measureButton.appendChild(document.createTextNode(measure.name));
         var span = document.createElement("span");
         span.setAttribute("class", "caret");
@@ -283,6 +303,7 @@ function buildGraphSettings(id) {
         measureNameExp.setAttribute("id", "measureName" + measure.id);
         measureNameExp.setAttribute("type", "text");
         measureNameExp.setAttribute("onchange", "updateGraphConfig('" + id + "')");
+        measureNameExp.setAttribute("class", "form-control");
         measureNameExp.value = measure.name;
         measureNameLi.appendChild(measureNameExp);
         measureNameLi.appendChild(document.createElement("br"));
@@ -294,6 +315,7 @@ function buildGraphSettings(id) {
         measureFieldExp.setAttribute("id", "measureExp" + measure.id);
         measureFieldExp.setAttribute("type", "text");
         measureFieldExp.setAttribute("onchange", "updateGraphConfig('" + id + "')");
+        measureFieldExp.setAttribute("class", "form-control");
         measureFieldExp.value = measure.expresion;
         measureNameLi.appendChild(measureFieldExp);
         measureNameLi.appendChild(document.createElement("br"));
@@ -312,6 +334,8 @@ function buildGraphSettings(id) {
     var addMeasureButton = document.createElement("button");
     addMeasureButton.innerHTML = "Nova Medida";
     addMeasureButton.setAttribute("onclick", "addMeasure('" + id + "')");
+    addMeasureButton.style.width = "250";
+    addMeasureButton.style.marginTop = "10";
     document.getElementById("Settings").appendChild(addMeasureButton);
     document.getElementById("Settings").appendChild(document.createElement("br"));
 
@@ -327,6 +351,7 @@ function buildGraphSettings(id) {
     widthExp.setAttribute("id", "Width");
     widthExp.setAttribute("type", "text");
     widthExp.setAttribute("onchange", "updateGraphConfig('" + id + "')");
+    widthExp.setAttribute("class", "form-control");
     widthExp.value = graph.style.width;
     document.getElementById("Settings").appendChild(widthExp);
     document.getElementById("Settings").appendChild(document.createElement("br"));
@@ -339,6 +364,7 @@ function buildGraphSettings(id) {
     heightExp.setAttribute("id", "Height");
     heightExp.setAttribute("type", "text");
     heightExp.setAttribute("onchange", "updateGraphConfig('" + id + "')");
+    heightExp.setAttribute("class", "form-control");
     heightExp.value = graph.style.height;
     document.getElementById("Settings").appendChild(heightExp);
     document.getElementById("Settings").appendChild(document.createElement("br"));
@@ -351,6 +377,7 @@ function buildGraphSettings(id) {
     xExp.setAttribute("id", "X");
     xExp.setAttribute("type", "text");
     xExp.setAttribute("onchange", "updateGraphConfig('" + id + "')");
+    xExp.setAttribute("class", "form-control");
     xExp.value = graph.style.x;
     document.getElementById("Settings").appendChild(xExp);
     document.getElementById("Settings").appendChild(document.createElement("br"));
@@ -363,6 +390,7 @@ function buildGraphSettings(id) {
     yExp.setAttribute("id", "Y");
     yExp.setAttribute("type", "text");
     yExp.setAttribute("onchange", "updateGraphConfig('" + id + "')");
+    yExp.setAttribute("class", "form-control");
     yExp.value = graph.style.y;
     document.getElementById("Settings").appendChild(yExp);
     document.getElementById("Settings").appendChild(document.createElement("br"));
@@ -460,6 +488,7 @@ function buildSheetSettings(id) {
     nameExp.setAttribute("id", "sheetName");
     nameExp.setAttribute("type", "text");
     nameExp.setAttribute("onchange", "updateSheetConfig('" + id + "')");
+    nameExp.setAttribute("class", "form-control");
     nameExp.value = sheet.name;
     document.getElementById("Settings").appendChild(nameExp);
     document.getElementById("Settings").appendChild(document.createElement("br"));
@@ -491,13 +520,22 @@ function deleteSheet(id) {
 function buildFilterSettings() {
     eraseSettings();
     var filters = reportData.config.sheets.filter(function (x) { return x.order == currentSheet })[0].filters;
-    for (var i = 0; i < filters.length; i++) {
+    var fLenght;
+    if (filters == null) {
+        fLenght = 0;
+    }
+    else {
+        fLenght = filters.length;
+    }
+    for (var i = 0; i < fLenght; i++) {
       
         var filter = filters[i];
         var filterDiv = document.createElement("div");
         filterDiv.setAttribute("class", "dropdown");
         var filterButton = document.createElement("button");
         filterButton.setAttribute("class", "btn btn-primary dropdown-toggle");
+        filterButton.style.width = "250";
+        filterButton.style.marginTop = "10";
         filterButton.setAttribute("type", "button");
         filterButton.setAttribute("data-toggle", "dropdown");
         filterButton.appendChild(document.createTextNode(filter.dimension.name));
@@ -527,6 +565,7 @@ function buildFilterSettings() {
         }
         selectDF.setAttribute("id", "DataFrame" + filter.id);
         selectDF.setAttribute("onchange", "updateFilterConfig('" + filter.id + "')");
+        selectDF.setAttribute("class", "form-control");
         selectDFDiv.appendChild(selectDF);
         ulFilter.appendChild(selectDFDiv);
         ulFilter.appendChild(document.createElement("br"));
@@ -540,6 +579,7 @@ function buildFilterSettings() {
         filterNameExp.setAttribute("id", "filterName" + filter.id);
         filterNameExp.setAttribute("type", "text");
         filterNameExp.setAttribute("onchange", "updateFilterConfig('" + filter.id + "')");
+        filterNameExp.setAttribute("class", "form-control");
         filterNameExp.value = filter.dimension.name;
         filterNameLi.appendChild(filterNameExp);
         filterNameLi.appendChild(document.createElement("br"));
@@ -551,6 +591,7 @@ function buildFilterSettings() {
         filterFieldExp.setAttribute("id", "filterField" + filter.id);
         filterFieldExp.setAttribute("type", "text");
         filterFieldExp.setAttribute("onchange", "updateFilterConfig('" + filter.id + "')");
+        filterFieldExp.setAttribute("class", "form-control");
         filterFieldExp.value = filter.dimension.field;
         filterNameLi.appendChild(filterFieldExp);
         filterNameLi.appendChild(document.createElement("br"));
@@ -569,6 +610,8 @@ function buildFilterSettings() {
     var addfilterButton = document.createElement("button");
     addfilterButton.innerHTML = "Novo Filtro";
     addfilterButton.setAttribute("onclick", "addFilter()");
+    addfilterButton.style.width = "250";
+    addfilterButton.style.marginTop = "10";
     document.getElementById("Settings").appendChild(addfilterButton);
     document.getElementById("Settings").appendChild(document.createElement("br"));
 

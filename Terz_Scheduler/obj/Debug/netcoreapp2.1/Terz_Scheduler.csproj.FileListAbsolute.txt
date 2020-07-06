@@ -1,0 +1,16 @@
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Terz_Scheduler.deps.json
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Terz_Scheduler.runtimeconfig.json
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Terz_Scheduler.runtimeconfig.dev.json
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Terz_Scheduler.dll
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Terz_Scheduler.pdb
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Terz_Core.dll
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Terz_DataBaseLayer.dll
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Terz_Core.pdb
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Terz_DataBaseLayer.pdb
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\obj\Debug\netcoreapp2.1\Terz_Scheduler.csprojAssemblyReference.cache
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\obj\Debug\netcoreapp2.1\Terz_Scheduler.csproj.CoreCompileInputs.cache
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\obj\Debug\netcoreapp2.1\Terz_Scheduler.AssemblyInfoInputs.cache
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\obj\Debug\netcoreapp2.1\Terz_Scheduler.AssemblyInfo.cs
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\obj\Debug\netcoreapp2.1\Terz_Scheduler.csproj.CopyComplete
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\obj\Debug\netcoreapp2.1\Terz_Scheduler.dll
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\obj\Debug\netcoreapp2.1\Terz_Scheduler.pdb

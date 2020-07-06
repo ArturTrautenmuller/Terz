@@ -51,9 +51,81 @@
 
 
 function solve(expression, dataFrame) {
-    var solvedExpression = solveSum(expression, dataFrame);
+    var solvedExpression = solveWhere(expression, dataFrame);
+   
+    solvedExpression = solveSum(solvedExpression, dataFrame);
     solvedExpression = solveCount(solvedExpression, dataFrame);
+    solvedExpression = solveMin(solvedExpression, dataFrame);
+    solvedExpression = solveMax(solvedExpression, dataFrame);
+    console.log("exp");
+    console.log(solvedExpression);
     return solvedExpression;
+}
+
+function solveWhere(expression, dataFrame) {
+    returnExpression = expression;
+    let pattern = /[^\s]+\.where\(.+?\)/g;
+    let res = pattern.exec(expression);
+    while (res != null) {
+        var whereExpression = res[0];
+        var wDataFrame = JSON.parse(JSON.stringify(dataFrame));
+        var headers = dataFrame[0];
+       
+        let wPattern = /where\(.+?\)/g;
+        let wRes = wPattern.exec(whereExpression);
+        var wExp = wRes[0];
+        var params = wExp.replace('where(', '').replace(')', '');
+
+        let paramsSplit = /\[.+?\}/g;
+        let param = paramsSplit.exec(params);
+        while (param != null) {
+            
+            let fPattern = /\[.+?\]/g;
+            var wField = fPattern.exec(param)[0].replace('[', '').replace(']', '');
+            let vPattern = /'.+?'/g;
+           
+            var values = [];
+            var wValue = vPattern.exec(param);
+            while (wValue != null) {
+                values.push(wValue[0].replace('\'', '').replace('\'', '').toString());
+                wValue = vPattern.exec(param);
+            }
+            var fPos = headers.indexOf(wField);
+            var wnDataFrame = [];
+            wnDataFrame.push(headers);
+            
+            console.log("values:" + values);
+            
+            for (var k = 1; k < wDataFrame.length; k++) {
+                var row = wDataFrame[k];
+                if (values.includes(row[fPos])) {
+                    wnDataFrame.push(row);
+                }
+            }
+
+            wDataFrame = wnDataFrame;
+            param = paramsSplit.exec(params);
+
+        }
+
+        var baseExp = whereExpression.replace("."+wExp, '');
+        var wSolvedExpression = solveSum(baseExp, wDataFrame);
+        wSolvedExpression = solveCount(wSolvedExpression, wDataFrame);
+        wSolvedExpression = solveMin(wSolvedExpression, wDataFrame);
+        wSolvedExpression = solveMax(wSolvedExpression, wDataFrame);
+        console.log(wSolvedExpression);
+        console.log(whereExpression);
+        console.log(returnExpression);
+        returnExpression = returnExpression.replace(whereExpression, wSolvedExpression);
+        console.log(wDataFrame);
+        res = pattern.exec(expression);
+
+
+    }
+
+    console.log("where")
+    console.log(returnExpression);
+    return returnExpression;
 }
 
 function solveSum(expression, dataFrame) {
@@ -109,6 +181,66 @@ function solveCount(expression, dataFrame) {
         res = pattern.exec(expression);
 
     }
+
+    return returnExpression;
+}
+
+function solveMin(expression, dataFrame){
+    var returnExpression = expression;
+    let pattern = /(?=min\().+?(?<=\))/g;
+    let res = pattern.exec(expression);
+    while (res != null) {
+        
+        var minExp = res[0];
+        var field = minExp.substr(5, minExp.length - 7);
+        var headers = dataFrame[0];
+        var pos = headers.indexOf(field);
+        var min = parseFloat(dataFrame[1][pos]);
+
+        for (var i = 2; i < dataFrame.length; i++) {
+
+            if (parseFloat(dataFrame[i][pos]) < min) {
+                min = parseFloat(dataFrame[i][pos]);
+            }
+        }
+
+        returnExpression = returnExpression.replace(minExp, min);
+        console.log(returnExpression);
+        console.log(res);
+        res = pattern.exec(expression);
+
+    }
+
+
+    return returnExpression;
+}
+
+function solveMax(expression, dataFrame) {
+    var returnExpression = expression;
+    let pattern = /(?=max\().+?(?<=\))/g;
+    let res = pattern.exec(expression);
+    while (res != null) {
+
+        var maxExp = res[0];
+        var field = maxExp.substr(5, maxExp.length - 7);
+        var headers = dataFrame[0];
+        var pos = headers.indexOf(field);
+        var max = parseFloat(dataFrame[1][pos]);
+
+        for (var i = 2; i < dataFrame.length; i++) {
+
+            if (parseFloat(dataFrame[i][pos]) > max) {
+                max = parseFloat(dataFrame[i][pos]);
+            }
+        }
+
+        returnExpression = returnExpression.replace(maxExp, max);
+        console.log(returnExpression);
+        console.log(res);
+        res = pattern.exec(expression);
+
+    }
+
 
     return returnExpression;
 }

@@ -7,7 +7,7 @@ using Terz_DataBaseLayer;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Newtonsoft.Json;
-
+using System.Security.Cryptography.Pkcs;
 namespace Terz.Controllers
 {
     public class UserController : Controller
@@ -15,7 +15,28 @@ namespace Terz.Controllers
 
         public PartialViewResult UserPage()
         {
-            return PartialView();
+            string userId = HttpContext.Session.GetString("User");
+            Usuario usuario = new Usuario();
+            usuario.Load(userId);
+            usuario.LoadReports();
+            Models.User.UserPageModel userPageModel = new Models.User.UserPageModel();
+            userPageModel.Usuario = usuario;
+            return PartialView(userPageModel);
+        }
+        public async Task<IActionResult> ExportApp([FromQuery(Name = "id")] string id)
+        {
+            string text = System.IO.File.ReadAllText(Location.ConfLocation);
+            Conf conf = JsonConvert.DeserializeObject<Conf>(text);
+
+            string configFile = conf.ConfigPath + "/" + id + "/config.json";
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(configFile, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+            return File(memory, "text/plain",id+".tcf");
         }
 
         public PartialViewResult Report()
@@ -29,6 +50,17 @@ namespace Terz.Controllers
             return PartialView(reportPageModel);
         }
 
+        public PartialViewResult Perfil()
+        {
+            string userId = HttpContext.Session.GetString("User");
+            Usuario usuario = new Usuario();
+            usuario.Load(userId);
+            usuario.LoadReports();
+            Models.User.PerfilModel perfilModel = new Models.User.PerfilModel();
+            perfilModel.Usuario = usuario;
+            return PartialView(perfilModel);
+        }
+
         public PartialViewResult ReportEditorConfig([FromQuery(Name = "id")] string id)
         {
             Terz_DataBaseLayer.Report report = new Report();
@@ -36,8 +68,28 @@ namespace Terz.Controllers
             return PartialView(report);
         }
 
+        public string UpdateProfile(Usuario usuario)
+        {
+            
+            usuario.Id = HttpContext.Session.GetString("User");
+            usuario.Update();
+            return "ok";
+           
+            
+        }
+
         public async Task<string> UpdateReportAsync([FromQuery(Name = "id")] string id, [FromQuery(Name = "name")] string name)
         {
+            string userId = HttpContext.Session.GetString("User");
+
+            if (userId == null || userId == "")
+            {
+                return "not authenticated";
+            }
+            if (!Security.CheckReportPermission(userId, id))
+            {
+                return "no permission";
+            }
             string text = System.IO.File.ReadAllText(Location.ConfLocation);
             Conf conf = JsonConvert.DeserializeObject<Conf>(text);
             var file = Request.Form.Files[0];
@@ -59,6 +111,15 @@ namespace Terz.Controllers
         }
 
         public PartialViewResult AddReport()
+        {
+            Models.Home.HomeView homeView = new Models.Home.HomeView();
+            Terz_DataBaseLayer.CategoryCollection categoryCollection = new Terz_DataBaseLayer.CategoryCollection();
+            categoryCollection.Load();
+            homeView.Categories = categoryCollection;
+            return PartialView(homeView);
+        }
+
+        public PartialViewResult ImportReport()
         {
             Models.Home.HomeView homeView = new Models.Home.HomeView();
             Terz_DataBaseLayer.CategoryCollection categoryCollection = new Terz_DataBaseLayer.CategoryCollection();

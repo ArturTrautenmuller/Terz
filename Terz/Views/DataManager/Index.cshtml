@@ -69,17 +69,93 @@
     </div>
     <input type="file" id="dfFile" multiple />
     <button onclick="uploadDataFrame()">Enviar</button>
-</div>
-<script src="~/LTE/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="~/LTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="~/LTE/dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="~/LTE/dist/js/demo.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
-<script>
+    <hr />
+    <div id="Referencias">
+        <div class="card">
+            <div class="card-header border-0">
+                <h3 class="card-title">Referencias</h3>
+                <div class="card-tools">
+                    <a href="#" class="btn btn-tool btn-sm">
+                        <i class="fas fa-download"></i>
+                    </a>
+                    <a href="#" class="btn btn-tool btn-sm">
+                        <i class="fas fa-bars"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <table class="table table-striped table-valign-middle">
+                    <thead>
+                        <tr>
+                            <th class="cell100 column1">Descrição</th>
+                            <th class="cell100 column2">Ações</th>
+
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (Terz_DataBaseLayer.Referencia referencia in Model.Report.Referencias)
+                            {
+                                <tr>
+                                    <td class="cell100 column1">
+                                        <label id="lr-@referencia.Id">@referencia.Descricao</label>
+                                        <input id="tr-@referencia.Id" type="text" style="display:none;width:80%" value="@referencia.Descricao" onchange="carregarReferencia('@referencia.Id')" />
+                                    </td>
+                                    <td class="cell100 column2">
+                                        <a href="#" onclick="mudarReferencia('@referencia.Id')">Renomear</a>
+                                        <a href="#" onclick=" deletarReferencia('@referencia.Id')">Excluir</a>
+                                    </td>
+
+
+
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <button onclick="AddReferencia()">Adicionar Referência</button>
+
+    </div>
+    <script src="~/LTE/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/LTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/LTE/dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="~/LTE/dist/js/demo.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+    <script>
+        function AddReferencia() {
+            
+            var referencia = {
+                ReportId:'@Model.Report.Id',
+                Descricao:''
+            }
+
+        $.ajax(
+            {
+                type: 'POST',
+                url: '../DataManager/AddReferencia',
+                dataType: 'html',
+                cache: false,
+                async: true,
+               
+                success: function (data) {
+
+                  
+                    location.reload();
+                },
+
+                data: referencia
+
+            });
+        }
     function uploadDataFrame() {
         var formData = new FormData();
         var files = document.getElementById("dfFile").files;
@@ -115,14 +191,14 @@
 
 
 
-
-            
-
-    }
-   
+        }
+        function mudarReferencia(id) {
+            document.getElementById("lr-" + id).style.display = "none";
+            document.getElementById("tr-" + id).style.display = "block";
+        }
 
     function carregarNome(name) {
-    
+
 
                  $.ajax(
                     {
@@ -140,7 +216,28 @@
                                 }
 
                             });
-    }
+        }
+
+        function carregarReferencia(id) {
+            
+                 $.ajax(
+                    {
+                         type: 'POST',
+                         url: '../DataManager/RenameReferencia?id=' + id + '&desc=' + document.getElementById("tr-" + id).value,
+                                dataType: 'html',
+                                cache: false,
+                                async: true,
+                                contentType: false,
+                                processData: false,
+                                success: function (data) {
+
+                                    console.log(data);
+                                    location.reload();
+                                }
+
+                            });
+        }
+        
 
    function deletarDataFrame(name){
      $.ajax(
@@ -159,8 +256,28 @@
                                 }
 
                             });
-    
+
+        }
+
+        function deletarReferencia(id){
+     $.ajax(
+                    {
+                                type: 'POST',
+                                url: '../DataManager/DeleteReferencia?id=' +id,
+                                dataType: 'html',
+                                cache: false,
+                                async: true,
+                                contentType: false,
+                                processData: false,
+                                success: function (data) {
+
+                                    console.log(data);
+                                    location.reload();
+                                }
+
+                            });
+
     }
 
-</script>
+    </script>
 

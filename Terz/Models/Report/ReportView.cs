@@ -10,5 +10,6 @@ namespace Terz.Models.Report
         public string Id { get; set; }
         public Terz_DataBaseLayer.Report Report { get; set; }
         public Terz_DataBaseLayer.CategoryCollection Categories { get; set; }
+        public Terz_DataBaseLayer.Usuario Usuario { get; set; }
     }
 }

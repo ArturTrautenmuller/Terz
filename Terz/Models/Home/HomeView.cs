@@ -10,5 +10,8 @@ namespace Terz.Models.Home
     {
        public Terz_DataBaseLayer.ReportCollection Reports { get; set; } 
        public Terz_DataBaseLayer.CategoryCollection Categories { get; set; }
+        public string currentCategory { get; set; }
+        public string currentKeyWord { get; set; }
+
     }
 }

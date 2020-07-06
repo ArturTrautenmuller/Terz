@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Terz_Core;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 using System.IO;
 
 namespace Terz.Controllers
@@ -13,12 +14,33 @@ namespace Terz.Controllers
     {
         public PartialViewResult Index([FromQuery(Name = "id")] string id)
         {
+            string userId = HttpContext.Session.GetString("User");
+
+            if(userId == null || userId == "")
+            {
+                return PartialView("~/Views/Home/Login.cshtml");
+            }
+            if (!Security.CheckReportPermission(userId, id))
+            {
+                return PartialView("~/Views/Home/Login.cshtml");
+            }
+
             Models.Editor.EditorView editorView = new Models.Editor.EditorView();
             editorView.Id = id;
             return PartialView(editorView);
         }
         public string UploadConfig([FromQuery(Name = "id")] string id , Config config)
         {
+            string userId = HttpContext.Session.GetString("User");
+
+            if (userId == null || userId == "")
+            {
+                return "not authenticated";
+            }
+            if (!Security.CheckReportPermission(userId, id))
+            {
+                return "no permission";
+            }
             string text = System.IO.File.ReadAllText(Location.ConfLocation);
             Conf conf = JsonConvert.DeserializeObject<Conf>(text);
             string configFile = conf.ConfigPath + "/" + id + "/config.json";

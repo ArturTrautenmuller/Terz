@@ -20,72 +20,139 @@
     </style>
 </head>
 <body>
+    <script>
+        var maxRank;
+        @{int maxRank; }
+        @if (Model.Reports.Reports.Count == 0)
+        {
+            maxRank = 0;
+        }
+        else
+        {
+            maxRank = Model.Reports.Reports.Select(r => r.Rank).Max();
+
+        }
+        maxRank = @maxRank;
+    </script>
     <div class="s131">
-        <form>
-            <div class="inner-form">
-                <div class="input-field first-wrap">
-                    <input id="search" type="text" placeholder="What are you looking for?" />
-                </div>
-                <div class="input-field second-wrap">
-                    <div class="input-select">
-                        <select data-trigger="" name="choices-single-defaul" id="category">
-                            <option value="0" placeholder="">CATEGORY</option>
-                            @foreach (Terz_DataBaseLayer.Category category in Model.Categories.Categories)
+        <div style="display:flex">
+            <form>
+                <div class="inner-form">
+                    <div class="input-field first-wrap">
+                        @{
+                            string keyword;
+                            if (Model.currentKeyWord.Length == 1)
                             {
-                                <option value="@category.Id">@category.Descricao </option>
+                                keyword = Model.currentKeyWord.Substring(1);
                             }
-                        </select>
+                            else
+                            {
+                                keyword = Model.currentKeyWord.Remove(Model.currentKeyWord.Length - 1, 1).Substring(1);
+                            }
+                        }
+                        <input id="search" type="text" placeholder="What are you looking for?" value="@keyword" />
+                    </div>
+                    <div class="input-field second-wrap">
+                        <div class="input-select">
+                            <select data-trigger="" name="choices-single-defaul" id="category">
+                                <option value="0" placeholder="">CATEGORY</option>
+                                @foreach (Terz_DataBaseLayer.Category category in Model.Categories.Categories)
+                                {
+                                    if (category.Id == Model.currentCategory)
+                                    {
+                                        <option value="@category.Id" selected>@category.Descricao </option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@category.Id">@category.Descricao </option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-field third-wrap">
+                        <button class="btn-search" type="button" onclick="filterReport()">SEARCH</button>
                     </div>
                 </div>
-                <div class="input-field third-wrap">
-                    <button class="btn-search" type="button" onclick="filterReport()">SEARCH</button>
-                </div>
-            </div>
-        </form>
+
+            </form>
+            <a style="margin-left:120px;color:gray;text-decoration:none" class="nav-link" href="@Url.Action("Cadastro","Home")">Cadastrar</a>
+            <a style="margin-left:20px;color:gray;text-decoration:none" class="nav-link" href="@Url.Action("login","Home")">Login</a>
+        </div>
         <br />
-        
+
         <div id="Reports" style="overflow-y:scroll; max-height:600px">
             @foreach (Terz_DataBaseLayer.Report report in Model.Reports.Reports)
             {
-            <div class="ReportSearch" id="Report" onclick="goToReport('@report.Id')">
-                @if (report.Imagem == "" || report.Imagem == null)
-                {
-                    <img width="100" height="77" class="FotoPerfil" src="~/images/app.png" />
-                }
-                else
-                {
-                    <img width="100" height="77" class="FotoPerfil" src="@report.Imagem" />
-                }
-                <label style="width:250px" class="LabelDesc">@report.Titulo</label>
-                <label style="width:175px; margin-right:25px;" class="LabelDesc">@report.Visualizacoes.Count Vizualizações</label>
-                @if (report.Avaliacoes.Count > 0)
-                {
-                    int i = 1;
-                    while (i <= report.Avaliacoes.Select(a => a.Nota).Average())
+                <div class="ReportSearch" id="Report" onclick="goToReport('@report.Id')">
+                    @if (report.Imagem == "" || report.Imagem == null)
                     {
-                        <span class="fa fa-star checked"></span>
-                        i++;
+                        <img width="100" height="77" class="FotoPerfil" src="~/images/app.png" />
+                    }
+                    else
+                    {
+                        <img width="100" height="77" class="FotoPerfil" src="@report.Imagem" />
+                    }
+                    <label style="width:250px" class="LabelDesc">@report.Titulo</label>
+                    <label style="width:175px; margin-right:25px;" class="LabelDesc">@report.Visualizacoes.Count Vizualizações</label>
+                    @if (report.Avaliacoes.Count > 0)
+                    {
+                        int i = 1;
+                        while (i <= report.Avaliacoes.Select(a => a.Nota).Average())
+                        {
+                            <span class="fa fa-star checked"></span>
+                            i++;
+                        }
+
+                        while (i <= 5)
+                        {
+                            <span class="fa fa-star"></span>
+                            i++;
+                        }
+                        <label style="width:75px">@report.Avaliacoes.Select(a => a.Nota).Average() / 5</label>
+                    }
+                    else
+                    {
+                        <label style="width:75px">Não Avaliado</label>
                     }
 
-                    while (i <= 5)
-                    {
-                        <span class="fa fa-star"></span>
-                        i++;
-                    }
-                    <label style="width:75px"  >@report.Avaliacoes.Select(a => a.Nota).Average() / 5</label>
-                }
-                else
-                {
-                    <label style="width:75px">Não Avaliado</label>
-                }
 
-                
-            </div>
+                </div>
             }
+            <button id="CarregaButton" onclick="loadReports()" style="margin-left:40px">Carregar Mais...</button>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="~/js/extension/choices.js"></script>
     <script>
+        var moredata;
+        var rBlock = 1;
+        function loadReports() {
+
+            var keyword = '%' + document.getElementById("search").value + '%';
+
+              $.ajax(
+            {
+                      type: 'POST',
+                      url: 'Home/MoreReports?category=@Model.currentCategory&rank=' + maxRank + "&keyword=" + keyword,
+                dataType: 'html',
+                cache: false,
+                async: true,
+                      success: function (data) {
+                          var rBlockDiv = document.createElement("div");
+                          rBlockDiv.setAttribute("id", "rBlock" + rBlock);
+                          document.getElementById("CarregaButton").parentNode.insertBefore(rBlockDiv, document.getElementById("CarregaButton"));
+                          $('#rBlock' + rBlock).html(data);
+                          rBlock++;
+                          var maxRankLabel = document.getElementById("maxRank").innerHTML;
+                          maxRank = maxRankLabel;
+                          document.getElementById("maxRank").remove();
+
+                }
+
+            });
+        }
+
       const choices = new Choices('[data-trigger]',
       {
         searchEnabled: false
@@ -93,7 +160,8 @@
 
         function filterReport() {
             var category = document.getElementById("category").value;
-            window.location.href = "?category=" + category;
+            var keyword = '%'+document.getElementById("search").value+ '%';
+            window.location.href = "?category=" + category + "&keyword=" + keyword;
         }
         function goToReport(id) {
             window.location.href = "../Report?id=" + id;

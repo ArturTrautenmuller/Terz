@@ -4,30 +4,37 @@
 *@
 <link rel="stylesheet" href="~/css/Editor.css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="~/LTE/plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="~/LTE/plugins/fontawesome-free/css/all.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<div id="Menu">
-    <button onclick="addIndicador()">Indicador</button>
-    <button onclick="AddGraph()">Grafico</button>
-    <button onclick="buildFilterSettings()">Filtros</button>
-</div>
-<div id="Pages">
+
+<div id="Menu" style="margin-left:5px;margin-top:10px;display:flex;border-bottom:2px solid #32bab6;padding-bottom:10px">
     <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+        <button style="width:160px;height:40px;" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
             Paginas
             <span class="caret"></span>
         </button>
         <ul id="sheetList" class="dropdown-menu"></ul>
     </div>
+    <button class="menuButton" onclick="addIndicador()"><i class="fas fa-tachometer-alt"></i> Indicador</button>
+    <button class="menuButton" onclick="AddGraph()"><i class="fas fa-chart-pie"></i> Gráfico</button>
+    <button class="menuButton" onclick="buildFilterSettings()"><i class="fas fa-filter"></i> Filtros</button>
+    <button class="menuButton" onclick="SaveReport()"><i class="fas fa-save"></i> Salvar</button>
+    <img style="margin-left:400px" height="40" width="40" src="~/images/Terz_Logo.png" />
+</div>
+<div id="Pages" style="margin-left:15px;margin-top:10px;">
+    
 </div>
 <div>
-    <div id="Sheet" >
+    <div id="Sheet">
         <div id="Graphs" class="resize-container"></div>
     </div>
     <div id="Settings" overflow-y: scroll; style="height:700px">
 
     </div>
 </div>
+
 
 
 <script src="https://unpkg.com/mathjs/dist/math.min.js"></script>
@@ -90,8 +97,8 @@
 
             target.setAttribute('data-x', x);
             target.setAttribute('data-y', y);
-           
-         //   target.textContent = event.rect.width + '×' + event.rect.height;
+
+            //   target.textContent = event.rect.width + '×' + event.rect.height;
         });
 
 
@@ -99,7 +106,7 @@
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 <script>
-    
+
     function addIndicador() {
         var form;
         $.ajax(
@@ -113,37 +120,37 @@
                 success: function (data) {
                     form = data;
                     bootbox.confirm(form, function (result) {
-                        if (result)
+                        if (result) {
 
-                        var indicador = {};
-                        indicador["id"] = Date.now().toString();
-                        indicador["dataFrameName"] = document.getElementById("DataFrameAdd").value;
-                        var style = {};
-                        style["id"] = Date.now().toString();
-                        style["width"] = document.getElementById("WidthAdd").value;
-                        style["height"] = document.getElementById("HeightAdd").value;
-                        style["x"] = document.getElementById("XAdd").value;
-                        style["y"] = document.getElementById("YAdd").value;
-                        style["backgroundColor"] = document.getElementById("BackgroundColorAdd").value;
-                        style["textColor"] = document.getElementById("TextColorAdd").value;
-                        style["fontSize"] = document.getElementById("FontSizeAdd").value;
+                            var indicador = {};
+                            indicador["id"] = Date.now().toString();
+                            indicador["dataFrameName"] = document.getElementById("DataFrameAdd").value;
+                            var style = {};
+                            style["id"] = Date.now().toString();
+                            style["width"] = document.getElementById("WidthAdd").value;
+                            style["height"] = document.getElementById("HeightAdd").value;
+                            style["x"] = document.getElementById("XAdd").value;
+                            style["y"] = document.getElementById("YAdd").value;
+                            style["backgroundColor"] = document.getElementById("BackgroundColorAdd").value;
+                            style["textColor"] = document.getElementById("TextColorAdd").value;
+                            style["fontSize"] = document.getElementById("FontSizeAdd").value;
 
-                        indicador["style"] = style;
+                            indicador["style"] = style;
 
-                        var measure = {};
-                        measure["id"] = Date.now().toString();
-                        measure["name"] = document.getElementById("MeasureNameAdd").value;
-                        measure["expresion"] = document.getElementById("ExpressionAdd").value;
+                            var measure = {};
+                            measure["id"] = Date.now().toString();
+                            measure["name"] = document.getElementById("MeasureNameAdd").value;
+                            measure["expresion"] = document.getElementById("ExpressionAdd").value;
 
-                        indicador["measure"] = measure;
+                            indicador["measure"] = measure;
 
-                        var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
-                        reportData.config.sheets[sheetPos].indicators.push(indicador);
+                            var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+                            reportData.config.sheets[sheetPos].indicators.push(indicador);
 
-                        reloadSheet();
-                        setObjEvents();
-                        
+                            reloadSheet();
+                            setObjEvents();
 
+                        }
 
                     });
 
@@ -168,35 +175,35 @@
                 success: function (data) {
                     form = data;
                     bootbox.confirm(form, function (result) {
-                        if (result)
+                        if (result) {
 
-                        var graph = {};
-                        graph["id"] = Date.now().toString();
-                        graph["dataFrameName"] = document.getElementById("DataFrameAdd").value;
-                        graph["title"] = document.getElementById("TitleAdd").value;
-                        graph["objectType"] = document.getElementById("TipoAdd").value;
-                        var style = {};
-                        style["id"] = Date.now().toString();
-                        style["width"] = document.getElementById("WidthAdd").value;
-                        style["height"] = document.getElementById("HeightAdd").value;
-                        style["x"] = document.getElementById("XAdd").value;
-                        style["y"] = document.getElementById("YAdd").value;
-                       
-
-                        graph["style"] = style;
-
-                        graph["measures"] = [];
-                        graph["dimensions"] = [];
-
-                       
-
-                        var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
-                        reportData.config.sheets[sheetPos].graphs.push(graph);
-
-                        reloadSheet();
-                        setObjEvents();
+                            var graph = {};
+                            graph["id"] = Date.now().toString();
+                            graph["dataFrameName"] = document.getElementById("DataFrameAdd").value;
+                            graph["title"] = document.getElementById("TitleAdd").value;
+                            graph["objectType"] = document.getElementById("TipoAdd").value;
+                            var style = {};
+                            style["id"] = Date.now().toString();
+                            style["width"] = document.getElementById("WidthAdd").value;
+                            style["height"] = document.getElementById("HeightAdd").value;
+                            style["x"] = document.getElementById("XAdd").value;
+                            style["y"] = document.getElementById("YAdd").value;
 
 
+                            graph["style"] = style;
+
+                            graph["measures"] = [];
+                            graph["dimensions"] = [];
+
+
+
+                            var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+                            reportData.config.sheets[sheetPos].graphs.push(graph);
+
+                            reloadSheet();
+                            setObjEvents();
+
+                        }
 
                     });
 
@@ -239,7 +246,7 @@
         reportData.config.sheets[sheetPos].name = document.getElementById("sheetName").value;
         buildSheetMenu();
 
-        
+
     }
 
     function updateFilterConfig(id) {
@@ -265,19 +272,19 @@
         reportData.config.sheets[sheetPos].indicators[indicatorPos].style.textColor = document.getElementById("TextColor").value;
         reportData.config.sheets[sheetPos].indicators[indicatorPos].style.fontSize = document.getElementById("FontSize").value;
 
-       
+
 
         reloadSheet();
         setObjEvents();
     }
 
-    
+
 
     function updadateIndicatorDimensions(id) {
         var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
         var indicatorPos = reportData.config.sheets[sheetPos].indicators.map(function (e) { return e.id; }).indexOf(id);
         var transform = document.getElementById("ind" + id).style.transform.replace('translate', '').replace('(', '').replace(')', '').replace('px', '').replace('px', '').split(',');
-       
+
         reportData.config.sheets[sheetPos].indicators[indicatorPos].style.width = parseInt(document.getElementById("ind" + id).style.width);
         reportData.config.sheets[sheetPos].indicators[indicatorPos].style.height = parseInt(document.getElementById("ind" + id).style.height);
         if (transform != "" && transform != null) {
@@ -295,7 +302,7 @@
         var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
         var graphPos = reportData.config.sheets[sheetPos].graphs.map(function (e) { return e.id; }).indexOf(id);
         var transform = document.getElementById("gc" + id).style.transform.replace('translate', '').replace('(', '').replace(')', '').replace('px', '').replace('px', '').split(',');
-      
+
         reportData.config.sheets[sheetPos].graphs[graphPos].style.width = parseInt(document.getElementById("gc" + id).style.width);
         reportData.config.sheets[sheetPos].graphs[graphPos].style.height = parseInt(document.getElementById("gc" + id).style.height);
         if (transform != "" && transform != null) {
@@ -315,7 +322,7 @@
         var graphPos = reportData.config.sheets[sheetPos].graphs.map(function (e) { return e.id; }).indexOf(id);
 
         reportData.config.sheets[sheetPos].graphs[graphPos].dataFrameName = document.getElementById("DataFrame").value;
-       
+
         reportData.config.sheets[sheetPos].graphs[graphPos].style.width = document.getElementById("Width").value;
         reportData.config.sheets[sheetPos].graphs[graphPos].style.height = document.getElementById("Height").value;
         reportData.config.sheets[sheetPos].graphs[graphPos].style.x = document.getElementById("X").value;
@@ -346,7 +353,7 @@
     }
 
     function updateBarChart(sheetPos, graphPos) {
-       
+
 
     }
 
@@ -365,17 +372,39 @@
 
     function setObjEvents() {
         var sheets = reportData.config.sheets.filter(function (x) { return x.order == currentSheet });
-        for (var i = 0; i < sheets.length; i++) {
+        var sLenght;
+        if (sheets == null) {
+            sLenght = 0;
+        }
+        else {
+            sLenght = sheets.length;
+        }
+        for (var i = 0; i < sLenght; i++) {
             var sheet = sheets[i];
+
             var indicators = sheet.indicators;
-            for (var j = 0; j < indicators.length; j++) {
+            var iLenght;
+            if (indicators == null) {
+                iLenght = 0;
+            }
+            else {
+                iLenght = indicators.length;
+            }
+            for (var j = 0; j < iLenght; j++) {
                 var indicator = indicators[j];
                 document.getElementById("ind" + indicator.id).setAttribute("onclick", "indicatorSettings('" + indicator.id + "')");
                 document.getElementById("ind" + indicator.id).setAttribute("onmouseup", "updadateIndicatorDimensions('" + indicator.id + "')");
             }
 
             var graphs = sheet.graphs;
-            for (var j = 0; j < graphs.length; j++) {
+            var gLenght;
+            if (graphs == null) {
+                gLenght = 0;
+            }
+            else {
+                gLenght = graphs.length;
+            }
+            for (var j = 0; j < gLenght; j++) {
                 var graph = graphs[j];
                 document.getElementById("gc" + graph.id).setAttribute("onclick", "graphSettings('" + graph.id + "')");
                 document.getElementById("gc" + graph.id).setAttribute("onmouseup", "updadateGraphDimensions('" + graph.id + "')");
@@ -419,8 +448,11 @@
             aSheet.setAttribute("onclick", "changeSheet('" + sheets[i].order + "')");
             liSheet.appendChild(aSheet);
             var editbutton = document.createElement("button");
-            editbutton.innerHTML = "Editar";
+            var editIcon = document.createElement("i");
+            editIcon.setAttribute("class", "fa fa-edit");
+            editbutton.appendChild(editIcon);
             editbutton.setAttribute("onclick", "buildSheetSettings('" + sheets[i].id + "')");
+      
             liSheet.appendChild(editbutton);
             document.getElementById("sheetList").appendChild(liSheet);
 

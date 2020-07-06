@@ -1,12 +1,21 @@
 ﻿function buildGraphs(sheetOrder) {
     var sheet = reportData.config.sheets.filter(function (x) { return x.order == sheetOrder })[0];
     var graphs = sheet.graphs;
-    for (var i = 0; i < graphs.length; i++) {
+    var gLenght;
+    if (graphs == null) {
+        gLenght = 0;
+    }
+    else {
+        gLenght = graphs.length;
+    }
+
+    for (var i = 0; i < gLenght; i++) {
         var graph = graphs[i];
 
         var graphContainer = document.createElement("div");
         graphContainer.setAttribute("id", "gc" + graph.id);
-        graphContainer.style.border = "1px solid black";
+        graphContainer.style.border = "2px solid lightgrey";
+        graphContainer.style.borderRadius = "7px";
         graphContainer.style.marginLeft = graph.style.x;
         graphContainer.style.marginTop = graph.style.y;
         graphContainer.style.width = graph.style.width;
@@ -14,7 +23,10 @@
         graphContainer.setAttribute("class", "resize-drag");
 
         var graphTitle = document.createElement("div");
-        graphTitle.appendChild(document.createTextNode(graph.title));
+        var graphTitleLabel = document.createElement("label");
+        graphTitleLabel.style.fontSize = "18px";
+        graphTitleLabel.appendChild(document.createTextNode(graph.title));
+        graphTitle.appendChild(graphTitleLabel);
         graphContainer.appendChild(graphTitle);
 
         var graphDiv = document.createElement("div");
@@ -32,6 +44,7 @@
                 case 'pie': { buildPieChart(graph); break; }
                 case 'line': { buildLineChart(graph); break; }
                 case 'tree': { buildTreeMap(graph); break; }
+                case 'network': { buildNetWorkGraph(graph); break; }
                 default: break;
 
 
@@ -120,6 +133,12 @@ function buildBarChart(graph) {
         .groupPadding(40)
         .render();
     
+
+}
+
+function buildNetWorkGraph(graph) {
+
+  
 
 }
 

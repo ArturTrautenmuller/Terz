@@ -1,12 +1,14 @@
 ﻿#Filters{
     width:20%;
    margin-left:10px;
+   height:1000px;
     float:left;
     
 }
 
 #Graphs{
     width:79%;
+    height:1000px;
    
     float:right;
     
@@ -72,11 +74,6 @@
     display: block;
 }
 
-#Pages{
-   
-    margin-left:80%;
-    margin-top:20px;
-}
 
 
 

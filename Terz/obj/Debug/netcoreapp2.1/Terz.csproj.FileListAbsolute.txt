@@ -46,3 +46,6 @@ C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\User\A
 C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\User\ReportEditorConfig.g.cshtml.cs
 C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\Report\AvaliatePage.g.cshtml.cs
 C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\Home\Cadastro.g.cshtml.cs
+C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\Home\MoreReports.g.cshtml.cs
+C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\User\Perfil.g.cshtml.cs
+C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\User\ImportReport.g.cshtml.cs

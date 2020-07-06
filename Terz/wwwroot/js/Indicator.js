@@ -1,7 +1,14 @@
 ﻿function buildIndicators(sheetOrder) {
     var sheet = reportData.config.sheets.filter(function (x) { return x.order == sheetOrder })[0];
     var indicators = sheet.indicators;
-    for (var i = 0; i < indicators.length; i++) {
+    var iLenght;
+    if (indicators == null) {
+        iLenght = 0;
+    }
+    else {
+        iLenght = indicators.length;
+    }
+    for (var i = 0; i < iLenght; i++) {
         var indicator = indicators[i];
         var indicatorDiv = document.createElement("div");
         indicatorDiv.style.marginLeft = indicator.style.x;
@@ -9,7 +16,9 @@
         indicatorDiv.style.width = indicator.style.width;
         indicatorDiv.style.height = indicator.style.height;
         indicatorDiv.style.position = "absolute";
-        indicatorDiv.style.border = "1px solid black";
+        indicatorDiv.style.border = "0px solid black";
+        indicatorDiv.style.borderRadius = "7px";
+
         indicatorDiv.setAttribute("id", "ind" + indicator.id);
         indicatorDiv.setAttribute("class", "resize-drag");
 

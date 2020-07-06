@@ -1,0 +1,40 @@
+﻿@model Terz.Models.Home.HomeView
+@foreach (Terz_DataBaseLayer.Report report in Model.Reports.Reports)
+{
+    <div class="ReportSearch" id="Report" onclick="goToReport('@report.Id')">
+        @if (report.Imagem == "" || report.Imagem == null)
+        {
+            <img width="100" height="77" class="FotoPerfil" src="~/images/app.png" />
+        }
+        else
+        {
+            <img width="100" height="77" class="FotoPerfil" src="@report.Imagem" />
+        }
+        <label style="width:250px" class="LabelDesc">@report.Titulo</label>
+        <label style="width:175px; margin-right:25px;" class="LabelDesc">@report.Visualizacoes.Count Vizualizações</label>
+        @if (report.Avaliacoes.Count > 0)
+        {
+            int i = 1;
+            while (i <= report.Avaliacoes.Select(a => a.Nota).Average())
+            {
+                <span class="fa fa-star checked"></span>
+                i++;
+            }
+
+            while (i <= 5)
+            {
+                <span class="fa fa-star"></span>
+                i++;
+            }
+            <label style="width:75px">@report.Avaliacoes.Select(a => a.Nota).Average() / 5</label>
+        }
+        else
+        {
+            <label style="width:75px">Não Avaliado</label>
+        }
+
+
+    </div>
+}
+
+<label id="maxRank" style="display:none">@Model.Reports.Reports.Select(r => r.Rank).Max()</label>

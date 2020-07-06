@@ -13,8 +13,11 @@ namespace Terz_DataBaseLayer
         public string Titulo { get; set; }
         public string Imagem { get; set; }
         public string CategoriaId { get; set; }
+        public int Score { get; set; }
+        public int Rank { get; set; }
         public List<Visualizacao> Visualizacoes { get; set; }
         public List<Avaliacao> Avaliacoes { get; set; }
+        public List<Referencia> Referencias { get; set; }
 
         public void Load(string Id)
         {
@@ -28,6 +31,7 @@ namespace Terz_DataBaseLayer
                 this.Titulo = myReader.GetString(2);
                 this.Imagem = myReader.GetString(3);
                 this.CategoriaId = Convert.ToString(myReader.GetValue(4));
+                this.Score = Convert.ToInt32(myReader.GetValue(5));
 
                 myReader.Close();
                 Base.connection.Close();
@@ -87,6 +91,29 @@ namespace Terz_DataBaseLayer
             Base.connection.Close();
         }
 
+        public void getReference()
+        {
+            Base.Init();
+            this.Referencias = new List<Referencia>();
+            var sql = "select * from referencia where report_id = '" + this.Id + "'";
+            MySqlDataReader myReader = Base.select(sql);
+            while (myReader.Read())
+            {
+                Referencia referencia = new Referencia();
+                referencia.Id = Convert.ToString(myReader.GetValue(0));
+                referencia.ReportId = Convert.ToString(myReader.GetValue(1));
+                referencia.Descricao = myReader.GetString(2);
+
+                this.Referencias.Add(referencia);
+
+
+
+            }
+
+            myReader.Close();
+            Base.connection.Close();
+        }
+
         public void Insert()
         {
             Base.Init();
@@ -99,6 +126,19 @@ namespace Terz_DataBaseLayer
         {
             Base.Init();
             var sql = "UPDATE `report` SET `titulo` = '"+this.Titulo+"', `imagem` = '"+this.Imagem+"' WHERE `report`.`id` = "+this.Id;
+            Base.sqlCommand(sql);
+        }
+
+        public void setScore()
+        {
+            Base.Init();
+            var sql = "UPDATE `report` SET `score` = '" + this.Score + "' WHERE `report`.`id` = " + this.Id;
+            Base.sqlCommand(sql);
+        }
+        public void setRank()
+        {
+            Base.Init();
+            var sql = "UPDATE `report` SET `rank` = '" + this.Rank + "' WHERE `report`.`id` = " + this.Id;
             Base.sqlCommand(sql);
         }
 
