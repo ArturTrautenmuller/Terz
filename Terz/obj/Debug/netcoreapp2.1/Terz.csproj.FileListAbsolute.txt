@@ -49,3 +49,9 @@ C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\Home\C
 C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\Home\MoreReports.g.cshtml.cs
 C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\User\Perfil.g.cshtml.cs
 C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\User\ImportReport.g.cshtml.cs
+C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\Editor\AddTextBlock.g.cshtml.cs
+C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\Editor\IndiacatorExp.g.cshtml.cs
+C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\Editor\MeasureExp.g.cshtml.cs
+C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\Creditos\Index.g.cshtml.cs
+C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\Creditos\Pagamento.g.cshtml.cs
+C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\Report\Sobre.g.cshtml.cs

@@ -67,8 +67,17 @@
             </table>
         </div>
     </div>
-    <input type="file" id="dfFile" multiple />
-    <button onclick="uploadDataFrame()">Enviar</button>
+    <label for="dfFile">Enviar DataFrames</label>
+    <div class="input-group">
+        <div class="custom-file">
+            <input type="file" class="custom-file-input"  id="dfFile" multiple>
+            <label class="custom-file-label" for="exampleInputFile">Escolher Arquivos</label>
+        </div>
+        <div class="input-group-append" onclick="uploadDataFrame()">
+            <span class="input-group-text" id="">Upload</span>
+        </div>
+    </div>
+   
     <hr />
     <div id="Referencias">
         <div class="card">
@@ -132,7 +141,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
     <script>
         function AddReferencia() {
-            
+
             var referencia = {
                 ReportId:'@Model.Report.Id',
                 Descricao:''
@@ -145,10 +154,10 @@
                 dataType: 'html',
                 cache: false,
                 async: true,
-               
+
                 success: function (data) {
 
-                  
+
                     location.reload();
                 },
 
@@ -219,7 +228,7 @@
         }
 
         function carregarReferencia(id) {
-            
+
                  $.ajax(
                     {
                          type: 'POST',
@@ -237,7 +246,7 @@
 
                             });
         }
-        
+
 
    function deletarDataFrame(name){
      $.ajax(

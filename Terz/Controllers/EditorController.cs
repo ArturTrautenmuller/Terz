@@ -49,7 +49,23 @@ namespace Terz.Controllers
             return "Aplicativo Salvo";
         }
 
+        public PartialViewResult MeasureExp([FromQuery(Name = "id")] string id)
+        {
+            ViewData["id"] = id;
+            return PartialView();
+        }
+
+        public PartialViewResult IndiacatorExp()
+        {
+            return PartialView();
+        }
+
         public PartialViewResult AddIndicador()
+        {
+            return PartialView();
+        }
+
+        public PartialViewResult AddTextBlock()
         {
             return PartialView();
         }

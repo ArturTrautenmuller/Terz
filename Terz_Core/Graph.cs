@@ -13,6 +13,7 @@ namespace Terz_Core
         public string DataFrameName { get; set; }
         public List<Dimension> Dimensions { get; set; }
         public List<Measure> Measures { get; set; }
+        public Sort Sort { get; set; }
 
 
     }

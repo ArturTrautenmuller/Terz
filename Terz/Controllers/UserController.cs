@@ -21,6 +21,10 @@ namespace Terz.Controllers
             usuario.LoadReports();
             Models.User.UserPageModel userPageModel = new Models.User.UserPageModel();
             userPageModel.Usuario = usuario;
+
+            
+
+
             return PartialView(userPageModel);
         }
         public async Task<IActionResult> ExportApp([FromQuery(Name = "id")] string id)
@@ -76,6 +80,29 @@ namespace Terz.Controllers
             return "ok";
            
             
+        }
+
+        public async Task<string> UpdateProfileFoto()
+        {
+            Usuario usuario = new Usuario();
+            usuario.Id = HttpContext.Session.GetString("User");
+            string text = System.IO.File.ReadAllText(Location.ConfLocation);
+            Conf conf = JsonConvert.DeserializeObject<Conf>(text);
+            var file = Request.Form.Files[0];
+
+            var filePath = Path.Combine(conf.ImagePath + "/User", usuario.Id + ".jpg");
+
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(fileStream);
+            }
+
+            usuario.Foto = Location.serverUrl + "/Terz/User/" + usuario.Id + ".jpg";
+            usuario.UpdateFoto();
+
+            return "ok";
+
+
         }
 
         public async Task<string> UpdateReportAsync([FromQuery(Name = "id")] string id, [FromQuery(Name = "name")] string name)
@@ -179,6 +206,57 @@ namespace Terz.Controllers
                 return PartialView("~/Views/Home/Cadastro.cshtml");
             }
 
+        }
+
+        public string AtivarReport([FromQuery(Name = "id")] string id)
+        {
+            string userId = HttpContext.Session.GetString("User");
+
+            if (userId == null || userId == "")
+            {
+                return "not authenticated";
+            }
+            if (!Security.CheckReportPermission(userId, id))
+            {
+                return "no permission";
+            }
+
+            Usuario usuario = new Usuario();
+            usuario.Load(userId);
+            if(usuario.Creditos == 0)
+            {
+                return "Sem Créditos Suficientes";
+            }
+
+            Report report = new Report();
+            report.Load(id);
+            report.Ativo = 1;
+            report.setAtivo();
+
+            return "Agora seu relatório está disponivel para qualquer pessoa";
+        }
+
+        public string DesativarReport([FromQuery(Name = "id")] string id)
+        {
+            string userId = HttpContext.Session.GetString("User");
+
+            if (userId == null || userId == "")
+            {
+                return "not authenticated";
+            }
+            if (!Security.CheckReportPermission(userId, id))
+            {
+                return "no permission";
+            }
+
+           
+
+            Report report = new Report();
+            report.Load(id);
+            report.Ativo = 0;
+            report.setAtivo();
+
+            return "Relatório desativado";
         }
     }
 }

@@ -1,0 +1,91 @@
+﻿@model Terz.Models.Report.SobreView
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .cardProfile {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 300px;
+        margin: auto;
+        text-align: center;
+        font-family: arial;
+    }
+
+    .titleProfile {
+        color: grey;
+        font-size: 18px;
+    }
+
+    .buttonProfile {
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 8px;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+    }
+
+    .aProfile {
+        text-decoration: none;
+        font-size: 22px;
+        color: black;
+    }
+
+        .buttonProfile:hover, .aProfile:hover {
+            opacity: 0.7;
+        }
+</style>
+
+<div style="display:flex">
+
+
+    <div class="cardProfile">
+        @if (Model.Usuario.Foto == "")
+        {
+
+            <img src="~/images/defaultuser.jpg" alt="Usuario" style="width:100%">
+        }
+        else
+        {
+            <img src="@Model.Usuario.Foto" alt="Usuario" style="width:100%">
+        }
+
+        <h1>@Model.Usuario.Nome</h1>
+        <p class="titleProfile">CEO & Founder, Example</p>
+        <p>Harvard University</p>
+        <div style="margin: 24px 0;">
+            <a href="#"><i class="fa fa-dribbble aProfile"></i></a>
+            <a href="#"><i class="fa fa-twitter aProfile"></i></a>
+            <a href="#"><i class="fa fa-linkedin aProfile"></i></a>
+            <a href="#"><i class="fa fa-facebook aProfile"></i></a>
+        </div>
+
+    </div>
+
+    <div class="cardProfile">
+        @if (Model.Report.Imagem == "")
+        {
+
+            <img src="~/images/app.png" alt="Report" style="width:100%">
+        }
+        else
+        {
+            <img src="@Model.Report.Imagem" alt="Report" style="width:100%">
+        }
+
+        <h1>@Model.Usuario.Nome</h1>
+        <p class="titleProfile">CEO & Founder, Example</p>
+        <p>Harvard University</p>
+        <div style="margin: 24px 0;">
+            <a href="#"><i class="fa fa-dribbble aProfile"></i></a>
+            <a href="#"><i class="fa fa-twitter aProfile"></i></a>
+            <a href="#"><i class="fa fa-linkedin aProfile"></i></a>
+            <a href="#"><i class="fa fa-facebook aProfile"></i></a>
+        </div>
+
+    </div>
+</div>

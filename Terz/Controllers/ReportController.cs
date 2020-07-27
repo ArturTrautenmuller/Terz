@@ -17,15 +17,11 @@ namespace Terz.Controllers
       //  [Route("[controller]/id")]
         public PartialViewResult Index([FromQuery(Name = "id")] string id)
         {
+
             string userId = HttpContext.Session.GetString("User");
-            if(userId != null && userId != "")
-            {
-                Visualizacao visualizacao = new Visualizacao();
-                visualizacao.ReportId = id;
-                visualizacao.UserId = userId;
-                visualizacao.Data = DateTime.Now.ToString("yy/MM/dd hh:mm:ss");
-                visualizacao.Insert();
-            }
+
+
+           
             Models.Report.ReportView reportView = new Models.Report.ReportView();
             reportView.Id = id;
             Terz_DataBaseLayer.Report report = new Report();
@@ -35,8 +31,37 @@ namespace Terz.Controllers
             reportView.Report = report;
             Usuario usuario = new Usuario();
             usuario.Load(report.UserId);
+
+            if(report.Ativo == 0 && report.UserId != userId)
+            {
+                return null;
+            }
+
             reportView.Usuario = usuario;
+
+            if (userId != null && userId != "")
+            {
+                Visualizacao visualizacao = new Visualizacao();
+                visualizacao.ReportId = id;
+                visualizacao.UserId = userId;
+                visualizacao.Data = DateTime.Now.ToString("yy/MM/dd hh:mm:ss");
+                visualizacao.Insert();
+            }
             return PartialView(reportView);
+        }
+
+        public PartialViewResult Sobre([FromQuery(Name = "id")] string id)
+        {
+            Terz_DataBaseLayer.Report report = new Report();
+            report.Load(id);
+            Usuario usuario = new Usuario();
+            usuario.Load(report.UserId);
+            Models.Report.SobreView sobreView = new Models.Report.SobreView();
+            sobreView.Report = report;
+            sobreView.Usuario = usuario;
+
+
+            return PartialView(sobreView);
         }
 
         public PartialViewResult AvaliatePage()
@@ -112,7 +137,7 @@ namespace Terz.Controllers
 
             Config config = new Config()
             {
-                Sheets = new System.Collections.Generic.List<Sheet>() 
+                Sheets = new System.Collections.Generic.List<Sheet>() { new Sheet() { Id = "1", Name = "DashBoard", Order = "1", Graphs = new List<Graph>(), Indicators = new List<Indicator>(), Filters = new List<Filter>(), TextBlocks = new List<TextBlock>() } }
             };
 
 

@@ -40,6 +40,12 @@
             <ul class="navbar-nav ml-auto">
                 <!-- Messages Dropdown Menu -->
                 <li class="nav-item dropdown">
+                    <a class="nav-link" href="@Url.Action("Index","Creditos")">
+                        <i class="fas fa-dollar-sign"></i>
+                        @Model.Usuario.Creditos Créditos
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
                     <a class="nav-link" href="#">
                         <i class="fas fa-sign-out-alt"></i>
                         Sair
@@ -74,7 +80,7 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-                with font-awesome or any other icon font library -->
+    with font-awesome or any other icon font library -->
 
                         <li class="nav-item has-treeview">
                             <a href="@Url.Action("UserPage","User")" class="nav-link">
@@ -106,6 +112,16 @@
                             </a>
 
                         </li>
+                        <li class="nav-item has-treeview">
+                            <a href="@Url.Action("Index","Creditos")" class="nav-link">
+                                <i class="far fa-money-bill-alt"></i>
+                                <p>
+                                    Comprar Créditos
+
+                                </p>
+                            </a>
+
+                        </li>
 
 
 
@@ -116,6 +132,28 @@
             </div>
             <!-- /.sidebar -->
         </aside>
+
+        <style>
+        .ImgPick {
+        width: 90%;
+        margin-left: 5%;
+        height: 40px;
+        font-size: 16px;
+        padding-top: 8px;
+        text-align: center;
+        background-color: lightseagreen;
+        color: white;
+        border-color: lightseagreen;
+        border: none;
+        margin-top: 15px;
+        }
+
+        .ImgPick:hover {
+        background-color: white;
+        color: lightseagreen;
+        }
+        </style>
+
         <div class="content-wrapper" id="Conteudo" style="padding-left:10px">
             <!-- Content Header (Page header) -->
             <section class="content-header">
@@ -142,21 +180,25 @@
                             <div class="card card-primary card-outline">
                                 <div class="card-body box-profile">
                                     <div class="text-center">
+
                                         @if (Model.Usuario.Foto == "")
                                         {
-                                            <img class="profile-user-img img-fluid img-circle"
+                                            <img id="userImg" class="profile-user-img img-fluid img-circle"
                                                  src="~/images/defaultuser.jpg"
                                                  alt="User profile picture">
                                         }
                                         else
                                         {
-                                        <img class="profile-user-img img-fluid img-circle"
-                                             src="@Model.Usuario.Foto"
-                                             alt="User profile picture">
+                                            <img id="userImg" class="profile-user-img img-fluid img-circle"
+                                                 src="@Model.Usuario.Foto"
+                                                 alt="User profile picture">
                                         }
+                                        
+                                        <input  type="file" id="userImgInput" style="visibility:hidden; display:none" onchange="readURL(this);">
+                                        <label class="ImgPick" for="userImgInput"><a> Escolher Imagem</a></label>
                                     </div>
                                     <h3 class="profile-username text-center">@Model.Usuario.Nome</h3>
-                                  
+
                                     <ul class="list-group list-group-unbordered mb-3">
                                         <li class="list-group-item">
                                             <b>Followers</b> <a class="float-right">1,322</a>
@@ -168,56 +210,45 @@
                                             <b>Friends</b> <a class="float-right">13,287</a>
                                         </li>
                                     </ul>
-                                   
+
                                 </div>
+
+                                <script>
+                                    function readURL(input) {
+                                        if (input.files && input.files[0]) {
+                                            var reader = new FileReader();
+
+                                            reader.onload = function (e) {
+                                                $('#userImg')
+                                                    .attr('src', e.target.result)
+
+                                                uploadImage();
+                                            };
+
+                                            reader.readAsDataURL(input.files[0]);
+                                            //document.getElementById("imgPost").style.display = "block";
+                                        }
+                                    }
+                                </script>
                                 <!-- /.card-body -->
                             </div>
                             <!-- /.card -->
                             <!-- About Me Box -->
-                            <div class="card card-primary">
-                                <div class="card-header">
-                                    <h3 class="card-title">About Me</h3>
-                                </div>
-                                <!-- /.card-header -->
-                                <div class="card-body">
-                                    <strong><i class="fas fa-book mr-1"></i> Education</strong>
-                                    <p class="text-muted">
-                                        B.S. in Computer Science from the University of Tennessee at Knoxville
-                                    </p>
-                                    <hr>
-                                    <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
-                                    <p class="text-muted">Malibu, California</p>
-                                    <hr>
-                                    <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
-                                    <p class="text-muted">
-                                        <span class="tag tag-danger">UI Design</span>
-                                        <span class="tag tag-success">Coding</span>
-                                        <span class="tag tag-info">Javascript</span>
-                                        <span class="tag tag-warning">PHP</span>
-                                        <span class="tag tag-primary">Node.js</span>
-                                    </p>
-                                    <hr>
-                                    <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
-                                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
-                                </div>
-                                <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
+                           
                         </div>
                         <!-- /.col -->
                         <div class="col-md-9">
                             <div class="card">
                                 <div class="card-header p-2">
                                     <ul class="nav nav-pills">
-                                       
+
                                         <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Settings</a></li>
                                     </ul>
                                 </div><!-- /.card-header -->
                                 <div class="card-body">
                                     <div class="tab-content">
-                                        
+
                                         <!-- /.tab-pane -->
-                                        
                                         <!-- /.tab-pane -->
                                         <div class="active tab-pane" id="settings">
                                             <form class="form-horizontal">
@@ -251,7 +282,7 @@
                                                         <input type="text" class="form-control" id="inputHabilidades" value="@Model.Usuario.Habilidades" placeholder="Habilidades">
                                                     </div>
                                                 </div>
-                                               
+
                                                 <div class="form-group row">
                                                     <div class="offset-sm-2 col-sm-10">
                                                         <button type="submit" onclick="updateProfile()" class="btn btn-danger">Submit</button>
@@ -298,6 +329,31 @@
     <script src="~/LTE/dist/js/demo.js"></script>
 
     <script>
+        function uploadImage() {
+            var formData = new FormData();
+            var files = document.getElementById("userImgInput").files;
+           
+            formData.append("userImgInput", files[0]);
+            
+             $.ajax(
+            {
+                type: 'POST',
+                url: '../User/UpdateProfileFoto',
+                dataType: 'html',
+                cache: false,
+                async: true,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+
+        
+                    location.reload();
+                },
+
+                data: formData
+
+            });
+        }
         function updateProfile() {
 
             var usuario = {

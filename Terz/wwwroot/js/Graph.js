@@ -22,13 +22,15 @@
         graphContainer.style.height = graph.style.height;
         graphContainer.setAttribute("class", "resize-drag");
 
-        var graphTitle = document.createElement("div");
-        var graphTitleLabel = document.createElement("label");
-        graphTitleLabel.style.fontSize = "18px";
-        graphTitleLabel.appendChild(document.createTextNode(graph.title));
-        graphTitle.appendChild(graphTitleLabel);
-        graphContainer.appendChild(graphTitle);
+        if (graph.objectType != 'table') {
 
+            var graphTitle = document.createElement("div");
+            var graphTitleLabel = document.createElement("label");
+            graphTitleLabel.style.fontSize = "18px";
+            graphTitleLabel.appendChild(document.createTextNode(graph.title));
+            graphTitle.appendChild(graphTitleLabel);
+            graphContainer.appendChild(graphTitle);
+        }
         var graphDiv = document.createElement("div");
         
        // graphDiv.style.position = "absolute";
@@ -45,6 +47,7 @@
                 case 'line': { buildLineChart(graph); break; }
                 case 'tree': { buildTreeMap(graph); break; }
                 case 'network': { buildNetWorkGraph(graph); break; }
+                case 'table': { buildTable(graph); break; }
                 default: break;
 
 
@@ -95,18 +98,81 @@ function buildBarChart(graph) {
             data.push(bar);
         }
     }
-    
 
-    console.log('obj data');
-    console.log(objData);
-    console.log(data);
+    var sort;
+    if (graph.sort == null) {
+        graph.sort = { axis: 'dim', type: 'numerico', option: 'none' };
+    }
+
+    if (graph.sort.axis == 'mea') {
+
+        if (graph.sort.option == 'crescente') {
+            sort = function (a, b) {
+
+                return a["y"] - b["y"];
+
+            };
+        }
+        if (graph.sort.option == 'decrescente') {
+            sort = function (a, b) {
+
+                return b["y"] - a["y"];
+
+            };
+        }
+
+
+
+         
+    }
+    else if (graph.sort.axis == 'dim') {
+        if (graph.sort.option == 'crescente') {
+            sort = function (a, b) {
+
+                return a["x"] - b["x"];
+
+            };
+        }
+        if (graph.sort.option == 'decrescente') {
+            sort = function (a, b) {
+
+                return b["x"] - a["x"];
+
+            };
+        }
+    }
+
+    
+    var discrete;
+    var x;
+    var y;
+    var xSort;
+    var ySort;
+    if (graph.style.orientation == 'horizontal' || graph.style.orientation == null) {
+        discrete = "x";
+        x = "x";
+        y = "y";
+        xSort = sort;
+    }
+    else {
+        discrete = "y";
+        x = "y";
+        y = "x";
+        ySort = sort;
+        
+    }
+
+   
     new d3plus.BarChart()
         .config({
             data: data,
-            discrete: "x",
+            discrete: discrete,
             groupBy: "id",
-            x: "x",
-            y: "y",
+            x: x,
+            y: y,
+            xSort: xSort,
+            ySort: ySort,
+            
             xConfig: {
                 title: graph.dimensions[0].name,
                 titleConfig: {
@@ -131,6 +197,7 @@ function buildBarChart(graph) {
     //    .data(data)
         .select("#g" + graph.id)
         .groupPadding(40)
+        .stacked(graph.style.stack)
         .render();
     
 
@@ -217,10 +284,50 @@ function buildLineChart(graph) {
         }
     }
 
+    var sort;
+    if (graph.sort == null) {
+        graph.sort = { axis: 'dim', type: 'numerico', option: 'none' };
+    }
 
-    console.log('obj data');
-    console.log(objData);
-    console.log(data);
+    if (graph.sort.axis == 'mea') {
+
+        if (graph.sort.option == 'crescente') {
+            sort = function (a, b) {
+
+                return a["y"] - b["y"];
+
+            };
+        }
+        if (graph.sort.option == 'decrescente') {
+            sort = function (a, b) {
+
+                return b["y"] - a["y"];
+
+            };
+        }
+
+
+
+
+    }
+    else if (graph.sort.axis == 'dim') {
+        if (graph.sort.option == 'crescente') {
+            sort = function (a, b) {
+
+                return a["x"] - b["x"];
+
+            };
+        }
+        if (graph.sort.option == 'decrescente') {
+            sort = function (a, b) {
+
+                return b["x"] - a["x"];
+
+            };
+        }
+    }
+
+    
     new d3plus.LinePlot()
         .config({
             data: data,
@@ -240,6 +347,7 @@ function buildLineChart(graph) {
                     fontColor: "green"
                 }
             },
+            xSort: sort,
             tooltipConfig: {
                 title: function (d) {
                     return graph.dimensions[0].name + ": " + d["x"];
@@ -297,5 +405,111 @@ function buildTreeMap(graph) {
         .select("#g" + graph.id)
         .render();
   
+
+}
+
+function buildTable(graph) {
+    var data = [];
+    var measureNames = [];
+    var expressions = [];
+    var dimensions = [];
+    var dimNames = [];
+    
+    for (var i = 0; i < graph.dimensions.length; i++) {
+        dimensions.push(graph.dimensions[i].field);
+        dimNames.push(graph.dimensions[i].name);
+    }
+
+    for (var i = 0; i < graph.measures.length; i++) {
+        expressions.push(graph.measures[i].expresion);
+        measureNames.push(graph.measures[i].name);
+    }
+
+
+    var objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
+
+    var card = document.createElement("div");
+    card.setAttribute("class", "card");
+
+    var headerTb = document.createElement("div");
+    headerTb.setAttribute("class", "card-header ");
+    var titleTb = document.createElement("h3");
+    titleTb.setAttribute("class", "card-title");
+    titleTb.appendChild(document.createTextNode(graph.title));
+    headerTb.appendChild(titleTb);
+    card.appendChild(headerTb);
+
+    var cardBody = document.createElement("div");
+    cardBody.setAttribute("class", "card-body ");
+    var table = document.createElement("table");
+    table.setAttribute("class", "table table-bordered table-striped");
+    table.setAttribute("Id", "gt" + graph.id);
+    var thead = document.createElement("thead");
+    var headRow = document.createElement("tr");
+    for (var i = 0; i < dimNames.length; i++) {
+        var th = document.createElement("th");
+        th.appendChild(document.createTextNode(dimNames[i]));
+        headRow.appendChild(th);
+
+    }
+
+    for (var i = 0; i < measureNames.length; i++) {
+        var th = document.createElement("th");
+        th.appendChild(document.createTextNode(measureNames[i]));
+        headRow.appendChild(th);
+    }
+
+    thead.appendChild(headRow);
+    table.appendChild(thead);
+
+    var tbody = document.createElement("tbody");
+
+    for (var i = 1; i < objData.length; i++) {
+        var tr = document.createElement("tr");
+        for (var j = 0; j < objData[i].length; j++) {
+            var td = document.createElement("td");
+            if (j < dimensions.length) {
+                td.appendChild(document.createTextNode(objData[i][j]));
+            }
+            else {
+               
+                var mExpression;
+                switch (graph.measures[j - dimensions.length].numberFormat) {
+                    case 'real': {
+                        mExpression = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(objData[i][j]);
+                        break;
+                    }
+                    case 'percent': {
+                        mExpression = parseFloat(objData[i][j]).toFixed(2) + "%";
+                        break;
+                    }
+                    case 'number': {
+                        mExpression = new Intl.NumberFormat('pt-BR', { style: 'decimal' }).format(objData[i][j]);
+                        break;
+                    }
+                    default: { mExpression = objData[i][j]; break; }
+                }
+
+                td.appendChild(document.createTextNode(mExpression));
+            }
+            tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+       
+    }
+
+    table.appendChild(tbody);
+    cardBody.appendChild(table);
+    card.appendChild(cardBody);
+    document.getElementById("g" + graph.id).appendChild(card);
+
+    $(function () {
+        $("#gt" + graph.id).DataTable({
+            "responsive": true,
+            "autoWidth": false,
+        });
+       
+    });
+
 
 }

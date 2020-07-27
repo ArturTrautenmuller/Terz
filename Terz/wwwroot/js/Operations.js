@@ -63,7 +63,7 @@ function solve(expression, dataFrame) {
 }
 
 function solveWhere(expression, dataFrame) {
-    returnExpression = expression;
+    var returnExpression = expression;
     let pattern = /[^\s]+\.where\(.+?\)/g;
     let res = pattern.exec(expression);
     while (res != null) {
@@ -93,14 +93,23 @@ function solveWhere(expression, dataFrame) {
             var fPos = headers.indexOf(wField);
             var wnDataFrame = [];
             wnDataFrame.push(headers);
-            
-            console.log("values:" + values);
+            var exculdes = param.toString().includes("-=");
+
+           
             
             for (var k = 1; k < wDataFrame.length; k++) {
                 var row = wDataFrame[k];
-                if (values.includes(row[fPos])) {
-                    wnDataFrame.push(row);
+                if (exculdes) {
+                    if (!values.includes(row[fPos])) {
+                        wnDataFrame.push(row);
+                    }
                 }
+                else {
+                    if (values.includes(row[fPos])) {
+                        wnDataFrame.push(row);
+                    }
+                }
+                
             }
 
             wDataFrame = wnDataFrame;
@@ -128,6 +137,8 @@ function solveWhere(expression, dataFrame) {
     return returnExpression;
 }
 
+
+
 function solveSum(expression, dataFrame) {
     var returnExpression = expression;
     let pattern = /(?=sum\().+?(?<=\))/g;
@@ -135,7 +146,10 @@ function solveSum(expression, dataFrame) {
     while (res != null) {
         var soma = 0;
         var sumExp = res[0];
-        var field = sumExp.substr(5, sumExp.length - 7);
+     //   var field = sumExp.substr(5, sumExp.length - 7);
+        var fPattern = /\[.+?\]/g;
+        var fRes = fPattern.exec(sumExp);
+        var field = fRes[0].replace('[', '').replace(']', '');
         var headers = dataFrame[0];
         var pos = headers.indexOf(field);
         
@@ -156,6 +170,8 @@ function solveSum(expression, dataFrame) {
     
 }
 
+
+
 function solveCount(expression, dataFrame) {
     var returnExpression = expression;
     let pattern = /(?=count\().+?(?<=\))/g;
@@ -163,7 +179,10 @@ function solveCount(expression, dataFrame) {
     while (res != null) {
         var total = 0;
         var countExp = res[0];
-        var field = countExp.substr(7, countExp.length - 9);
+       // var field = countExp.substr(7, countExp.length - 9);
+        var fPattern = /\[.+?\]/g;
+        var fRes = fPattern.exec(countExp);
+        var field = fRes[0].replace('[', '').replace(']', '');
         console.log(field);
         var headers = dataFrame[0];
         var pos = headers.indexOf(field);
@@ -192,7 +211,10 @@ function solveMin(expression, dataFrame){
     while (res != null) {
         
         var minExp = res[0];
-        var field = minExp.substr(5, minExp.length - 7);
+       // var field = minExp.substr(5, minExp.length - 7);
+        var fPattern = /\[.+?\]/g;
+        var fRes = fPattern.exec(minExp);
+        var field = fRes[0].replace('[', '').replace(']', '');
         var headers = dataFrame[0];
         var pos = headers.indexOf(field);
         var min = parseFloat(dataFrame[1][pos]);
@@ -222,7 +244,10 @@ function solveMax(expression, dataFrame) {
     while (res != null) {
 
         var maxExp = res[0];
-        var field = maxExp.substr(5, maxExp.length - 7);
+      //  var field = maxExp.substr(5, maxExp.length - 7);
+        var fPattern = /\[.+?\]/g;
+        var fRes = fPattern.exec(maxExp);
+        var field = fRes[0].replace('[', '').replace(']', '');
         var headers = dataFrame[0];
         var pos = headers.indexOf(field);
         var max = parseFloat(dataFrame[1][pos]);

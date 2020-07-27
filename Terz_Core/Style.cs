@@ -14,6 +14,8 @@ namespace Terz_Core
         public string BackgroundColor { get; set; }
         public string TextColor { get; set; }
         public string FontSize { get; set; }
+        public string Orientation { get; set; }
+        public bool Stack { get; set; }
 
 
     }

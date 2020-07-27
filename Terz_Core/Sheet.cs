@@ -12,5 +12,6 @@ namespace Terz_Core
         public List<Graph> Graphs { get; set; }
         public List<Indicator> Indicators { get; set; }
         public List<Filter> Filters { get; set; }
+        public List<TextBlock> TextBlocks { get; set; }
     }
 }

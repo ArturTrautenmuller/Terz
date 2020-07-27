@@ -43,6 +43,12 @@
             <ul class="navbar-nav ml-auto">
                 <!-- Messages Dropdown Menu -->
                 <li class="nav-item dropdown">
+                    <a class="nav-link" href="@Url.Action("Index","Creditos")">
+                        <i class="fas fa-dollar-sign"></i>
+                        @Model.Usuario.Creditos Créditos
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
                     <a class="nav-link" href="#">
                         <i class="fas fa-sign-out-alt"></i>
                         Sair
@@ -77,7 +83,7 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-                with font-awesome or any other icon font library -->
+    with font-awesome or any other icon font library -->
 
 
                         <li class="nav-item has-treeview">
@@ -111,6 +117,16 @@
                             </a>
 
                         </li>
+                        <li class="nav-item has-treeview">
+                            <a href="@Url.Action("Index","Creditos")" class="nav-link">
+                                <i class="far fa-money-bill-alt"></i>
+                                <p>
+                                    Comprar Créditos
+
+                                </p>
+                            </a>
+
+                        </li>
 
 
 
@@ -127,27 +143,36 @@
 
             @foreach (Terz_DataBaseLayer.Report report in Model.Usuario.Reports)
             {
-                <div class="ReportDiv">
+            <div class="ReportDiv">
 
 
-                    @if (report.Imagem == "" || report.Imagem == null)
-                    {
-                        <img onclick="EditReport('@report.Id')" width="130" height="100" class="FotoPerfil" src="~/images/app.png" />
-                    }
-                    else
-                    {
-                        <img onclick="EditReport('@report.Id')" width="130" height="100" class="FotoPerfil" src="@report.Imagem" />
-                    }
-                    <label class="LabelDesc">@report.Titulo</label>
-                    <label style="margin-left:16px; font-size:22px"><a href="../Editor?id=@report.Id"><i class="fa fa-edit"></i></a></label>
-                    <label style="margin-left:16px; font-size:22px"><a href="../DataManager?id=@report.Id"><i class="fas fa-table"></i> </a></label>
-                    <label style="margin-left:16px; font-size:22px"><a href="../Report?id=@report.Id"><i class="fas fa-eye"></i></a></label>
-                    <label style="margin-left:16px; font-size:22px"><a href="../User/ExportApp?id=@report.Id"><i class="fas fa-download"></i></a></label>
+                @if (report.Imagem == "" || report.Imagem == null)
+                {
+                    <img onclick="EditReport('@report.Id')" width="130" height="100" class="FotoPerfil" src="~/images/app.png" />
+                }
+                else
+                {
+                    <img onclick="EditReport('@report.Id')" width="130" height="100" class="FotoPerfil" src="@report.Imagem" />
+                }
+                <label style="width:200px" class="LabelDesc">@report.Titulo</label>
+                <label style="margin-left:16px; font-size:22px"><a href="../Editor?id=@report.Id"><i class="fa fa-edit"></i></a></label>
+                <label style="margin-left:16px; font-size:22px"><a href="../DataManager?id=@report.Id"><i class="fas fa-table"></i> </a></label>
+                <label style="margin-left:16px; font-size:22px"><a href="../Report?id=@report.Id"><i class="fas fa-eye"></i></a></label>
+                <label style="margin-left:16px; font-size:22px"><a href="../User/ExportApp?id=@report.Id"><i class="fas fa-download"></i></a></label>
+                @if (report.Ativo == 1)
+                {
+                    <label style="margin-left:100px; font-size:26px"><a href="#" onclick="desativarRelatorio(@report.Id)"><i class="fas fa-toggle-on"></i></a></label>
+                }
+                else
+                {
+                    <label style="margin-left:100px; font-size:26px"><a href="#" onclick="ativarRelatorio(@report.Id)"><i class="fas fa-toggle-off"></i></a></label>
+                }
 
 
 
 
-                </div>
+
+            </div>
             }
 
 
@@ -156,6 +181,44 @@
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
             <script>
+
+
+                function ativarRelatorio(id) {
+                    $.ajax(
+                        {
+                            type: 'POST',
+                            url: '../User/AtivarReport?id=' + id ,
+                            dataType: 'html',
+                            cache: false,
+                            async: true,
+
+                            success: function (data) {
+                                alert(data);
+                                location.reload();
+
+                            },
+
+                        });
+                }
+
+                function desativarRelatorio(id) {
+                    $.ajax(
+                        {
+                            type: 'POST',
+                            url: '../User/DesativarReport?id=' + id,
+                            dataType: 'html',
+                            cache: false,
+                            async: true,
+
+                            success: function (data) {
+                                alert(data);
+                                location.reload();
+
+                            },
+
+                        });
+                }
+
 
                 function importarRelatorio() {
                     var form;

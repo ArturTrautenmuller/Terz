@@ -24,6 +24,7 @@ namespace Terz_DataBaseLayer
                 report.CategoriaId = Convert.ToString(myReader.GetValue(4));
                 report.Score = Convert.ToInt32(myReader.GetValue(5));
                 report.Rank = Convert.ToInt32(myReader.GetValue(6));
+                report.Ativo = Convert.ToInt32(myReader.GetValue(7));
                 this.Reports.Add(report);
 
             }
@@ -91,6 +92,7 @@ namespace Terz_DataBaseLayer
                 report.CategoriaId = Convert.ToString(myReader.GetValue(4));
                 report.Score = Convert.ToInt32(myReader.GetValue(5));
                 report.Rank = Convert.ToInt32(myReader.GetValue(6));
+                report.Ativo = Convert.ToInt32(myReader.GetValue(7));
                 this.Reports.Add(report);
 
             }
@@ -118,6 +120,7 @@ namespace Terz_DataBaseLayer
                 report.CategoriaId = Convert.ToString(myReader.GetValue(4));
                 report.Score = Convert.ToInt32(myReader.GetValue(5));
                 report.Rank = Convert.ToInt32(myReader.GetValue(6));
+                report.Ativo = Convert.ToInt32(myReader.GetValue(7));
                 this.Reports.Add(report);
 
             }

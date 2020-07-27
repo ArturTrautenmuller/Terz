@@ -30,8 +30,26 @@
         indicatorDiv.appendChild(labelTitle);
         indicatorDiv.appendChild(document.createElement("br"));
         var labelValue = document.createElement("label");
-       
-        var value = document.createTextNode(EvalueteEx(indicator.measure.expresion, indicator.dataFrameName, null));
+
+        var indValue = EvalueteEx(indicator.measure.expresion, indicator.dataFrameName, null);
+        var indExpression;
+        switch (indicator.measure.numberFormat) {
+            case 'real': {
+                indExpression = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(indValue);
+                break;
+            }
+            case 'percent': {
+                indExpression = parseFloat(indValue).toFixed(2) + "%";
+                break;
+            }
+            case 'number': {
+                indExpression = new Intl.NumberFormat('pt-BR', { style: 'decimal' }).format(indValue);
+                break;
+            }
+            default: { indExpression = indValue; break; }
+        }
+
+        var value = document.createTextNode(indExpression);
         labelValue.appendChild(value);
      
         labelValue.style.color = indicator.style.textColor;

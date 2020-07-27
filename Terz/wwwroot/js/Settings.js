@@ -1,4 +1,86 @@
-﻿function buildIndicatorSettings(id) {
+﻿function buildTextBlockSettings(id) {
+    var content = document.getElementById("Settings");
+    while (content.firstChild) {
+        content.removeChild(content.lastChild);
+    }
+
+    var textBlock = reportData.config.sheets.filter(function (x) { return x.order == currentSheet })[0].textBlocks.filter(function (y) { return y.id == id })[0];
+    var textLabel = document.createElement("label");
+    textLabel.innerHTML = "Texto:";
+    document.getElementById("Settings").appendChild(textLabel);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    var textArea = document.createElement("textarea");
+    textArea.setAttribute("id", "textarea");
+   
+    textArea.setAttribute("onchange", "updateTextBlockConfig('" + id + "')");
+    textArea.setAttribute("class", "form-control");
+    textArea.innerHTML = textBlock.text;
+    document.getElementById("Settings").appendChild(textArea);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
+    document.getElementById("Settings").appendChild(document.createElement("hr"));
+    //Largura
+    var widthLabel = document.createElement("label");
+    widthLabel.innerHTML = "Largura:";
+    document.getElementById("Settings").appendChild(widthLabel);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    var widthExp = document.createElement("input");
+    widthExp.setAttribute("id", "Width");
+    widthExp.setAttribute("type", "text");
+    widthExp.setAttribute("onchange", "updateTextBlockConfig('" + id + "')");
+    widthExp.setAttribute("class", "form-control");
+    widthExp.value = textBlock.style.width;
+    document.getElementById("Settings").appendChild(widthExp);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    //Altura
+    var heightLabel = document.createElement("label");
+    heightLabel.innerHTML = "Altura:";
+    document.getElementById("Settings").appendChild(heightLabel);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    var heightExp = document.createElement("input");
+    heightExp.setAttribute("id", "Height");
+    heightExp.setAttribute("type", "text");
+    heightExp.setAttribute("onchange", "updateTextBlockConfig('" + id + "')");
+    heightExp.setAttribute("class", "form-control");
+    heightExp.value = textBlock.style.height;
+    document.getElementById("Settings").appendChild(heightExp);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    // X
+    var xLabel = document.createElement("label");
+    xLabel.innerHTML = "X:";
+    document.getElementById("Settings").appendChild(xLabel);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    var xExp = document.createElement("input");
+    xExp.setAttribute("id", "X");
+    xExp.setAttribute("type", "text");
+    xExp.setAttribute("onchange", "updateTextBlockConfig('" + id + "')");
+    xExp.setAttribute("class", "form-control");
+    xExp.value = textBlock.style.x;
+    document.getElementById("Settings").appendChild(xExp);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    // Y
+    var yLabel = document.createElement("label");
+    yLabel.innerHTML = "Y:";
+    document.getElementById("Settings").appendChild(yLabel);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    var yExp = document.createElement("input");
+    yExp.setAttribute("id", "Y");
+    yExp.setAttribute("type", "text");
+    yExp.setAttribute("onchange", "updateTextBlockConfig('" + id + "')");
+    yExp.setAttribute("class", "form-control");
+    yExp.value = textBlock.style.y;
+    document.getElementById("Settings").appendChild(yExp);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    document.getElementById("Settings").appendChild(document.createElement("hr"));
+    var deleteButton = document.createElement("button");
+    deleteButton.innerHTML = "Remover";
+    deleteButton.setAttribute("onclick", "deleteTextBlock('" + id + "')");
+    document.getElementById("Settings").appendChild(deleteButton);
+    
+
+}
+
+function buildIndicatorSettings(id) {
     var content = document.getElementById("Settings");
     while (content.firstChild) {
         content.removeChild(content.lastChild);
@@ -51,14 +133,49 @@
     measureExpLabel.innerHTML = "Expressão:";
     document.getElementById("Settings").appendChild(measureExpLabel);
     document.getElementById("Settings").appendChild(document.createElement("br"));
+    var expBut = document.createElement("button");
+    expBut.appendChild(document.createTextNode("F(x)"));
+    expBut.setAttribute("onclick", "ExpIndicator('" + id + "')");
+    document.getElementById("Settings").appendChild(expBut);
     var measureExp = document.createElement("input");
     measureExp.setAttribute("id", "Expression");
     measureExp.setAttribute("type", "text");
     measureExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
-    measureExp.setAttribute("class", "form-control");
+   // measureExp.setAttribute("class", "form-control");
     measureExp.value = indicator.measure.expresion;
+    measureExp.style.width = "200";
     document.getElementById("Settings").appendChild(measureExp);
+   
     document.getElementById("Settings").appendChild(document.createElement("br"));
+
+    //format
+
+    var selectFormatDiv = document.createElement("div");
+    var selectFormatLabel = document.createElement("label");
+    selectFormatLabel.innerHTML = "Formato:";
+
+
+    selectFormatDiv.appendChild(selectFormatLabel);
+    selectFormatDiv.appendChild(document.createElement("br"));
+    var selectFormat = document.createElement("select");
+    
+
+    for (var i = 0; i < formatList.length; i++) {
+        var selectFormatOption = document.createElement("option");
+        selectFormatOption.innerHTML = formatListLabel[i];
+        selectFormatOption.value = formatList[i];
+        if (indicator.measure.numberFormat == formatList[i]) {
+            selectFormatOption.selected = "selected";
+        }
+        selectFormat.appendChild(selectFormatOption);
+    }
+    selectFormat.setAttribute("id", "Format");
+    selectFormat.setAttribute("class", "form-control");
+    selectFormat.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
+    selectFormatDiv.appendChild(selectFormat);
+    document.getElementById("Settings").appendChild(selectFormatDiv);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
 
 
     document.getElementById("Settings").appendChild(document.createElement("hr"));
@@ -217,9 +334,10 @@ function buildGraphSettings(id) {
         var dimDiv = document.createElement("div");
         dimDiv.setAttribute("class", "dropdown");
         var dimButton = document.createElement("button");
-        dimButton.setAttribute("class", "btn btn-primary dropdown-toggle");
+        dimButton.setAttribute("onclick", "showContent(this)");
+       // dimButton.setAttribute("class", "btn btn-primary dropdown-toggle");
         dimButton.setAttribute("type", "button");
-        dimButton.setAttribute("data-toggle", "dropdown");
+       // dimButton.setAttribute("data-toggle", "dropdown");
         dimButton.style.width = "250";
         dimButton.style.marginTop = "10";
         dimButton.appendChild(document.createTextNode(dimension.name));
@@ -228,7 +346,8 @@ function buildGraphSettings(id) {
         dimButton.appendChild(span);
         dimDiv.appendChild(dimButton);
         var ulDim = document.createElement("ul");
-        ulDim.setAttribute("class", "dropdown-menu");
+        // ulDim.setAttribute("class", "dropdown-menu");
+        ulDim.style.display = "none";
         var DimNameLi = document.createElement("li");
         var dimNameLabel = document.createElement("label");
         dimNameLabel.innerHTML = "Nome:";
@@ -282,9 +401,10 @@ function buildGraphSettings(id) {
         var measureDiv = document.createElement("div");
         measureDiv.setAttribute("class", "dropdown");
         var measureButton = document.createElement("button");
-        measureButton.setAttribute("class", "btn btn-primary dropdown-toggle");
+      //  measureButton.setAttribute("class", "btn btn-primary dropdown-toggle");
         measureButton.setAttribute("type", "button");
-        measureButton.setAttribute("data-toggle", "dropdown");
+        //measureButton.setAttribute("data-toggle", "dropdown");
+        measureButton.setAttribute("onclick", "showContent(this)");
         measureButton.style.width = "250";
         measureButton.style.marginTop = "10";
         measureButton.appendChild(document.createTextNode(measure.name));
@@ -293,12 +413,15 @@ function buildGraphSettings(id) {
         measureButton.appendChild(span);
         measureDiv.appendChild(measureButton);
         var ulMeasure = document.createElement("ul");
-        ulMeasure.setAttribute("class", "dropdown-menu");
+        ulMeasure.style.display = "none";
+       // ulMeasure.setAttribute("class", "dropdown-menu");
         var measureNameLi = document.createElement("li");
         var measureNameLabel = document.createElement("label");
         measureNameLabel.innerHTML = "Nome:";
         measureNameLi.appendChild(measureNameLabel);
         measureNameLi.appendChild(document.createElement("br"));
+        
+
         var measureNameExp = document.createElement("input");
         measureNameExp.setAttribute("id", "measureName" + measure.id);
         measureNameExp.setAttribute("type", "text");
@@ -311,18 +434,51 @@ function buildGraphSettings(id) {
         measureFieldLabel.innerHTML = "Campo:";
         measureNameLi.appendChild(measureFieldLabel);
         measureNameLi.appendChild(document.createElement("br"));
+
+        var expBut = document.createElement("button");
+        expBut.appendChild(document.createTextNode("F(x)"));
+        expBut.setAttribute("onclick", "ExpMeasure('" + id + "','" + measure.id + "')");
+        measureNameLi.appendChild(expBut);
         var measureFieldExp = document.createElement("input");
         measureFieldExp.setAttribute("id", "measureExp" + measure.id);
         measureFieldExp.setAttribute("type", "text");
         measureFieldExp.setAttribute("onchange", "updateGraphConfig('" + id + "')");
-        measureFieldExp.setAttribute("class", "form-control");
+        measureFieldExp.style.width = "160";
+       // measureFieldExp.setAttribute("class", "form-control");
         measureFieldExp.value = measure.expresion;
         measureNameLi.appendChild(measureFieldExp);
         measureNameLi.appendChild(document.createElement("br"));
+        //formato
+
+        var selectFormatDiv = document.createElement("div");
+        var selectFormatLabel = document.createElement("label");
+        selectFormatLabel.innerHTML = "Formato:";
 
 
+        selectFormatDiv.appendChild(selectFormatLabel);
+        selectFormatDiv.appendChild(document.createElement("br"));
+        var selectFormat = document.createElement("select");
+
+
+        for (var j = 0; j < formatList.length; j++) {
+            var selectFormatOption = document.createElement("option");
+            selectFormatOption.innerHTML = formatListLabel[j];
+            selectFormatOption.value = formatList[j];
+            if (measure.numberFormat == formatList[j]) {
+                selectFormatOption.selected = "selected";
+            }
+            selectFormat.appendChild(selectFormatOption);
+        }
+        selectFormat.setAttribute("id", "FormatMeasure" + measure.id);
+        selectFormat.setAttribute("class", "form-control");
+        selectFormat.setAttribute("onchange", "updateGraphConfig('" + id + "')");
+        selectFormatDiv.appendChild(selectFormat);
+       
+        measureNameLi.appendChild(document.createElement("br"));
 
         ulMeasure.appendChild(measureNameLi);
+        ulMeasure.appendChild(selectFormatDiv);
+        // remover
         var deleteButton = document.createElement("button");
         deleteButton.innerHTML = "Remover";
         deleteButton.setAttribute("onclick", "deleteMeasure('" + id + "','" + measure.id + "')");
@@ -395,6 +551,137 @@ function buildGraphSettings(id) {
     document.getElementById("Settings").appendChild(yExp);
     document.getElementById("Settings").appendChild(document.createElement("br"));
 
+    
+    if (graph.objectType == 'bar') {
+        document.getElementById("Settings").appendChild(document.createElement("hr"));
+        var selectOrientationDiv = document.createElement("div");
+        var selectOrientationLabel = document.createElement("label");
+        selectOrientationLabel.innerHTML = "Orientação";
+
+        selectOrientationDiv.appendChild(selectOrientationLabel);
+        selectOrientationDiv.appendChild(document.createElement("br"));
+        var selectOrientation = document.createElement("select");
+        for (var i = 0; i < Orientacoes.length; i++) {
+            var selectOrientationOption = document.createElement("option");
+            selectOrientationOption.innerHTML = OrientacoesLabel[i];
+            selectOrientationOption.value = Orientacoes[i];
+            if (graph.style.orientation == Orientacoes[i]) {
+                selectOrientationOption.selected = "selected";
+            }
+            selectOrientation.appendChild(selectOrientationOption);
+        }
+        selectOrientation.setAttribute("id", "Orientation");
+        selectOrientation.setAttribute("onchange", "updateGraphConfig('" + id + "')");
+        selectOrientation.setAttribute("class", "form-control");
+        selectOrientationDiv.appendChild(selectOrientation);
+        document.getElementById("Settings").appendChild(selectOrientationDiv);
+        document.getElementById("Settings").appendChild(document.createElement("br"));
+
+       
+       
+        var checkstack = document.createElement("input");
+        checkstack.type = "checkbox";
+        checkstack.id = "Stack";
+        if (graph.style.stack == true) {
+            checkstack.checked = "checked";
+        }
+        checkstack.setAttribute("onchange", "updateGraphConfig('" + id + "')");
+        document.getElementById("Settings").appendChild(checkstack);
+
+        var checkstackLabel = document.createElement("label");
+        checkstackLabel.innerHTML = " Empilhar";
+        document.getElementById("Settings").appendChild(checkstackLabel);
+
+    }
+    document.getElementById("Settings").appendChild(document.createElement("hr"));
+
+    var selectSortDiv = document.createElement("div");
+    var selectSortLabel = document.createElement("label");
+    selectSortLabel.innerHTML = "Eixo:";
+
+    selectSortDiv.appendChild(selectSortLabel);
+    selectSortDiv.appendChild(document.createElement("br"));
+    var selectSort = document.createElement("select");
+    for (var i = 0; i < SortAxis.length; i++) {
+        var selectSortOption = document.createElement("option");
+        selectSortOption.innerHTML = SortAxisLabel[i];
+        selectSortOption.value = SortAxis[i];
+        if (graph.sort == null) {
+            graph.sort = { field: "0", type: 'numerico',axis:'dim' };
+        }
+        if (graph.sort.axis == SortAxis[i]) {
+            selectSortOption.selected = "selected";
+        }
+        selectSort.appendChild(selectSortOption);
+    }
+
+
+
+    selectSort.setAttribute("id", "SortAxis");
+    selectSort.setAttribute("onchange", "updateGraphConfig('" + id + "')");
+    selectSort.setAttribute("class", "form-control");
+    selectSortDiv.appendChild(selectSort);
+    document.getElementById("Settings").appendChild(selectSortDiv);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
+    var selectSortTypeDiv = document.createElement("div");
+    var selectSortTypeLabel = document.createElement("label");
+    selectSortTypeLabel.innerHTML = "Tipo:";
+
+    selectSortTypeDiv.appendChild(selectSortTypeLabel);
+    selectSortTypeDiv.appendChild(document.createElement("br"));
+    var selectSortType = document.createElement("select");
+    for (var i = 0; i < SortTypes.length; i++) {
+        var selectSortTypeOption = document.createElement("option");
+        selectSortTypeOption.innerHTML = SortTypesLabel[i];
+        selectSortTypeOption.value = SortTypes[i];
+        if (graph.sort == null) {
+            graph.sort = { field: "0",type:'numerico' };
+        }
+        if (graph.sort.type == SortTypes[i]) {
+            selectSortTypeOption.selected = "selected";
+        }
+        selectSortType.appendChild(selectSortTypeOption);
+    }
+    
+
+    selectSortType.setAttribute("id", "SortType");
+    selectSortType.setAttribute("onchange", "updateGraphConfig('" + id + "')");
+    selectSortType.setAttribute("class", "form-control");
+    selectSortTypeDiv.appendChild(selectSortType);
+    document.getElementById("Settings").appendChild(selectSortTypeDiv);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
+    var selectSortOptionDiv = document.createElement("div");
+    var selectSortOptionLabel = document.createElement("label");
+    selectSortOptionLabel.innerHTML = "Opção:";
+
+    selectSortOptionDiv.appendChild(selectSortOptionLabel);
+    selectSortOptionDiv.appendChild(document.createElement("br"));
+    var selectSortOption = document.createElement("select");
+    for (var i = 0; i < SortOptions.length; i++) {
+        var selectSortOptionOption = document.createElement("option");
+        selectSortOptionOption.innerHTML = SortOptionsLabel[i];
+        selectSortOptionOption.value = SortOptions[i];
+        if (graph.sort == null) {
+            graph.sort = { field: "0", type: 'numerico', option: 'none' };
+        }
+        if (graph.sort.option == SortOptions[i]) {
+            selectSortOptionOption.selected = "selected";
+        }
+        selectSortOption.appendChild(selectSortOptionOption);
+    }
+
+
+    selectSortOption.setAttribute("id", "SortOption");
+    selectSortOption.setAttribute("onchange", "updateGraphConfig('" + id + "')");
+    selectSortOption.setAttribute("class", "form-control");
+    selectSortOptionDiv.appendChild(selectSortOption);
+    document.getElementById("Settings").appendChild(selectSortOptionDiv);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
+   
+
     document.getElementById("Settings").appendChild(document.createElement("hr"));
     var deleteButton = document.createElement("button");
     deleteButton.innerHTML = "Remover";
@@ -451,6 +738,15 @@ function deleteIndicator(id) {
     var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
     var indicatorPos = reportData.config.sheets[sheetPos].indicators.map(function (e) { return e.id; }).indexOf(id);
     reportData.config.sheets[sheetPos].indicators.splice(indicatorPos, 1);
+    eraseSettings();
+    reloadSheet();
+    setObjEvents();
+}
+
+function deleteTextBlock(id) {
+    var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+    var textBlockPos = reportData.config.sheets[sheetPos].textBlocks.map(function (e) { return e.id; }).indexOf(id);
+    reportData.config.sheets[sheetPos].textBlocks.splice(textBlockPos, 1);
     eraseSettings();
     reloadSheet();
     setObjEvents();
@@ -645,4 +941,15 @@ function addFilter() {
 
     reportData.config.sheets[sheetPos].filters.push(filter);
     buildFilterSettings();
+}
+
+
+function showContent(obj) {
+    obj.classList.toggle("active");
+    var content = obj.nextElementSibling;
+    if (content.style.display === "block") {
+        content.style.display = "none";
+    } else {
+        content.style.display = "block";
+    }
 }

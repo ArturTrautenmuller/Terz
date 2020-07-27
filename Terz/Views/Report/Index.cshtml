@@ -4,6 +4,13 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="~/LTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="~/LTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<!-- Theme style -->
+
+
+
 <style>
     .checked {
         color: orange;
@@ -16,10 +23,10 @@
         <img width="117" height="90" src="@Model.Report.Imagem" />
         <label style="margin-left:12px">@Model.Report.Titulo</label>
     </div>
-   <div style="margin-left:5%">
-       <img height="90" width="90" src="~/images/Terz_Logo.png" />
-   </div>
-    <div id="Pages" style="margin-left:20%;margin-top:30px;">
+    <div style="margin-left:5%">
+        <img height="90" width="90" src="~/images/Terz_Logo.png" />
+    </div>
+    <div id="Pages" style="margin-left:12%;margin-top:30px;">
         <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                 Paginas
@@ -51,70 +58,82 @@
         }
 
         <a href="#" style="color:gray;text-decoration:none" onclick="AvaliatePage()">Avaliar</a>
+
     </div>
-</div>
-<div>
-   
-    <div id="Filters">
+    <div id="Avaliation" style="margin-left:2%;margin-top:37px;font-size:18px">
+        <a href="#" style="color:gray;text-decoration:none; margin-left:20px" onclick="ShowInfo()">Sobre</a>
+    </div>
+    </div>
+    <div>
 
-        <!--
-        <div class="dropdown">
-            <button onclick="showOptions('Year')" class="dropbtn">Dropdown</button>
-            <div id="Year" class="dropdown-content">
-                <input type="text" placeholder="Search.." id="Input-Year" onkeyup="filterFunction('Year')">
-                <a href="#about">About</a>
+        <div id="Filters">
 
+            <!--
+            <div class="dropdown">
+                <button onclick="showOptions('Year')" class="dropbtn">Dropdown</button>
+                <div id="Year" class="dropdown-content">
+                    <input type="text" placeholder="Search.." id="Input-Year" onkeyup="filterFunction('Year')">
+                    <a href="#about">About</a>
+
+                </div>
             </div>
+            <br />
+            -->
+
         </div>
-        <br />
-        -->
+        <div id="Graphs">
 
+        </div>
     </div>
-    <div id="Graphs">
 
-    </div>
-</div>
+    <script>
+        /* When the user clicks on the button,
+        toggle between hiding and showing the dropdown content */
+        function showOptions(filterId) {
+            console.log(filterId);
+            document.getElementById(filterId).classList.toggle("show");
+        }
 
-<script>
-    /* When the user clicks on the button,
-    toggle between hiding and showing the dropdown content */
-    function showOptions(filterId) {
-        console.log(filterId);
-        document.getElementById(filterId).classList.toggle("show");
-    }
-
-    function filterFunction(filterId) {
-        var input, filter, ul, li, a, i;
-        input = document.getElementById("Input-" + filterId);
-        filter = input.value.toUpperCase();
-        div = document.getElementById(filterId);
-        a = div.getElementsByTagName("a");
-        for (i = 0; i < a.length; i++) {
-            txtValue = a[i].textContent || a[i].innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                a[i].style.display = "";
-            } else {
-                a[i].style.display = "none";
+        function filterFunction(filterId) {
+            var input, filter, ul, li, a, i;
+            input = document.getElementById("Input-" + filterId);
+            filter = input.value.toUpperCase();
+            div = document.getElementById(filterId);
+            a = div.getElementsByTagName("a");
+            for (i = 0; i < a.length; i++) {
+                txtValue = a[i].textContent || a[i].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    a[i].style.display = "";
+                } else {
+                    a[i].style.display = "none";
+                }
             }
         }
-    }
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://unpkg.com/mathjs/dist/math.min.js"></script>
-<script language="JavaScript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.2.1/math.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3plus/2.0.0-alpha.14/d3plus.full.js"></script>
-<script src="https://d3js.org/d3-hierarchy.v1.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/mathjs/dist/math.min.js"></script>
+    <script language="JavaScript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.2.1/math.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3plus/2.0.0-alpha.14/d3plus.full.js"></script>
+    <script src="https://d3js.org/d3-hierarchy.v1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 
-<script src="~/js/Operations.js"></script>
-<script src="~/js/Variables.js"></script>
-<script src="~/js/Filter.js"></script>
-<script src="~/js/Indicator.js"></script>
-<script src="~/js/Graph.js"></script>
-<script>
+    <script src="~/LTE/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/LTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/LTE/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/LTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <!-- AdminLTE App -->
+
+
+    <script src="~/js/Operations.js"></script>
+    <script src="~/js/Variables.js"></script>
+    <script src="~/js/Filter.js"></script>
+    <script src="~/js/Indicator.js"></script>
+    <script src="~/js/Graph.js"></script>
+    <script src="~/js/TextBlock.js"></script>
+    <script>
     function AvaliatePage() {
         var form;
         $.ajax(
@@ -164,12 +183,40 @@
 
             });
     }
+
+    function ShowInfo() {
+        var form;
+        $.ajax(
+            {
+                type: 'POST',
+                url: '../Report/Sobre?id=@Model.Id',
+                dataType: 'html',
+                cache: false,
+                async: true,
+
+                success: function (data) {
+                    form = data;
+                    bootbox.confirm(form, function (result) {
+                        if (result) {
+
+                            console.log("close info");
+
+                        }
+                    });
+
+                },
+
+
+            });
+    }
+
     function init() {
         loadUsingDataFrames();
         buildSheetMenu();
         buildFilter(currentSheet);
         buildIndicators(currentSheet);
         buildGraphs(currentSheet);
+        buildTextBlocks(currentSheet);
 
     }
 
@@ -242,6 +289,7 @@
 
         buildIndicators(currentSheet);
         buildGraphs(currentSheet);
+        buildTextBlocks(currentSheet);
     }
 
     function reloadSheet() {
@@ -257,6 +305,7 @@
         buildFilter(currentSheet);
         buildIndicators(currentSheet);
         buildGraphs(currentSheet);
+        buildTextBlocks(currentSheet);
     }
 
     function changeSheet(sheetOrder) {
@@ -320,4 +369,4 @@
 
     GetReportData();
 
-</script>
+    </script>

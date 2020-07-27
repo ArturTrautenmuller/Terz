@@ -16,6 +16,7 @@ namespace Terz_DataBaseLayer
         public string Habilidades { get; set; }
         public string Lugar { get; set; }
         public string Funcao { get; set; }
+        public int Creditos { get; set; }
         public List<Report> Reports { get; set; }
 
         public void Load(string Id)
@@ -34,6 +35,7 @@ namespace Terz_DataBaseLayer
                 this.Habilidades = myReader.GetString(6);
                 this.Lugar = myReader.GetString(7);
                 this.Funcao = myReader.GetString(8);
+                this.Creditos = Convert.ToInt32(myReader.GetValue(9));
 
                 myReader.Close();
                 Base.connection.Close();
@@ -61,6 +63,7 @@ namespace Terz_DataBaseLayer
                 this.Habilidades = myReader.GetString(6);
                 this.Lugar = myReader.GetString(7);
                 this.Funcao = myReader.GetString(8);
+                this.Creditos = Convert.ToInt32(myReader.GetValue(9));
 
                 myReader.Close();
                 Base.connection.Close();
@@ -88,6 +91,7 @@ namespace Terz_DataBaseLayer
                 report.CategoriaId = Convert.ToString(myReader.GetValue(4));
                 report.Score = Convert.ToInt32(myReader.GetValue(5));
                 report.Rank = Convert.ToInt32(myReader.GetValue(6));
+                report.Ativo = Convert.ToInt32(myReader.GetValue(7));
 
                 this.Reports.Add(report);
 
@@ -99,6 +103,15 @@ namespace Terz_DataBaseLayer
             this.Reports.ForEach(r => r.getViews());
             this.Reports.ForEach(r => r.getAvaliations());
             this.Reports.ForEach(r => r.getReference());
+        }
+
+        public void DesativaReports()
+        {
+            foreach(Report report in this.Reports)
+            {
+                report.Ativo = 0;
+                report.setAtivo();
+            }
         }
 
         public bool Existis()
@@ -133,6 +146,20 @@ namespace Terz_DataBaseLayer
         {
             Base.Init();
             var sql = "UPDATE `usuario` set nome = '"+this.Nome+"', descricao = '"+this.Descricao+"',lugar = '"+this.Lugar+"',habilidades = '"+this.Habilidades+"',funcao = '"+this.Funcao+"' WHERE id = "+this.Id;
+            Base.sqlCommand(sql);
+        }
+
+        public void UpdateFoto()
+        {
+            Base.Init();
+            var sql = "UPDATE `usuario` set foto = '" + this.Foto + "' WHERE id = " + this.Id;
+            Base.sqlCommand(sql);
+        }
+
+        public void MudaCreditos()
+        {
+            Base.Init();
+            var sql = "UPDATE `usuario` set creditos = '"+this.Creditos+"' WHERE id = " + this.Id;
             Base.sqlCommand(sql);
         }
 

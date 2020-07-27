@@ -15,6 +15,7 @@ namespace Terz_DataBaseLayer
         public string CategoriaId { get; set; }
         public int Score { get; set; }
         public int Rank { get; set; }
+        public int Ativo { get; set; }
         public List<Visualizacao> Visualizacoes { get; set; }
         public List<Avaliacao> Avaliacoes { get; set; }
         public List<Referencia> Referencias { get; set; }
@@ -32,6 +33,8 @@ namespace Terz_DataBaseLayer
                 this.Imagem = myReader.GetString(3);
                 this.CategoriaId = Convert.ToString(myReader.GetValue(4));
                 this.Score = Convert.ToInt32(myReader.GetValue(5));
+                this.Rank = Convert.ToInt32(myReader.GetValue(6));
+                this.Ativo = Convert.ToInt32(myReader.GetValue(7));
 
                 myReader.Close();
                 Base.connection.Close();
@@ -48,7 +51,7 @@ namespace Terz_DataBaseLayer
 
             Base.Init();
             this.Visualizacoes = new List<Visualizacao>();
-            var sql = "select * from visualizacao where report_id = '" + this.Id + "'";
+            var sql = "select id,user_id,report_id,CAST(data as CHAR) from visualizacao where report_id = '" + this.Id + "'";
             MySqlDataReader myReader = Base.select(sql);
             while (myReader.Read())
             {
@@ -56,6 +59,7 @@ namespace Terz_DataBaseLayer
                 visualizacao.Id = Convert.ToString(myReader.GetValue(0));
                 visualizacao.UserId = Convert.ToString(myReader.GetValue(1));
                 visualizacao.ReportId = Convert.ToString(myReader.GetValue(2));
+                visualizacao.Data = Convert.ToString(myReader.GetValue(3));
 
                 this.Visualizacoes.Add(visualizacao);
 
@@ -117,7 +121,8 @@ namespace Terz_DataBaseLayer
         public void Insert()
         {
             Base.Init();
-            var sql = "INSERT INTO `report` (`id`, `user_id`, `titulo`, `imagem`,`id_categoria`) VALUES (NULL, '"+this.UserId+"', '"+this.Titulo+"', '"+this.Imagem+"','"+this.CategoriaId+"')";
+            this.Ativo = 1;
+            var sql = "INSERT INTO `report` (`id`, `user_id`, `titulo`, `imagem`,`id_categoria`,`ativo`) VALUES (NULL, '" + this.UserId+"', '"+this.Titulo+"', '"+this.Imagem+"','"+this.CategoriaId+"','"+this.Ativo+"')";
             this.Id = Convert.ToString(Base.sqlCommandAndGetId(sql));
             
         }
@@ -139,6 +144,13 @@ namespace Terz_DataBaseLayer
         {
             Base.Init();
             var sql = "UPDATE `report` SET `rank` = '" + this.Rank + "' WHERE `report`.`id` = " + this.Id;
+            Base.sqlCommand(sql);
+        }
+
+        public void setAtivo()
+        {
+            Base.Init();
+            var sql = "UPDATE `report` SET `ativo` = '" + this.Ativo + "' WHERE `report`.`id` = " + this.Id;
             Base.sqlCommand(sql);
         }
 

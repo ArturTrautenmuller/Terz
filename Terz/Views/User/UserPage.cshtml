@@ -39,6 +39,12 @@
             <!-- SEARCH FORM -->
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="@Url.Action("Index","Creditos")">
+                        <i class="fas fa-dollar-sign"></i>
+                        @Model.Usuario.Creditos Créditos
+                    </a>
+                </li>
                 <!-- Messages Dropdown Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="#">
@@ -107,6 +113,16 @@
                             </a>
 
                         </li>
+                        <li class="nav-item has-treeview">
+                            <a href="@Url.Action("Index","Creditos")" class="nav-link">
+                                <i class="far fa-money-bill-alt"></i>
+                                <p>
+                                    Comprar Créditos
+
+                                </p>
+                            </a>
+
+                        </li>
 
 
 
@@ -130,6 +146,37 @@
 
             @foreach (Terz_DataBaseLayer.Report report in Model.Usuario.Reports)
             {
+
+
+                DateTime now = DateTime.Now;
+                List<int> viewsWeek = new List<int>();
+                List<string> daysLastWeek = new List<string>();
+                for(int i = 6; i >= 0; i--)
+                {
+                    DateTime date = now.AddDays(i*-1);
+                    daysLastWeek.Add(date.ToString("MMMM")+" "+ date.Day);
+
+                    List<Terz_DataBaseLayer.Visualizacao> visualizacoes = report.Visualizacoes.Where(v => Convert.ToDateTime(v.Data).Day == date.Day && Convert.ToDateTime(v.Data).Month == date.Month && Convert.ToDateTime(v.Data).Year == date.Year).ToList();
+
+                    viewsWeek.Add(visualizacoes.Count);
+
+                }
+
+                List<int> viewsYear = new List<int>();
+                List<string> monthsLastYear = new List<string>();
+
+                for (int i = 11; i >= 0; i--)
+                {
+                    DateTime date = now.AddMonths(i * -1);
+                    monthsLastYear.Add(date.ToString("MMMM")+" "+ date.Year);
+
+                    List<Terz_DataBaseLayer.Visualizacao> visualizacoes = report.Visualizacoes.Where(v =>  Convert.ToDateTime(v.Data).Month == date.Month && Convert.ToDateTime(v.Data).Year == date.Year).ToList();
+
+                    viewsYear.Add(visualizacoes.Count);
+
+                }
+
+
             <div id="reportInfo@(report.Id)" class="reportInfo">
 
                 <!-- /.row -->
@@ -209,6 +256,66 @@
                     <canvas id="reportRating@(report.Id)" height="200"></canvas>
                 </div>
 
+                <div class="card">
+                    <div class="card-header border-0">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="card-title">Visualizações na Ultima Semana</h3>
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <p class="d-flex flex-column">
+                                <span class="text-bold text-lg">@viewsWeek.Sum()</span>
+                                <span>Views</span>
+                            </p>
+                            <p class="ml-auto d-flex flex-column text-right">
+
+                            </p>
+                        </div>
+                        <!-- /.d-flex -->
+                        <div class="position-relative mb-4">
+                            <canvas id="viewsByTime@(report.Id)" height="200"></canvas>
+                        </div>
+                        <div class="d-flex flex-row justify-content-end">
+                            <span class="mr-2">
+                                <i class="fas fa-square text-primary"></i> Esta Semana
+                            </span>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header border-0">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="card-title">Visualizações nos Ultimos 12 Meses</h3>
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <p class="d-flex flex-column">
+                                <span class="text-bold text-lg">@viewsYear.Sum()</span>
+                                <span>Views</span>
+                            </p>
+                            <p class="ml-auto d-flex flex-column text-right">
+
+                            </p>
+                        </div>
+                        <!-- /.d-flex -->
+                        <div class="position-relative mb-4">
+                            <canvas id="viewsByMonth@(report.Id)" height="200"></canvas>
+                        </div>
+                        <div class="d-flex flex-row justify-content-end">
+                            <span class="mr-2">
+                                <i class="fas fa-square text-primary"></i> Ultimo Ano
+                            </span>
+
+                        </div>
+                    </div>
+                </div>
+
                 <script>
                     var ticksStyle = {
                         fontColor: '#495057',
@@ -217,6 +324,122 @@
 
                     var mode = 'index';
                     var intersect = true;
+                    setTimeout(2000);
+                    var $visitorsChart = $('#viewsByTime'+@report.Id)
+                    var visitorsChart = new Chart($visitorsChart, {
+                        data: {
+                            labels: ['@daysLastWeek[0]', '@daysLastWeek[1]', '@daysLastWeek[2]', '@daysLastWeek[3]', '@daysLastWeek[4]', '@daysLastWeek[5]', '@daysLastWeek[6]'],
+                            datasets: [{
+                                type: 'line',
+                                data:[@viewsWeek[0],@viewsWeek[1],@viewsWeek[2],@viewsWeek[3],@viewsWeek[4],@viewsWeek[5],@viewsWeek[6]],
+
+                                backgroundColor: 'transparent',
+                                borderColor: '#007bff',
+                                pointBorderColor: '#007bff',
+                                pointBackgroundColor: '#007bff',
+                                fill: false
+                                // pointHoverBackgroundColor: '#007bff',
+                                // pointHoverBorderColor    : '#007bff'
+                            },
+                            ]
+                        },
+                        options: {
+                            maintainAspectRatio: false,
+                            tooltips: {
+                                mode: mode,
+                                intersect: intersect
+                            },
+                            hover: {
+                                mode: mode,
+                                intersect: intersect
+                            },
+                            legend: {
+                                display: false
+                            },
+                            scales: {
+                                yAxes: [{
+                                    // display: false,
+                                    gridLines: {
+                                        display: true,
+                                        lineWidth: '4px',
+                                        color: 'rgba(0, 0, 0, .2)',
+                                        zeroLineColor: 'transparent'
+                                    },
+                                    ticks: $.extend({
+                                        beginAtZero: true,
+                                        suggestedMax: @viewsWeek.Max()
+                                    }, ticksStyle)
+                                }],
+                                xAxes: [{
+                                    display: true,
+                                    gridLines: {
+                                        display: false
+                                    },
+                                    ticks: ticksStyle
+                                }]
+                            }
+                        }
+                    })
+
+                     var $visitorsChartMonth = $('#viewsByMonth'+@report.Id)
+                    var visitorsChartMonth = new Chart($visitorsChartMonth, {
+                        data: {
+                            labels: ['@monthsLastYear[0]', '@monthsLastYear[1]', '@monthsLastYear[2]', '@monthsLastYear[3]', '@monthsLastYear[4]', '@monthsLastYear[5]', '@monthsLastYear[6]','@monthsLastYear[7]','@monthsLastYear[8]','@monthsLastYear[9]','@monthsLastYear[10]','@monthsLastYear[11]'],
+                            datasets: [{
+                                type: 'line',
+                                data:[@viewsYear[0],@viewsYear[1],@viewsYear[2],@viewsYear[3],@viewsYear[4],@viewsYear[5],@viewsYear[6],@viewsYear[7],@viewsYear[8],@viewsYear[9],@viewsYear[10],@viewsYear[11]],
+
+                                backgroundColor: 'transparent',
+                                borderColor: '#007bff',
+                                pointBorderColor: '#007bff',
+                                pointBackgroundColor: '#007bff',
+                                fill: false
+                                // pointHoverBackgroundColor: '#007bff',
+                                // pointHoverBorderColor    : '#007bff'
+                            },
+                            ]
+                        },
+                        options: {
+                            maintainAspectRatio: false,
+                            tooltips: {
+                                mode: mode,
+                                intersect: intersect
+                            },
+                            hover: {
+                                mode: mode,
+                                intersect: intersect
+                            },
+                            legend: {
+                                display: false
+                            },
+                            scales: {
+                                yAxes: [{
+                                    // display: false,
+                                    gridLines: {
+                                        display: true,
+                                        lineWidth: '4px',
+                                        color: 'rgba(0, 0, 0, .2)',
+                                        zeroLineColor: 'transparent'
+                                    },
+                                    ticks: $.extend({
+                                        beginAtZero: true,
+                                        suggestedMax: @viewsYear.Max()
+                                    }, ticksStyle)
+                                }],
+                                xAxes: [{
+                                    display: true,
+                                    gridLines: {
+                                        display: false
+                                    },
+                                    ticks: ticksStyle
+                                }]
+                            }
+                        }
+                    })
+
+
+
+
                     var $salesChart = $('#reportRating@(report.Id)')
                     var salesChart = new Chart($salesChart, {
                         type: 'bar',
@@ -304,8 +527,16 @@
                         }
                     }
                 }
+                @if(Model.Usuario.Reports.Count == 0)
+                {
+                    Terz_DataBaseLayer.Report nreport = new Terz_DataBaseLayer.Report();
+                    nreport.Id = "0";
+                    Model.Usuario.Reports.Add(nreport);
+                }
 
-                showReportInfo("reportInfo"+@Model.Usuario.Reports[0].Id);
+                showReportInfo("reportInfo" +@Model.Usuario.Reports[0].Id);
+                
+
             </script>
 
         </div>

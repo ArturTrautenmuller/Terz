@@ -116,10 +116,15 @@
                         <label style="width:75px">Não Avaliado</label>
                     }
 
+                    @if (report.Ativo == 0)
+                    {
+                        <label style="margin-left:150px; color:firebrick">Desativado</label>
+                    }
+
 
                 </div>
             }
-            <button id="CarregaButton" onclick="loadReports()" style="margin-left:40px">Carregar Mais...</button>
+            <button id="CarregaButton" onclick="loadReports()" style="margin-left:70px">Carregar Mais...</button>
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

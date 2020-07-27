@@ -9,6 +9,7 @@ namespace Terz_Core
         public string Id { get; set; }
         public string Name { get; set; }
         public string Expresion { get; set; }
+        public string NumberFormat { get; set; }
 
     }
 }
