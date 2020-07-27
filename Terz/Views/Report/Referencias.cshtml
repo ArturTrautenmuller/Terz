@@ -1,0 +1,11 @@
+﻿@model Terz_DataBaseLayer.Report
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@foreach(Terz_DataBaseLayer.Referencia referencia in Model.Referencias)
+{
+    <div>
+        <a href="@referencia.Descricao" style="color:gray;text-decoration:none; margin-left:10px; font-size:18px" target="_blank">@referencia.Descricao</a>
+    </div>
+}

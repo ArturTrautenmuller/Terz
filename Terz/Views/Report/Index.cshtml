@@ -26,7 +26,7 @@
     <div style="margin-left:5%">
         <img height="90" width="90" src="~/images/Terz_Logo.png" />
     </div>
-    <div id="Pages" style="margin-left:12%;margin-top:30px;">
+    <div id="Pages" style="margin-left:5%;margin-top:30px;">
         <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                 Paginas
@@ -61,7 +61,8 @@
 
     </div>
     <div id="Avaliation" style="margin-left:2%;margin-top:37px;font-size:18px">
-        <a href="#" style="color:gray;text-decoration:none; margin-left:20px" onclick="ShowInfo()">Sobre</a>
+        <a href="#" style="color:gray;text-decoration:none; margin-left:10px" onclick="ShowInfo()">Sobre</a>
+        <a href="#" style="color:gray;text-decoration:none; margin-left:10px" onclick="ShowReference()">Referencias</a>
     </div>
     </div>
     <div>
@@ -210,6 +211,31 @@
             });
     }
 
+        function ShowReference() {
+        var form;
+        $.ajax(
+            {
+                type: 'POST',
+                url: '../Report/Referencias?id=@Model.Id',
+                dataType: 'html',
+                cache: false,
+                async: true,
+
+                success: function (data) {
+                    form = data;
+                    bootbox.confirm(form, function (result) {
+                        if (result) {
+
+                            console.log("close info");
+
+                        }
+                    });
+
+                },
+
+
+            });
+    }
     function init() {
         loadUsingDataFrames();
         buildSheetMenu();

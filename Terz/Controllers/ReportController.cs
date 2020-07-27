@@ -64,6 +64,16 @@ namespace Terz.Controllers
             return PartialView(sobreView);
         }
 
+        public PartialViewResult Referencias([FromQuery(Name = "id")] string id)
+        {
+            Terz_DataBaseLayer.Report report = new Report();
+            report.Load(id);
+            report.getReference();
+
+            return PartialView(report);
+        }
+
+
         public PartialViewResult AvaliatePage()
         {
             return PartialView();
