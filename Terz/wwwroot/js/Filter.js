@@ -13,16 +13,19 @@
         var filter = filters[i];
         console.log('filtro')
         console.log(filter);
-      
-        var col = reportData.dataFrames.filter(function (x) { return x.name == filter.dataFrameName })[0].table[0].indexOf(filter.dimension.field);
-       
-        var values = [];
-        
-        for (var j = 1; j < reportData.dataFrames.filter(function (x) { return x.name == filter.dataFrameName })[0].table.length; j++) {
-          
-            values.push(reportData.dataFrames.filter(function (x) { return x.name == filter.dataFrameName })[0].table[j][col]);
-        }
 
+        var dfNames = filter.dataFrameName;
+        var values = [];
+        for (var dfi = 0; dfi < dfNames.length; dfi++) {
+            var col = reportData.dataFrames.filter(function (x) { return x.name == dfNames[dfi] })[0].table[0].indexOf(filter.dimension.field);
+
+
+
+            for (var j = 1; j < reportData.dataFrames.filter(function (x) { return x.name == dfNames[dfi] })[0].table.length; j++) {
+
+                values.push(reportData.dataFrames.filter(function (x) { return x.name == dfNames[dfi] })[0].table[j][col]);
+            }
+        }
         var distinctValues = Array.from(new Set(values));
 
         var filterBlock = document.createElement('div');
@@ -48,7 +51,13 @@
             cell.appendChild(document.createTextNode(distinctValues[k]));
             cell.setAttribute("href", "#" + distinctValues[k]);
             cell.setAttribute("id", filter.dataFrameName + "," + filter.dimension.field + "," + distinctValues[k]);
-            cell.setAttribute("onclick", "filterValue('" + filter.dataFrameName + "," + filter.dimension.field + "," + distinctValues[k] + "')");
+            var alldfs = "";
+            for (var m = 0; m < dfNames.length; m++) {
+                alldfs += dfNames[m] + "&";
+            }
+            alldfs = alldfs.slice(0, -1);
+
+            cell.setAttribute("onclick", "filterValue('" + alldfs + "," + filter.dimension.field + "," + distinctValues[k] + "')");
             contentInfo.appendChild(cell);
         }
 

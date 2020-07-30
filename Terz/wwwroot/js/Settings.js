@@ -854,7 +854,7 @@ function buildFilterSettings() {
             var selectDFOption = document.createElement("option");
             selectDFOption.innerHTML = reportData.dataFrames[j].name;
             selectDFOption.value = reportData.dataFrames[j].name;
-            if (filter.dataFrameName == reportData.dataFrames[j].name) {
+            if (filter.dataFrameName[0] == reportData.dataFrames[j].name) {
                 selectDFOption.selected = "selected";
             }
             selectDF.appendChild(selectDFOption);
@@ -930,7 +930,7 @@ function addFilter() {
     var filter = {};
     filter["id"] = Date.now().toString();
     filter["style"] = {};
-    filter["dataFrameName"] = reportData.dataFrames[0].name;
+    filter["dataFrameName"] = [reportData.dataFrames[0].name];
     filter["multiValue"] = true;
     var dimension = {};
     dimension["id"] = Date.now().toString();

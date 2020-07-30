@@ -377,7 +377,7 @@
     function updateFilterConfig(id) {
         var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
         var filterPos = reportData.config.sheets[sheetPos].filters.map(function (e) { return e.id; }).indexOf(id);
-        reportData.config.sheets[sheetPos].filters[filterPos].dataFrameName = document.getElementById("DataFrame" + id).value;
+        reportData.config.sheets[sheetPos].filters[filterPos].dataFrameName[0] = document.getElementById("DataFrame" + id).value;
         reportData.config.sheets[sheetPos].filters[filterPos].dimension.name = document.getElementById("filterName" + id).value;
         reportData.config.sheets[sheetPos].filters[filterPos].dimension.field = document.getElementById("filterField" + id).value;
         buildFilterSettings();

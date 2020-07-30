@@ -107,18 +107,22 @@ function buildBarChart(graph) {
     if (graph.sort.axis == 'mea') {
 
         if (graph.sort.option == 'crescente') {
-            sort = function (a, b) {
+            if (graph.sort.type == 'numerico') {
+                sort = function (a, b) {
 
-                return a["y"] - b["y"];
+                    return a["y"] - b["y"];
 
-            };
+                };
+            }
         }
         if (graph.sort.option == 'decrescente') {
-            sort = function (a, b) {
+            if (graph.sort.type == 'numerico') {
+                sort = function (a, b) {
 
-                return b["y"] - a["y"];
+                    return b["y"] - a["y"];
 
-            };
+                };
+            }
         }
 
 
@@ -127,18 +131,40 @@ function buildBarChart(graph) {
     }
     else if (graph.sort.axis == 'dim') {
         if (graph.sort.option == 'crescente') {
-            sort = function (a, b) {
+            if (graph.sort.type == 'numerico') {
+                sort = function (a, b) {
 
-                return a["x"] - b["x"];
+                    return a["x"] - b["x"];
 
-            };
+                };
+            }
+            if (graph.sort.type == 'data') {
+                sort = function (a, b) {
+                    var ad = new Date(a["x"]);
+                    var bd = new Date(b["x"]);
+                   
+                    return ad - bd;
+
+                };
+            }
         }
         if (graph.sort.option == 'decrescente') {
-            sort = function (a, b) {
+            if (graph.sort.type == 'numerico') {
+                sort = function (a, b) {
 
-                return b["x"] - a["x"];
+                    return b["x"] - a["x"];
 
-            };
+                };
+            }
+            if (graph.sort.type == 'data') {
+                sort = function (a, b) {
+                    var ad = new Date(a["x"]);
+                    var bd = new Date(b["x"]);
+                   
+                    return bd - ad;
+
+                };
+            }
         }
     }
 
@@ -312,18 +338,40 @@ function buildLineChart(graph) {
     }
     else if (graph.sort.axis == 'dim') {
         if (graph.sort.option == 'crescente') {
-            sort = function (a, b) {
+            if (graph.sort.type == 'numerico') {
+                sort = function (a, b) {
 
-                return a["x"] - b["x"];
+                    return a["x"] - b["x"];
 
-            };
+                };
+            }
+            if (graph.sort.type == 'data') {
+                sort = function (a, b) {
+                    var ad = new Date(a["x"]);
+                    var bd = new Date(b["x"]);
+                   
+                    return ad - bd;
+
+                };
+            }
         }
         if (graph.sort.option == 'decrescente') {
-            sort = function (a, b) {
+            if (graph.sort.type == 'numerico') {
+                sort = function (a, b) {
 
-                return b["x"] - a["x"];
+                    return b["x"] - a["x"];
 
-            };
+                };
+            }
+            if (graph.sort.type == 'data') {
+                sort = function (a, b) {
+                    var ad = new Date(a["x"]);
+                    var bd = new Date(b["x"]);
+                   
+                    return bd - ad;
+
+                };
+            }
         }
     }
 

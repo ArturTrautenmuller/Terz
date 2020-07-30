@@ -278,25 +278,46 @@
     function addFilter(cellValue) {
         var valueMap = cellValue.split(",");
         var df = valueMap[0];
+
+        var alldfs = df.split("&");
+
         var field = valueMap[1];
         var value = valueMap[2];
-        if (selections.filter(function (x) { return x.field == field }).length == 0) {
-            var filterBlock = { dataFrame: df, field: field, value: [] };
-            filterBlock.value.push(value);
-            selections.push(filterBlock);
-        }
-        else {
-            var pos = selections.map(function (e) { return e.field; }).indexOf(field);
-            selections[pos].value.push(value);
+
+        for (var i = 0; i < alldfs.length; i++) {
+
+            var cdf = alldfs[i];
+
+            if (selections.filter(function (x) { return x.field == field && x.dataFrame == cdf }).length == 0) {
+                var filterBlock = { dataFrame: cdf, field: field, value: [] };
+                filterBlock.value.push(value);
+                selections.push(filterBlock);
+            }
+            else {
+                var pos = selections.findIndex(i => i.field == field && i.dataFrame == cdf);
+                selections[pos].value.push(value);
+            }
         }
     }
 
     function removeFilter(cellValue) {
         var valueMap = cellValue.split(",");
         var df = valueMap[0];
+        var alldfs = df.split("&");
         var field = valueMap[1];
         var value = valueMap[2];
-        var pos = selections.map(function (e) { return e.field; }).indexOf(field);
+
+        for (var i = 0; i < alldfs.length; i++) {
+
+            var cdf = alldfs[i];
+            var pos = selections.findIndex(i => i.field == field && i.dataFrame == cdf);
+            var posValue = selections[pos].value.indexOf(value);
+            selections[pos].value.splice(posValue, 1);
+
+        }
+
+
+        
         var posValue = selections[pos].value.indexOf(value);
         selections[pos].value.splice(posValue, 1);
     }

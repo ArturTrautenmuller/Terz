@@ -8,7 +8,7 @@ namespace Terz_Core
     {
         public string Id { get; set; }
         public Style Style { get; set; }
-        public string DataFrameName {get; set;}
+        public List<string> DataFrameName {get; set;}
         public Dimension Dimension { get; set; }
         public bool MultiValue { get; set; }
 
