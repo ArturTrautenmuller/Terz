@@ -50,13 +50,13 @@
             var cell = document.createElement("a");
             cell.appendChild(document.createTextNode(distinctValues[k]));
             cell.setAttribute("href", "#" + distinctValues[k]);
-            cell.setAttribute("id", filter.dataFrameName + "," + filter.dimension.field + "," + distinctValues[k]);
+            
             var alldfs = "";
             for (var m = 0; m < dfNames.length; m++) {
                 alldfs += dfNames[m] + "&";
             }
             alldfs = alldfs.slice(0, -1);
-
+            cell.setAttribute("id", alldfs + "," + filter.dimension.field + "," + distinctValues[k]);
             cell.setAttribute("onclick", "filterValue('" + alldfs + "," + filter.dimension.field + "," + distinctValues[k] + "')");
             contentInfo.appendChild(cell);
         }

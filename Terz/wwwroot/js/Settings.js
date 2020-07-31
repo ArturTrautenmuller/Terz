@@ -306,7 +306,7 @@ function buildGraphSettings(id) {
         var selectDFOption = document.createElement("option");
         selectDFOption.innerHTML = reportData.dataFrames[i].name;
         selectDFOption.value = reportData.dataFrames[i].name;
-        if (graph.dataFrameName == reportData.dataFrames[i].name) {
+        if (graph.dataFrameName[0] == reportData.dataFrames[i].name) {
             selectDFOption.selected = "selected";
         }
         selectDF.appendChild(selectDFOption);

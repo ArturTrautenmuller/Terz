@@ -121,6 +121,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/alasql@0.6"></script>
+
     <script src="~/LTE/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="~/LTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/LTE/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
@@ -264,13 +266,19 @@
         if (document.getElementById(cellValue).style.backgroundColor == 'green') {
             document.getElementById(cellValue).style.backgroundColor = 'white';
             removeFilter(cellValue);
-            applySelections(cellValue.split(",")[0]);
+            var dfs = cellValue.split(",")[0].split("&");
+            for (var i = 0; i < dfs.length; i++) {
+                applySelections(dfs[i]);
+            }
             reloadGraphs();
         }
         else {
             document.getElementById(cellValue).style.backgroundColor = 'green';
             addFilter(cellValue);
-            applySelections(cellValue.split(",")[0]);
+            var dfs = cellValue.split(",")[0].split("&");
+            for (var i = 0; i < dfs.length; i++) {
+                applySelections(dfs[i]);
+            }
             reloadGraphs();
         }
     }

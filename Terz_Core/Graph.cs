@@ -10,7 +10,7 @@ namespace Terz_Core
         public string Title { get; set; }
         public string ObjectType { get; set; }
         public Style Style { get; set; }
-        public string DataFrameName { get; set; }
+        public List<string> DataFrameName { get; set; }
         public List<Dimension> Dimensions { get; set; }
         public List<Measure> Measures { get; set; }
         public Sort Sort { get; set; }

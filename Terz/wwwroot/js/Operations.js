@@ -1,10 +1,16 @@
 ﻿function EvalueteEx(expressions, dataframe, fields) {
     if (fields == null) {
-        var reducedExpression = solve(expressions, usingDataFrames.filter(function (x) { return x.name = dataframe })[0].table);
+        var reducedExpression = solve(expressions, usingDataFrames.filter(function (x) { return x.name == dataframe })[0].table);
         return math.eval(reducedExpression);
     }
     else {
-        var tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name = dataframe })[0].table));
+       
+       
+        var tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == dataframe[0] })[0].table));
+        for (var i = 1; i < dataframe.length; i++) {
+             tempDf = fulljoin(tempDf, JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == dataframe[i] })[0].table)))
+        }
+        
         console.log(tempDf);
         var reducedDf = [];
         reducedDf.push(fields);
@@ -280,4 +286,65 @@ function considerRow(fields, fieldsValues,header,row) {
     }
 
     return true;
+}
+
+
+function findKey(aheaders, bheaders) {
+    for (var i = 0; i < aheaders.length; i++) {
+        if (bheaders.includes(aheaders[i])) {
+            return aheaders[i];
+        }
+    }
+}
+
+
+function fulljoin(a, b) {
+    var aheaders = a[0];
+    var bheaders = b[0];
+
+    var ta = "a" + Math.floor(Math.random() * 1000000000);
+    var tb = "b" + Math.floor(Math.random() * 1000000000);
+
+    alasql("CREATE TABLE " + ta + " (" + aheaders.join() + ")");
+    alasql("CREATE TABLE " + tb + " (" + bheaders.join() + ")");
+
+
+
+    for (var i = 1; i < a.length; i++) {
+        row = a[i].join("','");
+        var values = "'" + row + "'";
+        alasql("INSERT INTO " + ta + " VALUES (" + values + ")");
+    }
+
+    for (var i = 1; i < b.length; i++) {
+        row = b[i].join("','");
+        var values = "'" + row + "'";
+        alasql("INSERT INTO " + tb + " VALUES (" + values + ")");
+    }
+
+    var key = findKey(aheaders, bheaders);
+    var resultheader = Array.from(new Set(aheaders.concat(bheaders)));
+
+   
+
+    var resultSql = alasql("SELECT * FROM " + ta + " join " + tb + " on " + ta + "." + key + " = " + tb + "." + key);
+
+    var result = [];
+    result.push(resultheader);
+    for (var i = 0; i < resultSql.length; i++) {
+        var row = [];
+        var sqlRow = resultSql[i];
+        for (var j = 0; j < resultheader.length; j++) {
+            row.push(sqlRow[resultheader[j]]);
+        }
+        result.push(row);
+    }
+
+    alasql.exec("DROP TABLE IF EXISTS " + ta, [], function (res) {
+        console.log('removed');
+    });
+    alasql.exec("DROP TABLE IF EXISTS " + tb, [], function (res) {
+        console.log('removed');
+    });
+    return result;
 }
