@@ -96,20 +96,35 @@ function buildIndicatorSettings(id) {
    
     selectDFDiv.appendChild(selectDFLabel);
     selectDFDiv.appendChild(document.createElement("br"));
-    var selectDF = document.createElement("select");
-    for (var i = 0; i < reportData.dataFrames.length; i++) {
-        var selectDFOption = document.createElement("option");
-        selectDFOption.innerHTML = reportData.dataFrames[i].name;
-        selectDFOption.value = reportData.dataFrames[i].name;
-        if (indicator.dataFrameName == reportData.dataFrames[i].name) {
-            selectDFOption.selected = "selected";
+
+   
+
+
+    for (var j = 0; j < reportData.dataFrames.length; j++) {
+        var checkDF = document.createElement("input");
+        checkDF.type = "checkbox";
+        checkDF.value = reportData.dataFrames[j].name;
+        checkDF.setAttribute("name", "DataFrame");
+
+        if (indicator.dataFrameName.includes(reportData.dataFrames[j].name)) {
+            checkDF.checked = "checked";
         }
-        selectDF.appendChild(selectDFOption);
+        selectDFDiv.appendChild(checkDF);
+        var dfLabel = document.createElement("label");
+        dfLabel.append(document.createTextNode(reportData.dataFrames[j].name));
+        selectDFDiv.appendChild(dfLabel);
+        selectDFDiv.appendChild(document.createElement("br"));
+
     }
-    selectDF.setAttribute("id", "DataFrame");
-    selectDF.setAttribute("class", "form-control");
-    selectDF.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
-    selectDFDiv.appendChild(selectDF);
+
+    var applyButton = document.createElement("button");
+    applyButton.append(document.createTextNode("Aplicar"));
+    applyButton.setAttribute("onclick", "updateIndicatorConfig('" + id + "')");
+    selectDFDiv.appendChild(applyButton);
+    selectDFDiv.appendChild(document.createElement("br"));
+
+
+
     document.getElementById("Settings").appendChild(selectDFDiv);
     document.getElementById("Settings").appendChild(document.createElement("br"));
 
@@ -301,20 +316,33 @@ function buildGraphSettings(id) {
 
     selectDFDiv.appendChild(selectDFLabel);
     selectDFDiv.appendChild(document.createElement("br"));
-    var selectDF = document.createElement("select");
-    for (var i = 0; i < reportData.dataFrames.length; i++) {
-        var selectDFOption = document.createElement("option");
-        selectDFOption.innerHTML = reportData.dataFrames[i].name;
-        selectDFOption.value = reportData.dataFrames[i].name;
-        if (graph.dataFrameName[0] == reportData.dataFrames[i].name) {
-            selectDFOption.selected = "selected";
+   
+
+
+    for (var j = 0; j < reportData.dataFrames.length; j++) {
+        var checkDF = document.createElement("input");
+        checkDF.type = "checkbox";
+        checkDF.value = reportData.dataFrames[j].name;
+        checkDF.setAttribute("name", "DataFrame");
+
+        if (graph.dataFrameName.includes(reportData.dataFrames[j].name)) {
+            checkDF.checked = "checked";
         }
-        selectDF.appendChild(selectDFOption);
+        selectDFDiv.appendChild(checkDF);
+        var dfLabel = document.createElement("label");
+        dfLabel.append(document.createTextNode(reportData.dataFrames[j].name));
+        selectDFDiv.appendChild(dfLabel);
+        selectDFDiv.appendChild(document.createElement("br"));
+
     }
-    selectDF.setAttribute("id", "DataFrame");
-    selectDF.setAttribute("onchange", "updateGraphConfig('" + id + "')");
-    selectDF.setAttribute("class", "form-control");
-    selectDFDiv.appendChild(selectDF);
+
+    var applyButton = document.createElement("button");
+    applyButton.append(document.createTextNode("Aplicar"));
+    applyButton.setAttribute("onclick", "updateGraphConfig('" + id + "')");
+    selectDFDiv.appendChild(applyButton);
+    selectDFDiv.appendChild(document.createElement("br"));
+
+
     document.getElementById("Settings").appendChild(selectDFDiv);
     document.getElementById("Settings").appendChild(document.createElement("br"));
 
@@ -849,22 +877,37 @@ function buildFilterSettings() {
 
         selectDFDiv.appendChild(selectDFLabel);
         selectDFDiv.appendChild(document.createElement("br"));
-        var selectDF = document.createElement("select");
+        //
+       
+        
+        //
+
         for (var j = 0; j < reportData.dataFrames.length; j++) {
-            var selectDFOption = document.createElement("option");
-            selectDFOption.innerHTML = reportData.dataFrames[j].name;
-            selectDFOption.value = reportData.dataFrames[j].name;
-            if (filter.dataFrameName[0] == reportData.dataFrames[j].name) {
-                selectDFOption.selected = "selected";
+            var checkDF = document.createElement("input");
+            checkDF.type = "checkbox";
+            checkDF.value = reportData.dataFrames[j].name;
+            checkDF.setAttribute("name", "DataFrame" + filter.id);
+         
+            if (filter.dataFrameName.includes(reportData.dataFrames[j].name)) {
+                checkDF.checked = "checked";
             }
-            selectDF.appendChild(selectDFOption);
+            selectDFDiv.appendChild(checkDF);
+            var dfLabel = document.createElement("label");
+            dfLabel.append(document.createTextNode(reportData.dataFrames[j].name));
+            selectDFDiv.appendChild(dfLabel);
+            selectDFDiv.appendChild(document.createElement("br"));
+
         }
-        selectDF.setAttribute("id", "DataFrame" + filter.id);
-        selectDF.setAttribute("onchange", "updateFilterConfig('" + filter.id + "')");
-        selectDF.setAttribute("class", "form-control");
-        selectDFDiv.appendChild(selectDF);
+
+        var applyButton = document.createElement("button");
+        applyButton.append(document.createTextNode("Aplicar"));
+        applyButton.setAttribute("onclick", "updateFilterConfig('" + filter.id + "')");
+        selectDFDiv.appendChild(applyButton);
+        selectDFDiv.appendChild(document.createElement("br"));
+
         ulFilter.appendChild(selectDFDiv);
         ulFilter.appendChild(document.createElement("br"));
+
 
         var filterNameLi = document.createElement("li");
         var filterNameLabel = document.createElement("label");
@@ -930,7 +973,7 @@ function addFilter() {
     var filter = {};
     filter["id"] = Date.now().toString();
     filter["style"] = {};
-    filter["dataFrameName"] = [reportData.dataFrames[0].name];
+    filter["dataFrameName"] = [];
     filter["multiValue"] = true;
     var dimension = {};
     dimension["id"] = Date.now().toString();
