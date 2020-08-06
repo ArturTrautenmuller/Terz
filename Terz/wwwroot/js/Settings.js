@@ -857,18 +857,20 @@ function buildFilterSettings() {
         var filterDiv = document.createElement("div");
         filterDiv.setAttribute("class", "dropdown");
         var filterButton = document.createElement("button");
-        filterButton.setAttribute("class", "btn btn-primary dropdown-toggle");
+        filterButton.setAttribute("onclick", "showContent(this)");
+       // filterButton.setAttribute("class", "btn btn-primary dropdown-toggle");
         filterButton.style.width = "250";
         filterButton.style.marginTop = "10";
         filterButton.setAttribute("type", "button");
-        filterButton.setAttribute("data-toggle", "dropdown");
+      //  filterButton.setAttribute("data-toggle", "dropdown");
         filterButton.appendChild(document.createTextNode(filter.dimension.name));
         var span = document.createElement("span");
         span.setAttribute("class", "caret");
         filterButton.appendChild(span);
         filterDiv.appendChild(filterButton);
         var ulFilter = document.createElement("ul");
-        ulFilter.setAttribute("class", "dropdown-menu");
+        ulFilter.style.display = "none";
+     //   ulFilter.setAttribute("class", "dropdown-menu");
 
         var selectDFDiv = document.createElement("div");
         var selectDFLabel = document.createElement("label");
@@ -981,7 +983,9 @@ function addFilter() {
     dimension["field"] = "";
 
     filter["dimension"] = dimension;
-
+    if (reportData.config.sheets[sheetPos].filters == null) {
+        reportData.config.sheets[sheetPos].filters = [];
+    }
     reportData.config.sheets[sheetPos].filters.push(filter);
     buildFilterSettings();
 }

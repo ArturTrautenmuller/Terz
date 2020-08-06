@@ -1,9 +1,13 @@
-﻿function EvalueteEx(expressions, dataframe, fields) {
+﻿var test;
+
+function EvalueteEx(expressions, dataframe, fields) {
     if (fields == null) {
         var tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == dataframe[0] })[0].table));
         for (var i = 1; i < dataframe.length; i++) {
-            tempDf = fulljoin(tempDf, JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == dataframe[i] })[0].table)))
+            tempDf = fulljoin(tempDf, JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == dataframe[i] })[0].table)));
+
         }
+        test = tempDf;
         var reducedExpression = solve(expressions, tempDf);
         return math.eval(reducedExpression);
     }
@@ -294,6 +298,7 @@ function considerRow(fields, fieldsValues,header,row) {
 
 
 function findKey(aheaders, bheaders) {
+    console.log(aheaders + "headers" + bheaders);
     for (var i = 0; i < aheaders.length; i++) {
         if (bheaders.includes(aheaders[i])) {
             return aheaders[i];
@@ -301,7 +306,8 @@ function findKey(aheaders, bheaders) {
     }
 }
 
-
+var sqltest;
+var keytest;
 function fulljoin(a, b) {
     var aheaders = a[0];
     var bheaders = b[0];
@@ -332,6 +338,8 @@ function fulljoin(a, b) {
    
 
     var resultSql = alasql("SELECT * FROM " + ta + " join " + tb + " on " + ta + "." + key + " = " + tb + "." + key);
+    sqltest = resultSql;
+    keytest = key;
 
     var result = [];
     result.push(resultheader);

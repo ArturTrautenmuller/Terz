@@ -222,6 +222,11 @@
                             indicador["measure"] = measure;
 
                             var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+
+                            if (reportData.config.sheets[sheetPos].indicadors == null) {
+                                reportData.config.sheets[sheetPos].indicadors = [];
+                            }
+
                             reportData.config.sheets[sheetPos].indicators.push(indicador);
 
                             reloadSheet();
@@ -270,6 +275,11 @@
 
 
                             var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+
+                            if (reportData.config.sheets[sheetPos].textBlocks == null) {
+                                reportData.config.sheets[sheetPos].textBlocks = [];
+                            }
+
                             reportData.config.sheets[sheetPos].textBlocks.push(textBlock);
 
                             reloadSheet();
@@ -323,6 +333,9 @@
 
 
                             var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+                            if (reportData.config.sheets[sheetPos].graphs == null) {
+                                reportData.config.sheets[sheetPos].graphs = [];
+                            }
                             reportData.config.sheets[sheetPos].graphs.push(graph);
 
                             reloadSheet();
