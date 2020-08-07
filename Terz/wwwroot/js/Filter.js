@@ -55,6 +55,9 @@
             for (var m = 0; m < dfNames.length; m++) {
                 alldfs += dfNames[m] + "&";
             }
+
+
+
             alldfs = alldfs.slice(0, -1);
             cell.setAttribute("id", alldfs + "," + filter.dimension.field + "," + distinctValues[k]);
             cell.setAttribute("onclick", "filterValue('" + alldfs + "," + filter.dimension.field + "," + distinctValues[k] + "')");

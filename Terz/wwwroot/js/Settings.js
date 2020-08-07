@@ -119,7 +119,7 @@ function buildIndicatorSettings(id) {
 
     var applyButton = document.createElement("button");
     applyButton.append(document.createTextNode("Aplicar"));
-    applyButton.setAttribute("onclick", "updateIndicatorConfig('" + id + "')");
+    applyButton.setAttribute("onclick", "updateIndicatorDataFrame('" + id + "')");
     selectDFDiv.appendChild(applyButton);
     selectDFDiv.appendChild(document.createElement("br"));
 
@@ -338,7 +338,7 @@ function buildGraphSettings(id) {
 
     var applyButton = document.createElement("button");
     applyButton.append(document.createTextNode("Aplicar"));
-    applyButton.setAttribute("onclick", "updateGraphConfig('" + id + "')");
+    applyButton.setAttribute("onclick", "updateGraphDataFrame('" + id + "')");
     selectDFDiv.appendChild(applyButton);
     selectDFDiv.appendChild(document.createElement("br"));
 

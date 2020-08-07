@@ -2,23 +2,26 @@
 
 function EvalueteEx(expressions, dataframe, fields) {
     if (fields == null) {
-        var tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == dataframe[0] })[0].table));
-        for (var i = 1; i < dataframe.length; i++) {
+
+
+        var tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == dataframe.join(",") })[0].table));
+    /*    for (var i = 1; i < dataframe.length; i++) {
             tempDf = fulljoin(tempDf, JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == dataframe[i] })[0].table)));
 
         }
-        test = tempDf;
+        test = tempDf;*/
         var reducedExpression = solve(expressions, tempDf);
         return math.eval(reducedExpression);
     }
     else {
        
        
-        var tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == dataframe[0] })[0].table));
+        var tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == dataframe.join(",") })[0].table));
+        /*
         for (var i = 1; i < dataframe.length; i++) {
              tempDf = fulljoin(tempDf, JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == dataframe[i] })[0].table)))
         }
-        
+        */
         console.log(tempDf);
         var reducedDf = [];
         reducedDf.push(fields);

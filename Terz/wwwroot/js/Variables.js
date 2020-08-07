@@ -1,5 +1,7 @@
 ﻿var reportData;
 var DataFrames;
+var AllDFS;
+var Groups = [];
 var currentSheet = "1";
 var selections = [];
 let usingDataFrames;

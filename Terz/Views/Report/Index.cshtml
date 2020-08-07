@@ -270,6 +270,13 @@
             for (var i = 0; i < dfs.length; i++) {
                 applySelections(dfs[i]);
             }
+            for (var i = 0; i < AllDFS.length; i++) {
+                var dfNames = AllDFS[i].name.split(",");
+                if (dfNames.length > 1 && dfNames.some(v => dfs.indexOf(v) !== -1)) {
+                    applySelections(AllDFS[i].name);
+                }
+            }
+
             reloadGraphs();
         }
         else {
@@ -278,6 +285,12 @@
             var dfs = cellValue.split(",")[0].split("&");
             for (var i = 0; i < dfs.length; i++) {
                 applySelections(dfs[i]);
+            }
+            for (var i = 0; i < AllDFS.length; i++) {
+                var dfNames = AllDFS[i].name.split(",");
+                if (dfNames.length > 1 && dfNames.some(v => dfs.indexOf(v) !== -1)) {
+                    applySelections(AllDFS[i].name);
+                }
             }
             reloadGraphs();
         }
@@ -306,6 +319,24 @@
                 selections[pos].value.push(value);
             }
         }
+
+        for (var i = 0; i < AllDFS.length; i++) {
+            var dfNames = AllDFS[i].name.split(",");
+            if (dfNames.length > 1 && dfNames.some(v => alldfs.indexOf(v) !== -1)) {
+                var cdf = AllDFS[i].name;
+
+                if (selections.filter(function (x) { return x.field == field && x.dataFrame == cdf }).length == 0) {
+                    var filterBlock = { dataFrame: cdf, field: field, value: [] };
+                    filterBlock.value.push(value);
+                    selections.push(filterBlock);
+                }
+                else {
+                    var pos = selections.findIndex(i => i.field == field && i.dataFrame == cdf);
+                    selections[pos].value.push(value);
+                }
+
+            }
+        }
     }
 
     function removeFilter(cellValue) {
@@ -324,16 +355,57 @@
 
         }
 
-
+        for (var i = 0; i < AllDFS.length; i++) {
+            var dfNames = AllDFS[i].name.split(",");
+            if (dfNames.length > 1 && dfNames.some(v => alldfs.indexOf(v) !== -1)) {
+                var cdf = AllDFS[i].name;
+                var pos = selections.findIndex(i => i.field == field && i.dataFrame == cdf);
+                var posValue = selections[pos].value.indexOf(value);
+                selections[pos].value.splice(posValue, 1);
+            }
+        }
         
-        var posValue = selections[pos].value.indexOf(value);
-        selections[pos].value.splice(posValue, 1);
     }
 
     function loadUsingDataFrames() {
 
+        AllDFS = JSON.parse(JSON.stringify(reportData.dataFrames));
+        for (var i = 0; i < reportData.config.sheets.length; i++) {
+            for (var j = 0; j < reportData.config.sheets[i].indicators.length; j++) {
+                var df = reportData.config.sheets[i].indicators[j].dataFrameName;
+                var dfs = df.join(",");
+                if (df.length > 1 && AllDFS.findIndex(i => i.name == dfs) == -1) {
+                    var group = {};
+                    group["name"] = dfs;
+                    var table = JSON.parse(JSON.stringify(AllDFS.filter(function (x) { return x.name == df[0] })[0].table));
+                    for (var k = 1; k < df.length; k++) {
+                        table = fulljoin(table, JSON.parse(JSON.stringify(AllDFS.filter(function (x) { return x.name == df[k] })[0].table)));
+                    }
+                    group["table"] = table;
+                    AllDFS.push(group);
+                }
+            }
 
-        usingDataFrames = JSON.parse(JSON.stringify(reportData.dataFrames));
+
+
+            for (var j = 0; j < reportData.config.sheets[i].graphs.length; j++) {
+                var df = reportData.config.sheets[i].graphs[j].dataFrameName;
+                var dfs = df.join(",");
+                if (df.length > 1 && AllDFS.findIndex(i => i.name == dfs) == -1) {
+                    var group = {};
+                    group["name"] = dfs;
+                    var table = JSON.parse(JSON.stringify(AllDFS.filter(function (x) { return x.name == df[0] })[0].table));
+                    for (var k = 1; k < df.length; k++) {
+                        table = fulljoin(table, JSON.parse(JSON.stringify(AllDFS.filter(function (x) { return x.name == df[k] })[0].table)));
+                    }
+                    group["table"] = table;
+                    AllDFS.push(group);
+                }
+            }
+
+
+        }
+        usingDataFrames = JSON.parse(JSON.stringify(AllDFS));
     }
 
     function reloadGraphs() {
@@ -371,7 +443,7 @@
     function applySelections(name) {
         var dfSelections = selections.filter(function (x) { return x.dataFrame == name });
         var pos = usingDataFrames.map(function (e) { return e.name; }).indexOf(name);
-        var completeTable = reportData.dataFrames.filter(function (x) { return x.name == name })[0].table;
+        var completeTable = AllDFS.filter(function (x) { return x.name == name })[0].table;
         var filteredTable = [];
         var headers = completeTable[0];
         filteredTable.push(completeTable[0]);
