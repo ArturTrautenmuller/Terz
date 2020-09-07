@@ -104,6 +104,15 @@ namespace Terz.Controllers
             }
         }
 
+        public string getReportVersion([FromQuery(Name = "id")] string id)
+        {
+            Report report = new Report();
+            report.Load(id);
+            return report.getVersion().ToString();
+        }
+
+
+
         public Models.Report.ReportData GetReportData([FromQuery(Name = "id")] string id)
         {
             

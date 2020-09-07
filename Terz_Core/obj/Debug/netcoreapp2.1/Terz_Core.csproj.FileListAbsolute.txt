@@ -7,3 +7,6 @@ C:\Users\artur\source\repos\Terz\Terz_Core\obj\Debug\netcoreapp2.1\Terz_Core.Ass
 C:\Users\artur\source\repos\Terz\Terz_Core\obj\Debug\netcoreapp2.1\Terz_Core.AssemblyInfo.cs
 C:\Users\artur\source\repos\Terz\Terz_Core\obj\Debug\netcoreapp2.1\Terz_Core.dll
 C:\Users\artur\source\repos\Terz\Terz_Core\obj\Debug\netcoreapp2.1\Terz_Core.pdb
+C:\Users\artur\source\repos\Terz\Terz_Core\bin\Debug\netcoreapp2.1\Microsoft.AspNetCore.Http.Features.dll
+C:\Users\artur\source\repos\Terz\Terz_Core\bin\Debug\netcoreapp2.1\Microsoft.AspNetCore.Http.Features.xml
+C:\Users\artur\source\repos\Terz\Terz_Core\obj\Debug\netcoreapp2.1\Terz_Core.csproj.CopyComplete

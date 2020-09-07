@@ -35,7 +35,7 @@
     <div id="Sheet">
         <div id="Graphs" class="resize-container"></div>
     </div>
-    <div id="Settings" overflow-y: scroll; style="height:700px">
+    <div id="Settings"  style="overflow-y: scroll; height:700px">
 
     </div>
 </div>
@@ -432,16 +432,7 @@
         var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
         var indicatorPos = reportData.config.sheets[sheetPos].indicators.map(function (e) { return e.id; }).indexOf(id);
 
-        var dfOptions = document.getElementsByName("DataFrame");
-        var selectedDFs = [];
-        for (var i = 0; i < dfOptions.length; i++) {
-
-            if (dfOptions[i].checked) {
-                selectedDFs.push(dfOptions[i].value);
-            }
-        }
-
-        reportData.config.sheets[sheetPos].indicators[indicatorPos].dataFrameName = selectedDFs;
+       
         reportData.config.sheets[sheetPos].indicators[indicatorPos].measure.name = document.getElementById("MeasureName").value;
         reportData.config.sheets[sheetPos].indicators[indicatorPos].measure.expresion = document.getElementById("Expression").value;
         reportData.config.sheets[sheetPos].indicators[indicatorPos].measure.numberFormat = document.getElementById("Format").value;
@@ -553,16 +544,7 @@
         var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
         var graphPos = reportData.config.sheets[sheetPos].graphs.map(function (e) { return e.id; }).indexOf(id);
 
-        var dfOptions = document.getElementsByName("DataFrame");
-        var selectedDFs = [];
-        for (var i = 0; i < dfOptions.length; i++) {
-
-            if (dfOptions[i].checked) {
-                selectedDFs.push(dfOptions[i].value);
-            }
-        }
-
-        reportData.config.sheets[sheetPos].graphs[graphPos].dataFrameName = selectedDFs;
+       
 
         reportData.config.sheets[sheetPos].graphs[graphPos].style.width = document.getElementById("Width").value;
         reportData.config.sheets[sheetPos].graphs[graphPos].style.height = document.getElementById("Height").value;

@@ -16,6 +16,7 @@ namespace Terz_DataBaseLayer
         public int Score { get; set; }
         public int Rank { get; set; }
         public int Ativo { get; set; }
+        public int MaxSize { get; set; }
         public List<Visualizacao> Visualizacoes { get; set; }
         public List<Avaliacao> Avaliacoes { get; set; }
         public List<Referencia> Referencias { get; set; }
@@ -35,6 +36,7 @@ namespace Terz_DataBaseLayer
                 this.Score = Convert.ToInt32(myReader.GetValue(5));
                 this.Rank = Convert.ToInt32(myReader.GetValue(6));
                 this.Ativo = Convert.ToInt32(myReader.GetValue(7));
+                this.MaxSize = Convert.ToInt32(myReader.GetValue(8));
 
                 myReader.Close();
                 Base.connection.Close();
@@ -118,13 +120,80 @@ namespace Terz_DataBaseLayer
             Base.connection.Close();
         }
 
+        public bool canReciveUpload(long totalsize)
+        {
+            long maxSizeBytes = this.MaxSize * 1024 * 1024;
+            if (totalsize > maxSizeBytes) return false;
+            else return true;
+        }
+
         public void Insert()
         {
             Base.Init();
             this.Ativo = 1;
-            var sql = "INSERT INTO `report` (`id`, `user_id`, `titulo`, `imagem`,`id_categoria`,`ativo`) VALUES (NULL, '" + this.UserId+"', '"+this.Titulo+"', '"+this.Imagem+"','"+this.CategoriaId+"','"+this.Ativo+"')";
+            this.MaxSize = 10;
+            
+            var sql = "INSERT INTO `report` (`id`, `user_id`, `titulo`, `imagem`,`id_categoria`,`ativo`,`max_size`) VALUES (NULL, '" + this.UserId+"', '"+this.Titulo+"', '"+this.Imagem+"','"+this.CategoriaId+"','"+this.Ativo+"','"+this.MaxSize+"')";
             this.Id = Convert.ToString(Base.sqlCommandAndGetId(sql));
             
+        }
+
+        public string getVersion()
+        {
+            Base.Init();
+            var sql = "select version from report_version where report_id = '" + this.Id + "'";
+            int version;
+            MySqlDataReader myReader = Base.select(sql);
+            if (myReader.Read())
+            {
+                version = Convert.ToInt32(myReader.GetValue(0));
+               
+
+            }
+            else
+            {
+                version = 0;
+            }
+
+            myReader.Close();
+            Base.connection.Close();
+            return version.ToString();
+        }
+
+        public void Expandir()
+        {
+            Base.Init();
+            var sql = "UPDATE `report` SET `max_size` = '" + this.MaxSize + "' WHERE `report`.`id` = " + this.Id;
+            Base.sqlCommand(sql);
+        }
+
+        public void IncrementVersion()
+        {
+            Base.Init();
+            var sql = "select version from report_version where report_id = '" + this.Id + "'";
+            int version;
+            MySqlDataReader myReader = Base.select(sql);
+            if (myReader.Read())
+            {
+                version = Convert.ToInt32(myReader.GetValue(0));
+                Base.Init();
+                var sqlu = "UPDATE `report_version` SET version = '"+(version + 1)+ "' WHERE report_id = " + this.Id;
+                Base.sqlCommand(sqlu);
+
+            }
+            else
+            {
+                version = 0;
+                var sqli = "INSERT INTO `report_version` (`report_id`, `version`) VALUES ('"+this.Id+"', '"+(version + 1)+"')";
+                Base.sqlCommand(sqli);
+            }
+
+
+
+            myReader.Close();
+            Base.connection.Close();
+
+
         }
 
         public void Update()

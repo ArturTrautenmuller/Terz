@@ -56,3 +56,4 @@ C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\Credit
 C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\Creditos\Pagamento.g.cshtml.cs
 C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\Report\Sobre.g.cshtml.cs
 C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\Report\Referencias.g.cshtml.cs
+C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\DataManager\ExpandOptions.g.cshtml.cs

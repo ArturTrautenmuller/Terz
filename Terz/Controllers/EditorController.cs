@@ -7,6 +7,7 @@ using Terz_Core;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using Terz_DataBaseLayer;
 
 namespace Terz.Controllers
 {
@@ -46,6 +47,11 @@ namespace Terz.Controllers
             string configFile = conf.ConfigPath + "/" + id + "/config.json";
             string json_text = JsonConvert.SerializeObject(config, Formatting.Indented);
             System.IO.File.WriteAllText(configFile, json_text);
+
+            Report report = new Report();
+            report.Load(id);
+            report.IncrementVersion();
+
             return "Aplicativo Salvo";
         }
 

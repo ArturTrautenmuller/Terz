@@ -9,6 +9,8 @@
 
 <link rel="stylesheet" href="~/LTE/plugins/fontawesome-free/css/all.min.css">
 <link rel="stylesheet" href="~/LTE/plugins/fontawesome-free/css/all.css">
+
+
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 <!-- Theme style -->
@@ -37,7 +39,8 @@
                 <thead>
                     <tr>
                         <th class="cell100 column1">Arquivo</th>
-                        <th class="cell100 column2">Ações</th>
+                        <th class="cell100 column2">Tamanho</th>
+                        <th class="cell100 column3">Ações</th>
 
 
 
@@ -53,6 +56,9 @@
                                     <input id="t-@dataFrameInfo.Name" type="text" style="display:none" value="@dataFrameInfo.Name" onchange="carregarNome('@dataFrameInfo.Name')" />
                                 </td>
                                 <td class="cell100 column2">
+                                    @( ((double)((Convert.ToDouble(dataFrameInfo.Size)) / (1024 * 1024))).ToString("0.00") )  MB
+                                </td>
+                                <td class="cell100 column3">
                                     <a href="#" onclick="mudarNome('@dataFrameInfo.Name')">Renomear</a>
                                     <a href="#" onclick=" deletarDataFrame('@dataFrameInfo.Name')">Excluir</a>
                                 </td>
@@ -63,21 +69,42 @@
                         }
                     }
 
+                    <tr>
+                        <td class="cell100 column1"></td>
+                        <td class="cell100 column2"><label> @( ((double)((Convert.ToDouble(Model.DataFrameInfos.Sum(d => d.Size))) / (1024 * 1024))).ToString("0.00") ) /@Model.Report.MaxSize MB </label></td>
+                        <td class="cell100 column3"><button onclick="showExpandOptions()">Expandir</button></td>
+                    </tr>
+
                 </tbody>
             </table>
         </div>
     </div>
+    <div id="ExpandOptions" style="display:none">
+        <select class="form-control" id="ExpandOptionSelect">
+            <option value="0" id="eo0">10 MB (Grátis)</option>
+            <option value="1" id="eo1">100 MB 1 crédito/dia</option>
+            <option value="2" id="eo2">250 MB 2 créditos/dia</option>
+            <option value="3" id="eo3">400 MB 3 créditos/dia</option>
+            <option value="4" id="eo4">600 MB 4 créditos/dia</option>
+            <option value="5" id="eo5">800 MB 5 créditos/dia</option>
+            <option value="6" id="eo6">1000 MB 6 créditos/dia</option>
+        </select>
+
+        <button onclick="Expand()">Confirmar</button>
+        <button onclick="showExpandOptions()">Cancelar</button>
+    </div>
+
     <label for="dfFile">Enviar DataFrames</label>
     <div class="input-group">
         <div class="custom-file">
-            <input type="file" class="custom-file-input"  id="dfFile" multiple>
+            <input type="file" class="custom-file-input" id="dfFile" multiple>
             <label class="custom-file-label" for="exampleInputFile">Escolher Arquivos</label>
         </div>
         <div class="input-group-append" onclick="uploadDataFrame()">
             <span class="input-group-text" id="">Upload</span>
         </div>
     </div>
-   
+
     <hr />
     <div id="Referencias">
         <div class="card">
@@ -130,16 +157,47 @@
         <button onclick="AddReferencia()">Adicionar Referência</button>
 
     </div>
-    <script src="~/LTE/plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="~/LTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+   
     <!-- AdminLTE App -->
     <script src="~/LTE/dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="~/LTE/dist/js/demo.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+  
+
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+   
     <script>
+        function showExpandOptions() {
+            if (document.getElementById("ExpandOptions").style.display == "none") {
+
+                document.getElementById("ExpandOptions").style.display = "block";
+            }
+            else {
+                document.getElementById("ExpandOptions").style.display = "none";
+            }
+        }
+
+        function Expand() {
+            var option = document.getElementById("ExpandOptionSelect").value;
+            $.ajax(
+                {
+                    type: 'POST',
+                    url: '../DataManager/ExpandirRelatorio?id=@Model.Report.Id&opcao=' + option,
+                    dataType: 'html',
+                    cache: false,
+                    async: true,
+
+                    success: function (data) {
+
+
+                        location.reload();
+                    }
+
+                });
+        }
         function AddReferencia() {
 
             var referencia = {

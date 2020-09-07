@@ -105,6 +105,8 @@ function buildIndicatorSettings(id) {
         checkDF.type = "checkbox";
         checkDF.value = reportData.dataFrames[j].name;
         checkDF.setAttribute("name", "DataFrame");
+        checkDF.style.width = "18px";
+        checkDF.style.height = "18px";
 
         if (indicator.dataFrameName.includes(reportData.dataFrames[j].name)) {
             checkDF.checked = "checked";
@@ -112,6 +114,9 @@ function buildIndicatorSettings(id) {
         selectDFDiv.appendChild(checkDF);
         var dfLabel = document.createElement("label");
         dfLabel.append(document.createTextNode(reportData.dataFrames[j].name));
+        dfLabel.style.fontSize = "16px";
+        dfLabel.style.color = "gray";
+        dfLabel.style.marginLeft = "10px";
         selectDFDiv.appendChild(dfLabel);
         selectDFDiv.appendChild(document.createElement("br"));
 
@@ -127,7 +132,43 @@ function buildIndicatorSettings(id) {
 
     document.getElementById("Settings").appendChild(selectDFDiv);
     document.getElementById("Settings").appendChild(document.createElement("br"));
+    var ordemLabel = document.createElement("label");
+    ordemLabel.innerHTML = "Ordem:";
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    for (var i = 0; i < indicator.dataFrameName.length; i++) {
+        var orderDfDiv = document.createElement("div");
+        orderDfDiv.setAttribute("name", "dfOrder");
+        var orderDfLabel = document.createElement("label");
+        orderDfLabel.innerHTML = indicator.dataFrameName[i];
+        orderDfLabel.style.fontSize = "16px";
+        orderDfLabel.style.color = "gray";
+        orderDfLabel.style.width = "170px";
+        orderDfDiv.appendChild(orderDfLabel);
 
+        var orderDfDown = document.createElement("a");
+        orderDfDown.style.fontSize = "16px";
+        orderDfDown.setAttribute("onclick", "rebaixarDF('" + indicator.id + "'," + i + ")");
+        var downIcon = document.createElement("i");
+        downIcon.setAttribute("class", "fas fa-arrow-down");
+        orderDfDown.appendChild(downIcon);
+        orderDfDiv.appendChild(orderDfDown);
+
+        var orderDfUp = document.createElement("a");
+        orderDfUp.style.fontSize = "16px";
+        orderDfUp.setAttribute("onclick", "promoverDF('" + indicator.id + "'," + i + ")");
+        var upIcon = document.createElement("i");
+        upIcon.setAttribute("class", "fas fa-arrow-up");
+        orderDfUp.appendChild(upIcon);
+        orderDfDiv.appendChild(orderDfUp);
+
+
+        document.getElementById("Settings").appendChild(orderDfDiv);
+    }
+    /*var aplicarOrdem = document.createElement("button");
+    aplicarOrdem.innerHTML = "Aplicar";
+    aplicarOrdem.setAttribute("onclick", "aplicarOrdem()");
+    document.getElementById("Settings").appendChild(aplicarOrdem);
+    */
 
     document.getElementById("Settings").appendChild(document.createElement("hr"));
     //Nome da Medida
@@ -158,7 +199,7 @@ function buildIndicatorSettings(id) {
     measureExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
    // measureExp.setAttribute("class", "form-control");
     measureExp.value = indicator.measure.expresion;
-    measureExp.style.width = "200";
+    measureExp.style.width = "180";
     document.getElementById("Settings").appendChild(measureExp);
    
     document.getElementById("Settings").appendChild(document.createElement("br"));
@@ -345,6 +386,34 @@ function buildGraphSettings(id) {
 
     document.getElementById("Settings").appendChild(selectDFDiv);
     document.getElementById("Settings").appendChild(document.createElement("br"));
+
+    var ordemLabel = document.createElement("label");
+    ordemLabel.innerHTML = "Ordem:";
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    for (var i = 0; i < graph.dataFrameName.length; i++) {
+        var orderDfDiv = document.createElement("div");
+        orderDfDiv.setAttribute("name", "dfOrder");
+        var orderDfLabel = document.createElement("label");
+        orderDfLabel.innerHTML = graph.dataFrameName[i];
+        orderDfDiv.appendChild(orderDfLabel);
+
+        var orderDfDown = document.createElement("a");
+        orderDfDown.setAttribute("onclick", "rebaixarDFGraph('" + graph.id + "'," + i + ")");
+        var downIcon = document.createElement("i");
+        downIcon.setAttribute("class", "fas fa-arrow-down");
+        orderDfDown.appendChild(downIcon);
+        orderDfDiv.appendChild(orderDfDown);
+
+        var orderDfUp = document.createElement("a");
+        orderDfUp.setAttribute("onclick", "promoverDFGraph('" + graph.id + "'," + i + ")");
+        var upIcon = document.createElement("i");
+        upIcon.setAttribute("class", "fas fa-arrow-up");
+        orderDfUp.appendChild(upIcon);
+        orderDfDiv.appendChild(orderDfUp);
+
+
+        document.getElementById("Settings").appendChild(orderDfDiv);
+    }
 
 
     document.getElementById("Settings").appendChild(document.createElement("hr"));
@@ -998,5 +1067,59 @@ function showContent(obj) {
         content.style.display = "none";
     } else {
         content.style.display = "block";
+    }
+}
+
+function rebaixarDF(id,order) {
+    var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+    var indicatorPos = reportData.config.sheets[sheetPos].indicators.map(function (e) { return e.id; }).indexOf(id);
+    if (reportData.config.sheets[sheetPos].indicators[indicatorPos].dataFrameName.length - 1 > order) {
+        var temp = reportData.config.sheets[sheetPos].indicators[indicatorPos].dataFrameName[order + 1];
+        reportData.config.sheets[sheetPos].indicators[indicatorPos].dataFrameName[order + 1] = reportData.config.sheets[sheetPos].indicators[indicatorPos].dataFrameName[order];
+        reportData.config.sheets[sheetPos].indicators[indicatorPos].dataFrameName[order] = temp;
+        loadUsingDataFrames();
+        updateIndicatorConfig(id);
+        buildIndicatorSettings(id);
+    }
+}
+
+function promoverDF(id, order) {
+    var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+    var indicatorPos = reportData.config.sheets[sheetPos].indicators.map(function (e) { return e.id; }).indexOf(id);
+    if (order > 0) {
+       
+        var temp = reportData.config.sheets[sheetPos].indicators[indicatorPos].dataFrameName[order - 1];
+        reportData.config.sheets[sheetPos].indicators[indicatorPos].dataFrameName[order - 1] = reportData.config.sheets[sheetPos].indicators[indicatorPos].dataFrameName[order];
+        reportData.config.sheets[sheetPos].indicators[indicatorPos].dataFrameName[order] = temp;
+        loadUsingDataFrames();
+        updateIndicatorConfig(id);
+        buildIndicatorSettings(id);
+    }
+}
+
+function rebaixarDFGraph(id, order) {
+    var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+    var graphPos = reportData.config.sheets[sheetPos].graphs.map(function (e) { return e.id; }).indexOf(id);
+    if (reportData.config.sheets[sheetPos].graphs[graphPos].dataFrameName.length - 1 > order) {
+        var temp = reportData.config.sheets[sheetPos].graphs[graphPos].dataFrameName[order + 1];
+        reportData.config.sheets[sheetPos].graphs[graphPos].dataFrameName[order + 1] = reportData.config.sheets[sheetPos].graphs[graphPos].dataFrameName[order];
+        reportData.config.sheets[sheetPos].graphs[graphPos].dataFrameName[order] = temp;
+        loadUsingDataFrames();
+        updateGraphConfig(id);
+        buildGraphSettings(id);
+    }
+}
+
+function promoverDFGraph(id, order) {
+    var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+    var graphPos = reportData.config.sheets[sheetPos].graphs.map(function (e) { return e.id; }).indexOf(id);
+    if (order > 0) {
+
+        var temp = reportData.config.sheets[sheetPos].graphs[graphPos].dataFrameName[order - 1];
+        reportData.config.sheets[sheetPos].graphs[graphPos].dataFrameName[order - 1] = reportData.config.sheets[sheetPos].graphs[graphPos].dataFrameName[order];
+        reportData.config.sheets[sheetPos].graphs[graphPos].dataFrameName[order] = temp;
+        loadUsingDataFrames();
+        updateGraphConfig(id);
+        buildGraphSettings(id);
     }
 }

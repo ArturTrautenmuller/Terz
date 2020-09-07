@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Terz_DataBaseLayer;
+using Terz_Core;
 
 namespace Terz_API.Controllers
 {
@@ -28,21 +29,58 @@ namespace Terz_API.Controllers
             {
                 return "Falha de autenticação, usuario e senha incorretos";
             }
-
-            var file = Request.Form.Files[0];
-           
             string text = System.IO.File.ReadAllText(Location.ConfLocation);
             Conf conf = JsonConvert.DeserializeObject<Conf>(text);
+
+            var file = Request.Form.Files[0];
+
+            long dirSize = Operations.getFolderSize(conf.DataFramePath + "/" + id);
+            long filesSize = Operations.getFilesSize(Request.Form.Files);
+            long repetedFilesSize = Operations.getRepetedFilesSize(Request.Form.Files, conf.DataFramePath + "/" + id);
+
+            Report report = new Report();
+            report.Load(id);
+
+            bool canUpload = report.canReciveUpload(dirSize + filesSize - repetedFilesSize);
+            if (!canUpload)
+            {
+                return "não há espaço suficiente para subir esses arquivos";
+            }
+
+            
             var filePath = Path.Combine(conf.DataFramePath + "/"+id,file.FileName);
 
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(fileStream);
             }
+
+           
+            report.IncrementVersion();
+
             return "DataFrame importado com sucesso";
         }
+        [HttpGet]
+        [Route("api/[controller]/{id}/Insert")]
+
+        public string Insert(string id)
+        {
+
+            string email = Request.Form["email"].ToString();
+            string password = Request.Form["password"].ToString();
+            string table = Request.Form["table"].ToString();
+            string[] row = JsonConvert.DeserializeObject<string[]>(Request.Form["row"].ToString());
+
+
+
+
+
+            return "ok";
+        }
+
+
 
         // GET api/values/5
-       
+
     }
 }

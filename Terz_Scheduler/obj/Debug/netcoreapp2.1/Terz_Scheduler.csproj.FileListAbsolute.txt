@@ -14,3 +14,9 @@ C:\Users\artur\source\repos\Terz\Terz_Scheduler\obj\Debug\netcoreapp2.1\Terz_Sch
 C:\Users\artur\source\repos\Terz\Terz_Scheduler\obj\Debug\netcoreapp2.1\Terz_Scheduler.csproj.CopyComplete
 C:\Users\artur\source\repos\Terz\Terz_Scheduler\obj\Debug\netcoreapp2.1\Terz_Scheduler.dll
 C:\Users\artur\source\repos\Terz\Terz_Scheduler\obj\Debug\netcoreapp2.1\Terz_Scheduler.pdb
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Terz.Views.dll
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Terz.Views.pdb
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Terz.dll
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Microsoft.AspNetCore.Http.Features.dll
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Terz.pdb
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Microsoft.AspNetCore.Http.Features.xml

@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Terz;
 using Terz_Core;
 using Terz_DataBaseLayer;
 
@@ -72,8 +75,40 @@ namespace Terz_Scheduler
                 report.Score = Convert.ToInt32(views * Math.Pow(2, rating));
                 report.setScore();
 
-               
-               
+                // storage
+                Expansao expansao = new Expansao();
+                expansao.Load(report.Id);
+
+                Usuario usuario = new Usuario();
+                usuario.Load(report.UserId);
+                if(usuario.Creditos < expansao.Consumo && expansao.Consumo != 0)
+                {
+                    expansao.Delete();
+                    report.MaxSize = 10;
+                    report.Expandir();
+
+                    string text = System.IO.File.ReadAllText(Location.ConfLocation);
+                    Conf conf = JsonConvert.DeserializeObject<Conf>(text);
+
+                    long dirSize = Operations.getFolderSize(conf.DataFramePath + "/" + report.Id);
+
+                    if(dirSize > report.MaxSize * 1024 * 1024)
+                    {
+                        System.IO.DirectoryInfo di = new DirectoryInfo(conf.DataFramePath + "/" + report.Id);
+                        foreach (FileInfo file in di.GetFiles())
+                        {
+                            file.Delete();
+                        }
+                    }
+                }
+                else
+                {
+                    usuario.Creditos -= expansao.Consumo;
+                    usuario.MudaCreditos();
+
+                }
+
+
             }
 
             List<Report> reportsAtivos = reports.Reports.Where(r => r.Ativo == 1).ToList();
