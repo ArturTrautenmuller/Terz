@@ -45,6 +45,16 @@ namespace Terz.Controllers
             string text = System.IO.File.ReadAllText(Location.ConfLocation);
             Conf conf = JsonConvert.DeserializeObject<Conf>(text);
             string configFile = conf.ConfigPath + "/" + id + "/config.json";
+
+            for(int i = 0; i < config.Sheets.Count; i++)
+            {
+                if (config.Sheets[i].Indicators == null) config.Sheets[i].Indicators = new List<Indicator>();
+                if (config.Sheets[i].Graphs == null) config.Sheets[i].Graphs = new List<Graph>();
+                if (config.Sheets[i].Filters == null) config.Sheets[i].Filters = new List<Filter>();
+                if (config.Sheets[i].TextBlocks == null) config.Sheets[i].TextBlocks = new List<TextBlock>();
+            }
+
+
             string json_text = JsonConvert.SerializeObject(config, Formatting.Indented);
             System.IO.File.WriteAllText(configFile, json_text);
 
