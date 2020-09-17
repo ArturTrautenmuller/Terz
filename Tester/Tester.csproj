@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Terz_Core\Terz_Core.csproj" />
+    <ProjectReference Include="..\Terz_DataBaseLayer\Terz_DataBaseLayer.csproj" />
   </ItemGroup>
 
 </Project>

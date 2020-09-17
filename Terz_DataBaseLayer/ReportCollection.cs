@@ -80,7 +80,7 @@ namespace Terz_DataBaseLayer
         public void LoadN(int limit,int rank,string keyword) {
             this.Reports = new List<Report>();
             Base.Init();
-            var sql = "select * from report where rank > "+rank+" and titulo like '"+keyword+"' order by score DESC "+"LIMIT "+limit;
+            var sql = "select * from report where ranque > "+rank+" and titulo like '"+keyword+"' order by score DESC "+"LIMIT "+limit;
             MySqlDataReader myReader = Base.select(sql);
             while (myReader.Read())
             {
@@ -108,7 +108,7 @@ namespace Terz_DataBaseLayer
         {
             this.Reports = new List<Report>();
             Base.Init();
-            var sql = "select * from report where rank > "+rank+ " and titulo like '" + keyword + "' and id_categoria = " + categoryId+ " order by score DESC " + "LIMIT " + limit;
+            var sql = "select * from report where ranque > " + rank+ " and titulo like '" + keyword + "' and id_categoria = " + categoryId+ " order by score DESC " + "LIMIT " + limit;
             MySqlDataReader myReader = Base.select(sql);
             while (myReader.Read())
             {

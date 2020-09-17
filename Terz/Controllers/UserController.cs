@@ -97,7 +97,7 @@ namespace Terz.Controllers
                 await file.CopyToAsync(fileStream);
             }
 
-            usuario.Foto = Location.serverUrl + "/Terz/User/" + usuario.Id + ".jpg";
+            usuario.Foto = Location.serverUrl + "/User/" + usuario.Id + ".jpg";
             usuario.UpdateFoto();
 
             return "ok";
@@ -131,7 +131,7 @@ namespace Terz.Controllers
             Terz_DataBaseLayer.Report report = new Report();
             report.Id = id;
             report.Titulo = name;
-            report.Imagem = Location.serverUrl + "/Terz/CapaApp/" + id + ".jpg";
+            report.Imagem = Location.serverUrl + "/CapaApp/" + id + ".jpg";
             report.Update();
 
             return "ok";

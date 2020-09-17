@@ -2,16 +2,47 @@
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
-<link rel="stylesheet" href="~/css/Editor.css" />
+<link rel="stylesheet" href="~/terz/css/Editor.css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="~/LTE/plugins/fontawesome-free/css/all.min.css">
-<link rel="stylesheet" href="~/LTE/plugins/fontawesome-free/css/all.css">
-<link rel="stylesheet" href="~/LTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="~/LTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="~/terz/LTE/plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="~/terz/LTE/plugins/fontawesome-free/css/all.css">
+<link rel="stylesheet" href="~/terz/LTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="~/terz/LTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 <!-- Theme style -->
+
+<style>
+    #overlay {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 2;
+        cursor: pointer;
+    }
+
+    #text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 30px;
+        color: white;
+        transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+    }
+</style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<div id="overlay">
+    
+    <div id="text"><div style="margin-left:22px" class="loader"></div>  <label id="contentOverlay">Calculando...</label></div>
+</div>
 
 <div id="Menu" style="margin-left:5px;margin-top:10px;display:flex;border-bottom:2px solid #32bab6;padding-bottom:10px">
     <div class="dropdown">
@@ -25,8 +56,8 @@
     <button class="menuButton" onclick="AddGraph()"><i class="fas fa-chart-pie"></i> Gráfico</button>
     <button class="menuButton" onclick="addTextBlock()"><i class="fas fa-font"></i>  Texto</button>
     <button class="menuButton" onclick="buildFilterSettings()"><i class="fas fa-filter"></i> Filtros</button>
-    <button class="menuButton" onclick="SaveReport()"><i class="fas fa-save"></i> Salvar</button>
-    <img style="margin-left:400px" height="40" width="40" src="~/images/Terz_Logo.png" />
+    <button class="btn btn-block btn-success" style="width:160px;height:40px;margin-left:10px" onclick="SaveReport()"><i class="fas fa-save"></i> Salvar</button>
+    <img style="margin-left:400px" height="40" width="40" src="~/terz/images/Terz_Logo.png" />
 </div>
 <div id="Pages" style="margin-left:15px;margin-top:10px;">
 
@@ -47,21 +78,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3plus/2.0.0-alpha.14/d3plus.full.js"></script>
 <script src="https://d3js.org/d3-hierarchy.v1.min.js"></script>
 
-<script src="~/LTE/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="~/LTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="~/LTE/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="~/LTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="~/terz/LTE/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/terz/LTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/terz/LTE/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/terz/LTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/alasql@0.6"></script>
 <!-- AdminLTE App -->
 
 
-<script src="~/js/Operations.js"></script>
-<script src="~/js/Variables.js"></script>
-<script src="~/js/Filter.js"></script>
-<script src="~/js/Indicator.js"></script>
-<script src="~/js/Graph.js"></script>
-<script src="~/js/Settings.js"></script>
-<script src="~/js/TextBlock.js"></script>
+<script src="~/terz/js/Operations.js"></script>
+<script src="~/terz/js/Variables.js"></script>
+<script src="~/terz/js/Filter.js"></script>
+<script src="~/terz/js/Indicator.js"></script>
+<script src="~/terz/js/Graph.js"></script>
+<script src="~/terz/js/Settings.js"></script>
+<script src="~/terz/js/TextBlock.js"></script>
 <script type="module">
     import interact from
         'https://cdn.interactjs.io/v1.9.19/interactjs/index.js'
@@ -120,14 +151,21 @@
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 <script>
+    function on(text) {
+        document.getElementById("overlay").style.display = "block";
+        document.getElementById("contentOverlay").innerHTML = text;
+    }
 
+    function off() {
+        document.getElementById("overlay").style.display = "none";
+    }
 
     function ExpMeasure(graphId, measureId) {
         var form;
         $.ajax(
             {
                 type: 'POST',
-                url: '../Editor/MeasureExp?id=' + measureId,
+                url: 'Editor/MeasureExp?id=' + measureId,
                 dataType: 'html',
                 cache: false,
                 async: true,
@@ -158,7 +196,7 @@
         $.ajax(
             {
                 type: 'POST',
-                url: '../Editor/IndiacatorExp',
+                url: 'Editor/IndiacatorExp',
                 dataType: 'html',
                 cache: false,
                 async: true,
@@ -189,7 +227,7 @@
         $.ajax(
             {
                 type: 'POST',
-                url: '../Editor/AddIndicador',
+                url: 'Editor/AddIndicador',
                 dataType: 'html',
                 cache: false,
                 async: true,
@@ -249,7 +287,7 @@
         $.ajax(
             {
                 type: 'POST',
-                url: '../Editor/AddTextBlock',
+                url: 'Editor/AddTextBlock',
                 dataType: 'html',
                 cache: false,
                 async: true,
@@ -302,7 +340,7 @@
         $.ajax(
             {
                 type: 'POST',
-                url: '../Editor/AddGraph',
+                url: 'Editor/AddGraph',
                 dataType: 'html',
                 cache: false,
                 async: true,
@@ -523,6 +561,7 @@
     }
 
     function updateGraphDataFrame(id) {
+        on(' Calculando...');
         var dfOptions = document.getElementsByName("DataFrame");
         var selectedDFs = [];
         for (var i = 0; i < dfOptions.length; i++) {
@@ -537,7 +576,7 @@
 
         loadUsingDataFrames();
         updateGraphConfig(id);
-        
+        off();
     }
 
     function updateGraphConfig(id) {
@@ -700,18 +739,26 @@
         var sheets = reportData.config.sheets;
         for (var i = 0; i < sheets.length; i++) {
             var liSheet = document.createElement("li");
+            liSheet.style.width = "200px";
+            var divSheet = document.createElement("div");
+            divSheet.style.display = "flex";
             var aSheet = document.createElement("a");
+            aSheet.setAttribute("class", "btn btn-block btn-secondary btn-sm");
+            aSheet.style.marginLeft = "10px";
+            aSheet.style.width = "140px";
             aSheet.appendChild(document.createTextNode(sheets[i].name));
             aSheet.setAttribute("href", "#");
             aSheet.setAttribute("onclick", "changeSheet('" + sheets[i].order + "')");
-            liSheet.appendChild(aSheet);
+            divSheet.appendChild(aSheet);
             var editbutton = document.createElement("button");
             var editIcon = document.createElement("i");
             editIcon.setAttribute("class", "fa fa-edit");
             editbutton.appendChild(editIcon);
+            editbutton.style.width = "30px";
             editbutton.setAttribute("onclick", "buildSheetSettings('" + sheets[i].id + "')");
 
-            liSheet.appendChild(editbutton);
+            divSheet.appendChild(editbutton);
+            liSheet.appendChild(divSheet);
             document.getElementById("sheetList").appendChild(liSheet);
 
         }
@@ -721,6 +768,9 @@
         buttonSheet.appendChild(document.createTextNode("Nova Pasta"));
         buttonSheet.setAttribute("href", "#");
         buttonSheet.setAttribute("onclick", "AddSheet()");
+        buttonSheet.setAttribute("class", "btn btn-block btn-info btn-sm");
+        buttonSheet.style.margin = "10px";
+        buttonSheet.style.width = "180px";
         liAddSheet.appendChild(buttonSheet);
         document.getElementById("sheetList").appendChild(liAddSheet);
 
@@ -802,7 +852,7 @@
 
 
     function GetReportData(){
-
+        on(' Carregando...');
 
         $.ajax(
             {
@@ -814,8 +864,9 @@
                 success: function (data) {
 
                     reportData = data;
-
+                    
                     init();
+                    off();
                 }
 
             });
@@ -824,15 +875,16 @@
     }
 
     function SaveReport() {
+        on(' Salvando...');
         $.ajax(
             {
                 type: 'POST',
                 url: 'Editor/UploadConfig?id=@Model.Id',
-                dataType: 'json',
+                dataType: 'html',
                 cache: false,
                 async: true,
                 success: function (data) {
-
+                    off();
                     alert(data);
                 },
                 data: reportData.config

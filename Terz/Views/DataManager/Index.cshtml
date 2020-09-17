@@ -7,17 +7,17 @@
 
 
 
-<link rel="stylesheet" href="~/LTE/plugins/fontawesome-free/css/all.min.css">
-<link rel="stylesheet" href="~/LTE/plugins/fontawesome-free/css/all.css">
+<link rel="stylesheet" href="~/terz/LTE/plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="~/terz/LTE/plugins/fontawesome-free/css/all.css">
 
 
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 <!-- Theme style -->
-<link rel="stylesheet" href="~/LTE/dist/css/adminlte.min.css">
+<link rel="stylesheet" href="~/terz/LTE/dist/css/adminlte.min.css">
 <!-- Google Font: Source Sans Pro -->
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-<link rel="stylesheet" href="~/css/DataManager.css" />
+<link rel="stylesheet" href="~/terz/css/DataManager.css" />
 
 
 <br />
@@ -159,9 +159,9 @@
     </div>
    
     <!-- AdminLTE App -->
-    <script src="~/LTE/dist/js/adminlte.min.js"></script>
+    <script src="~/terz/LTE/dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
-    <script src="~/LTE/dist/js/demo.js"></script>
+    <script src="~/terz/LTE/dist/js/demo.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
   
 
@@ -185,7 +185,7 @@
             $.ajax(
                 {
                     type: 'POST',
-                    url: '../DataManager/ExpandirRelatorio?id=@Model.Report.Id&opcao=' + option,
+                    url: 'DataManager/ExpandirRelatorio?id=@Model.Report.Id&opcao=' + option,
                     dataType: 'html',
                     cache: false,
                     async: true,
@@ -208,7 +208,7 @@
         $.ajax(
             {
                 type: 'POST',
-                url: '../DataManager/AddReferencia',
+                url: 'DataManager/AddReferencia',
                 dataType: 'html',
                 cache: false,
                 async: true,
@@ -234,7 +234,7 @@
         $.ajax(
             {
                 type: 'POST',
-                url: '../DataManager/UploadDataFrame?id=' + @Model.Id,
+                url: 'DataManager/UploadDataFrame?id=' + @Model.Id,
                 dataType: 'html',
                 cache: false,
                 async: true,
@@ -270,7 +270,7 @@
                  $.ajax(
                     {
                                 type: 'POST',
-                                url: '../DataManager/RenameDataFrame?id=' + @Model.Id+'&name=' + name + '&newname=' + document.getElementById("t-" + name).value,
+                                url: 'DataManager/RenameDataFrame?id=' + @Model.Id+'&name=' + name + '&newname=' + document.getElementById("t-" + name).value,
                                 dataType: 'html',
                                 cache: false,
                                 async: true,
@@ -290,7 +290,7 @@
                  $.ajax(
                     {
                          type: 'POST',
-                         url: '../DataManager/RenameReferencia?id=' + id + '&desc=' + document.getElementById("tr-" + id).value,
+                         url: 'DataManager/RenameReferencia?id=' + id + '&desc=' + document.getElementById("tr-" + id).value,
                                 dataType: 'html',
                                 cache: false,
                                 async: true,
@@ -310,7 +310,7 @@
      $.ajax(
                     {
                                 type: 'POST',
-                                url: '../DataManager/DeleteDataFrame?id=' + @Model.Id+'&name=' + name,
+                                url: 'DataManager/DeleteDataFrame?id=' + @Model.Id+'&name=' + name,
                                 dataType: 'html',
                                 cache: false,
                                 async: true,
@@ -330,7 +330,7 @@
      $.ajax(
                     {
                                 type: 'POST',
-                                url: '../DataManager/DeleteReferencia?id=' +id,
+                                url: 'DataManager/DeleteReferencia?id=' +id,
                                 dataType: 'html',
                                 cache: false,
                                 async: true,

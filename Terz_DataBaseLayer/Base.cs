@@ -16,7 +16,7 @@ namespace Terz_DataBaseLayer
 #if DEBUG
             string confFile = @"C:\TERZ\DataBaseConf.json";
 #else
-            string confFile = @"/root/tst/Conf.json";
+            string confFile = "/root/terz/DataBaseConf.json";
 #endif
             string confInfoTxt = File.ReadAllText(confFile);
 

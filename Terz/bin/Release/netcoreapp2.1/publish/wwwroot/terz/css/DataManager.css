@@ -1,0 +1,18 @@
+﻿.column1 {
+    width: 65%;
+    padding-left: 30px;
+}
+
+.column2 {
+    width: 15%;
+}
+
+.column3{
+    width:20%
+}
+
+#TableFiles{
+    width:70%;
+    margin-left:15%;
+}
+

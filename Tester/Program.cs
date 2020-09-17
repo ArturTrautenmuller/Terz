@@ -2,6 +2,7 @@
 using Terz_Core;
 using Newtonsoft.Json;
 using System.IO;
+using Terz_DataBaseLayer;
 
 namespace Tester
 {
@@ -10,6 +11,14 @@ namespace Tester
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+            Usuario usuario = new Usuario();
+            usuario.Load("1");
+            Console.WriteLine(usuario.Email);
+
+
+
+
+            /*
             Config config = new Config() {
                 Sheets = new System.Collections.Generic.List<Sheet>() {
                     new Sheet() {
@@ -76,7 +85,7 @@ namespace Tester
             string df = JsonConvert.SerializeObject(dataFrame, Formatting.Indented);
             File.WriteAllText(@"C:\TERZ\Folder\DataFrame\123456\df.json", df);
 
-
+            */
 
 
         }

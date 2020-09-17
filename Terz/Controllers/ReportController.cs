@@ -164,6 +164,8 @@ namespace Terz.Controllers
             string configFile = conf.ConfigPath + "/" + report.Id + "/config.json";
             System.IO.File.WriteAllText(configFile, json_text);
 
+     
+
 
 
 

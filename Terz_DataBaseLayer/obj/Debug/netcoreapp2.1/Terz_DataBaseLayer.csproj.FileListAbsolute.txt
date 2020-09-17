@@ -3,7 +3,6 @@ C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\bin\Debug\netcoreapp2.1\Terz
 C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\obj\Debug\netcoreapp2.1\Terz_DataBaseLayer.csproj.CoreCompileInputs.cache
 C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\obj\Debug\netcoreapp2.1\Terz_DataBaseLayer.AssemblyInfoInputs.cache
 C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\obj\Debug\netcoreapp2.1\Terz_DataBaseLayer.AssemblyInfo.cs
-C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\obj\Debug\netcoreapp2.1\Terz_DataBaseLayer.csprojAssemblyReference.cache
 C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\bin\Debug\netcoreapp2.1\Terz_DataBaseLayer.pdb
 C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\obj\Debug\netcoreapp2.1\Terz_DataBaseLayer.dll
 C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\obj\Debug\netcoreapp2.1\Terz_DataBaseLayer.pdb

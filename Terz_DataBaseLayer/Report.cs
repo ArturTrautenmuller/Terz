@@ -133,9 +133,11 @@ namespace Terz_DataBaseLayer
             this.Ativo = 1;
             this.MaxSize = 10;
             
-            var sql = "INSERT INTO `report` (`id`, `user_id`, `titulo`, `imagem`,`id_categoria`,`ativo`,`max_size`) VALUES (NULL, '" + this.UserId+"', '"+this.Titulo+"', '"+this.Imagem+"','"+this.CategoriaId+"','"+this.Ativo+"','"+this.MaxSize+"')";
+            var sql = "INSERT INTO `report` (`id`, `user_id`, `titulo`, `imagem`,`id_categoria`,`score`,`ranque`,`ativo`,`max_size`) VALUES (NULL, '" + this.UserId+"', '"+this.Titulo+"', '"+this.Imagem+"','"+this.CategoriaId+"','0','0','"+this.Ativo+"','"+this.MaxSize+"')";
+
             this.Id = Convert.ToString(Base.sqlCommandAndGetId(sql));
-            
+
+
         }
 
         public string getVersion()
@@ -212,7 +214,7 @@ namespace Terz_DataBaseLayer
         public void setRank()
         {
             Base.Init();
-            var sql = "UPDATE `report` SET `rank` = '" + this.Rank + "' WHERE `report`.`id` = " + this.Id;
+            var sql = "UPDATE `report` SET `ranque` = '" + this.Rank + "' WHERE `report`.`id` = " + this.Id;
             Base.sqlCommand(sql);
         }
 
