@@ -5,7 +5,7 @@
 <link href="https://fonts.googleapis.com/css?family=Raleway:600|Work+Sans" rel="stylesheet">
 <link rel="stylesheet" href="~/terz/css/Sobre.css" />
 
-<div class="card-container">
+<div class="card-container" style="margin-left:20%">
     @if (Model.Usuario.Foto == "")
     {
         <img width="200" class="round" src="~/terz/images/defaultuser.jpg" alt="user" />
@@ -17,18 +17,16 @@
 
     <h3>@Model.Usuario.Nome</h3>
     <h6>@Model.Usuario.Lugar</h6>
-    <p>User interface designer and <br /> front-end developer</p>
+    <p>@Model.Usuario.Descricao</p>
    
     <div class="skills">
         <h6>Skills</h6>
         <ul>
-            <li>UI / UX</li>
-            <li>Front End Development</li>
-            <li>HTML</li>
-            <li>CSS</li>
-            <li>JavaScript</li>
-            <li>React</li>
-            <li>Node</li>
+            @foreach(string habilidade in Model.Usuario.Habilidades.Split(","))
+            {
+                <li>@habilidade</li>
+            }
+            
         </ul>
     </div>
 </div>

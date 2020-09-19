@@ -19,8 +19,8 @@ namespace Terz_Core
         public PagamentoPagSeguro()
         {
             this.client = new HttpClient();
-            this.Email = "arturtmuller13@gmail.com";
-            this.PagSeguroToken = "34B6B872ED024F838E1BE88ECDE0F2A6";
+            this.Email = "arturtmuller14@gmail.com";
+            this.PagSeguroToken = "a7f1c55b-9249-428b-9b3f-986e6b08183dca52ac55493998a24f3e1c8464556e7f692e-df71-4c7c-902e-6c678c45f90e";
 
         }
 
@@ -32,7 +32,7 @@ namespace Terz_Core
             checkout.Sender.Documents = new Checkout.Documents() { Document = new Checkout.Document() { Tipo = "CPF", Value = cpf } };
             checkout.Currency = "BRL";
             checkout.Items = new Checkout.Items() { Item = new Checkout.Item() { Id = "0001", Description = produto, Quantity = "1", Amount = valor, Weight = "10", ShippingCost = "0.00" } };
-            checkout.RedirectURL = "http://unime.site/admin";
+            checkout.RedirectURL = "http://terzanalytics.com/terz";
             checkout.ExtraAmount = "0.00";
             checkout.Reference = codref;
             checkout.Shipping = new Checkout.Shipping() { AddressRequired = "false", Tipo = "1", Cost = "0.00" };
@@ -55,7 +55,7 @@ namespace Terz_Core
             }
             string body = xml.Replace("encoding=\"utf-16\"", "");
 
-            string URL = "https://ws.sandbox.pagseguro.uol.com.br/v2/checkout?email=" + this.Email + "&token=" + this.PagSeguroToken;
+            string URL = "https://ws.pagseguro.uol.com.br/v2/checkout?email=" + this.Email + "&token=" + this.PagSeguroToken;
 
             var httpContent = new StringContent(body, Encoding.UTF8, "application/xml");
             string respone = await client.PostAsync(URL, httpContent).Result.Content.ReadAsStringAsync();
@@ -74,7 +74,7 @@ namespace Terz_Core
                 Console.WriteLine(exp.Message);
             }
 
-            string RedirectURL = "https://sandbox.pagseguro.uol.com.br/v2/checkout/payment.html?code=" + token.Code;
+            string RedirectURL = "https://pagseguro.uol.com.br/v2/checkout/payment.html?code=" + token.Code;
 
             return RedirectURL;
 
@@ -85,7 +85,7 @@ namespace Terz_Core
 
         public async Task<bool> VerificaPagamento(int codRef)
         {
-            string URL = "https://ws.sandbox.pagseguro.uol.com.br/v2/transactions?email=" + Email + "&token=" + PagSeguroToken + "&reference=" + codRef;
+            string URL = "https://ws.pagseguro.uol.com.br/v2/transactions?email=" + Email + "&token=" + PagSeguroToken + "&reference=" + codRef;
             string respone = await client.GetAsync(URL).Result.Content.ReadAsStringAsync();
             Consulta.TransactionSearchResult result = new Consulta.TransactionSearchResult();
             try
