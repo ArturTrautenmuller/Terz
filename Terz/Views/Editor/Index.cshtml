@@ -803,6 +803,29 @@
                     console.log("group" + group);
                     AllDFS.push(group);
                 }
+
+                let pattern = /[^\s]+\.externalDF\(.+?\)/g;
+                let res = pattern.exec(reportData.config.sheets[i].indicators[j].measure.expression);
+                while (res != null) {
+                    var eExpression = res[0];
+                    let ePattern = /externalDF\(.+?\)/g;
+                    let eRes = ePattern.exec(eExpression)[0];
+                    var edfs = eRes.replace('externalDF(', '').replace(')', '');
+                    var edfNames = edfs.split(',');
+                    if (AllDFS.findIndex(i => i.name == edfs) == -1) {
+                        var group = {};
+                        group["name"] = edfs;
+                        var table = JSON.parse(JSON.stringify(AllDFS.filter(function (x) { return x.name == edfNames[0] })[0].table));
+                        for (var k = 1; k < edfNames.length; k++) {
+                            table = fulljoin(table, JSON.parse(JSON.stringify(AllDFS.filter(function (x) { return x.name == edfNames[k] })[0].table)));
+                        }
+                        group["table"] = table;
+                        AllDFS.push(group);
+                    }
+
+
+                    res = pattern.exec(expression);
+                }
             }
 
 
@@ -819,6 +842,31 @@
                     }
                     group["table"] = table;
                     AllDFS.push(group);
+                }
+
+                for (l = 0; l < reportData.config.sheets[i].graphs[j].measures.length; l++) {
+                    let pattern = /[^\s]+\.externalDF\(.+?\)/g;
+                    let res = pattern.exec(reportData.config.sheets[i].graphs[j].measures[l].expression);
+                    while (res != null) {
+                        var eExpression = res[0];
+                        let ePattern = /externalDF\(.+?\)/g;
+                        let eRes = ePattern.exec(eExpression)[0];
+                        var edfs = eRes.replace('externalDF(', '').replace(')', '');
+                        var edfNames = edfs.split(',');
+                        if (AllDFS.findIndex(i => i.name == edfs) == -1) {
+                            var group = {};
+                            group["name"] = edfs;
+                            var table = JSON.parse(JSON.stringify(AllDFS.filter(function (x) { return x.name == edfNames[0] })[0].table));
+                            for (var k = 1; k < edfNames.length; k++) {
+                                table = fulljoin(table, JSON.parse(JSON.stringify(AllDFS.filter(function (x) { return x.name == edfNames[k] })[0].table)));
+                            }
+                            group["table"] = table;
+                            AllDFS.push(group);
+                        }
+
+
+                        res = pattern.exec(expression);
+                    }
                 }
             }
 

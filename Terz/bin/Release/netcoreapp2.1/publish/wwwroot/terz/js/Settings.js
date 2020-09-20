@@ -74,6 +74,7 @@
     document.getElementById("Settings").appendChild(document.createElement("hr"));
     var deleteButton = document.createElement("button");
     deleteButton.innerHTML = "Remover";
+    deleteButton.setAttribute("class", "btn btn-block btn-danger btn-sm");
     deleteButton.setAttribute("onclick", "deleteTextBlock('" + id + "')");
     document.getElementById("Settings").appendChild(deleteButton);
     
@@ -105,8 +106,8 @@ function buildIndicatorSettings(id) {
         checkDF.type = "checkbox";
         checkDF.value = reportData.dataFrames[j].name;
         checkDF.setAttribute("name", "DataFrame");
-        checkDF.style.width = "18px";
-        checkDF.style.height = "18px";
+        checkDF.style.width = "16px";
+        checkDF.style.height = "16px";
 
         if (indicator.dataFrameName.includes(reportData.dataFrames[j].name)) {
             checkDF.checked = "checked";
@@ -114,7 +115,7 @@ function buildIndicatorSettings(id) {
         selectDFDiv.appendChild(checkDF);
         var dfLabel = document.createElement("label");
         dfLabel.append(document.createTextNode(reportData.dataFrames[j].name));
-        dfLabel.style.fontSize = "16px";
+        dfLabel.style.fontSize = "14px";
         dfLabel.style.color = "gray";
         dfLabel.style.marginLeft = "10px";
         selectDFDiv.appendChild(dfLabel);
@@ -125,6 +126,8 @@ function buildIndicatorSettings(id) {
     var applyButton = document.createElement("button");
     applyButton.append(document.createTextNode("Aplicar"));
     applyButton.setAttribute("onclick", "updateIndicatorDataFrame('" + id + "')");
+    applyButton.setAttribute("class", "btn btn-block btn-info btn-sm");
+
     selectDFDiv.appendChild(applyButton);
     selectDFDiv.appendChild(document.createElement("br"));
 
@@ -140,7 +143,7 @@ function buildIndicatorSettings(id) {
         orderDfDiv.setAttribute("name", "dfOrder");
         var orderDfLabel = document.createElement("label");
         orderDfLabel.innerHTML = indicator.dataFrameName[i];
-        orderDfLabel.style.fontSize = "16px";
+        orderDfLabel.style.fontSize = "14px";
         orderDfLabel.style.color = "gray";
         orderDfLabel.style.width = "170px";
         orderDfDiv.appendChild(orderDfLabel);
@@ -188,7 +191,7 @@ function buildIndicatorSettings(id) {
     var measureExpLabel = document.createElement("label");
     measureExpLabel.innerHTML = "Expressão:";
     document.getElementById("Settings").appendChild(measureExpLabel);
-    document.getElementById("Settings").appendChild(document.createElement("br"));
+   // document.getElementById("Settings").appendChild(document.createElement("br"));
     var expBut = document.createElement("button");
     expBut.appendChild(document.createTextNode("F(x)"));
     expBut.setAttribute("onclick", "ExpIndicator('" + id + "')");
@@ -196,10 +199,11 @@ function buildIndicatorSettings(id) {
     var measureExp = document.createElement("input");
     measureExp.setAttribute("id", "Expression");
     measureExp.setAttribute("type", "text");
+    measureExp.setAttribute("class", "form-control");
     measureExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
    // measureExp.setAttribute("class", "form-control");
     measureExp.value = indicator.measure.expresion;
-    measureExp.style.width = "180";
+    //measureExp.style.width = "180";
     document.getElementById("Settings").appendChild(measureExp);
    
     document.getElementById("Settings").appendChild(document.createElement("br"));
@@ -336,6 +340,7 @@ function buildIndicatorSettings(id) {
     document.getElementById("Settings").appendChild(document.createElement("hr"));
     var deleteButton = document.createElement("button");
     deleteButton.innerHTML = "Remover";
+    deleteButton.setAttribute("class", "btn btn-block btn-danger btn-sm");
     deleteButton.setAttribute("onclick", "deleteIndicator('" + id + "')");
     document.getElementById("Settings").appendChild(deleteButton);
 
@@ -365,12 +370,18 @@ function buildGraphSettings(id) {
         checkDF.type = "checkbox";
         checkDF.value = reportData.dataFrames[j].name;
         checkDF.setAttribute("name", "DataFrame");
+        checkDF.style.width = "16px";
+        checkDF.style.height = "16px";
 
         if (graph.dataFrameName.includes(reportData.dataFrames[j].name)) {
             checkDF.checked = "checked";
         }
         selectDFDiv.appendChild(checkDF);
         var dfLabel = document.createElement("label");
+        dfLabel.style.fontSize = "14px";
+        dfLabel.style.color = "gray";
+        dfLabel.style.marginLeft = "10px";
+
         dfLabel.append(document.createTextNode(reportData.dataFrames[j].name));
         selectDFDiv.appendChild(dfLabel);
         selectDFDiv.appendChild(document.createElement("br"));
@@ -380,6 +391,7 @@ function buildGraphSettings(id) {
     var applyButton = document.createElement("button");
     applyButton.append(document.createTextNode("Aplicar"));
     applyButton.setAttribute("onclick", "updateGraphDataFrame('" + id + "')");
+    applyButton.setAttribute("class", "btn btn-block btn-info btn-sm");
     selectDFDiv.appendChild(applyButton);
     selectDFDiv.appendChild(document.createElement("br"));
 
@@ -395,9 +407,13 @@ function buildGraphSettings(id) {
         orderDfDiv.setAttribute("name", "dfOrder");
         var orderDfLabel = document.createElement("label");
         orderDfLabel.innerHTML = graph.dataFrameName[i];
+        orderDfLabel.style.fontSize = "14px";
+        orderDfLabel.style.color = "gray";
+        orderDfLabel.style.width = "170px";
         orderDfDiv.appendChild(orderDfLabel);
 
         var orderDfDown = document.createElement("a");
+        orderDfDown.style.fontSize = "16px";
         orderDfDown.setAttribute("onclick", "rebaixarDFGraph('" + graph.id + "'," + i + ")");
         var downIcon = document.createElement("i");
         downIcon.setAttribute("class", "fas fa-arrow-down");
@@ -405,6 +421,7 @@ function buildGraphSettings(id) {
         orderDfDiv.appendChild(orderDfDown);
 
         var orderDfUp = document.createElement("a");
+        orderDfUp.style.fontSize = "16px";
         orderDfUp.setAttribute("onclick", "promoverDFGraph('" + graph.id + "'," + i + ")");
         var upIcon = document.createElement("i");
         upIcon.setAttribute("class", "fas fa-arrow-up");
@@ -437,15 +454,17 @@ function buildGraphSettings(id) {
        // dimButton.setAttribute("data-toggle", "dropdown");
         dimButton.style.width = "250";
         dimButton.style.marginTop = "10";
+        dimButton.setAttribute("class", "btn btn-block btn-secondary btn-sm");
         dimButton.appendChild(document.createTextNode(dimension.name));
         var span = document.createElement("span");
         span.setAttribute("class", "caret");
         dimButton.appendChild(span);
         dimDiv.appendChild(dimButton);
-        var ulDim = document.createElement("ul");
+       // var ulDim = document.createElement("ul");
         // ulDim.setAttribute("class", "dropdown-menu");
-        ulDim.style.display = "none";
+       // ulDim.style.display = "none";
         var DimNameLi = document.createElement("li");
+        DimNameLi.style.display = "none";
         var dimNameLabel = document.createElement("label");
         dimNameLabel.innerHTML = "Nome:";
         DimNameLi.appendChild(dimNameLabel);
@@ -473,12 +492,13 @@ function buildGraphSettings(id) {
 
 
 
-        ulDim.appendChild(DimNameLi);
+       // ulDim.appendChild(DimNameLi);
         var deleteButton = document.createElement("button");
         deleteButton.innerHTML = "Remover";
+        deleteButton.setAttribute("class", "btn btn-block btn-danger btn-sm");
         deleteButton.setAttribute("onclick", "deleteDimension('" + id + "','" + dimension.id + "')");
-        ulDim.appendChild(deleteButton);
-        dimDiv.appendChild(ulDim);
+        DimNameLi.appendChild(deleteButton);
+        dimDiv.appendChild(DimNameLi);
         document.getElementById("Settings").appendChild(dimDiv);
         
 
@@ -489,6 +509,7 @@ function buildGraphSettings(id) {
     addDimButton.setAttribute("onclick", "addDimension('" + id + "')");
     addDimButton.style.width = "250";
     addDimButton.style.marginTop = "10";
+    addDimButton.setAttribute("class", "btn btn-block btn-info btn-sm");
     document.getElementById("Settings").appendChild(addDimButton);
     document.getElementById("Settings").appendChild(document.createElement("br"));
     document.getElementById("Settings").appendChild(document.createElement("hr"));
@@ -498,6 +519,7 @@ function buildGraphSettings(id) {
         var measureDiv = document.createElement("div");
         measureDiv.setAttribute("class", "dropdown");
         var measureButton = document.createElement("button");
+        measureButton.setAttribute("class", "btn btn-block btn-secondary btn-sm");
       //  measureButton.setAttribute("class", "btn btn-primary dropdown-toggle");
         measureButton.setAttribute("type", "button");
         //measureButton.setAttribute("data-toggle", "dropdown");
@@ -509,10 +531,11 @@ function buildGraphSettings(id) {
         span.setAttribute("class", "caret");
         measureButton.appendChild(span);
         measureDiv.appendChild(measureButton);
-        var ulMeasure = document.createElement("ul");
-        ulMeasure.style.display = "none";
+      //  var ulMeasure = document.createElement("ul");
+        //ulMeasure.style.display = "none";
        // ulMeasure.setAttribute("class", "dropdown-menu");
         var measureNameLi = document.createElement("li");
+        measureNameLi.style.display = "none";
         var measureNameLabel = document.createElement("label");
         measureNameLabel.innerHTML = "Nome:";
         measureNameLi.appendChild(measureNameLabel);
@@ -528,9 +551,9 @@ function buildGraphSettings(id) {
         measureNameLi.appendChild(measureNameExp);
         measureNameLi.appendChild(document.createElement("br"));
         var measureFieldLabel = document.createElement("label");
-        measureFieldLabel.innerHTML = "Campo:";
+        measureFieldLabel.innerHTML = "Expressão:";
         measureNameLi.appendChild(measureFieldLabel);
-        measureNameLi.appendChild(document.createElement("br"));
+       // measureNameLi.appendChild(document.createElement("br"));
 
         var expBut = document.createElement("button");
         expBut.appendChild(document.createTextNode("F(x)"));
@@ -539,12 +562,13 @@ function buildGraphSettings(id) {
         var measureFieldExp = document.createElement("input");
         measureFieldExp.setAttribute("id", "measureExp" + measure.id);
         measureFieldExp.setAttribute("type", "text");
+        measureFieldExp.setAttribute("class", "form-control");
         measureFieldExp.setAttribute("onchange", "updateGraphConfig('" + id + "')");
-        measureFieldExp.style.width = "160";
+      //  measureFieldExp.style.width = "160";
        // measureFieldExp.setAttribute("class", "form-control");
         measureFieldExp.value = measure.expresion;
         measureNameLi.appendChild(measureFieldExp);
-        measureNameLi.appendChild(document.createElement("br"));
+       // measureNameLi.appendChild(document.createElement("br"));
         //formato
 
         var selectFormatDiv = document.createElement("div");
@@ -573,14 +597,15 @@ function buildGraphSettings(id) {
        
         measureNameLi.appendChild(document.createElement("br"));
 
-        ulMeasure.appendChild(measureNameLi);
-        ulMeasure.appendChild(selectFormatDiv);
+        // ulMeasure.appendChild(measureNameLi);
+        measureNameLi.appendChild(selectFormatDiv);
         // remover
         var deleteButton = document.createElement("button");
         deleteButton.innerHTML = "Remover";
+        deleteButton.setAttribute("class", "btn btn-block btn-danger btn-sm");
         deleteButton.setAttribute("onclick", "deleteMeasure('" + id + "','" + measure.id + "')");
-        ulMeasure.appendChild(deleteButton);
-        measureDiv.appendChild(ulMeasure);
+        measureNameLi.appendChild(deleteButton);
+        measureDiv.appendChild(measureNameLi);
         document.getElementById("Settings").appendChild(measureDiv);
     }
 
@@ -589,6 +614,7 @@ function buildGraphSettings(id) {
     addMeasureButton.setAttribute("onclick", "addMeasure('" + id + "')");
     addMeasureButton.style.width = "250";
     addMeasureButton.style.marginTop = "10";
+    addMeasureButton.setAttribute("class", "btn btn-block btn-info btn-sm");
     document.getElementById("Settings").appendChild(addMeasureButton);
     document.getElementById("Settings").appendChild(document.createElement("br"));
 
@@ -781,6 +807,7 @@ function buildGraphSettings(id) {
 
     document.getElementById("Settings").appendChild(document.createElement("hr"));
     var deleteButton = document.createElement("button");
+    deleteButton.setAttribute("class", "btn btn-block btn-danger btn-sm");
     deleteButton.innerHTML = "Remover";
     deleteButton.setAttribute("onclick", "deleteGraph('" + id + "')");
     document.getElementById("Settings").appendChild(deleteButton);
@@ -886,6 +913,7 @@ function buildSheetSettings(id) {
     document.getElementById("Settings").appendChild(nameExp);
     document.getElementById("Settings").appendChild(document.createElement("br"));
     var deleteButton = document.createElement("button");
+    deleteButton.setAttribute("class", "btn btn-block btn-danger btn-sm");
     deleteButton.setAttribute("onclick", "deleteSheet('" + id + "')");
     deleteButton.innerHTML = "Remover";
     document.getElementById("Settings").appendChild(deleteButton);
@@ -930,6 +958,7 @@ function buildFilterSettings() {
        // filterButton.setAttribute("class", "btn btn-primary dropdown-toggle");
         filterButton.style.width = "250";
         filterButton.style.marginTop = "10";
+        filterButton.setAttribute("class", "btn btn-block btn-secondary btn-sm");
         filterButton.setAttribute("type", "button");
       //  filterButton.setAttribute("data-toggle", "dropdown");
         filterButton.appendChild(document.createTextNode(filter.dimension.name));
@@ -972,6 +1001,7 @@ function buildFilterSettings() {
 
         var applyButton = document.createElement("button");
         applyButton.append(document.createTextNode("Aplicar"));
+        applyButton.setAttribute("class", "btn btn-block btn-info btn-sm");
         applyButton.setAttribute("onclick", "updateFilterConfig('" + filter.id + "')");
         selectDFDiv.appendChild(applyButton);
         selectDFDiv.appendChild(document.createElement("br"));
@@ -1011,6 +1041,7 @@ function buildFilterSettings() {
         ulFilter.appendChild(filterNameLi);
         var deleteButton = document.createElement("button");
         deleteButton.innerHTML = "Remover";
+        deleteButton.setAttribute("class", "btn btn-block btn-danger btn-sm");
         deleteButton.setAttribute("onclick", "deleteFilter('" + filter.id + "')");
         ulFilter.appendChild(deleteButton);
         filterDiv.appendChild(ulFilter);
@@ -1022,6 +1053,7 @@ function buildFilterSettings() {
     addfilterButton.setAttribute("onclick", "addFilter()");
     addfilterButton.style.width = "250";
     addfilterButton.style.marginTop = "10";
+    addfilterButton.setAttribute("class", "btn btn-block btn-info btn-sm");
     document.getElementById("Settings").appendChild(addfilterButton);
     document.getElementById("Settings").appendChild(document.createElement("br"));
 

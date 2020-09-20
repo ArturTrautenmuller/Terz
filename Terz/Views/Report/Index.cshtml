@@ -1,5 +1,7 @@
 ﻿@model Terz.Models.Report.ReportView
 
+<title>@Model.Report.Titulo</title>
+
 <link rel="stylesheet" href="~/terz/css/Report.css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
@@ -50,54 +52,65 @@
     <div id="text"><div style="margin-left:22px" class="loader"></div> Calculando...</div>
 </div>
 
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        
+        <div class="navbar-header">
 
 
-<div id="header" style=" display:flex;background-color:#eee;border-bottom:2px solid #32bab6; margin-bottom:10px;">
-    <div style="width:38%;margin-left:2%">
 
-        <label style="margin-left:12px">@Model.Report.Titulo</label>
-    </div>
 
-    <div id="Pages" style="margin-left:5%;margin-top:30px;">
-        <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                Paginas
-                <span class="caret"></span>
-            </button>
-            <ul id="sheetList" class="dropdown-menu"></ul>
+            <h4 class="brand brand-name navbar-left" style="margin-top:28px; max-width:500px">@Model.Report.Titulo</h4>
+        </div>
+        <div class="collapse navbar-collapse navbar-right" id="myNavbar">
+            <ul class="nav navbar-nav">
+
+                <li><a href="#" style="color:gray;text-decoration:none; margin-left:10px" onclick="ShowInfo()">Sobre</a></li>
+                <li><a href="#" style="color:gray;text-decoration:none; margin-left:10px" onclick="ShowReference()">Referencias</a></li>
+                <li><a href="#" style="color:gray;text-decoration:none" onclick="AvaliatePage()">Avaliar</a></li>
+                <li>
+                    <a>
+                        @if (Model.Report.Avaliacoes.Count > 0)
+                        {
+                            int i = 1;
+                            while (i <= Model.Report.Avaliacoes.Select(a => a.Nota).Average())
+                            {
+                                <span class="fa fa-star checked"></span>
+                                i++;
+                            }
+
+                            while (i <= 5)
+                            {
+                                <span class="fa fa-star"></span>
+                                i++;
+                            }
+                        }
+
+                        else
+                        {
+                            <label>Não Avaliado</label>
+                        }
+                    </a>
+                </li>
+                <li>
+                    <div id="Pages" style="margin-left:5%;margin-top:23px;">
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                Paginas
+                                <span class="caret"></span>
+                            </button>
+                            <ul id="sheetList" class="dropdown-menu"></ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
-    <div id="Avaliation" style="margin-left:5%;margin-top:37px;font-size:18px">
-        @if (Model.Report.Avaliacoes.Count > 0)
-        {
-            int i = 1;
-            while (i <= Model.Report.Avaliacoes.Select(a => a.Nota).Average())
-            {
-                <span class="fa fa-star checked"></span>
-                i++;
-            }
+</nav>
 
-            while (i <= 5)
-            {
-                <span class="fa fa-star"></span>
-                i++;
-            }
-        }
 
-        else
-        {
-            <label>Não Avaliado</label>
-        }
 
-        <a href="#" style="color:gray;text-decoration:none" onclick="AvaliatePage()">Avaliar</a>
-
-    </div>
-    <div id="Avaliation" style="margin-left:2%;margin-top:37px;font-size:18px">
-        <a href="#" style="color:gray;text-decoration:none; margin-left:10px" onclick="ShowInfo()">Sobre</a>
-        <a href="#" style="color:gray;text-decoration:none; margin-left:10px" onclick="ShowReference()">Referencias</a>
-    </div>
-</div>
-<div>
+<div style="margin-top:85px">
 
     <div id="Filters">
 
@@ -424,9 +437,34 @@
                         }
                         group["table"] = table;
                         AllDFS.push(group);
-                    }
-                }
 
+                    }
+
+                    let pattern = /[^\s]+\.externalDF\(.+?\)/g;
+                    let res = pattern.exec(reportData.config.sheets[i].indicators[j].measure.expression);
+                    while (res != null) {
+                        var eExpression = res[0];
+                        let ePattern = /externalDF\(.+?\)/g;
+                        let eRes = ePattern.exec(eExpression)[0];
+                        var edfs = eRes.replace('externalDF(', '').replace(')', '');
+                        var edfNames = edfs.split(',');
+                        if (AllDFS.findIndex(i => i.name == edfs) == -1) {
+                            var group = {};
+                            group["name"] = edfs;
+                            var table = JSON.parse(JSON.stringify(AllDFS.filter(function (x) { return x.name == edfNames[0] })[0].table));
+                            for (var k = 1; k < edfNames.length; k++) {
+                                table = fulljoin(table, JSON.parse(JSON.stringify(AllDFS.filter(function (x) { return x.name == edfNames[k] })[0].table)));
+                            }
+                            group["table"] = table;
+                            AllDFS.push(group);
+                        } 
+
+
+                        res = pattern.exec(expression);
+                    }
+
+                }
+            
 
 
                 for (var j = 0; j < reportData.config.sheets[i].graphs.length; j++) {
@@ -442,6 +480,32 @@
                         group["table"] = table;
                         AllDFS.push(group);
                     }
+
+                    for (l = 0; l < reportData.config.sheets[i].graphs[j].measures.length; l++) {
+                        let pattern = /[^\s]+\.externalDF\(.+?\)/g;
+                        let res = pattern.exec(reportData.config.sheets[i].graphs[j].measures[l].expression);
+                        while (res != null) {
+                            var eExpression = res[0];
+                            let ePattern = /externalDF\(.+?\)/g;
+                            let eRes = ePattern.exec(eExpression)[0];
+                            var edfs = eRes.replace('externalDF(', '').replace(')', '');
+                            var edfNames = edfs.split(',');
+                            if (AllDFS.findIndex(i => i.name == edfs) == -1) {
+                                var group = {};
+                                group["name"] = edfs;
+                                var table = JSON.parse(JSON.stringify(AllDFS.filter(function (x) { return x.name == edfNames[0] })[0].table));
+                                for (var k = 1; k < edfNames.length; k++) {
+                                    table = fulljoin(table, JSON.parse(JSON.stringify(AllDFS.filter(function (x) { return x.name == edfNames[k] })[0].table)));
+                                }
+                                group["table"] = table;
+                                AllDFS.push(group);
+                            }
+
+
+                            res = pattern.exec(expression);
+                        }
+                    }
+                    
                 }
 
 

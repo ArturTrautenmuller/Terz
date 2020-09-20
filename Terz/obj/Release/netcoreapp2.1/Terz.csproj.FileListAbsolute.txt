@@ -57,3 +57,4 @@ C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Terz.Views.pdb
 C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Terz.csproj.CopyComplete
 C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Terz.dll
 C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Terz.pdb
+C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Razor\Views\Documentation\Index.g.cshtml.cs

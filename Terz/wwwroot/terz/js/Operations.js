@@ -6,7 +6,7 @@ function EvalueteEx(expressions, dataframe, fields) {
 
         var tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == dataframe.join(",") })[0].table));
    
-        var reducedExpression = solve(expressions, tempDf);
+        var reducedExpression = solve(expressions, tempDf, dataframe.join(","),fields,null);
         return math.eval(reducedExpression);
     }
     else {
@@ -40,7 +40,7 @@ function EvalueteEx(expressions, dataframe, fields) {
                 }
             }
             for (var l = 0; l < expressions.length; l++) {
-                var res = math.eval(solve(expressions[l], filterdDf));
+                var res = math.eval(solve(expressions[l], filterdDf, dataframe.join(","), fields, distinctDf[j]));
                 distinctDf[j].push(res);
             }
 
@@ -58,9 +58,43 @@ function EvalueteEx(expressions, dataframe, fields) {
     return 0;
 }
 
+function applySelectionsOp(name) {
+    var dfSelections = selections.filter(function (x) { return x.dataFrame == name });
+    var pos = usingDataFrames.map(function (e) { return e.name; }).indexOf(name);
+    var completeTable = AllDFS.filter(function (x) { return x.name == name })[0].table;
+    var filteredTable = [];
+    var headers = completeTable[0];
+    filteredTable.push(completeTable[0]);
+    for (var i = 1; i < completeTable.length; i++) {
+        var row = completeTable[i];
+        var selectRow = true;
+        for (j = 0; j < dfSelections.length; j++) {
+            var selection = dfSelections[j];
+            if (selection.value.length != 0) {
+                var fieldPos = headers.indexOf(selection.field);
+                if (!selection.value.includes(row[fieldPos])) {
+                    selectRow = false;
+                }
+            }
+        }
 
-function solve(expression, dataFrame) {
-    var solvedExpression = solveWhere(expression, dataFrame);
+        if (selectRow) {
+            filteredTable.push(row);
+        }
+    }
+    console.log(filteredTable);
+    usingDataFrames[pos].table = filteredTable;
+
+}
+
+function solve(expression, dataFrame,dataFrameName,fields,groupedRow) {
+
+    var solvedExpression = solveExternalDF(expression, fields, groupedRow)
+
+    solvedExpression = solveIgnoreAll(solvedExpression, dataFrameName, fields, groupedRow);
+    solvedExpression = solveIgnore(solvedExpression, dataFrameName, fields, groupedRow);
+
+    solvedExpression = solveWhere(solvedExpression, dataFrame);
    
     solvedExpression = solveSum(solvedExpression, dataFrame);
     solvedExpression = solveCount(solvedExpression, dataFrame);
@@ -69,6 +103,154 @@ function solve(expression, dataFrame) {
     console.log("exp");
     console.log(solvedExpression);
     return solvedExpression;
+}
+
+function solveIgnoreAll(expression, dataFrameName, fields, groupedRow) {
+
+    var selectionsBackup = JSON.parse(JSON.stringify(selections));
+    selections = [];
+    applySelectionsOp(dataFrameName);
+    tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == dataFrameName })[0].table));
+    var dataFrame;
+    if (fields == null) {
+        dataFrame = tempDf
+    }
+    else {
+        var filterdDf = [];
+        var header = tempDf[0];
+        filterdDf.push(header);
+        for (var k = 1; k < tempDf.length; k++) {
+            var row = tempDf[k];
+            if (considerRow(fields, groupedRow, header, row)) {
+                filterdDf.push(row);
+            }
+        }
+
+        dataFrame = filterdDf;
+    }
+    var returnExpression = expression;
+    let pattern = /[^\s]+\.ignoreAll\(\)/g;
+    let res = pattern.exec(expression);
+    while (res != null) {
+        var iExpression = res[0];
+       
+       
+        var baseExp = iExpression.replace(".ignoreAll()", '');
+
+        var iSolvedExpression = solveWhere(baseExp, dataFrame);
+        iSolvedExpression = solveSum(iSolvedExpression, dataFrame);
+        iSolvedExpression = solveCount(iSolvedExpression, dataFrame);
+        iSolvedExpression = solveMin(iSolvedExpression, dataFrame);
+        iSolvedExpression = solveMax(iSolvedExpression, dataFrame);
+
+        returnExpression = returnExpression.replace(iExpression, iSolvedExpression);
+
+        res = pattern.exec(expression);
+    }
+    selections = JSON.parse(JSON.stringify(selectionsBackup));
+    applySelectionsOp(dataFrameName);
+    return returnExpression;
+}
+
+function solveIgnore(expression, dataFrameName, fields, groupedRow) {
+
+    var selectionsBackup = JSON.parse(JSON.stringify(selections));
+    var returnExpression = expression;
+    let pattern = /[^\s]+\.ignore\(.+?\)/g;
+    let res = pattern.exec(expression);
+    while (res != null) {
+        var iExpression = res[0];
+        let iPattern = /ignore\(.+?\)/g;
+        let iRes = iPattern.exec(iExpression)[0];
+        var ignoreFields = iRes.replace('ignore(', '').replace(')', '').split(',');
+
+        //filtrar
+        var _selectionsBackup = JSON.parse(JSON.stringify(selectionsBackup));
+
+        for (var k = 0; k < ignoreFields.length; k++) {
+            var pos = _selectionsBackup.findIndex(i => i.field == ignoreFields[k] && i.dataFrame == dataFrameName);
+            if (pos != -1) {
+                _selectionsBackup[pos].value = [];
+            }
+        }
+
+        selections = _selectionsBackup;
+
+        applySelectionsOp(dataFrameName);
+        tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == dataFrameName })[0].table));
+        var dataFrame;
+        if (fields == null) {
+            dataFrame = tempDf
+        }
+        else {
+            var filterdDf = [];
+            var header = tempDf[0];
+            filterdDf.push(header);
+            for (var k = 1; k < tempDf.length; k++) {
+                var row = tempDf[k];
+                if (considerRow(fields, groupedRow, header, row)) {
+                    filterdDf.push(row);
+                }
+            }
+
+            dataFrame = filterdDf;
+        }
+
+        //
+
+
+        var baseExp = iExpression.replace("." + iRes, '');
+
+        var iSolvedExpression = solveWhere(baseExp, dataFrame);
+        iSolvedExpression = solveSum(iSolvedExpression, dataFrame);
+        iSolvedExpression = solveCount(iSolvedExpression, dataFrame);
+        iSolvedExpression = solveMin(iSolvedExpression, dataFrame);
+        iSolvedExpression = solveMax(iSolvedExpression, dataFrame);
+
+        returnExpression = returnExpression.replace(iExpression, iSolvedExpression);
+
+        res = pattern.exec(expression);
+    }
+    selections = JSON.parse(JSON.stringify(selectionsBackup));
+    applySelectionsOp(dataFrameName);
+    return returnExpression;
+}
+
+function solveExternalDF(expression, fields, groupedRow) {
+
+    
+
+    var returnExpression = expression;
+    let pattern = /[^\s]+\.externalDF\(.+?\)/g;
+    let res = pattern.exec(expression);
+    while (res != null) {
+        var eExpression = res[0];
+        let ePattern = /externalDF\(.+?\)/g;
+        let eRes = ePattern.exec(eExpression)[0];
+        var dfs = eRes.replace('externalDF(', '').replace(')', '');
+
+        
+        var externalDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == dfs })[0].table));
+        
+
+
+        var baseExp = eExpression.replace("." + eRes, '');
+
+
+        var eSolvedExpression = solveIgnoreAll(baseExp, dfs, fields, groupedRow);
+        eSolvedExpression = solveIgnore(eSolvedExpression, dfs, fields, groupedRow);
+        eSolvedExpression = solveWhere(eSolvedExpression, externalDf);
+        eSolvedExpression = solveSum(eSolvedExpression, externalDf);
+        eSolvedExpression = solveCount(eSolvedExpression, externalDf);
+        eSolvedExpression = solveMin(eSolvedExpression, externalDf);
+        eSolvedExpression = solveMax(eSolvedExpression, externalDf);
+
+        returnExpression = returnExpression.replace(eExpression, eSolvedExpression);
+
+        res = pattern.exec(expression);
+    }
+    
+    return returnExpression;
 }
 
 function solveWhere(expression, dataFrame) {
