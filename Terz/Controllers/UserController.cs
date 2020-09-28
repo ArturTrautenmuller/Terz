@@ -189,6 +189,7 @@ namespace Terz.Controllers
 
             Usuario usuario = new Usuario();
             usuario.Email = email;
+            usuario.Nome = name;
             usuario.Senha = senha;
             if (!usuario.Existis())
             {

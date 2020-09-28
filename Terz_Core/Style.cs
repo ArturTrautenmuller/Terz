@@ -15,8 +15,12 @@ namespace Terz_Core
         public string TextColor { get; set; }
         public string FontSize { get; set; }
         public string Orientation { get; set; }
+        public string BorderColor { get; set; }
+        public string BorderThickness { get; set; }
+        public string BorderRadius { get; set; }
         public bool Stack { get; set; }
 
+        public string Region { get; set; }
 
     }
 }

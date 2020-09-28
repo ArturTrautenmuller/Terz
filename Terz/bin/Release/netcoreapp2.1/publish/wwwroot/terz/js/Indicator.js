@@ -16,8 +16,12 @@
         indicatorDiv.style.width = indicator.style.width;
         indicatorDiv.style.height = indicator.style.height;
         indicatorDiv.style.position = "absolute";
-        indicatorDiv.style.border = "0px solid black";
-        indicatorDiv.style.borderRadius = "7px";
+       // indicatorDiv.style.border = "0px solid black";
+        // indicatorDiv.style.borderRadius = "7px";
+        indicatorDiv.style.borderStyle = "solid";
+        indicatorDiv.style.borderRadius = indicator.style.borderRadius+"px";
+        indicatorDiv.style.borderColor = indicator.style.borderColor;
+        indicatorDiv.style.borderWidth = indicator.style.borderThickness+"px";
 
         indicatorDiv.setAttribute("id", "ind" + indicator.id);
         indicatorDiv.setAttribute("class", "resize-drag");

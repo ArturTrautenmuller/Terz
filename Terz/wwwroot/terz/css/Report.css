@@ -15,17 +15,19 @@
 }
 
 .dropbtn {
-    background-color: #3297a8;
-    color: white;
+    background-color: white;
+    color: gray;
     padding: 10px;
     font-size: 16px;
     border: none;
     cursor: pointer;
-    border-radius:8px;
+    border-radius: 0px;
+    border-bottom: 1px solid #3297a8;
+    border-left: 1px solid #3297a8;
 }
 
     .dropbtn:hover, .dropbtn:focus {
-        background-color: white;
+        background-color: #eee;
         color: #3297a8;
     }
 

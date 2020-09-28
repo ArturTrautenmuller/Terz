@@ -337,6 +337,55 @@ function buildIndicatorSettings(id) {
     document.getElementById("Settings").appendChild(fsExp);
     document.getElementById("Settings").appendChild(document.createElement("br"));
 
+    //Cor da Borda
+
+    var borcLabel = document.createElement("label");
+    borcLabel.innerHTML = "Cor da Borda:";
+    document.getElementById("Settings").appendChild(borcLabel);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    var borcExp = document.createElement("input");
+    borcExp.setAttribute("id", "BorderColor");
+    borcExp.setAttribute("type", "color");
+    borcExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
+    borcExp.setAttribute("class", "form-control");
+    borcExp.value = indicator.style.borderColor;
+    document.getElementById("Settings").appendChild(borcExp);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
+    // Espessura da Borda
+    var bortLabel = document.createElement("label");
+    bortLabel.innerHTML = "Espessura da Borda:";
+    document.getElementById("Settings").appendChild(bortLabel);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    var bortExp = document.createElement("input");
+    bortExp.setAttribute("id", "BordeThickness");
+    bortExp.setAttribute("type", "text");
+    bortExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
+    bortExp.setAttribute("class", "form-control");
+    bortExp.value = indicator.style.borderThickness;
+    document.getElementById("Settings").appendChild(bortExp);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
+    // Raio da Borda
+    var borrLabel = document.createElement("label");
+    borrLabel.innerHTML = "Raio da Borda:";
+    document.getElementById("Settings").appendChild(borrLabel);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    var borrExp = document.createElement("input");
+    borrExp.setAttribute("id", "BordeRadius");
+    borrExp.setAttribute("type", "text");
+    borrExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
+    borrExp.setAttribute("class", "form-control");
+    borrExp.value = indicator.style.borderRadius;
+    document.getElementById("Settings").appendChild(borrExp);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
+
+
+  
+
+    
+
     document.getElementById("Settings").appendChild(document.createElement("hr"));
     var deleteButton = document.createElement("button");
     deleteButton.innerHTML = "Remover";
@@ -673,7 +722,22 @@ function buildGraphSettings(id) {
     yExp.value = graph.style.y;
     document.getElementById("Settings").appendChild(yExp);
     document.getElementById("Settings").appendChild(document.createElement("br"));
-
+    if (graph.objectType == 'map') {
+        var regionLabel = document.createElement("label");
+        regionLabel.innerHTML = "Região:";
+        document.getElementById("Settings").appendChild(regionLabel);
+        document.getElementById("Settings").appendChild(document.createElement("br"));
+        var regionExp = document.createElement("input");
+        regionExp.setAttribute("id", "Region");
+        regionExp.setAttribute("type", "text");
+        regionExp.setAttribute("onchange", "updateGraphConfig('" + id + "')");
+        regionExp.setAttribute("class", "form-control");
+        if (graph.style.region != null) {
+            regionExp.value = graph.style.region;
+        }
+        document.getElementById("Settings").appendChild(regionExp);
+        document.getElementById("Settings").appendChild(document.createElement("br"));
+    }
     
     if (graph.objectType == 'bar') {
         document.getElementById("Settings").appendChild(document.createElement("hr"));

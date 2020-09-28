@@ -138,7 +138,8 @@ namespace Terz_DataBaseLayer
         public void Insert()
         {
             Base.Init();
-            var sql = "INSERT INTO `usuario` (`id`, `email`, `senha`) VALUES (NULL, '" + this.Email + "', '" + this.Senha + "')";
+            var sql = "INSERT INTO `usuario` (`id`, `email`, `senha`, `nome`, `foto`, `descricao`, `habilidades`, `lugar`, `funcao`, `creditos`) VALUES(NULL,'" + this.Email + "', '" + this.Senha + "', '"+this.Nome+"', '', '', '', '', '', '150')";
+           
             Base.sqlCommand(sql);
         }
 

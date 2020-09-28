@@ -77,6 +77,7 @@
 <script language="JavaScript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.2.1/math.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3plus/2.0.0-alpha.14/d3plus.full.js"></script>
 <script src="https://d3js.org/d3-hierarchy.v1.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script src="~/terz/LTE/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="~/terz/LTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -481,7 +482,9 @@
         reportData.config.sheets[sheetPos].indicators[indicatorPos].style.backgroundColor = document.getElementById("BackgroundColor").value;
         reportData.config.sheets[sheetPos].indicators[indicatorPos].style.textColor = document.getElementById("TextColor").value;
         reportData.config.sheets[sheetPos].indicators[indicatorPos].style.fontSize = document.getElementById("FontSize").value;
-
+        reportData.config.sheets[sheetPos].indicators[indicatorPos].style.borderColor = document.getElementById("BorderColor").value;
+        reportData.config.sheets[sheetPos].indicators[indicatorPos].style.borderThickness = document.getElementById("BordeThickness").value;
+        reportData.config.sheets[sheetPos].indicators[indicatorPos].style.borderRadius = document.getElementById("BordeRadius").value;
 
 
         reloadSheet();
@@ -589,6 +592,11 @@
         reportData.config.sheets[sheetPos].graphs[graphPos].style.height = document.getElementById("Height").value;
         reportData.config.sheets[sheetPos].graphs[graphPos].style.x = document.getElementById("X").value;
         reportData.config.sheets[sheetPos].graphs[graphPos].style.y = document.getElementById("Y").value;
+
+        if (reportData.config.sheets[sheetPos].graphs[graphPos].objectType == 'map') {
+            reportData.config.sheets[sheetPos].graphs[graphPos].style.region = document.getElementById("Region").value;
+        }
+
         if (reportData.config.sheets[sheetPos].graphs[graphPos].objectType == 'bar') {
             reportData.config.sheets[sheetPos].graphs[graphPos].style.orientation = document.getElementById("Orientation").value;
             reportData.config.sheets[sheetPos].graphs[graphPos].style.stack = document.getElementById("Stack").checked;
