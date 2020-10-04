@@ -36,7 +36,8 @@
        // graphDiv.style.position = "absolute";
        
         graphDiv.setAttribute("id", "g" + graph.id);
-        if (graph.objectType == 'bubble' || graph.objectType == 'sankey') {
+ 
+        if (['bubble', 'sankey', 'org','timeline'].includes(graph.objectType)) {
             graphDiv.style.height = "90%";
         }
         graphContainer.appendChild(graphDiv);
@@ -54,6 +55,8 @@
                 case 'bubble': { buildBubbleChart(graph); break; }
                 case 'map': { buildMapChart(graph); break; }
                 case 'sankey': { buildSankeyChart(graph); break; }
+                case 'org': { buildOrgChart(graph); break; }
+                case 'timeline': { buildTimeLineChart(graph); break; }
                 default: break;
 
 
@@ -67,6 +70,8 @@
     }
 
 }
+
+
 
 function buildBarChart(graph) {
     /* var data = [
@@ -311,6 +316,116 @@ function buildBubbleChart(graph) {
     }
 
 }
+
+function buildTimeLineChart(graph) {
+    var dataTableC = [];
+    var expressions = [];
+    var dimensions = [];
+    var measureNames = [];
+    var dimNames = [];
+
+    dimensions.push(graph.dimensions[0].field);
+    dimNames.push(graph.dimensions[0].name);
+    dimensions.push(graph.dimensions[1].field);
+    dimNames.push(graph.dimensions[1].name);
+    dimensions.push(graph.dimensions[2].field);
+    dimNames.push(graph.dimensions[2].name);
+    dimensions.push(graph.dimensions[3].field);
+    dimNames.push(graph.dimensions[3].name);
+
+    expressions.push("0");
+    measureNames.push("Label");
+
+
+    var objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
+    for (var i = 1; i < objData.length; i++) {
+        var row = objData[i];
+        var iData = row[2].split('/');
+        var fData = row[3].split('/');
+        row[2] = new Date(parseInt(iData[2]), parseInt(iData[1]), parseInt(iData[0]));
+        row[3] = new Date(parseInt(fData[2]), parseInt(fData[1]), parseInt(fData[0]));
+        var nRow = []
+        for (var j = 0; j < row.length - 1; j++) {
+            nRow.push(row[j]);
+        }
+        dataTableC.push(nRow);
+    }
+
+
+
+
+    google.charts.load("current", { packages: ["timeline"] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+        var container = document.getElementById("g" + graph.id);
+        var chart = new google.visualization.Timeline(container);
+        var dataTable = new google.visualization.DataTable();
+        dataTable.addColumn({ type: 'string', id: dimNames[0] });
+        dataTable.addColumn({ type: 'string', id: dimNames[1] });
+        dataTable.addColumn({ type: 'date', id: dimNames[2] });
+        dataTable.addColumn({ type: 'date', id: dimNames[3] });
+        dataTable.addRows(dataTableC);
+
+        chart.draw(dataTable);
+    }
+}
+
+function buildOrgChart(graph) {
+    
+
+    var dataTable = [];
+    var expressions = [];
+    var dimensions = [];
+    var measureNames = [];
+    var dimNames = [];
+
+    dimensions.push(graph.dimensions[0].field);
+    dimNames.push(graph.dimensions[0].name);
+    dimensions.push(graph.dimensions[1].field);
+    dimNames.push(graph.dimensions[1].name);
+
+    if (graph.measures.length > 0) {
+        expressions.push(graph.measures[0].expresion);
+        measureNames.push(graph.measures[0].name);
+    }
+    else {
+        expressions.push("0");
+        measureNames.push("Label");
+    }
+
+    var objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
+    for (var i = 1; i < objData.length; i++) {
+        var row = objData[i];
+        if (row[2] == 0) {
+            row[2] = '';
+        }
+        else {
+            row[2] = row[2].toString();
+        }
+        dataTable.push(row);
+    }
+
+    google.charts.load('current', { packages: ["orgchart"] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', dimNames[0]);
+        data.addColumn('string', dimNames[1]);
+        data.addColumn('string', measureNames[0]);
+
+        // For each orgchart box, provide the name, manager, and tooltip to show.
+        data.addRows(dataTable);
+
+        // Create the chart.
+        var chart = new google.visualization.OrgChart(document.getElementById("g" + graph.id));
+        // Draw the chart, setting the allowHtml option to true for the tooltips.
+        chart.draw(data, { 'allowHtml': true });
+    }
+}
+
 
 function buildMapChart(graph) {
     google.charts.load('current', {

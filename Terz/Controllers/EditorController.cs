@@ -50,6 +50,14 @@ namespace Terz.Controllers
             {
                 if (config.Sheets[i].Indicators == null) config.Sheets[i].Indicators = new List<Indicator>();
                 if (config.Sheets[i].Graphs == null) config.Sheets[i].Graphs = new List<Graph>();
+
+                for(int j = 0; j < config.Sheets[i].Graphs.Count; j++)
+                {
+                    if (config.Sheets[i].Graphs[j].Measures == null) config.Sheets[i].Graphs[j].Measures = new List<Measure>();
+                    if (config.Sheets[i].Graphs[j].Dimensions == null) config.Sheets[i].Graphs[j].Dimensions = new List<Dimension>();
+
+                }
+
                 if (config.Sheets[i].Filters == null) config.Sheets[i].Filters = new List<Filter>();
                 if (config.Sheets[i].TextBlocks == null) config.Sheets[i].TextBlocks = new List<TextBlock>();
             }
