@@ -1,0 +1,269 @@
+﻿@model Terz_ProcessingPlataform.Models.User.UserPageModel
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="~/processing/css/User/UserPage.css" />
+<link rel="stylesheet" href="~/processing/css/App/AppPage.css" />
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="~/processing/LTE/plugins/fontawesome-free/css/all.min.css">
+<!-- overlayScrollbars -->
+<link rel="stylesheet" href="~/processing/LTE/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="~/processing/LTE/dist/css/adminlte.min.css">
+
+<link rel="stylesheet" href="~/processing/LTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="~/processing/LTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<body class="hold-transition layout-top-nav">
+    <!-- Navbar -->
+    <div class="wrapper">
+        <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+            <div class="container">
+                <a href="../../index3.html" class="navbar-brand">
+                    <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                         style="opacity: .8">
+                    <span class="brand-text font-weight-light">Terz</span>
+                </a>
+
+
+                <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+                    <!-- Left navbar links -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="index3.html" class="nav-link">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Contact</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Aplicativos</a>
+                            <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                                <li><a href="#" onclick="NovoApp()" class="dropdown-item">Novo Aplicativo </a></li>
+
+
+                                <!-- End Level two -->
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- SEARCH FORM -->
+
+                </div>
+                <!-- Right navbar links -->
+                <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+                    <!-- Messages Dropdown Menu -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" data-toggle="dropdown" href="#">
+                            <i class="fas fa-comments"></i>
+                            <span class="badge badge-danger navbar-badge">3</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                            <a href="#" class="dropdown-item">
+                                <!-- Message Start -->
+                                <div class="media">
+                                    <img src="../../dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                                    <div class="media-body">
+                                        <h3 class="dropdown-item-title">
+                                            Brad Diesel
+                                            <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                                        </h3>
+                                        <p class="text-sm">Call me whenever you can...</p>
+                                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                                    </div>
+                                </div>
+                                <!-- Message End -->
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
+                                <!-- Message Start -->
+                                <div class="media">
+                                    <img src="../../dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                                    <div class="media-body">
+                                        <h3 class="dropdown-item-title">
+                                            John Pierce
+                                            <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
+                                        </h3>
+                                        <p class="text-sm">I got your message bro</p>
+                                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                                    </div>
+                                </div>
+                                <!-- Message End -->
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
+                                <!-- Message Start -->
+                                <div class="media">
+                                    <img src="../../dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                                    <div class="media-body">
+                                        <h3 class="dropdown-item-title">
+                                            Nora Silvester
+                                            <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
+                                        </h3>
+                                        <p class="text-sm">The subject goes here</p>
+                                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                                    </div>
+                                </div>
+                                <!-- Message End -->
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+                        </div>
+                    </li>
+                    <!-- Notifications Dropdown Menu -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" data-toggle="dropdown" href="#">
+                            <i class="far fa-bell"></i>
+                            <span class="badge badge-warning navbar-badge">15</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                            <span class="dropdown-header">15 Notifications</span>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-envelope mr-2"></i> 4 new messages
+                                <span class="float-right text-muted text-sm">3 mins</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-users mr-2"></i> 8 friend requests
+                                <span class="float-right text-muted text-sm">12 hours</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-file mr-2"></i> 3 new reports
+                                <span class="float-right text-muted text-sm">2 days</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                            <i class="fas fa-th-large"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- /.navbar -->
+        <div class="content-wrapper">
+            <div class="row-w">
+
+                @foreach (Terz_DataBaseLayer.Processo processo in Model.Usuario.Processos)
+                {
+                    <div class="column-w">
+                        <div class="card-w">
+                            <div class="card card-info">
+                                <div class="card-header">
+                                    <h3 class="card-title">@processo.Nome</h3>
+                                </div>
+
+                                <div class="card-body">
+                                    <img src="~/processing/images/app.png" style="width:100%" />
+                                    <br />
+                                    <br />
+                                    <a href="../Processo?id=@processo.Id" style="font-size:22px;margin-left:-10px;margin-right:10px"><i class="far fa-eye"></i></a>
+                                   
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+
+                        </div>
+                    </div>
+                }
+
+
+
+
+            </div>
+
+        </div>
+    </div>
+</body>
+
+
+
+
+
+
+<script src="~/gradius/js/Variables.js"></script>
+<script src="~/gradius/js/Operations.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script src="~/processing/LTE/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="~/processing/LTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="~/processing/LTE/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- AdminLTE App -->
+<script src="~/processing/LTE/dist/js/adminlte.js"></script>
+<!-- OPTIONAL SCRIPTS -->
+<script src="~/processing/LTE/dist/js/demo.js"></script>
+<!-- PAGE PLUGINS -->
+<!-- jQuery Mapael -->
+<script src="~/processing/LTE/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+
+<script src="~/processing/LTE/plugins/raphael/raphael.min.js"></script>
+<script src="~/processing/LTE/plugins/jquery-mapael/jquery.mapael.min.js"></script>
+<script src="~/processing/LTE/plugins/jquery-mapael/maps/usa_states.min.js"></script>
+<!-- ChartJS -->
+<script src="~/processing/LTE/plugins/chart.js/Chart.min.js"></script>
+<!-- PAGE SCRIPTS -->
+<script src="~/processing/LTE/dist/js/pages/dashboard2.js"></script>
+
+<script src="~/processing/LTE/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/processing/LTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/processing/LTE/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/processing/LTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+
+<script>
+    function CreateApp(nome) {
+        $.ajax(
+            {
+                type: 'POST',
+                url: '../Processo/CreateApp?Nome=' + nome,
+                dataType: 'html',
+                cache: false,
+                async: true,
+                 success: function (data) {
+                     location.reload();
+
+
+                },
+
+
+
+            });
+    }
+    function NovoApp() {
+        var form;
+        $.ajax(
+            {
+                type: 'POST',
+                url: '../Processo/AddApp',
+                dataType: 'html',
+                cache: false,
+                async: true,
+
+                success: function (data) {
+                    form = data;
+                    bootbox.confirm(form, function (result) {
+                        if (result) {
+
+                            var nome = document.getElementById("AppName").value;
+                            CreateApp(nome);
+
+
+                        }
+
+                    });
+
+                },
+
+
+
+
+            });
+    }
+
+</script>

@@ -13,7 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Terz_DataBaseLayer", "Terz_
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Terz_Scheduler", "Terz_Scheduler\Terz_Scheduler.csproj", "{2D527D3E-D46F-458D-81E4-D946845163B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terz_API", "Terz_API\Terz_API.csproj", "{C26011CD-D9D8-49B8-9F8D-69C1C64C892D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Terz_API", "Terz_API\Terz_API.csproj", "{C26011CD-D9D8-49B8-9F8D-69C1C64C892D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terz_Storage", "Terz_Storage\Terz_Storage.csproj", "{49D30932-7700-4A6E-811C-63CADB06C4D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terz_ProcessingPlataform", "Terz_ProcessingPlataform\Terz_ProcessingPlataform.csproj", "{81B41988-65B9-40A9-BDA9-00E7F017843D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,14 @@ Global
 		{C26011CD-D9D8-49B8-9F8D-69C1C64C892D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C26011CD-D9D8-49B8-9F8D-69C1C64C892D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C26011CD-D9D8-49B8-9F8D-69C1C64C892D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49D30932-7700-4A6E-811C-63CADB06C4D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49D30932-7700-4A6E-811C-63CADB06C4D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49D30932-7700-4A6E-811C-63CADB06C4D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49D30932-7700-4A6E-811C-63CADB06C4D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81B41988-65B9-40A9-BDA9-00E7F017843D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81B41988-65B9-40A9-BDA9-00E7F017843D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81B41988-65B9-40A9-BDA9-00E7F017843D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81B41988-65B9-40A9-BDA9-00E7F017843D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -18,6 +18,8 @@ namespace Terz_DataBaseLayer
         public string Funcao { get; set; }
         public int Creditos { get; set; }
         public List<Report> Reports { get; set; }
+        public List<Processo> Processos { get; set; }
+        public List<Task> Tasks { get; set; }
 
         public void Load(string Id)
         {
@@ -133,6 +135,56 @@ namespace Terz_DataBaseLayer
             Base.connection.Close();
 
             return false;
+        }
+
+        public void LoadProcessos()
+        {
+            this.Processos = new List<Processo>();
+            Base.Init();
+            var sql = "select * from processo where user_id = '" + this.Id + "'";
+            MySqlDataReader myReader = Base.select(sql);
+            while (myReader.Read())
+            {
+                Processo processo = new Processo();
+
+                processo.Id = Convert.ToString(myReader.GetValue(0));
+                processo.UserId = Convert.ToString(myReader.GetValue(1));
+                processo.Nome = myReader.GetString(2);
+
+                this.Processos.Add(processo);
+
+            }
+
+            myReader.Close();
+            Base.connection.Close();
+
+           
+        }
+
+        public void LoadTasks()
+        {
+            this.Tasks = new List<Task>();
+            Base.Init();
+            var sql = "SELECT t.id,t.processo_id,t.tipo,CAST(t.hora as char),t.parent_id FROM task t LEFT JOIN processo p on t.processo_id = p.id WHERE p.user_id = "+this.Id;
+            MySqlDataReader myReader = Base.select(sql);
+            while (myReader.Read())
+            {
+                Task task = new Task();
+
+                task.Id = Convert.ToString(myReader.GetValue(0));
+                task.ProcessoId = Convert.ToString(myReader.GetValue(1));
+                task.Tipo = myReader.GetString(2);
+                task.Hora = myReader.GetString(3);
+                task.ParentId = Convert.ToString(myReader.GetValue(4));
+
+                this.Tasks.Add(task);
+
+            }
+
+            myReader.Close();
+            Base.connection.Close();
+
+
         }
 
         public void Insert()

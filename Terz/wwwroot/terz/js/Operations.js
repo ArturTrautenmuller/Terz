@@ -362,25 +362,65 @@ function solveSum(expression, dataFrame) {
       //  var field = fRes[0].replace('[', '').replace(']', '');
         var headers = dataFrame[0];
      //   var pos = headers.indexOf(field);
-       
-        for (var i = 1; i < dataFrame.length; i++) {
-            var innerExp = sumExp.replace('sum(', '').slice(0, -1);
-            let fPattern = /\[.+?\]/g;
-            let fRes = fPattern.exec(innerExp);
-            while(fRes != null) {
-                var field = fRes[0].replace('[', '').replace(']', '');
-                console.log("eval campo " + field);
-                var pos = headers.indexOf(field);
-                innerExp = innerExp.replace("[" + field + "]", parseFloat(dataFrame[i][pos]));
-                console.log("eval inner " + innerExp);
-                let nfPattern = /\[.+?\]/g;
-                fRes = nfPattern.exec(innerExp);
-                
-                console.log(fRes);
+
+        var _innerExp = sumExp.replace('sum(', '').slice(0, -1);
+        var isMultExp = false;
+        var operators = ['+', '-', '*', '/', '^', '{', '}'];
+        for (var i = 0; i < operators.length; i++) {
+            if (_innerExp.includes(operators[i])) {
+                isMultExp = true;
+            }
+        }
+
+        if (isMultExp) {
+
+            let _fPattern = /\[.+?\]/g;
+            let _fRes = _fPattern.exec(_innerExp);
+            var allFields = [];
+            while (_fRes != null) {
+
+
+                var oFields = {};
+                oFields["field"] = _fRes[0].replace('[', '').replace(']', '');
+                oFields["pos"] = headers.indexOf(oFields["field"]);
+                //  let nfPattern = /\[.+?\]/g;
+                allFields.push(oFields);
+                // _innerExp = _innerExp.replace("[" + oFields["field"] + "]","1");
+                _fRes = _fPattern.exec(_innerExp);
+
+
             }
 
-            console.log("eval : " + innerExp);
-            soma += math.eval(innerExp.replaceAll('{', '(').replaceAll('}', ')'));
+
+
+
+            for (var i = 1; i < dataFrame.length; i++) {
+                var innerExp = sumExp.replace('sum(', '').slice(0, -1);
+                // let fPattern = /\[.+?\]/g;
+                // let fRes = fPattern.exec(innerExp);
+                for (var j = 0; j < allFields.length; j++) {
+                    var field = allFields[j].field;
+                    console.log("eval campo " + field);
+                    var pos = allFields[j].pos;
+                    innerExp = innerExp.replace("[" + field + "]", parseFloat(dataFrame[i][pos]));
+                    console.log("eval inner " + innerExp);
+                    //let nfPattern = /\[.+?\]/g;
+                    // fRes = nfPattern.exec(innerExp);
+
+                    // console.log(fRes);
+                }
+
+                console.log("eval : " + innerExp);
+                soma += math.eval(innerExp.replaceAll('{', '(').replaceAll('}', ')'));
+            }
+        }
+        else {
+            var field = _innerExp.replace('[', '').replace(']','');
+            var pos = headers.indexOf(field);
+            for (var i = 1; i < dataFrame.length; i++) {
+        
+                soma += parseFloat(dataFrame[i][pos]);
+            }
         }
         console.log(sumExp);
         returnExpression = returnExpression.replace(sumExp, soma);
@@ -436,6 +476,7 @@ function solveMin(expression, dataFrame){
     while (res != null) {
         
         var minExp = res[0];
+        var min;
        // var field = minExp.substr(5, minExp.length - 7);
      //   var fPattern = /\[.+?\]/g;
     //    var fRes = fPattern.exec(minExp);
@@ -443,51 +484,93 @@ function solveMin(expression, dataFrame){
         var headers = dataFrame[0];
      //   var pos = headers.indexOf(field);
 
-        var _innerExp = minExp.replace('min(', '').slice(0, -1);
-        let _fPattern = /\[.+?\]/g;
-        let _fRes = _fPattern.exec(_innerExp);
-        while (_fRes != null) {
-            var field = _fRes[0].replace('[', '').replace(']', '');
-            console.log("eval campo " + field);
+        var __innerExp = minExp.replace('min(', '').slice(0, -1);
+
+        var isMultExp = false;
+        var operators = ['+', '-', '*', '/', '^', '{', '}'];
+        for (var i = 0; i < operators.length; i++) {
+            if (__innerExp.includes(operators[i])) {
+                isMultExp = true;
+            }
+        }
+
+        if (isMultExp) {
+
+            let __fPattern = /\[.+?\]/g;
+            let __fRes = __fPattern.exec(__innerExp);
+            var allFields = [];
+            while (__fRes != null) {
+
+
+                var oFields = {};
+                oFields["field"] = __fRes[0].replace('[', '').replace(']', '');
+                oFields["pos"] = headers.indexOf(oFields["field"]);
+                //  let nfPattern = /\[.+?\]/g;
+                allFields.push(oFields);
+                // _innerExp = _innerExp.replace("[" + oFields["field"] + "]","1");
+                __fRes = __fPattern.exec(__innerExp);
+
+
+            }
+
+
+            var _innerExp = minExp.replace('min(', '').slice(0, -1);
+            //  let _fPattern = /\[.+?\]/g;
+            //  let _fRes = _fPattern.exec(_innerExp);
+            for (var i = 0; i < allFields.length; i++) {
+                // var field = _fRes[0].replace('[', '').replace(']', '');
+                // console.log("eval campo " + field);
+                // var pos = headers.indexOf(field);
+                _innerExp = _innerExp.replace("[" + allFields[i].field + "]", parseFloat(dataFrame[1][allFields[i].pos]));
+                console.log("eval inner " + _innerExp);
+                // let nfPattern = /\[.+?\]/g;
+                //_fRes = nfPattern.exec(_innerExp);
+
+                // console.log(_fRes);
+            }
+
+
+
+
+            min = parseFloat(math.eval(_innerExp));
+
+
+            for (var i = 2; i < dataFrame.length; i++) {
+                var innerExp = minExp.replace('min(', '').slice(0, -1);
+                //    let fPattern = /\[.+?\]/g;
+                //   let fRes = fPattern.exec(innerExp);
+                for (var j = 0; j < allFields.length; j++) {
+                    //  var field = fRes[0].replace('[', '').replace(']', '');
+                    // console.log("eval campo " + field);
+                    // var pos = headers.indexOf(field);
+                    innerExp = innerExp.replace("[" + allFields[j].field + "]", parseFloat(dataFrame[i][allFields[j].pos]));
+                    console.log("eval inner " + innerExp);
+                    //   let nfPattern = /\[.+?\]/g;
+                    //   fRes = nfPattern.exec(innerExp);
+
+                    //   console.log(fRes);
+                }
+
+                console.log("eval : " + innerExp);
+                var innerExpEval = parseFloat(math.eval(innerExp));
+                if (innerExpEval < min) {
+                    min = innerExpEval;
+                }
+
+            }
+        }
+        else {
+            var field = __innerExp.replace('[', '').replace(']', '');
             var pos = headers.indexOf(field);
-            _innerExp = _innerExp.replace("[" + field + "]", parseFloat(dataFrame[1][pos]));
-            console.log("eval inner " + _innerExp);
-            let nfPattern = /\[.+?\]/g;
-            _fRes = nfPattern.exec(_innerExp);
+            min = parseFloat(dataFrame[1][pos]);
+            for (var i = 2; i < dataFrame.length; i++) {
+                var value = parseFloat(dataFrame[i][pos]);
+                if (value < min) {
+                    min = value;
+                }
 
-            console.log(_fRes);
-        }
-
-
-
-
-        var min = parseFloat(math.eval(_innerExp));
-       
-
-        for (var i = 2; i < dataFrame.length; i++) {
-            var innerExp = minExp.replace('min(', '').slice(0, -1);
-            let fPattern = /\[.+?\]/g;
-            let fRes = fPattern.exec(innerExp);
-            while (fRes != null) {
-                var field = fRes[0].replace('[', '').replace(']', '');
-                console.log("eval campo " + field);
-                var pos = headers.indexOf(field);
-                innerExp = innerExp.replace("[" + field + "]", parseFloat(dataFrame[i][pos]));
-                console.log("eval inner " + innerExp);
-                let nfPattern = /\[.+?\]/g;
-                fRes = nfPattern.exec(innerExp);
-
-                console.log(fRes);
             }
-
-            console.log("eval : " + innerExp);
-            var innerExpEval = parseFloat(math.eval(innerExp));
-            if (innerExpEval < min) {
-                min = innerExpEval;
-            }
-            
         }
-
 
       
 
@@ -509,58 +592,103 @@ function solveMax(expression, dataFrame) {
     while (res != null) {
 
         var maxExp = res[0];
-      //  var field = maxExp.substr(5, maxExp.length - 7);
-    //    var fPattern = /\[.+?\]/g;
-     //   var fRes = fPattern.exec(maxExp);
-      //  var field = fRes[0].replace('[', '').replace(']', '');
+        var max;
+        // var field = maxExp.substr(5, maxExp.length - 7);
+        //   var fPattern = /\[.+?\]/g;
+        //    var fRes = fPattern.exec(maxExp);
+        //   var field = fRes[0].replace('[', '').replace(']', '');
         var headers = dataFrame[0];
-      //  var pos = headers.indexOf(field);
+        //   var pos = headers.indexOf(field);
 
-        var _innerExp = maxExp.replace('max(', '').slice(0, -1);
-        let _fPattern = /\[.+?\]/g;
-        let _fRes = _fPattern.exec(_innerExp);
-        while (_fRes != null) {
-            var field = _fRes[0].replace('[', '').replace(']', '');
-            console.log("eval campo " + field);
+        var __innerExp = maxExp.replace('max(', '').slice(0, -1);
+
+        var isMultExp = false;
+        var operators = ['+', '-', '*', '/', '^', '{', '}'];
+        for (var i = 0; i < operators.length; i++) {
+            if (__innerExp.includes(operators[i])) {
+                isMultExp = true;
+            }
+        }
+
+        if (isMultExp) {
+
+            let __fPattern = /\[.+?\]/g;
+            let __fRes = __fPattern.exec(__innerExp);
+            var allFields = [];
+            while (__fRes != null) {
+
+
+                var oFields = {};
+                oFields["field"] = __fRes[0].replace('[', '').replace(']', '');
+                oFields["pos"] = headers.indexOf(oFields["field"]);
+                //  let nfPattern = /\[.+?\]/g;
+                allFields.push(oFields);
+                // _innerExp = _innerExp.replace("[" + oFields["field"] + "]","1");
+                __fRes = __fPattern.exec(__innerExp);
+
+
+            }
+
+
+            var _innerExp = maxExp.replace('max(', '').slice(0, -1);
+            //  let _fPattern = /\[.+?\]/g;
+            //  let _fRes = _fPattern.exec(_innerExp);
+            for (var i = 0; i < allFields.length; i++) {
+                // var field = _fRes[0].replace('[', '').replace(']', '');
+                // console.log("eval campo " + field);
+                // var pos = headers.indexOf(field);
+                _innerExp = _innerExp.replace("[" + allFields[i].field + "]", parseFloat(dataFrame[1][allFields[i].pos]));
+                console.log("eval inner " + _innerExp);
+                // let nfPattern = /\[.+?\]/g;
+                //_fRes = nfPattern.exec(_innerExp);
+
+                // console.log(_fRes);
+            }
+
+
+
+
+            max = parseFloat(math.eval(_innerExp));
+
+
+            for (var i = 2; i < dataFrame.length; i++) {
+                var innerExp = maxExp.replace('max(', '').slice(0, -1);
+                //    let fPattern = /\[.+?\]/g;
+                //   let fRes = fPattern.exec(innerExp);
+                for (var j = 0; j < allFields.length; j++) {
+                    //  var field = fRes[0].replace('[', '').replace(']', '');
+                    // console.log("eval campo " + field);
+                    // var pos = headers.indexOf(field);
+                    innerExp = innerExp.replace("[" + allFields[j].field + "]", parseFloat(dataFrame[i][allFields[j].pos]));
+                    console.log("eval inner " + innerExp);
+                    //   let nfPattern = /\[.+?\]/g;
+                    //   fRes = nfPattern.exec(innerExp);
+
+                    //   console.log(fRes);
+                }
+
+                console.log("eval : " + innerExp);
+                var innerExpEval = parseFloat(math.eval(innerExp));
+                if (innerExpEval > max) {
+                    max = innerExpEval;
+                }
+
+            }
+        }
+        else {
+            var field = __innerExp.replace('[', '').replace(']', '');
             var pos = headers.indexOf(field);
-            _innerExp = _innerExp.replace("[" + field + "]", parseFloat(dataFrame[1][pos]));
-            console.log("eval inner " + _innerExp);
-            let nfPattern = /\[.+?\]/g;
-            _fRes = nfPattern.exec(_innerExp);
+            max = parseFloat(dataFrame[1][pos]);
+            for (var i = 2; i < dataFrame.length; i++) {
+                var value = parseFloat(dataFrame[i][pos]);
+                if (value > max) {
+                    max = value;
+                }
 
-            console.log(_fRes);
+            }
         }
 
 
-
-
-        var max = parseFloat(math.eval(_innerExp));
-
-
-
-        for (var i = 2; i < dataFrame.length; i++) {
-            var innerExp = maxExp.replace('max(', '').slice(0, -1);
-            let fPattern = /\[.+?\]/g;
-            let fRes = fPattern.exec(innerExp);
-            while (fRes != null) {
-                var field = fRes[0].replace('[', '').replace(']', '');
-                console.log("eval campo " + field);
-                var pos = headers.indexOf(field);
-                innerExp = innerExp.replace("[" + field + "]", parseFloat(dataFrame[i][pos]));
-                console.log("eval inner " + innerExp);
-                let nfPattern = /\[.+?\]/g;
-                fRes = nfPattern.exec(innerExp);
-
-                console.log(fRes);
-            }
-
-            console.log("eval : " + innerExp);
-            var innerExpEval = parseFloat(math.eval(innerExp));
-            if (innerExpEval > max) {
-                max = innerExpEval;
-            }
-
-        }
 
         returnExpression = returnExpression.replace(maxExp, max);
         console.log(returnExpression);

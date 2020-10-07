@@ -1,0 +1,236 @@
+﻿@model Terz_ProcessingPlataform.Models.Processo.ProcessoView
+
+    
+
+    <link rel="stylesheet" href="~/processing/LTE/plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/processing/LTE/dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <style>
+        #overlay {
+            position: fixed;
+            display: none;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 2;
+            cursor: pointer;
+        }
+
+        #text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            font-size: 30px;
+            color: white;
+            transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+        }
+    </style>
+
+    <div id="overlay">
+
+        <div id="text"><div style="margin-left:22px" class="loader"></div>  <label id="contentOverlay">Calculando...</label></div>
+    </div>
+
+<div style="margin-top:10px">
+    <button class="btn btn-block btn-success" style="width:160px;height:40px;margin-left:10px" onclick="salvar()"><i class="fas fa-save"></i> Salvar</button>
+</div>
+
+    <div style="display:flex;margin-top:10px">
+        <div class="card card-primary card-outline" style="width:250px">
+            <div class="card-body">
+                <h5 class="card-title">Scripts</h5>
+                <br />
+                <button onclick="createFile()">Novo Arquivo</button>
+                <br />
+                <div id="fileList">
+                    @foreach (Terz_DataBaseLayer.Script script in Model.Processo.Scripts)
+                    {
+                        <a id="arq-@script.Nome" href="#" onclick="showContent('@script.Nome')" class="nav-link" style="color:dimgray">
+                            <i class="fas fa-file-alt"></i>
+
+                            @(System.IO.Path.GetFileName(script.Path))
+
+
+                        </a>
+                       
+                    }
+                </div>
+
+             </div>
+        </div><!-- /.card -->
+
+        <div class="card card-primary card-outline" style="width:900px;height:600px;margin-left:20px">
+            <div class="card-body">
+                
+                <a href="#" style="text-decoration:none;color:dimgray;font-size:18px" onclick="deletaScript()"><i class="fas fa-trash"></i> Excluir</a>
+                <a href="#" style="text-decoration:none;color:dimgray;font-size:18px;margin-left:20px" onclick="renomearScript()"><i class="fas fa-keyboard"></i> Renomear</a>
+                <label style="font-size:18px;float:right;margin-right:10px" id="codeTitle">main.py</label>
+                <br />
+                <div style="width:100%;height:100%" id="textcodeDiv">
+                    <textarea onchange="saveScript()" id="textcode" style="width:96%;height:95%;margin-left:2%;margin-top:2%"></textarea>
+                </div>
+
+
+            </div>
+        </div><!-- /.card -->
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+    var processo;
+    var arqIndex = 0;
+    var currentScript = 'main';
+
+    function on(text) {
+        document.getElementById("overlay").style.display = "block";
+        document.getElementById("contentOverlay").innerHTML = text;
+    }
+
+    function off() {
+        document.getElementById("overlay").style.display = "none";
+    }
+
+    function getProcesso() {
+         $.ajax(
+            {
+                type: 'POST',
+                 url: 'Processo/GetProcesso?id=@Model.Processo.Id',
+                dataType: 'json',
+                cache: false,
+                async: true,
+                success: function (data) {
+
+                    processo = data;
+
+                    showContent('main');
+
+                }
+
+            });
+    }
+
+    function showContent(name) {
+        currentScript = name;
+
+        document.getElementById("textcode").remove();
+        var textcode = document.createElement("textarea");
+        textcode.setAttribute("id", "textcode");
+        textcode.setAttribute("onchange", "saveScript()");
+        textcode.style.marginLeft = "2%";
+        textcode.style.marginTop = "2%";
+        textcode.style.width = "96%";
+        textcode.style.height = "95%";
+        textcode.innerHTML = processo.scripts.filter(function (x) { return x.nome == name })[0].content;
+        document.getElementById("textcodeDiv").appendChild(textcode);
+
+
+        var codeTitle = document.getElementById("codeTitle");
+        while (codeTitle.firstChild) {
+            codeTitle.removeChild(codeTitle.lastChild);
+        }
+
+        codeTitle.innerHTML = name + ".py";
+       
+    }
+
+    function saveScript() {
+        var pos = processo.scripts.map(function (e) { return e.nome; }).indexOf(currentScript);
+        processo.scripts[pos].content = document.getElementById("textcode").value;
+    }
+
+    function createFile() {
+        var script = {};
+        script["content"] = "";
+        script["nome"] = "novo arquivo"
+        if (arqIndex > 0) script["nome"] = script["nome"] + arqIndex;
+
+        script["path"] = script["nome"] + ".py";
+
+        processo.scripts.push(script);
+        var fileA = document.createElement("a");
+        fileA.setAttribute("id", "arq-" + script["nome"]);
+        fileA.setAttribute("href", "#");
+        fileA.setAttribute("class", "nav-link");
+        fileA.setAttribute("onclick", "showContent('" + script["nome"] + "')");
+        fileA.style.color = "dimgray";
+        var fileI = document.createElement("i");
+        fileI.setAttribute("class", "fas fa-file-alt");
+        fileA.appendChild(fileI);
+        fileA.appendChild(document.createTextNode(script["path"]));
+        document.getElementById("fileList").appendChild(fileA);
+
+        arqIndex++;
+
+        
+
+    }
+
+    function deletaScript() {
+        document.getElementById("arq-" + currentScript).remove();
+
+        var pos = processo.scripts.map(function (e) { return e.nome; }).indexOf(currentScript);
+        processo.scripts.splice(pos, 1);
+
+        currentScript = 'main';
+        showContent(currentScript);
+    }
+
+    function renomearScript() {
+        var novoNome = prompt("Defina o Nome do Arquivo", currentScript);
+
+        var pos = processo.scripts.map(function (e) { return e.nome; }).indexOf(currentScript);
+        processo.scripts[pos].nome = novoNome;
+        processo.scripts[pos].path = novoNome+".py";
+
+
+
+        var fileA = document.getElementById("arq-" + currentScript);
+        while (fileA.firstChild) {
+            fileA.removeChild(fileA.lastChild);
+        }
+        var fileI = document.createElement("i");
+        fileI.setAttribute("class", "fas fa-file-alt");
+        fileA.appendChild(fileI);
+        fileA.appendChild(document.createTextNode(processo.scripts[pos].path));
+
+        fileA.removeAttribute("id");
+        fileA.setAttribute("id", "arq-" + novoNome);
+
+        fileA.removeAttribute("onclick");
+        fileA.setAttribute("onclick", "showContent('" + novoNome + "')");
+
+        currentScript = novoNome;
+        showContent(currentScript);
+
+    }
+
+    function salvar() {
+         on(' Salvando...');
+        $.ajax(
+            {
+                type: 'POST',
+                url: 'Processo/SaveProcesso',
+                dataType: 'html',
+                cache: false,
+                async: true,
+                success: function (data) {
+                    off();
+                    alert(data);
+                },
+                data: processo
+
+            });
+    }
+
+    getProcesso();
+
+</script>

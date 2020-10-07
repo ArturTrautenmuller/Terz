@@ -1,0 +1,14 @@
+C:\Users\artur\source\repos\Terz\Terz_Storage\bin\Debug\netcoreapp2.1\Terz_Storage.deps.json
+C:\Users\artur\source\repos\Terz\Terz_Storage\bin\Debug\netcoreapp2.1\Terz_Storage.runtimeconfig.json
+C:\Users\artur\source\repos\Terz\Terz_Storage\bin\Debug\netcoreapp2.1\Terz_Storage.runtimeconfig.dev.json
+C:\Users\artur\source\repos\Terz\Terz_Storage\bin\Debug\netcoreapp2.1\Terz_Storage.dll
+C:\Users\artur\source\repos\Terz\Terz_Storage\obj\Debug\netcoreapp2.1\Terz_Storage.csprojAssemblyReference.cache
+C:\Users\artur\source\repos\Terz\Terz_Storage\obj\Debug\netcoreapp2.1\Terz_Storage.csproj.CoreCompileInputs.cache
+C:\Users\artur\source\repos\Terz\Terz_Storage\obj\Debug\netcoreapp2.1\Terz_Storage.RazorAssemblyInfo.cache
+C:\Users\artur\source\repos\Terz\Terz_Storage\obj\Debug\netcoreapp2.1\Terz_Storage.RazorAssemblyInfo.cs
+C:\Users\artur\source\repos\Terz\Terz_Storage\obj\Debug\netcoreapp2.1\Terz_Storage.AssemblyInfoInputs.cache
+C:\Users\artur\source\repos\Terz\Terz_Storage\obj\Debug\netcoreapp2.1\Terz_Storage.AssemblyInfo.cs
+C:\Users\artur\source\repos\Terz\Terz_Storage\obj\Debug\netcoreapp2.1\Terz_Storage.RazorTargetAssemblyInfo.cache
+C:\Users\artur\source\repos\Terz\Terz_Storage\bin\Debug\netcoreapp2.1\Terz_Storage.pdb
+C:\Users\artur\source\repos\Terz\Terz_Storage\obj\Debug\netcoreapp2.1\Terz_Storage.dll
+C:\Users\artur\source\repos\Terz\Terz_Storage\obj\Debug\netcoreapp2.1\Terz_Storage.pdb

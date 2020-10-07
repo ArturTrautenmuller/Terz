@@ -60,6 +60,42 @@ namespace Terz_API.Controllers
 
             return "DataFrame importado com sucesso";
         }
+
+        [HttpGet]
+        [Route("storage/[controller]/importDataFrame/{id}")]
+        public string importDataFrame(string id)
+        {
+            string email = Request.Form["email"].ToString();
+            string password = Request.Form["password"].ToString();
+            DataFrame dataFrame = JsonConvert.DeserializeObject<DataFrame>(Request.Form["dataframe"].ToString());
+
+
+            Usuario usuario = new Usuario();
+            usuario.Auth(email, password);
+
+            if (usuario.Id == null)
+            {
+                return "usuario e senha invalidos";
+            }
+            string text = System.IO.File.ReadAllText(Location.ConfLocation);
+            Conf conf = JsonConvert.DeserializeObject<Conf>(text);
+
+            string contentText = "";
+            foreach (string[] row in dataFrame.Table)
+            {
+                contentText += string.Join(",", row) + Environment.NewLine;
+            }
+
+            var filePath = Path.Combine(conf.DataFramePath + "/" + id, dataFrame.Name + ".csv");
+            System.IO.File.WriteAllText(filePath, contentText);
+
+
+
+
+            return "dataframe importado com sucesso";
+        }
+
+
         [HttpGet]
         [Route("api/[controller]/{id}/Insert")]
 
