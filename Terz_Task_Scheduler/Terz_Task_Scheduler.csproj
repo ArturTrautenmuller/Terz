@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Terz_Core\Terz_Core.csproj" />
+    <ProjectReference Include="..\Terz_DataBaseLayer\Terz_DataBaseLayer.csproj" />
+    <ProjectReference Include="..\Terz_ProcessingExecuter\Terz_ProcessingExecuter.csproj" />
+  </ItemGroup>
+
+</Project>

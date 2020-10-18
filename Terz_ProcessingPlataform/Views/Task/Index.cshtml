@@ -3,3 +3,212 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
+
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+<link rel="stylesheet" href="~/processing/css/App/AppPage.css" />
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="~/processing/LTE/plugins/fontawesome-free/css/all.min.css">
+<!-- overlayScrollbars -->
+<link rel="stylesheet" href="~/processing/LTE/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="~/processing/LTE/dist/css/adminlte.min.css">
+<!-- Google Font: Source Sans Pro -->
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+
+
+<button onclick="NovaTask()" class="btn btn-block btn-info" style="margin-top:10px;margin-left:10px;width:200px">Nova Task</button>
+<div class="card card-primary card-outline" style="margin-top:10px;margin-left:10px">
+    <div class="card-header">
+        <h3 class="card-title">Tasks</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Nome</th>
+                    <th style="width:110px">Status</th>
+                    <th style="width: 40px"></th>
+                    <th style="width: 80px"></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int i = 1;
+                }
+                @foreach (Terz_DataBaseLayer.Task task in Model.Usuario.Tasks)
+                {
+                    <tr>
+                        <td>@i</td>
+                        <td>@task.Nome</td>
+                        <td>@task.Status</td>
+                        
+                        <td><a ><i class="fas fa-play"></i> <i class="fas fa-pause" style="display:none"></i>  </a></td>
+                        <td><a onclick="DeleteTask('@task.Id')"><i class="fas fa-trash"></i>   </a></td>
+
+                    </tr>
+                    i++;
+                }
+
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+
+</div>
+<!-- /.card -->
+
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script src="~/processing/LTE/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="~/processing/LTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="~/processing/LTE/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- AdminLTE App -->
+<script src="~/processing/LTE/dist/js/adminlte.js"></script>
+<!-- OPTIONAL SCRIPTS -->
+<script src="~/processing/LTE/dist/js/demo.js"></script>
+<!-- PAGE PLUGINS -->
+<!-- jQuery Mapael -->
+<script src="~/processing/LTE/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+
+<script src="~/processing/LTE/plugins/raphael/raphael.min.js"></script>
+<script src="~/processing/LTE/plugins/jquery-mapael/jquery.mapael.min.js"></script>
+<script src="~/processing/LTE/plugins/jquery-mapael/maps/usa_states.min.js"></script>
+<!-- ChartJS -->
+<script src="~/processing/LTE/plugins/chart.js/Chart.min.js"></script>
+<!-- PAGE SCRIPTS -->
+<script src="~/processing/LTE/dist/js/pages/dashboard2.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+
+<script>
+    function trainRegressor(hash) {
+        document.getElementById("R-" + hash).style.display = "none";
+        document.getElementById("P-" + hash).style.display = "block";
+        $.ajax(
+            {
+                type: 'POST',
+                url: '../processing/Task/Execute?Id=&Hash=' + hash,
+                dataType: 'html',
+                cache: false,
+                async: true,
+                success: function (data) {
+                    document.getElementById("R-" + hash).style.display = "block";
+                    document.getElementById("P-" + hash).style.display = "none";
+
+
+                },
+
+
+
+            });
+    }
+
+    function NovaTask() {
+        var form;
+        $.ajax(
+            {
+                type: 'POST',
+                url: '../processing/Task/AddTask',
+                dataType: 'html',
+                cache: false,
+                async: true,
+
+                success: function (data) {
+                    form = data;
+                    bootbox.confirm(form, function (result) {
+                        if (result) {
+
+                            var nome = document.getElementById("TaskNome").value;
+                            var tipo = document.getElementById("TaskTipo").value;
+                            var hora = document.getElementById("TaskHora").value;
+                            var parent_id = document.getElementById("TaskParent").value;
+                            var processo_id = document.getElementById("TaskProcesso").value;
+
+                            CreateTask(nome, tipo, hora, parent_id, processo_id);
+
+
+                        }
+
+                    });
+
+                },
+
+
+
+
+            });
+    }
+
+    function CreateTask(nome,tipo,hora,parent_id,processo_id) {
+        var task = {
+            "Id": 0,
+            "ProcessoId": processo_id,
+            "Tipo": tipo,
+            "Hora": hora,
+            "ParentId": parent_id,
+            "Nome": nome,
+            "Status": ""
+        };
+
+        $.ajax(
+            {
+                type: 'POST',
+                url: '../processing/Task/CreateTask',
+                dataType: 'html',
+                cache: false,
+                async: true,
+
+                success: function (data) {
+                    if (data) {
+                        location.reload();
+                    }
+                    else {
+                        alert("Erro ao registrar a Task");
+                        location.reload();
+                    }
+                },
+                data: task
+
+
+
+            });
+
+    }
+
+    function DeleteTask(id) {
+        var form;
+        $.ajax(
+            {
+                type: 'POST',
+                url: '../processing/Task/DeleteTask?id=' + id,
+                dataType: 'html',
+                cache: false,
+                async: true,
+
+                success: function (data) {
+                    location.reload();
+
+                },
+
+
+
+
+            });
+    }
+</script>

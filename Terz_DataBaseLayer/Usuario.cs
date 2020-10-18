@@ -165,7 +165,7 @@ namespace Terz_DataBaseLayer
         {
             this.Tasks = new List<Task>();
             Base.Init();
-            var sql = "SELECT t.id,t.processo_id,t.tipo,CAST(t.hora as char),t.parent_id FROM task t LEFT JOIN processo p on t.processo_id = p.id WHERE p.user_id = "+this.Id;
+            var sql = "SELECT t.id,t.processo_id,t.tipo,CAST(t.hora as char),t.parent_id,t.nome,t.status FROM task t LEFT JOIN processo p on t.processo_id = p.id WHERE p.user_id = "+this.Id;
             MySqlDataReader myReader = Base.select(sql);
             while (myReader.Read())
             {
@@ -176,6 +176,9 @@ namespace Terz_DataBaseLayer
                 task.Tipo = myReader.GetString(2);
                 task.Hora = myReader.GetString(3);
                 task.ParentId = Convert.ToString(myReader.GetValue(4));
+                task.Nome = myReader.GetString(5);
+                task.Status = myReader.GetString(6);
+
 
                 this.Tasks.Add(task);
 

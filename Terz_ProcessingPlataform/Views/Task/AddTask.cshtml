@@ -1,0 +1,49 @@
+﻿@model Terz_ProcessingPlataform.Models.Task.TaskView
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<label>Nome:</label>
+<input class="form-control" id="TaskNome" />
+
+<label>Processo:</label>
+<select class="form-control" id="TaskProcesso">
+    @foreach (Terz_DataBaseLayer.Processo processo in Model.Usuario.Processos)
+    {
+        <option value="@processo.Id">@processo.Nome</option>
+    }
+</select>
+
+<label>Tipo:</label>
+<select class="form-control" onchange="change()" id="TaskTipo">
+    <option value="daily" selected>Diária</option>
+    <option value="event">Cadeia</option>
+
+</select>
+
+<div id="Hora">
+    <label>Hora:</label>
+    <input class="form-control" type="time" id="TaskHora" min="00:00" max="23:59" value="08:00">
+</div>
+
+<div id="Parent" style="display:none">
+    <label>Task:</label>
+    <select class="form-control" id="TaskParent" >
+        @foreach (Terz_DataBaseLayer.Task task in Model.Usuario.Tasks)
+        {
+            <option value="@task.Id">@task.Nome</option>
+        }
+    </select>
+</div>
+<script>
+    function change() {
+        if (document.getElementById("TaskTipo").value == "daily") {
+            document.getElementById("Hora").style.display = "block";
+            document.getElementById("Parent").style.display = "none";
+        }
+        else {
+            document.getElementById("Hora").style.display = "none";
+            document.getElementById("Parent").style.display = "block";
+        }
+    }
+</script>

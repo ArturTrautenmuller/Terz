@@ -39,3 +39,7 @@ C:\Users\artur\source\repos\Terz\Terz_ProcessingPlataform\obj\Debug\netcoreapp2.
 C:\Users\artur\source\repos\Terz\Terz_ProcessingPlataform\obj\Debug\netcoreapp2.1\Razor\Views\User\UserPage.g.cshtml.cs
 C:\Users\artur\source\repos\Terz\Terz_ProcessingPlataform\obj\Debug\netcoreapp2.1\Razor\Views\Processo\Index.g.cshtml.cs
 C:\Users\artur\source\repos\Terz\Terz_ProcessingPlataform\obj\Debug\netcoreapp2.1\Razor\Views\Processo\AddApp.g.cshtml.cs
+C:\Users\artur\source\repos\Terz\Terz_ProcessingPlataform\obj\Debug\netcoreapp2.1\Razor\Views\Task\Index.g.cshtml.cs
+C:\Users\artur\source\repos\Terz\Terz_ProcessingPlataform\obj\Debug\netcoreapp2.1\Razor\Views\Task\AddTask.g.cshtml.cs
+C:\Users\artur\source\repos\Terz\Terz_ProcessingPlataform\bin\Debug\netcoreapp2.1\Terz_ProcessingExecuter.dll
+C:\Users\artur\source\repos\Terz\Terz_ProcessingPlataform\bin\Debug\netcoreapp2.1\Terz_ProcessingExecuter.pdb

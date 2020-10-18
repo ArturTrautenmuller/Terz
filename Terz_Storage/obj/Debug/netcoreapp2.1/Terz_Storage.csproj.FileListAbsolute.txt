@@ -12,3 +12,10 @@ C:\Users\artur\source\repos\Terz\Terz_Storage\obj\Debug\netcoreapp2.1\Terz_Stora
 C:\Users\artur\source\repos\Terz\Terz_Storage\bin\Debug\netcoreapp2.1\Terz_Storage.pdb
 C:\Users\artur\source\repos\Terz\Terz_Storage\obj\Debug\netcoreapp2.1\Terz_Storage.dll
 C:\Users\artur\source\repos\Terz\Terz_Storage\obj\Debug\netcoreapp2.1\Terz_Storage.pdb
+C:\Users\artur\source\repos\Terz\Terz_Storage\bin\Debug\netcoreapp2.1\Terz_API.dll
+C:\Users\artur\source\repos\Terz\Terz_Storage\bin\Debug\netcoreapp2.1\Terz_Core.dll
+C:\Users\artur\source\repos\Terz\Terz_Storage\bin\Debug\netcoreapp2.1\Terz_DataBaseLayer.dll
+C:\Users\artur\source\repos\Terz\Terz_Storage\bin\Debug\netcoreapp2.1\Terz_API.pdb
+C:\Users\artur\source\repos\Terz\Terz_Storage\bin\Debug\netcoreapp2.1\Terz_DataBaseLayer.pdb
+C:\Users\artur\source\repos\Terz\Terz_Storage\bin\Debug\netcoreapp2.1\Terz_Core.pdb
+C:\Users\artur\source\repos\Terz\Terz_Storage\obj\Debug\netcoreapp2.1\Terz_Storage.csproj.CopyComplete

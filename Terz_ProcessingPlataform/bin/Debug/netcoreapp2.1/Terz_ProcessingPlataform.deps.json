@@ -30,7 +30,8 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.1.9",
           "Newtonsoft.Json": "12.0.3",
           "Terz_Core": "1.0.0",
-          "Terz_DataBaseLayer": "1.0.0"
+          "Terz_DataBaseLayer": "1.0.0",
+          "Terz_ProcessingExecuter": "1.0.0"
         },
         "runtime": {
           "Terz_ProcessingPlataform.dll": {}
@@ -907,6 +908,20 @@
         },
         "compile": {
           "Terz_DataBaseLayer.dll": {}
+        }
+      },
+      "Terz_ProcessingExecuter/1.0.0": {
+        "dependencies": {
+          "Microsoft.NETCore.App": "2.1.0",
+          "Newtonsoft.Json": "12.0.3",
+          "Terz_Core": "1.0.0",
+          "Terz_DataBaseLayer": "1.0.0"
+        },
+        "runtime": {
+          "Terz_ProcessingExecuter.dll": {}
+        },
+        "compile": {
+          "Terz_ProcessingExecuter.dll": {}
         }
       },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
@@ -4159,6 +4174,11 @@
       "sha512": ""
     },
     "Terz_DataBaseLayer/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Terz_ProcessingExecuter/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

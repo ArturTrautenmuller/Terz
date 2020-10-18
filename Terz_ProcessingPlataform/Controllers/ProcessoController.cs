@@ -30,6 +30,11 @@ namespace Terz_ProcessingPlataform.Controllers
 
         public Processo GetProcesso([FromQuery(Name = "id")] string id)
         {
+            string userId = HttpContext.Session.GetString("User");
+            if (!Security.CheckProcessoPermission(userId, id))
+            {
+                return null;
+            }
             string text = System.IO.File.ReadAllText(Location.ConfLocation);
             Conf conf = JsonConvert.DeserializeObject<Conf>(text);
 
@@ -43,6 +48,11 @@ namespace Terz_ProcessingPlataform.Controllers
 
         public string SaveProcesso(Processo processo)
         {
+            string userId = HttpContext.Session.GetString("User");
+            if (!Security.CheckProcessoPermission(userId, processo.Id))
+            {
+                return null;
+            }
 
             string text = System.IO.File.ReadAllText(Location.ConfLocation);
             Conf conf = JsonConvert.DeserializeObject<Conf>(text);
@@ -77,6 +87,23 @@ namespace Terz_ProcessingPlataform.Controllers
 
 
             return "ok";
+        }
+
+        public string ExecuteProcesso([FromQuery(Name = "id")] string Id)
+        {
+            string userId = HttpContext.Session.GetString("User");
+            if (!Security.CheckProcessoPermission(userId, Id))
+            {
+                return null;
+            }
+
+            string text = System.IO.File.ReadAllText(Location.ConfLocation);
+            Terz_ProcessingExecuter.Conf conf = JsonConvert.DeserializeObject<Terz_ProcessingExecuter.Conf>(text);
+
+            string result = Terz_ProcessingExecuter.Runner.Run(Id,"0",conf,"0");
+
+            return result;
+
         }
 
 

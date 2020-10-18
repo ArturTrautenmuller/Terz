@@ -4919,6 +4919,22 @@
         "runtime": {
           "bin/placeholder/Terz_DataBaseLayer.dll": {}
         }
+      },
+      "Terz_ProcessingExecuter/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.1",
+        "dependencies": {
+          "Microsoft.NETCore.App": "2.1.0",
+          "Newtonsoft.Json": "12.0.3",
+          "Terz_Core": "1.0.0",
+          "Terz_DataBaseLayer": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Terz_ProcessingExecuter.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Terz_ProcessingExecuter.dll": {}
+        }
       }
     }
   },
@@ -13370,6 +13386,11 @@
       "type": "project",
       "path": "../Terz_DataBaseLayer/Terz_DataBaseLayer.csproj",
       "msbuildProject": "../Terz_DataBaseLayer/Terz_DataBaseLayer.csproj"
+    },
+    "Terz_ProcessingExecuter/1.0.0": {
+      "type": "project",
+      "path": "../Terz_ProcessingExecuter/Terz_ProcessingExecuter.csproj",
+      "msbuildProject": "../Terz_ProcessingExecuter/Terz_ProcessingExecuter.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -13380,7 +13401,8 @@
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.1.9",
       "Newtonsoft.Json >= 12.0.3",
       "Terz_Core >= 1.0.0",
-      "Terz_DataBaseLayer >= 1.0.0"
+      "Terz_DataBaseLayer >= 1.0.0",
+      "Terz_ProcessingExecuter >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -13418,6 +13440,9 @@
             },
             "C:\\Users\\artur\\source\\repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj": {
               "projectPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj"
+            },
+            "C:\\Users\\artur\\source\\repos\\Terz\\Terz_ProcessingExecuter\\Terz_ProcessingExecuter.csproj": {
+              "projectPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_ProcessingExecuter\\Terz_ProcessingExecuter.csproj"
             }
           }
         }

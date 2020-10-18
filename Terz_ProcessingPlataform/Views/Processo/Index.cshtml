@@ -39,8 +39,9 @@
         <div id="text"><div style="margin-left:22px" class="loader"></div>  <label id="contentOverlay">Calculando...</label></div>
     </div>
 
-<div style="margin-top:10px">
-    <button class="btn btn-block btn-success" style="width:160px;height:40px;margin-left:10px" onclick="salvar()"><i class="fas fa-save"></i> Salvar</button>
+<div style="margin-top:10px; display:flex">
+    <button class="btn btn-block btn-success" style="width:160px;height:40px;margin-left:10px;margin-top:8px" onclick="salvar()"><i class="fas fa-save"></i> Salvar</button>
+    <button class="btn btn-block btn-info" style="width:160px;height:40px;margin-left:10px" onclick="runProcesso()"><i class="fas fa-play"></i> Executar</button>
 </div>
 
     <div style="display:flex;margin-top:10px">
@@ -84,6 +85,7 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 <script>
 
     var processo;
@@ -227,6 +229,27 @@
                     alert(data);
                 },
                 data: processo
+
+            });
+    }
+
+    function runProcesso() {
+        on(' Executando...');
+        var form;
+         $.ajax(
+            {
+                type: 'POST',
+                 url: 'Processo/ExecuteProcesso?id=@Model.Processo.Id',
+                dataType: 'html',
+                cache: false,
+                async: true,
+                success: function (data) {
+                    off();
+                    alert(data);
+                    
+
+                   
+                }
 
             });
     }

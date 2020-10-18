@@ -29,34 +29,29 @@ namespace Terz_Storage.Controllers
             {
                 return "Falha de autenticação, usuario e senha incorretos";
             }
+            if (!Security.CheckReportPermission(usuario.Id, id))
+            {
+                return "permissão negada";
+            }
             string text = System.IO.File.ReadAllText(Location.ConfLocation);
             Conf conf = JsonConvert.DeserializeObject<Conf>(text);
 
             var file = Request.Form.Files[0];
 
-            long dirSize = Operations.getFolderSize(conf.DataFramePath + "/" + id);
-            long filesSize = Operations.getFilesSize(Request.Form.Files);
-            long repetedFilesSize = Operations.getRepetedFilesSize(Request.Form.Files, conf.DataFramePath + "/" + id);
-
-            Report report = new Report();
-            report.Load(id);
-
-            bool canUpload = report.canReciveUpload(dirSize + filesSize - repetedFilesSize);
-            if (!canUpload)
-            {
-                return "não há espaço suficiente para subir esses arquivos";
-            }
 
             
-            var filePath = Path.Combine(conf.DataFramePath + "/"+id,file.FileName);
+            if(!System.IO.Directory.Exists(conf.DataFramePath + Aid.getBar() + id))
+            {
+                System.IO.Directory.CreateDirectory(conf.DataFramePath + Aid.getBar() + id);
+            }
+
+            var filePath = Path.Combine(conf.DataFramePath + Aid.getBar()+id,file.FileName);
 
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(fileStream);
             }
 
-           
-            report.IncrementVersion();
 
             return "DataFrame importado com sucesso";
         }
@@ -75,13 +70,18 @@ namespace Terz_Storage.Controllers
             {
                 return null;
             }
+
+            if (!Security.CheckReportPermission(usuario.Id, id))
+            {
+                return null;
+            }
             string text = System.IO.File.ReadAllText(Location.ConfLocation);
             Conf conf = JsonConvert.DeserializeObject<Conf>(text);
 
          
 
 
-            var filePath = Path.Combine(conf.DataFramePath + "/" + id,dataframe + ".csv");
+            var filePath = Path.Combine(conf.DataFramePath + Aid.getBar()+ id,dataframe + ".csv");
             DataFrame dataFrame = new DataFrame();
             dataFrame.Load(filePath);
 
@@ -103,6 +103,11 @@ namespace Terz_Storage.Controllers
             {
                 return null;
             }
+
+            if(!Security.CheckReportPermission(usuario.Id,id))
+            {
+                return null;
+            }
             string text = System.IO.File.ReadAllText(Location.ConfLocation);
             Conf conf = JsonConvert.DeserializeObject<Conf>(text);
 
@@ -110,7 +115,7 @@ namespace Terz_Storage.Controllers
 
 
             List<DataFrame> dataFrames = new List<DataFrame>();
-            string[] df_files = System.IO.Directory.GetFiles(conf.DataFramePath + "/" + id);
+            string[] df_files = System.IO.Directory.GetFiles(conf.DataFramePath + Aid.getBar() + id);
             foreach (string df in df_files)
             {
                 DataFrame dataFrame = new DataFrame();
@@ -138,6 +143,11 @@ namespace Terz_Storage.Controllers
             {
                 return "usuario e senha invalidos";
             }
+
+            if (!Security.CheckReportPermission(usuario.Id, id))
+            {
+                return "permissão negada";
+            }
             string text = System.IO.File.ReadAllText(Location.ConfLocation);
             Conf conf = JsonConvert.DeserializeObject<Conf>(text);
 
@@ -147,7 +157,7 @@ namespace Terz_Storage.Controllers
                 contentText += string.Join(",", row) + Environment.NewLine;
             }
 
-            var filePath = Path.Combine(conf.DataFramePath + "/" + id, dataFrame.Name + ".csv");
+            var filePath = Path.Combine(conf.DataFramePath +Aid.getBar() + id, dataFrame.Name + ".csv");
             System.IO.File.WriteAllText(filePath, contentText);
 
 

@@ -722,7 +722,22 @@ function buildGraphSettings(id) {
     yExp.value = graph.style.y;
     document.getElementById("Settings").appendChild(yExp);
     document.getElementById("Settings").appendChild(document.createElement("br"));
-
+    if (graph.objectType == 'map') {
+        var regionLabel = document.createElement("label");
+        regionLabel.innerHTML = "Região:";
+        document.getElementById("Settings").appendChild(regionLabel);
+        document.getElementById("Settings").appendChild(document.createElement("br"));
+        var regionExp = document.createElement("input");
+        regionExp.setAttribute("id", "Region");
+        regionExp.setAttribute("type", "text");
+        regionExp.setAttribute("onchange", "updateGraphConfig('" + id + "')");
+        regionExp.setAttribute("class", "form-control");
+        if (graph.style.region != null) {
+            regionExp.value = graph.style.region;
+        }
+        document.getElementById("Settings").appendChild(regionExp);
+        document.getElementById("Settings").appendChild(document.createElement("br"));
+    }
     
     if (graph.objectType == 'bar') {
         document.getElementById("Settings").appendChild(document.createElement("hr"));
