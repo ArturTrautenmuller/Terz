@@ -152,10 +152,11 @@ namespace Terz.Controllers
             {
                 return "não há espaço suficiente para subir esses arquivos";
             }
-
+            List<string> dfs = new List<string>();
             foreach (var file in files)
             {
                 var filePath = Path.Combine(conf.DataFramePath + "/" + id, file.FileName);
+                dfs.Add(Path.GetFileNameWithoutExtension(file.FileName));
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(fileStream);
@@ -164,9 +165,12 @@ namespace Terz.Controllers
 
             
             report.IncrementVersion();
+            Query.ProcessDataFrames(dfs, Path.Combine(conf.DataFramePath, id), Path.Combine(conf.QueryConfigPath, id));
 
             return "ok";
         }
+
+        
 
         public string RenameDataFrame([FromQuery(Name = "id")] string id, [FromQuery(Name = "name")] string name, [FromQuery(Name = "newname")] string newName)
         {

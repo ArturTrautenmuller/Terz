@@ -25,6 +25,6 @@ namespace Terz_API
         public string ConfigPath { get; set; }
         public string DataFramePath { get; set; }
         public string ImagePath {get;set;}
-         
+        public string QueryConfigPath { get; set; }
     }
 }

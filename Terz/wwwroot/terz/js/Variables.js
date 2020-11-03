@@ -19,3 +19,8 @@ var keepAllData = true;
 var browseData;
 var browseConfig;
 var version;
+
+var QueryConfig;
+var QueryCurrentSheet = "1";
+var QuerySelections = [];
+var QueryData = [];

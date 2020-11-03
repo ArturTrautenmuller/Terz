@@ -33,6 +33,8 @@ namespace Terz_API.Controllers
             Conf conf = JsonConvert.DeserializeObject<Conf>(text);
 
             var file = Request.Form.Files[0];
+            List<string> dfs = new List<string>();
+            dfs.Add(file.FileName);
 
             long dirSize = Operations.getFolderSize(conf.DataFramePath + "/" + id);
             long filesSize = Operations.getFilesSize(Request.Form.Files);
@@ -57,6 +59,7 @@ namespace Terz_API.Controllers
 
            
             report.IncrementVersion();
+            Query.ProcessDataFrames(dfs, Path.Combine(conf.DataFramePath, id), Path.Combine(conf.QueryConfigPath, id));
 
             return "DataFrame importado com sucesso";
         }
@@ -89,9 +92,10 @@ namespace Terz_API.Controllers
             var filePath = Path.Combine(conf.DataFramePath + "/" + id, dataFrame.Name + ".csv");
             System.IO.File.WriteAllText(filePath, contentText);
 
+            List<string> dfs = new List<string>();
+            dfs.Add(dataFrame.Name);
 
-
-
+            Query.ProcessDataFrames(dfs, Path.Combine(conf.DataFramePath, id), Path.Combine(conf.QueryConfigPath, id));
             return "dataframe importado com sucesso";
         }
 

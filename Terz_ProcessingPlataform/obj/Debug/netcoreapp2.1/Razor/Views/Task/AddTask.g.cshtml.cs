@@ -64,7 +64,7 @@ using Terz_ProcessingPlataform.Models;
             WriteLiteral("        ");
             EndContext();
             BeginContext(418, 52, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "19a3e4417bad42acaa294912869c8df8", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3c54ac11ac49479e8d80f553324641b5", async() => {
                 BeginContext(448, 13, false);
 #line 13 "C:\Users\artur\source\repos\Terz\Terz_ProcessingPlataform\Views\Task\AddTask.cshtml"
                                 Write(processo.Nome);
@@ -105,7 +105,7 @@ using Terz_ProcessingPlataform.Models;
             WriteLiteral("</select>\r\n\r\n<label>Tipo:</label>\r\n<select class=\"form-control\" onchange=\"change()\" id=\"TaskTipo\">\r\n    ");
             EndContext();
             BeginContext(583, 46, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f3ff44d09e634c5dbcdcd5915810b500", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e9855b5553154fa388f1b50271d059ad", async() => {
                 BeginContext(614, 6, true);
                 WriteLiteral("Diária");
                 EndContext();
@@ -130,7 +130,7 @@ using Terz_ProcessingPlataform.Models;
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(635, 37, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8d2783c75090437883c693c5920da150", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2123ef102bdd472399feac678e20eb05", async() => {
                 BeginContext(657, 6, true);
                 WriteLiteral("Cadeia");
                 EndContext();
@@ -173,7 +173,7 @@ using Terz_ProcessingPlataform.Models;
             WriteLiteral("            ");
             EndContext();
             BeginContext(1053, 44, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1fd271c0307345688579d63ee346df68", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "10af40823bd04154aa422f7c59f63f22", async() => {
                 BeginContext(1079, 9, false);
 #line 34 "C:\Users\artur\source\repos\Terz\Terz_ProcessingPlataform\Views\Task\AddTask.cshtml"
                                 Write(task.Nome);

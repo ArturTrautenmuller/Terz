@@ -1,0 +1,350 @@
+﻿@model Terz.Models.Query.QueryView
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<link rel="stylesheet" href="~/terz/css/Report.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="~/terz/LTE/plugins/fontawesome-free/css/all.min.css">
+
+
+
+<link rel="stylesheet" href="~/terz/LTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="~/terz/LTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<!-- Theme style -->
+
+
+
+<style>
+    .checked {
+        color: orange;
+    }
+
+    #overlay {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 2;
+        cursor: pointer;
+    }
+
+    #text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 30px;
+        color: white;
+        transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+    }
+</style>
+
+<div id="overlay">
+
+    <div id="text"><div style="margin-left:22px" class="loader"></div> Calculando...</div>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+
+        <div class="navbar-header">
+
+
+
+
+            <h4 class="brand brand-name navbar-left" style="margin-top:28px; max-width:500px">@Model.Report.Titulo</h4>
+        </div>
+        <div class="collapse navbar-collapse navbar-right" id="myNavbar">
+            <ul class="nav navbar-nav">
+
+                <li><a href="#" style="color:gray;text-decoration:none; margin-left:10px" onclick="ShowInfo()">Sobre</a></li>
+                <li><a href="#" style="color:gray;text-decoration:none; margin-left:10px" onclick="ShowReference()">Referencias</a></li>
+               
+                <li>
+                    <div id="Pages" style="margin-left:5%;margin-top:23px;">
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                Paginas
+                                <span class="caret"></span>
+                            </button>
+                            <ul id="sheetList" class="dropdown-menu"></ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div style="margin-top:85px">
+    <button class="btn btn-block btn-info" style="width:230px;margin-left:10px;" name="pButton" onclick="Pesquisar()"><i class="fas fa-search"></i> Pesquisar</button><br />
+    <div id="Filters">
+
+
+
+    </div>
+    <div id="Graphs">
+
+    </div>
+</div>
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://unpkg.com/mathjs/dist/math.min.js"></script>
+<script language="JavaScript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.2.1/math.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3plus/2.0.0-alpha.14/d3plus.full.js"></script>
+<script src="https://d3js.org/d3-hierarchy.v1.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/alasql@0.6"></script>
+
+<script src="~/terz/LTE/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/terz/LTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/terz/LTE/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/terz/LTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<!-- AdminLTE App -->
+
+
+<script src="~/terz/js/Operations.js"></script>
+<script src="~/terz/js/Variables.js"></script>
+<script src="~/terz/js/Filter.js"></script>
+<script src="~/terz/js/Indicator.js"></script>
+<script src="~/terz/js/Graph.js"></script>
+<script src="~/terz/js/QueryTable.js"></script>
+<script src="~/terz/js/TextBlock.js"></script>
+<script>
+    /* When the user clicks on the button,
+    toggle between hiding and showing the dropdown content */
+    function showOptions(filterId) {
+        console.log(filterId);
+        document.getElementById(filterId).classList.toggle("show");
+    }
+
+    function filterFunction(filterId) {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById("Input-" + filterId);
+        filter = input.value.toUpperCase();
+        div = document.getElementById(filterId);
+        a = div.getElementsByTagName("a");
+        for (i = 0; i < a.length; i++) {
+            txtValue = a[i].textContent || a[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                a[i].style.display = "";
+            } else {
+                a[i].style.display = "none";
+            }
+        }
+    }
+</script>
+
+
+<script>
+
+     function ShowInfo() {
+        var form;
+        $.ajax(
+            {
+                type: 'POST',
+                url: 'Report/Sobre?id=@Model.Id',
+                dataType: 'html',
+                cache: false,
+                async: true,
+
+                success: function (data) {
+                    form = data;
+                    bootbox.confirm(form, function (result) {
+                        if (result) {
+
+                            console.log("close info");
+
+                        }
+                    });
+
+                },
+
+
+            });
+    }
+
+        function ShowReference() {
+        var form;
+        $.ajax(
+            {
+                type: 'POST',
+                url: 'Report/Referencias?id=@Model.Id',
+                dataType: 'html',
+                cache: false,
+                async: true,
+
+                success: function (data) {
+                    form = data;
+                    bootbox.confirm(form, function (result) {
+                        if (result) {
+
+                            console.log("close info");
+
+                        }
+                    });
+
+                },
+
+
+            });
+    }
+
+    function buildSheetMenu() {
+        var sheets = QueryConfig.querySheets;
+      
+        for (var i = 0; i < sheets.length; i++) {
+            var liSheet = document.createElement("li");
+            var aSheet = document.createElement("a");
+            aSheet.appendChild(document.createTextNode(sheets[i].name));
+            aSheet.setAttribute("href", "#");
+            aSheet.setAttribute("onclick", "changeSheet('" + sheets[i].order + "')");
+            liSheet.appendChild(aSheet);
+            document.getElementById("sheetList").appendChild(liSheet);
+
+        }
+    }
+
+    function changeSheet(sheetOrder) {
+        on();
+        currentSheet = sheetOrder;
+        reloadSheet();
+        off();
+    }
+
+    function reloadSheet() {
+        buildQueryFilter(QueryCurrentSheet);
+        buildQueryTable(QueryCurrentSheet);
+    }
+
+    function filterValue(cellValue) {
+        if (document.getElementById(cellValue).style.backgroundColor == 'green') {
+            document.getElementById(cellValue).style.backgroundColor = 'white';
+            removeFilter(cellValue);
+           
+        }
+        else {
+            document.getElementById(cellValue).style.backgroundColor = 'green';
+            addFilter(cellValue);
+           
+        }
+    }
+
+    function addFilter(cellValue) {
+        var valueMap = cellValue.split(",");
+        
+        var field = valueMap[0];
+        var value = valueMap[1];
+
+        if (QuerySelections[currentSheet] == null) QuerySelections[currentSheet] = [];
+
+        if (QuerySelections[currentSheet].filter(function (x) { return x.field == field }).length == 0) {
+             var filterBlock = { field: field, values: [] };
+             filterBlock.values.push(value);
+            QuerySelections[currentSheet].push(filterBlock);
+            }
+        else {
+            var pos = QuerySelections[currentSheet].findIndex(i => i.field == field);
+            QuerySelections[currentSheet][pos].values.push(value);
+            }
+        
+        
+    }
+
+    function removeFilter(cellValue) {
+        var valueMap = cellValue.split(",");
+
+        var field = valueMap[0];
+        var value = valueMap[1];
+
+        var pos = QuerySelections[currentSheet].findIndex(i => i.field == field);
+        var posValue = QuerySelections[currentSheet][pos].values.indexOf(value);
+        QuerySelections[currentSheet][pos].values.splice(posValue, 1);
+    }
+
+    function on() {
+        document.getElementById("overlay").style.display = "block";
+    }
+
+    function off() {
+        document.getElementById("overlay").style.display = "none";
+    }
+
+    function Pesquisar() {
+        on();
+
+        var queryContent = {};
+        queryContent["Parameters"] = QuerySelections[currentSheet];
+
+        $.ajax(
+            {
+                type: 'POST',
+                url: 'Query/ExecuteQuery?id=@Model.Id&sheet='+ QueryCurrentSheet,
+                dataType: 'json',
+                cache: false,
+                async: true,
+                contentType:"application/json",
+                success: function (data) {
+
+                    QueryData[currentSheet] = data;
+                    buildQueryTable(QueryCurrentSheet);
+
+                    off();
+                },
+                data: JSON.stringify(queryContent)
+
+            });
+    }
+
+    function init() {
+        buildSheetMenu();
+        buildQueryFilter(QueryCurrentSheet);
+        buildQueryTable(QueryCurrentSheet);
+    }
+
+    function GetQueryConfig(){
+
+        on();
+        $.ajax(
+            {
+                type: 'POST',
+                url: 'Query/GetQueryConfig?id=@Model.Id',
+                dataType: 'json',
+                cache: false,
+                async: true,
+                success: function (data) {
+
+                    QueryConfig = data;
+
+
+
+
+                    init();
+                    off();
+                }
+
+            });
+
+
+    }
+
+    GetQueryConfig();
+</script>

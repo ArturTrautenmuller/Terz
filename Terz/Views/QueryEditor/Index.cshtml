@@ -1,0 +1,153 @@
+﻿@model Terz.Models.QueryEditor.QueryEditorView
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<link rel="stylesheet" href="~/terz/css/Editor.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="~/terz/LTE/plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="~/terz/LTE/plugins/fontawesome-free/css/all.css">
+<link rel="stylesheet" href="~/terz/LTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="~/terz/LTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<!-- Theme style -->
+
+<style>
+    #overlay {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 2;
+        cursor: pointer;
+    }
+
+    #text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 30px;
+        color: white;
+        transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+    }
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<div id="overlay">
+
+    <div id="text"><div style="margin-left:22px" class="loader"></div>  <label id="contentOverlay">Calculando...</label></div>
+</div>
+
+<div class="card card-info">
+    <div class="card-header">
+        <h3 class="card-title">Files</h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>File Name</th>
+                    <th>File Size</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Functional-requirements.docx</td>
+                    <td>49.8005 kb</td>
+                    <td class="text-right py-0 align-middle">
+                        <div class="btn-group btn-group-sm">
+                            <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                        </div>
+                    </td>
+                <tr>
+                    <td>UAT.pdf</td>
+                    <td>28.4883 kb</td>
+                    <td class="text-right py-0 align-middle">
+                        <div class="btn-group btn-group-sm">
+                            <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                        </div>
+                    </td>
+                <tr>
+                    <td>Email-from-flatbal.mln</td>
+                    <td>57.9003 kb</td>
+                    <td class="text-right py-0 align-middle">
+                        <div class="btn-group btn-group-sm">
+                            <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                        </div>
+                    </td>
+                <tr>
+                    <td>Logo.png</td>
+                    <td>50.5190 kb</td>
+                    <td class="text-right py-0 align-middle">
+                        <div class="btn-group btn-group-sm">
+                            <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                        </div>
+                    </td>
+                <tr>
+                    <td>Contract-10_12_2014.docx</td>
+                    <td>44.9715 kb</td>
+                    <td class="text-right py-0 align-middle">
+                        <div class="btn-group btn-group-sm">
+                            <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                        </div>
+                    </td>
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>
+
+
+
+
+<script src="https://unpkg.com/mathjs/dist/math.min.js"></script>
+<script language="JavaScript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.2.1/math.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3plus/2.0.0-alpha.14/d3plus.full.js"></script>
+<script src="https://d3js.org/d3-hierarchy.v1.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script src="~/terz/LTE/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/terz/LTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/terz/LTE/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/terz/LTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/alasql@0.6"></script>
+<!-- AdminLTE App -->
+
+
+<script src="~/terz/js/Operations.js"></script>
+<script src="~/terz/js/Variables.js"></script>
+<script src="~/terz/js/Filter.js"></script>
+<script src="~/terz/js/Indicator.js"></script>
+<script src="~/terz/js/Graph.js"></script>
+<script src="~/terz/js/Settings.js"></script>
+<script src="~/terz/js/TextBlock.js"></script>
+
+
+<script>
+    function on(text) {
+        document.getElementById("overlay").style.display = "block";
+        document.getElementById("contentOverlay").innerHTML = text;
+    }
+
+    function off() {
+        document.getElementById("overlay").style.display = "none";
+    }
+</script>

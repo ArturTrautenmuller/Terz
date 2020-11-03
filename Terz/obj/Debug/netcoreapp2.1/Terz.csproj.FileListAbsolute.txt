@@ -58,3 +58,5 @@ C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Terz.csproj.CopyCo
 C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Terz.dll
 C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Terz.pdb
 C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\Documentation\Index.g.cshtml.cs
+C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\Query\Index.g.cshtml.cs
+C:\Users\artur\source\repos\Terz\Terz\obj\Debug\netcoreapp2.1\Razor\Views\QueryEditor\Index.g.cshtml.cs

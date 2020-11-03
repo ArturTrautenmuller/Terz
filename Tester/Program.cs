@@ -11,9 +11,7 @@ namespace Tester
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            Usuario usuario = new Usuario();
-            usuario.Load("1");
-            Console.WriteLine(usuario.Email);
+            
 
 
 
