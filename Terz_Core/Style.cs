@@ -22,5 +22,9 @@ namespace Terz_Core
 
         public string Region { get; set; }
 
+        public string Icon { get; set; }
+        public string IconColor { get; set; }
+        public string IconSize { get; set; }
+
     }
 }

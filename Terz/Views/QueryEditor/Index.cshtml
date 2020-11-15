@@ -4,11 +4,19 @@
 *@
 
 <link rel="stylesheet" href="~/terz/css/Editor.css" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+
+
 <link rel="stylesheet" href="~/terz/LTE/plugins/fontawesome-free/css/all.min.css">
-<link rel="stylesheet" href="~/terz/LTE/plugins/fontawesome-free/css/all.css">
-<link rel="stylesheet" href="~/terz/LTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="~/terz/LTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<!-- overlayScrollbars -->
+<link rel="stylesheet" href="~/terz/LTE/dist/css/adminlte.min.css">
+<!-- Google Font: Source Sans Pro -->
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+
 <!-- Theme style -->
 
 <style>
@@ -39,95 +47,37 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 
 <div id="overlay">
 
     <div id="text"><div style="margin-left:22px" class="loader"></div>  <label id="contentOverlay">Calculando...</label></div>
 </div>
 
-<div class="card card-info">
-    <div class="card-header">
-        <h3 class="card-title">Files</h3>
-        <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                <i class="fas fa-minus"></i>
-            </button>
-        </div>
-    </div>
-    <div class="card-body p-0">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>File Name</th>
-                    <th>File Size</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Functional-requirements.docx</td>
-                    <td>49.8005 kb</td>
-                    <td class="text-right py-0 align-middle">
-                        <div class="btn-group btn-group-sm">
-                            <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                        </div>
-                    </td>
-                <tr>
-                    <td>UAT.pdf</td>
-                    <td>28.4883 kb</td>
-                    <td class="text-right py-0 align-middle">
-                        <div class="btn-group btn-group-sm">
-                            <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                        </div>
-                    </td>
-                <tr>
-                    <td>Email-from-flatbal.mln</td>
-                    <td>57.9003 kb</td>
-                    <td class="text-right py-0 align-middle">
-                        <div class="btn-group btn-group-sm">
-                            <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                        </div>
-                    </td>
-                <tr>
-                    <td>Logo.png</td>
-                    <td>50.5190 kb</td>
-                    <td class="text-right py-0 align-middle">
-                        <div class="btn-group btn-group-sm">
-                            <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                        </div>
-                    </td>
-                <tr>
-                    <td>Contract-10_12_2014.docx</td>
-                    <td>44.9715 kb</td>
-                    <td class="text-right py-0 align-middle">
-                        <div class="btn-group btn-group-sm">
-                            <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                        </div>
-                    </td>
-            </tbody>
-        </table>
-    </div>
-    <!-- /.card-body -->
+<div style="display:flex;margin-top:12px">
+    <button style="width:200px;height:35px; margin-left:10px;margin-top:4px" class="btn btn-block btn-info" onclick="AddSheet()"><i class="fas fa-plus"></i> Nova Pasta</button>
+    <button style="width:200px;height:35px;margin-left:20px" class="btn btn-block btn-success" onclick="SaveReport()"><i class="fas fa-save"></i> Salvar</button>
+</div>
+<br />
+<div id="Sheets" style="width:50%;margin-left:10px">
+
+   
+
+
 </div>
 
-
-
-
 <script src="https://unpkg.com/mathjs/dist/math.min.js"></script>
-<script language="JavaScript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.2.1/math.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3plus/2.0.0-alpha.14/d3plus.full.js"></script>
 <script src="https://d3js.org/d3-hierarchy.v1.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-<script src="~/terz/LTE/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="~/terz/LTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="~/terz/LTE/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="~/terz/LTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="~/terz/LTE/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="~/terz/LTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="~/terz/LTE/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="~/terz/LTE/dist/js/demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/alasql@0.6"></script>
 <!-- AdminLTE App -->
 
@@ -139,6 +89,7 @@
 <script src="~/terz/js/Graph.js"></script>
 <script src="~/terz/js/Settings.js"></script>
 <script src="~/terz/js/TextBlock.js"></script>
+<script src="~/terz/js/QueryEditor.js"></script>
 
 
 <script>
@@ -150,4 +101,251 @@
     function off() {
         document.getElementById("overlay").style.display = "none";
     }
+
+    function AddFilter(sheet) {
+        var form;
+        $.ajax(
+            {
+                type: 'POST',
+                url: 'QueryEditor/AddFilter?id=@Model.Id&df=' + QueryConfig.querySheets.filter(function (x) { return x.order == sheet })[0].dataFrame,
+                dataType: 'html',
+                cache: false,
+                async: true,
+
+                success: function (data) {
+                    form = data;
+                    bootbox.confirm(form, function (result) {
+                        if (result) {
+
+                            var nFilter = document.getElementById("FilterName").value;
+                            var sheetPos = QueryConfig.querySheets.map(function (e) { return e.order; }).indexOf(sheet);
+                            if (QueryConfig.querySheets[sheetPos].filters == null) {
+                                QueryConfig.querySheets[sheetPos].filters = [];
+                            }
+                            QueryConfig.querySheets[sheetPos].filters.push(nFilter);
+
+                            if (QueryConfig.querySheets[sheetPos].queryFilterValues == null) {
+                                QueryConfig.querySheets[sheetPos].queryFilterValues = [];
+                            }
+
+                            var nQueryFilterValues = {};
+                            nQueryFilterValues["Filter"] = nFilter;
+                            nQueryFilterValues["Values"] = [];
+                            QueryConfig.querySheets[sheetPos].queryFilterValues.push(nQueryFilterValues);
+
+                            buildQuerySheetEditor();
+
+                        }
+
+                    });
+
+                },
+
+
+
+
+            });
+    }
+
+
+     function AddField(sheet) {
+        var form;
+        $.ajax(
+            {
+                type: 'POST',
+                url: 'QueryEditor/AddField?id=@Model.Id&df=' + QueryConfig.querySheets.filter(function (x) { return x.order == sheet })[0].dataFrame,
+                dataType: 'html',
+                cache: false,
+                async: true,
+
+                success: function (data) {
+                    form = data;
+                    bootbox.confirm(form, function (result) {
+                        if (result) {
+
+                            var nField = {};
+                            nField['field'] = document.getElementById("FieldName").value;
+                            nField['format'] = document.getElementById("FieldFormat").value;
+                            var sheetPos = QueryConfig.querySheets.map(function (e) { return e.order; }).indexOf(sheet);
+                            if (QueryConfig.querySheets[sheetPos].queryFields == null) {
+                                QueryConfig.querySheets[sheetPos].queryFields = [];
+                            }
+
+
+
+                            QueryConfig.querySheets[sheetPos].queryFields.push(nField);
+
+                            buildQuerySheetEditor();
+
+                        }
+
+                    });
+
+                },
+
+
+
+
+            });
+    }
+
+    function AddSheet() {
+         var form;
+        $.ajax(
+            {
+                type: 'POST',
+                url: 'QueryEditor/AddSheet?id=@Model.Id',
+                dataType: 'html',
+                cache: false,
+                async: true,
+
+                success: function (data) {
+                    form = data;
+                    bootbox.confirm(form, function (result) {
+                        if (result) {
+
+                            if (QueryConfig.querySheets == null) {
+                                QueryConfig.querySheets = [];
+                            }
+
+                            var nSheet = {};
+                            nSheet['name'] = document.getElementById("SheetName").value;
+                            nSheet['dataFrame'] = document.getElementById("DataFrameName").value;
+                            nSheet['id'] = Date.now().toString();
+                            nSheet['order'] = (QueryConfig.querySheets.length + 1).toString();
+                            nSheet['filters'] = [];
+                            nSheet['queryFields'] = [];
+                            nSheet['queryFilterValues'] = [];
+
+
+
+                            QueryConfig.querySheets.push(nSheet);
+
+                            buildQuerySheetEditor();
+
+                        }
+
+                    });
+
+                },
+
+
+
+
+            });
+    }
+
+    function RemoveFilter(sheet,name) {
+        var sheetPos = QueryConfig.querySheets.map(function (e) { return e.order; }).indexOf(sheet);
+        var filterPos = QueryConfig.querySheets[sheetPos].filters.indexOf(name);
+
+        QueryConfig.querySheets[sheetPos].filters.splice(filterPos, 1);
+        buildQuerySheetEditor();
+    }
+
+    function RemoveField(sheet, name) {
+        var sheetPos = QueryConfig.querySheets.map(function (e) { return e.order; }).indexOf(sheet);
+        var fieldPos = QueryConfig.querySheets[sheetPos].queryFields.map(function (e) { return e.field; }).indexOf(name);
+
+        QueryConfig.querySheets[sheetPos].queryFields.splice(fieldPos, 1);
+        buildQuerySheetEditor();
+    }
+
+    function RemoveSheet(sheet) {
+        var sheetPos = QueryConfig.querySheets.map(function (e) { return e.order; }).indexOf(sheet);
+        QueryConfig.querySheets.splice(sheetPos, 1);
+        for (var i = 0; i < QueryConfig.querySheets.length; i++) {
+            if (parseInt(QueryConfig.querySheets[i].order) > parseInt(sheet)) {
+                QueryConfig.querySheets[i].order = (parseInt(QueryConfig.querySheets[i].order) - 1).toString();
+            }
+        }
+
+        buildQuerySheetEditor();
+    }
+
+    function PromoteSheet(sheet) {
+        if (sheet == '1') return;
+        var sheetPos = QueryConfig.querySheets.map(function (e) { return e.order; }).indexOf(sheet);
+        var nextSheetPos = QueryConfig.querySheets.map(function (e) { return e.order; }).indexOf((parseInt(sheet) - 1).toString());
+
+        QueryConfig.querySheets[sheetPos].order = (parseInt(QueryConfig.querySheets[sheetPos].order) - 1).toString();
+        QueryConfig.querySheets[nextSheetPos].order = (parseInt(QueryConfig.querySheets[nextSheetPos].order) + 1).toString();
+
+        var nextSheetBackup = JSON.parse(JSON.stringify(QueryConfig.querySheets[nextSheetPos]));
+        QueryConfig.querySheets[nextSheetPos] = JSON.parse(JSON.stringify(QueryConfig.querySheets[sheetPos]));
+        QueryConfig.querySheets[sheetPos] = JSON.parse(JSON.stringify(nextSheetBackup));
+
+        buildQuerySheetEditor();
+
+    }
+
+    function DemoteSheet(sheet) {
+
+        if (parseInt(sheet) >= QueryConfig.querySheets.length) return;
+
+        var sheetPos = QueryConfig.querySheets.map(function (e) { return e.order; }).indexOf(sheet);
+        var nextSheetPos = QueryConfig.querySheets.map(function (e) { return e.order; }).indexOf((parseInt(sheet) + 1).toString());
+
+        console.log("sheetpos: "+sheetPos);
+        console.log("nextsheetpos: "+nextSheetPos);
+
+        QueryConfig.querySheets[sheetPos].order = (parseInt(QueryConfig.querySheets[sheetPos].order) + 1).toString();
+        QueryConfig.querySheets[nextSheetPos].order = (parseInt(QueryConfig.querySheets[nextSheetPos].order) - 1).toString();
+
+        var nextSheetBackup = JSON.parse(JSON.stringify(QueryConfig.querySheets[nextSheetPos]));
+        QueryConfig.querySheets[nextSheetPos] = JSON.parse(JSON.stringify(QueryConfig.querySheets[sheetPos]));
+        QueryConfig.querySheets[sheetPos] = JSON.parse(JSON.stringify(nextSheetBackup));
+
+        buildQuerySheetEditor();
+    }
+
+    function SaveReport() {
+        on(' Salvando...');
+        $.ajax(
+            {
+                type: 'POST',
+                url: 'QueryEditor/Save?id=@Model.Id',
+                dataType: 'html',
+                cache: false,
+                async: true,
+                success: function (data) {
+                    off();
+                    alert(data);
+                },
+                data: QueryConfig
+
+            });
+    }
+
+    function init() {
+        buildQuerySheetEditor();
+    }
+
+    function GetQueryConfig(){
+
+        on();
+        $.ajax(
+            {
+                type: 'POST',
+                url: 'Query/GetQueryConfig?id=@Model.Id',
+                dataType: 'json',
+                cache: false,
+                async: true,
+                success: function (data) {
+
+                    QueryConfig = data;
+
+
+
+
+                    init();
+                    off();
+                }
+
+            });
+
+
+    }
+
+    GetQueryConfig();
 </script>

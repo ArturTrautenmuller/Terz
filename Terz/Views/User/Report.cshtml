@@ -86,7 +86,7 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-                        with font-awesome or any other icon font library -->
+    with font-awesome or any other icon font library -->
 
 
                         <li class="nav-item has-treeview">
@@ -131,6 +131,16 @@
 
                         </li>
                         <li class="nav-item has-treeview">
+                            <a href="http://terzanalytics.com/processing/Home/Login" class="nav-link">
+                                <i class="fas fa-cogs"></i>
+                                <p>
+                                    Processing|ETL
+
+                                </p>
+                            </a>
+
+                        </li>
+                        <li class="nav-item has-treeview">
                             <a href="@Url.Action("Index","Documentation")" class="nav-link">
                                 <i class="fas fa-file-alt"></i>
                                 <p>
@@ -155,36 +165,38 @@
 
             @foreach (Terz_DataBaseLayer.Report report in Model.Usuario.Reports)
             {
-                <div class="ReportDiv">
+            <div class="ReportDiv">
 
 
-                    @if (report.Imagem == "" || report.Imagem == null)
-                    {
-                        <img onclick="EditReport('@report.Id')" width="130" height="100" class="FotoPerfil" src="~/terz/images/app.png" />
-                    }
-                    else
-                    {
-                        <img onclick="EditReport('@report.Id')" width="130" height="100" class="FotoPerfil" src="@report.Imagem" />
-                    }
-                    <label style="width:200px" class="LabelDesc">@report.Titulo</label>
-                    <label style="margin-left:16px; font-size:22px"><a href="../Editor?id=@report.Id"><i class="fa fa-edit"></i></a></label>
-                    <label style="margin-left:16px; font-size:22px"><a href="../DataManager?id=@report.Id"><i class="fas fa-table"></i> </a></label>
-                    <label style="margin-left:16px; font-size:22px"><a href="../Report?id=@report.Id"><i class="fas fa-eye"></i></a></label>
-                    <label style="margin-left:16px; font-size:22px"><a href="../User/ExportApp?id=@report.Id"><i class="fas fa-download"></i></a></label>
-                    @if (report.Ativo == 1)
-                    {
-                        <label style="margin-left:100px; font-size:26px"><a href="#" onclick="desativarRelatorio(@report.Id)"><i class="fas fa-toggle-on"></i></a></label>
-                    }
-                    else
-                    {
-                        <label style="margin-left:100px; font-size:26px"><a href="#" onclick="ativarRelatorio(@report.Id)"><i class="fas fa-toggle-off"></i></a></label>
-                    }
+                @if (report.Imagem == "" || report.Imagem == null)
+                {
+                    <img onclick="EditReport('@report.Id')" width="130" height="100" class="FotoPerfil" src="~/terz/images/app.png" />
+                }
+                else
+                {
+                    <img onclick="EditReport('@report.Id')" width="130" height="100" class="FotoPerfil" src="@report.Imagem" />
+                }
+                <label style="width:200px" class="LabelDesc">@report.Titulo</label>
+                <label style="margin-left:16px; font-size:22px"><a href="../Editor?id=@report.Id"><i class="fa fa-edit"></i></a></label>
+                <label style="margin-left:16px; font-size:22px"><a href="../DataManager?id=@report.Id"><i class="fas fa-table"></i> </a></label>
+                <label style="margin-left:16px; font-size:22px"><a href="../Report?id=@report.Id"><i class="fas fa-eye"></i></a></label>
+                <label style="margin-left:16px; color:cornflowerblue; font-size:22px"><a href="../QueryEditor?id=@report.Id"><i class="fa fa-edit"></i></a></label>
+                <label style="margin-left:16px; color:cornflowerblue; font-size:22px"><a href="../Query?id=@report.Id"><i class="fas fa-eye"></i></a></label>
+                <label style="margin-left:16px; font-size:22px"><a href="../User/ExportApp?id=@report.Id"><i class="fas fa-download"></i></a></label>
+                @if (report.Ativo == 1)
+                {
+                    <label style="margin-left:100px; font-size:26px"><a href="#" onclick="desativarRelatorio(@report.Id)"><i class="fas fa-toggle-on"></i></a></label>
+                }
+                else
+                {
+                    <label style="margin-left:100px; font-size:26px"><a href="#" onclick="ativarRelatorio(@report.Id)"><i class="fas fa-toggle-off"></i></a></label>
+                }
 
 
 
 
 
-                </div>
+            </div>
             }
 
 

@@ -1,0 +1,16 @@
+﻿@model Terz.Models.QueryEditor.AddSheetView
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+<label>Nome da Pasta:</label><br />
+<input type="text" class="form-control" style="width:200px" id="SheetName" /><br />
+<label>Selecione o DataFrame:</label>
+<br />
+<select class="form-control" style="width:200px" id="DataFrameName">
+    @foreach (string df in Model.DataFrames)
+    {
+        <option value="@df">@df</option>
+    }
+</select>

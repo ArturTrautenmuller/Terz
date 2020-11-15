@@ -1,0 +1,22 @@
+﻿@model Terz.Models.QueryEditor.AddFilterView
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<label>Selecione o Campo:</label>
+<br />
+<select class="form-control" style="width:200px" id="FieldName">
+    @foreach (string field in Model.Filters)
+    {
+        <option value="@field">@field</option>
+    }
+</select>
+
+<label>Selecione o Formato:</label>
+<br />
+<select class="form-control" style="width:200px" id="FieldFormat">
+    <option value="normal">Nenhum</option>
+    <option value="real">Real R$</option>
+    <option value="percent">Percentual (%)</option>
+    <option value="number">Decimal</option>
+</select>

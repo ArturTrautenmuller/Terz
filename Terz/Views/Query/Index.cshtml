@@ -66,9 +66,10 @@
         <div class="collapse navbar-collapse navbar-right" id="myNavbar">
             <ul class="nav navbar-nav">
 
+                <li><a href="../terz/Report?id=@Model.Id" style="color:gray;text-decoration:none; margin-left:10px"><i class="fas fa-chart-area"></i> Report</a></li>
                 <li><a href="#" style="color:gray;text-decoration:none; margin-left:10px" onclick="ShowInfo()">Sobre</a></li>
                 <li><a href="#" style="color:gray;text-decoration:none; margin-left:10px" onclick="ShowReference()">Referencias</a></li>
-               
+
                 <li>
                     <div id="Pages" style="margin-left:5%;margin-top:23px;">
                         <div class="dropdown">
@@ -225,7 +226,7 @@
 
     function changeSheet(sheetOrder) {
         on();
-        currentSheet = sheetOrder;
+        QueryCurrentSheet = sheetOrder;
         reloadSheet();
         off();
     }
@@ -254,16 +255,16 @@
         var field = valueMap[0];
         var value = valueMap[1];
 
-        if (QuerySelections[currentSheet] == null) QuerySelections[currentSheet] = [];
+        if (QuerySelections[QueryCurrentSheet] == null) QuerySelections[QueryCurrentSheet] = [];
 
-        if (QuerySelections[currentSheet].filter(function (x) { return x.field == field }).length == 0) {
+        if (QuerySelections[QueryCurrentSheet].filter(function (x) { return x.field == field }).length == 0) {
              var filterBlock = { field: field, values: [] };
              filterBlock.values.push(value);
-            QuerySelections[currentSheet].push(filterBlock);
+            QuerySelections[QueryCurrentSheet].push(filterBlock);
             }
         else {
-            var pos = QuerySelections[currentSheet].findIndex(i => i.field == field);
-            QuerySelections[currentSheet][pos].values.push(value);
+            var pos = QuerySelections[QueryCurrentSheet].findIndex(i => i.field == field);
+            QuerySelections[QueryCurrentSheet][pos].values.push(value);
             }
         
         
@@ -275,9 +276,9 @@
         var field = valueMap[0];
         var value = valueMap[1];
 
-        var pos = QuerySelections[currentSheet].findIndex(i => i.field == field);
-        var posValue = QuerySelections[currentSheet][pos].values.indexOf(value);
-        QuerySelections[currentSheet][pos].values.splice(posValue, 1);
+        var pos = QuerySelections[QueryCurrentSheet].findIndex(i => i.field == field);
+        var posValue = QuerySelections[QueryCurrentSheet][pos].values.indexOf(value);
+        QuerySelections[QueryCurrentSheet][pos].values.splice(posValue, 1);
     }
 
     function on() {
@@ -292,7 +293,7 @@
         on();
 
         var queryContent = {};
-        queryContent["Parameters"] = QuerySelections[currentSheet];
+        queryContent["Parameters"] = QuerySelections[QueryCurrentSheet];
 
         $.ajax(
             {
@@ -304,7 +305,7 @@
                 contentType:"application/json",
                 success: function (data) {
 
-                    QueryData[currentSheet] = data;
+                    QueryData[QueryCurrentSheet] = data;
                     buildQueryTable(QueryCurrentSheet);
 
                     off();
