@@ -10,3 +10,5 @@ C:\Users\artur\source\repos\Terz\Terz_Core\obj\Release\netcoreapp2.1\Terz_Core.A
 C:\Users\artur\source\repos\Terz\Terz_Core\obj\Release\netcoreapp2.1\Terz_Core.csproj.CopyComplete
 C:\Users\artur\source\repos\Terz\Terz_Core\obj\Release\netcoreapp2.1\Terz_Core.dll
 C:\Users\artur\source\repos\Terz\Terz_Core\obj\Release\netcoreapp2.1\Terz_Core.pdb
+C:\Users\artur\source\repos\Terz\Terz_Core\bin\Release\netcoreapp2.1\Terz_DataBaseLayer.dll
+C:\Users\artur\source\repos\Terz\Terz_Core\bin\Release\netcoreapp2.1\Terz_DataBaseLayer.pdb

@@ -80,3 +80,77 @@
     }
 
 }
+
+
+
+function buildQueryFilter(sheetOrder) {
+
+    var filtersD = document.getElementById("Filters");
+    while (filtersD.firstChild) {
+        filtersD.removeChild(filtersD.lastChild);
+    }
+
+    
+
+    var sheet = QueryConfig.querySheets.filter(function (x) { return x.order == sheetOrder })[0];
+    var filters = sheet.filters;
+    var filtersValues = sheet.queryFilterValues;
+
+    var fLenght;
+    if (filters == null) {
+        fLenght = 0;
+    }
+    else {
+        fLenght = filters.length;
+    }
+
+    for (var i = 0; i < fLenght; i++) {
+        var filter = filters[i];
+        var distinctValues = filtersValues[i].values;
+
+        var filterBlock = document.createElement('div');
+        filterBlock.setAttribute("class", "dropdown");
+        var button = document.createElement("button");
+        button.setAttribute("onclick", "showOptions('" + filter + "')");
+        button.setAttribute("class", "dropbtn");
+        var buttonText = document.createTextNode(filter);
+        // <input type="text" placeholder="Search.." id="Input-campo" onkeyup="filterFunction('campo')">
+        var contentInfo = document.createElement("div");
+        contentInfo.setAttribute("class", "dropdown-content");
+        contentInfo.setAttribute("id", filter);
+        var input = document.createElement("input");
+        input.setAttribute("type", "text");
+        input.setAttribute("placeholder", "Search..");
+        input.setAttribute("id", "Input-" + filter);
+        input.setAttribute("onkeyup", "filterFunction('" + filter + "')");
+        contentInfo.appendChild(input);
+
+
+        for (var k = 0; k < distinctValues.length; k++) {
+            var cell = document.createElement("a");
+            cell.appendChild(document.createTextNode(distinctValues[k]));
+            cell.setAttribute("href", "#" + distinctValues[k]);
+
+            
+            cell.setAttribute("id", filter + "," + distinctValues[k]);
+            cell.setAttribute("onclick", "filterValue('" + filter + "," + distinctValues[k] + "')");
+            contentInfo.appendChild(cell);
+        }
+
+        button.appendChild(buttonText);
+        button.style.width = 220;
+        button.style.height = 40;
+
+
+        filterBlock.appendChild(button);
+        filterBlock.appendChild(contentInfo);
+
+        filterBlock.style.paddingTop = 10;
+        document.getElementById("Filters").appendChild(filterBlock);
+        document.getElementById("Filters").appendChild(document.createElement("br"));
+
+
+    }
+
+
+}

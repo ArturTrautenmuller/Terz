@@ -73,6 +73,32 @@ namespace Terz.Controllers
             return "Aplicativo Salvo";
         }
 
+        public Models.Report.ReportData GetReportData([FromQuery(Name = "id")] string id)
+        {
+
+            string text = System.IO.File.ReadAllText(Location.ConfLocation);
+            Conf conf = JsonConvert.DeserializeObject<Conf>(text);
+
+            Models.Report.ReportData reportData = new Models.Report.ReportData();
+            string configFile = conf.ConfigPath + "/" + id + "/config.json";
+            string configText = System.IO.File.ReadAllText(configFile);
+
+            reportData.Config = JsonConvert.DeserializeObject<Config>(configText);
+
+            List<DataFrame> dataFrames = new List<DataFrame>();
+            string[] df_files = System.IO.Directory.GetFiles(conf.DataFramePath + "/" + id);
+            foreach (string df in df_files)
+            {
+                DataFrame dataFrame = new DataFrame();
+                dataFrame.Load(df);
+                dataFrames.Add(dataFrame);
+            }
+
+            reportData.DataFrames = dataFrames;
+
+            return reportData;
+        }
+
         public PartialViewResult MeasureExp([FromQuery(Name = "id")] string id)
         {
             ViewData["id"] = id;

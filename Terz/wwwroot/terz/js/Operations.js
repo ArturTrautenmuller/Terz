@@ -11,7 +11,7 @@ function EvalueteEx(expressions, dataframe, fields) {
     }
     else {
        
-       
+        
         var tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == dataframe.join(",") })[0].table));
        
         console.log(tempDf);
@@ -28,8 +28,11 @@ function EvalueteEx(expressions, dataframe, fields) {
 
         let set = new Set(reducedDf.map(JSON.stringify));
         var distinctDf = Array.from(set).map(JSON.parse);
-        
+       
+
         for (var j = 1; j < distinctDf.length; j++) {
+            
+            
             var filterdDf = [];
             var header = tempDf[0];
             filterdDf.push(header);
@@ -39,17 +42,18 @@ function EvalueteEx(expressions, dataframe, fields) {
                     filterdDf.push(row);
                 }
             }
+          
             for (var l = 0; l < expressions.length; l++) {
                 var res = math.eval(solve(expressions[l], filterdDf, dataframe.join(","), fields, distinctDf[j]));
                 distinctDf[j].push(res);
             }
-
+           
         }
 
         for (var m = 0; m < expressions.length; m++) {
             distinctDf[0].push(expressions[m]);
         }
-
+        
 
         return distinctDf;
 
@@ -88,22 +92,22 @@ function applySelectionsOp(name) {
 }
 
 function solve(expression, dataFrame,dataFrameName,fields,groupedRow) {
-
+    
     var solvedExpression = removeBlank(expression);
-
+    
     var solvedExpression = solveExternalDF(solvedExpression, fields, groupedRow)
-
-    solvedExpression = solveIgnoreAll(solvedExpression, dataFrameName, fields, groupedRow);
-    solvedExpression = solveIgnore(solvedExpression, dataFrameName, fields, groupedRow);
-
-    solvedExpression = solveWhere(solvedExpression, dataFrame);
    
+    solvedExpression = solveIgnoreAll(solvedExpression, dataFrameName, fields, groupedRow);
+    
+    solvedExpression = solveIgnore(solvedExpression, dataFrameName, fields, groupedRow);
+   
+    solvedExpression = solveWhere(solvedExpression, dataFrame);
+    
     solvedExpression = solveSum(solvedExpression, dataFrame);
     solvedExpression = solveCount(solvedExpression, dataFrame);
     solvedExpression = solveMin(solvedExpression, dataFrame);
     solvedExpression = solveMax(solvedExpression, dataFrame);
-    console.log("exp");
-    console.log(solvedExpression);
+   
     return solvedExpression;
 }
 
@@ -125,6 +129,8 @@ function removeBlank(expression) {
 }
 
 function solveIgnoreAll(expression, dataFrameName, fields, groupedRow) {
+
+    if (!expression.includes("ignoreAll(")) return expression;
 
     var selectionsBackup = JSON.parse(JSON.stringify(selections));
     selections = [];
@@ -172,6 +178,8 @@ function solveIgnoreAll(expression, dataFrameName, fields, groupedRow) {
 }
 
 function solveIgnore(expression, dataFrameName, fields, groupedRow) {
+
+    if (!expression.includes("ignore(")) return expression;
 
     var selectionsBackup = JSON.parse(JSON.stringify(selections));
     var returnExpression = expression;
@@ -237,7 +245,7 @@ function solveIgnore(expression, dataFrameName, fields, groupedRow) {
 
 function solveExternalDF(expression, fields, groupedRow) {
 
-    
+    if (!expression.includes("externalDF(")) return expression;
 
     var returnExpression = expression;
     let pattern = /[^\s]+\.externalDF\(.+?\)/g;
@@ -273,6 +281,8 @@ function solveExternalDF(expression, fields, groupedRow) {
 }
 
 function solveWhere(expression, dataFrame) {
+    if (!expression.includes("where(")) return expression;
+
     var returnExpression = expression;
     let pattern = /[^\s]+\.where\(.+?\)/g;
     let res = pattern.exec(expression);
@@ -350,6 +360,8 @@ function solveWhere(expression, dataFrame) {
 
 
 function solveSum(expression, dataFrame) {
+    if (!expression.includes("sum(")) return expression;
+
     var returnExpression = expression;
     let pattern = /(?=sum\().+?(?<=\))/g;
     let res = pattern.exec(expression);
@@ -418,7 +430,7 @@ function solveSum(expression, dataFrame) {
             var field = _innerExp.replace('[', '').replace(']','');
             var pos = headers.indexOf(field);
             for (var i = 1; i < dataFrame.length; i++) {
-        
+                
                 soma += parseFloat(dataFrame[i][pos]);
             }
         }
@@ -438,6 +450,8 @@ function solveSum(expression, dataFrame) {
 
 
 function solveCount(expression, dataFrame) {
+    if (!expression.includes("count(")) return expression;
+
     var returnExpression = expression;
     let pattern = /(?=count\().+?(?<=\))/g;
     let res = pattern.exec(expression);
@@ -469,7 +483,9 @@ function solveCount(expression, dataFrame) {
     return returnExpression;
 }
 
-function solveMin(expression, dataFrame){
+function solveMin(expression, dataFrame) {
+    if (!expression.includes("min(")) return expression;
+
     var returnExpression = expression;
     let pattern = /(?=min\().+?(?<=\))/g;
     let res = pattern.exec(expression);
@@ -586,6 +602,8 @@ function solveMin(expression, dataFrame){
 }
 
 function solveMax(expression, dataFrame) {
+    if (!expression.includes("max(")) return expression;
+
     var returnExpression = expression;
     let pattern = /(?=max\().+?(?<=\))/g;
     let res = pattern.exec(expression);

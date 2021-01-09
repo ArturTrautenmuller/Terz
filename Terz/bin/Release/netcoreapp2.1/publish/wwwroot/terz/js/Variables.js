@@ -9,8 +9,8 @@ var formatList = ['number', 'real', 'percent'];
 var formatListLabel = ['Numérico', 'Moeda (R$)', 'Percentual (%)'];
 var Orientacoes = ['horizontal', 'vertical'];
 var OrientacoesLabel = ['Horizontal', 'Vertical'];
-var SortTypes = ['numerico','data'];
-var SortTypesLabel = ['Numérico','Data'];
+var SortTypes = ['numerico','data','mes'];
+var SortTypesLabel = ['Numérico','Data','Mês'];
 var SortOptions = ['none','crescente','decrescente'];
 var SortOptionsLabel = ['Nenhum', 'Crescente', 'Decrescente'];
 var SortAxis = ['dim', 'mea'];
@@ -19,3 +19,23 @@ var keepAllData = true;
 var browseData;
 var browseConfig;
 var version;
+
+var QueryConfig;
+var QueryCurrentSheet = "1";
+var QuerySelections = [];
+var QueryData = [];
+
+
+var MonthToInt = {};
+MonthToInt["jan"] = 1;
+MonthToInt["fev"] = 2;
+MonthToInt["mar"] = 3;
+MonthToInt["abr"] = 4;
+MonthToInt["mai"] = 5;
+MonthToInt["jun"] = 6;
+MonthToInt["jul"] = 7;
+MonthToInt["ago"] = 8;
+MonthToInt["set"] = 9;
+MonthToInt["out"] = 10;
+MonthToInt["nov"] = 11;
+MonthToInt["dez"] = 12;

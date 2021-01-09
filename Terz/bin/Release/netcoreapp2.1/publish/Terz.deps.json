@@ -994,6 +994,10 @@
         }
       },
       "Terz_Core/1.0.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.3",
+          "Terz_DataBaseLayer": "1.0.0"
+        },
         "runtime": {
           "Terz_Core.dll": {}
         },

@@ -380,10 +380,39 @@ function buildIndicatorSettings(id) {
     document.getElementById("Settings").appendChild(borrExp);
     document.getElementById("Settings").appendChild(document.createElement("br"));
 
+    //Icone
+    /*
+
+    // Cor do Icone
+   
+    var iconColorLabel = document.createElement("label");
+    iconColorLabel.innerHTML = "Cor do Icone:";
+    document.getElementById("Settings").appendChild(iconColorLabel);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    var iconColorExp = document.createElement("input");
+    iconColorExp.setAttribute("id", "IconColor");
+    iconColorExp.setAttribute("type", "color");
+    iconColorExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
+    iconColorExp.setAttribute("class", "form-control");
+    iconColorExp.value = indicator.style.iconColor;
+    document.getElementById("Settings").appendChild(iconColorExp);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
 
 
-  
-
+    // Icon Size
+    var iconSizeLabel = document.createElement("label");
+    iconSizeLabel.innerHTML = "Tamanho do Icone:";
+    document.getElementById("Settings").appendChild(iconSizeLabel);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    var iconSizeExp = document.createElement("input");
+    iconSizeExp.setAttribute("id", "IconSize");
+    iconSizeExp.setAttribute("type", "text");
+    iconSizeExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
+    iconSizeExp.setAttribute("class", "form-control");
+    iconSizeExp.value = indicator.style.iconSize;
+    document.getElementById("Settings").appendChild(iconSizeExp);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    */
     
 
     document.getElementById("Settings").appendChild(document.createElement("hr"));

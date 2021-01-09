@@ -40,7 +40,11 @@
         if (['bubble', 'sankey', 'org','timeline'].includes(graph.objectType)) {
             graphDiv.style.height = "90%";
         }
+
+        
+
         graphContainer.appendChild(graphDiv);
+
         document.getElementById("Graphs").appendChild(graphContainer);
 
         try {
@@ -158,6 +162,16 @@ function buildBarChart(graph) {
 
                 };
             }
+
+            if (graph.sort.type == 'mes') {
+                sort = function (a, b) {
+                    var ad = MonthToInt[a];
+                    var bd = MonthToInt[b];
+
+                    return ad - bd;
+
+                };
+            }
         }
         if (graph.sort.option == 'decrescente') {
             if (graph.sort.type == 'numerico') {
@@ -176,6 +190,16 @@ function buildBarChart(graph) {
 
                 };
             }
+
+            if (graph.sort.type == 'mes') {
+                sort = function (a, b) {
+                    var ad = MonthToInt[a];
+                    var bd = MonthToInt[b];
+
+                    return bd - ad;
+
+                };
+            }
         }
     }
 
@@ -190,15 +214,31 @@ function buildBarChart(graph) {
         x = "x";
         y = "y";
         xSort = sort;
+
+        document.getElementById("gc" + graph.id).style.overflowX = "auto";
+        var gWidth = objData.length * 75 + 100;
+        if (graph.style.width < gWidth) {
+            document.getElementById("g" + graph.id).style.width = gWidth+"px";
+        }
+
+        document.getElementById("g" + graph.id).style.height = Math.floor(graph.style.height * 0.8) + "px";
     }
     else {
         discrete = "y";
         x = "y";
         y = "x";
         ySort = sort;
+
+        document.getElementById("gc" + graph.id).style.overflowY = "auto";
+        var gheight = objData.length * 75 + 100;
+        if (graph.style.height < gheight) {
+            document.getElementById("g" + graph.id).style.height = gheight + "px";
+        }
+
         
     }
 
+  
    
     new d3plus.BarChart()
         .config({
@@ -635,6 +675,16 @@ function buildLineChart(graph) {
 
                 };
             }
+
+            if (graph.sort.type == 'mes') {
+                sort = function (a, b) {
+                    var ad = MonthToInt[a];
+                    var bd = MonthToInt[b];
+
+                    return ad - bd;
+
+                };
+            }
         }
         if (graph.sort.option == 'decrescente') {
             if (graph.sort.type == 'numerico') {
@@ -653,8 +703,26 @@ function buildLineChart(graph) {
 
                 };
             }
+
+            if (graph.sort.type == 'mes') {
+                sort = function (a, b) {
+                    var ad = MonthToInt[a];
+                    var bd = MonthToInt[b];
+
+                    return bd - ad;
+
+                };
+            }
         }
     }
+
+    document.getElementById("gc" + graph.id).style.overflowX = "auto";
+    var gWidth = objData.length * 75 + 100;
+    if (graph.style.width < gWidth) {
+        document.getElementById("g" + graph.id).style.width = gWidth + "px";
+    }
+
+    document.getElementById("g" + graph.id).style.height = Math.floor(graph.style.height * 0.8) + "px";
 
     
     new d3plus.LinePlot()

@@ -50,6 +50,8 @@ namespace Terz.Controllers
             return PartialView(reportView);
         }
 
+        
+
         public PartialViewResult Sobre([FromQuery(Name = "id")] string id)
         {
             Terz_DataBaseLayer.Report report = new Report();
@@ -125,13 +127,30 @@ namespace Terz.Controllers
            
             reportData.Config = JsonConvert.DeserializeObject<Config>(configText);
 
+            List<string> df_names = new List<string>();
+            foreach (Sheet sheet in reportData.Config.Sheets)
+            {
+                foreach (Indicator indicator in sheet.Indicators)
+                {
+                    df_names.AddRange(indicator.DataFrameName);
+                }
+
+                foreach(Graph graph in sheet.Graphs)
+                {
+                    df_names.AddRange(graph.DataFrameName);
+                }
+            }
+
             List<DataFrame> dataFrames = new List<DataFrame>();
             string[] df_files = System.IO.Directory.GetFiles(conf.DataFramePath+"/"+id);
             foreach(string df in df_files)
             {
-                DataFrame dataFrame = new DataFrame();
-                dataFrame.Load(df);
-                dataFrames.Add(dataFrame);
+                if (df_names.Contains(System.IO.Path.GetFileNameWithoutExtension(df)))
+                {
+                    DataFrame dataFrame = new DataFrame();
+                    dataFrame.Load(df);
+                    dataFrames.Add(dataFrame);
+                }
             }
 
             reportData.DataFrames = dataFrames;

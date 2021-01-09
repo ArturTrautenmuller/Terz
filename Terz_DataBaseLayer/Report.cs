@@ -140,6 +140,14 @@ namespace Terz_DataBaseLayer
 
         }
 
+        public void Delete(string id)
+        {
+            Base.Init();
+            var sql = $"DELETE FROM report WHERE id = '{id}'";
+            Base.sqlCommand(sql);
+            
+        }
+
         public string getVersion()
         {
             Base.Init();

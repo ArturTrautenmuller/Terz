@@ -54,6 +54,22 @@ namespace Terz.Controllers
             return PartialView(reportPageModel);
         }
 
+        public string DeleteReport([FromQuery(Name = "id")] string id)
+        {
+            string userId = HttpContext.Session.GetString("User");
+            if (userId == null) return "no permisson";
+
+            Report report = new Report();
+            report.Delete(id);
+            string text = System.IO.File.ReadAllText(Location.ConfLocation);
+            Conf conf = JsonConvert.DeserializeObject<Conf>(text);
+            string configFolder = conf.ConfigPath + "/" + id;
+            Directory.Delete(configFolder, true);
+
+            return "o relatório foi excluido!";
+           
+        }
+
         public PartialViewResult Perfil()
         {
             string userId = HttpContext.Session.GetString("User");
@@ -119,19 +135,25 @@ namespace Terz.Controllers
             }
             string text = System.IO.File.ReadAllText(Location.ConfLocation);
             Conf conf = JsonConvert.DeserializeObject<Conf>(text);
-            var file = Request.Form.Files[0];
-
-            var filePath = Path.Combine(conf.ImagePath + "/CapaApp", id + ".jpg");
-
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
-            {
-                await file.CopyToAsync(fileStream);
-            }
-
             Terz_DataBaseLayer.Report report = new Report();
+
+            var form = Request.Form.Files;
+            if (form.Count > 0)
+            {
+                var file = form[0];
+                var filePath = Path.Combine(conf.ImagePath + "/CapaApp", id + ".jpg");
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(fileStream);
+                }
+
+                report.Imagem = Location.serverUrl + "/CapaApp/" + id + ".jpg";
+            }
+            
             report.Id = id;
             report.Titulo = name;
-            report.Imagem = Location.serverUrl + "/CapaApp/" + id + ".jpg";
+           
             report.Update();
 
             return "ok";
