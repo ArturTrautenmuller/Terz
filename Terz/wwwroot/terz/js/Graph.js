@@ -165,8 +165,8 @@ function buildBarChart(graph) {
 
             if (graph.sort.type == 'mes') {
                 sort = function (a, b) {
-                    var ad = MonthToInt[a];
-                    var bd = MonthToInt[b];
+                    var ad = MonthToInt[a["x"].toLowerCase()];
+                    var bd = MonthToInt[b["x"].toLowerCase()];
 
                     return ad - bd;
 
@@ -193,8 +193,8 @@ function buildBarChart(graph) {
 
             if (graph.sort.type == 'mes') {
                 sort = function (a, b) {
-                    var ad = MonthToInt[a];
-                    var bd = MonthToInt[b];
+                    var ad = MonthToInt[a["x"].toLowerCase()];
+                    var bd = MonthToInt[b["x"].toLowerCase()];
 
                     return bd - ad;
 

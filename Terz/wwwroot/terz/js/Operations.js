@@ -118,7 +118,7 @@ function removeBlank(expression) {
 
     while (res != null) {
         var iExpression = res[0];
-        var tExpression = iExpression.replaceAll(' ', '');
+        var tExpression = iExpression.replaceAll('( [ ', '([').replaceAll('] )','])');
         returnExpression = returnExpression.replace(iExpression, tExpression);
 
         res = pattern.exec(expression);

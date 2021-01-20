@@ -11,6 +11,8 @@ namespace Terz_Core
     {
         public static void ProcessDataFrames(List<string> DataFrames, string DataFarmePath,string QueryConfigPath)
         {
+            if (!File.Exists(Path.Combine(QueryConfigPath, "config.json"))) return;
+
             string configText = System.IO.File.ReadAllText(Path.Combine(QueryConfigPath,"config.json"));
             QueryConfig queryConfig = JsonConvert.DeserializeObject<QueryConfig>(configText);
 

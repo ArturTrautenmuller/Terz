@@ -70,14 +70,14 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="#" class="brand-link">
+            <a href="#" class="brand-link"  style="height:60px">
                 <img src="~/terz/images/Terz_Logo.png"
                      alt="Terz Logo"
                      class="brand-image img-circle elevation-3"
                      style="opacity: .8">
-                <span class="brand-text font-weight-light">TERZ</span>
+                <span class="brand-text font-weight-light" style="font-size:18px;font-weight:normal">TERZ</span>
             </a>
-
+            <br />
             <!-- Sidebar -->
             <div class="sidebar">
 
@@ -90,7 +90,7 @@
 
 
                         <li class="nav-item has-treeview">
-                            <a href="@Url.Action("UserPage","User")" class="nav-link">
+                            <a href="@Url.Action("UserPage","User")" style="font-size:16px" class="nav-link">
                                 <i class="fas fa-tachometer-alt"></i>
                                 <p>
                                     DashBoard
@@ -100,7 +100,7 @@
 
                         </li>
                         <li class="nav-item has-treeview">
-                            <a href="@Url.Action("Report","User")" class="nav-link">
+                            <a href="@Url.Action("Report","User")"  style="font-size:16px" class="nav-link">
                                 <i class="fas fa-chart-area"></i>
                                 <p>
                                     Meus Relatórios
@@ -111,7 +111,7 @@
                         </li>
 
                         <li class="nav-item has-treeview">
-                            <a href="@Url.Action("Perfil","User")" class="nav-link">
+                            <a href="@Url.Action("Perfil","User")"  style="font-size:16px" class="nav-link">
                                 <i class="fas fa-user"></i>
                                 <p>
                                     Perfil
@@ -121,7 +121,7 @@
 
                         </li>
                         <li class="nav-item has-treeview">
-                            <a href="@Url.Action("Index","Creditos")" class="nav-link">
+                            <a href="@Url.Action("Index","Creditos")"  style="font-size:16px" class="nav-link">
                                 <i class="far fa-money-bill-alt"></i>
                                 <p>
                                     Comprar Créditos
@@ -131,7 +131,7 @@
 
                         </li>
                         <li class="nav-item has-treeview">
-                            <a href="http://terzanalytics.com/processing/Home/Login" class="nav-link">
+                            <a href="http://terzanalytics.com/processing/Home/Login"  style="font-size:16px" class="nav-link">
                                 <i class="fas fa-cogs"></i>
                                 <p>
                                     Processing|ETL
@@ -141,7 +141,7 @@
 
                         </li>
                         <li class="nav-item has-treeview">
-                            <a href="@Url.Action("Index","Documentation")" class="nav-link">
+                            <a href="@Url.Action("Index","Documentation")"  style="font-size:16px" class="nav-link">
                                 <i class="fas fa-file-alt"></i>
                                 <p>
                                     Documentação
@@ -160,8 +160,8 @@
             <!-- /.sidebar -->
         </aside>
         <div class="content-wrapper" id="Conteudo" style="padding-left:10px">
-            <button class="ButtonNovo" onclick="novoRelatorio()">Novo Relatório</button>
-            <button class="ButtonNovo" onclick="importarRelatorio()">Importar Relatório</button>
+            <button class="ButtonNovo" onclick="novoRelatorio()"><i class="fas fa-plus"></i> Novo Relatório</button>
+            <button class="ButtonNovo" onclick="importarRelatorio()"><i class="fas fa-upload"></i> Importar Relatório</button>
 
             @foreach (Terz_DataBaseLayer.Report report in Model.Usuario.Reports)
             {
@@ -176,25 +176,31 @@
                 {
                     <img onclick="EditReport('@report.Id')" width="130" height="100" class="FotoPerfil" src="@report.Imagem" />
                 }
-                <label style="width:200px" class="LabelDesc">@report.Titulo</label>
-                <label style="margin-left:16px; font-size:22px"><a href="../Editor?id=@report.Id"><i class="fa fa-edit"></i></a></label>
-                <label style="margin-left:16px; font-size:22px"><a href="../DataManager?id=@report.Id"><i class="fas fa-table"></i> </a></label>
-                <label style="margin-left:16px; font-size:22px"><a href="../Report?id=@report.Id"><i class="fas fa-eye"></i></a></label>
-                <label style="margin-left:16px; color:cornflowerblue; font-size:22px"><a href="../QueryEditor?id=@report.Id"><i class="fa fa-edit"></i></a></label>
-                <label style="margin-left:16px; color:cornflowerblue; font-size:22px"><a href="../Query?id=@report.Id"><i class="fas fa-eye"></i></a></label>
-                <label style="margin-left:16px; font-size:22px"><a href="../User/ExportApp?id=@report.Id"><i class="fas fa-download"></i></a></label>
+                <label style="width:500px" class="LabelDesc">@report.Titulo</label>
+                
                 @if (report.Ativo == 1)
                 {
-                    <label style="margin-left:100px; font-size:26px"><a href="#" onclick="desativarRelatorio(@report.Id)"><i class="fas fa-toggle-on"></i></a></label>
+                    <label style="margin-left:200px; font-size:26px"><a href="#" onclick="desativarRelatorio(@report.Id)"><i class="fas fa-toggle-on"></i></a></label>
                 }
                 else
                 {
-                    <label style="margin-left:100px; font-size:26px"><a href="#" onclick="ativarRelatorio(@report.Id)"><i class="fas fa-toggle-off"></i></a></label>
+                    <label style="margin-left:200px; font-size:26px"><a href="#" onclick="ativarRelatorio(@report.Id)"><i class="fas fa-toggle-off"></i></a></label>
                 }
 
-                <label style="margin-left:16px; font-size:22px; color:dimgrey"><a href="#" onclick="DeleteReport(@report.Id)"><i class="fas fa-trash"></i></a></label>
+                
 
-
+                <div class="dropdown">
+                    <button onclick="dropdown('@report.Id')" class="dropbtn"><i class="fas fa-ellipsis-v"></i></button>
+                    <div id="links-@report.Id" class="dropdown-content">
+                        <a href="../Editor?id=@report.Id"><i class="fa fa-edit"></i> Editor</a>
+                        <a href="../DataManager?id=@report.Id"><i class="fas fa-table"></i> Gerenciador De Dados </a>
+                        <a href="../Report?id=@report.Id"><i class="fas fa-eye"></i> Visualizar Aplicativo</a>
+                        <a href="../QueryEditor?id=@report.Id"><i class="fa fa-edit"></i> Editor de Consulta</a>
+                        <a href="../Query?id=@report.Id"><i class="fas fa-eye"></i> Visualizar Consulta</a>
+                        <a href="../User/ExportApp?id=@report.Id"><i class="fas fa-download"></i> Download</a>
+                       <a href="#" onclick="DeleteReport(@report.Id)"><i class="fas fa-trash"></i> Remover</a>
+                    </div>
+                </div>
 
 
             </div>
@@ -206,7 +212,23 @@
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
             <script>
+                function dropdown(id) {
+                    document.getElementById("links-"+id).classList.toggle("show");
+                }
 
+                // Close the dropdown if the user clicks outside of it
+                window.onclick = function (event) {
+                    if (!event.target.matches('.dropbtn')) {
+                        var dropdowns = document.getElementsByClassName("dropdown-content");
+                        var i;
+                        for (i = 0; i < dropdowns.length; i++) {
+                            var openDropdown = dropdowns[i];
+                            if (openDropdown.classList.contains('show')) {
+                                openDropdown.classList.remove('show');
+                            }
+                        }
+                    }
+                }
 
                 function ativarRelatorio(id) {
                     $.ajax(

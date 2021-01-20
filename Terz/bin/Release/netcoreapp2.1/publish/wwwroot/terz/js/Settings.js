@@ -434,6 +434,20 @@ function buildGraphSettings(id) {
     var graph = reportData.config.sheets.filter(function (x) { return x.order == currentSheet })[0].graphs.filter(function (y) { return y.id == id })[0];
 
 
+    //Nome
+    var nameLabel = document.createElement("label");
+    nameLabel.innerHTML = "Nome:";
+    document.getElementById("Settings").appendChild(nameLabel);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    var nameExp = document.createElement("input");
+    nameExp.setAttribute("id", "Title");
+    nameExp.setAttribute("type", "text");
+    nameExp.setAttribute("onchange", "updateGraphConfig('" + id + "')");
+    nameExp.setAttribute("class", "form-control");
+    nameExp.value = graph.title;
+    document.getElementById("Settings").appendChild(nameExp);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
     var selectDFDiv = document.createElement("div");
     var selectDFLabel = document.createElement("label");
     selectDFLabel.innerHTML = "Data Frame:";
@@ -1092,12 +1106,7 @@ function buildFilterSettings() {
 
         }
 
-        var applyButton = document.createElement("button");
-        applyButton.append(document.createTextNode("Aplicar"));
-        applyButton.setAttribute("class", "btn btn-block btn-info btn-sm");
-        applyButton.setAttribute("onclick", "updateFilterConfig('" + filter.id + "')");
-        selectDFDiv.appendChild(applyButton);
-        selectDFDiv.appendChild(document.createElement("br"));
+        
 
         ulFilter.appendChild(selectDFDiv);
         ulFilter.appendChild(document.createElement("br"));
@@ -1111,7 +1120,7 @@ function buildFilterSettings() {
         var filterNameExp = document.createElement("input");
         filterNameExp.setAttribute("id", "filterName" + filter.id);
         filterNameExp.setAttribute("type", "text");
-        filterNameExp.setAttribute("onchange", "updateFilterConfig('" + filter.id + "')");
+        //filterNameExp.setAttribute("onchange", "updateFilterConfig('" + filter.id + "')");
         filterNameExp.setAttribute("class", "form-control");
         filterNameExp.value = filter.dimension.name;
         filterNameLi.appendChild(filterNameExp);
@@ -1123,7 +1132,7 @@ function buildFilterSettings() {
         var filterFieldExp = document.createElement("input");
         filterFieldExp.setAttribute("id", "filterField" + filter.id);
         filterFieldExp.setAttribute("type", "text");
-        filterFieldExp.setAttribute("onchange", "updateFilterConfig('" + filter.id + "')");
+        //filterFieldExp.setAttribute("onchange", "updateFilterConfig('" + filter.id + "')");
         filterFieldExp.setAttribute("class", "form-control");
         filterFieldExp.value = filter.dimension.field;
         filterNameLi.appendChild(filterFieldExp);
@@ -1132,6 +1141,15 @@ function buildFilterSettings() {
 
 
         ulFilter.appendChild(filterNameLi);
+
+        var applyButton = document.createElement("button");
+        applyButton.append(document.createTextNode("Aplicar"));
+        applyButton.setAttribute("class", "btn btn-block btn-info btn-sm");
+        applyButton.setAttribute("onclick", "updateFilterConfig('" + filter.id + "')");
+        ulFilter.appendChild(applyButton);
+        ulFilter.appendChild(document.createElement("br"));
+
+
         var deleteButton = document.createElement("button");
         deleteButton.innerHTML = "Remover";
         deleteButton.setAttribute("class", "btn btn-block btn-danger btn-sm");

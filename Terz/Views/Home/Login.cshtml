@@ -29,7 +29,7 @@
                 <p class="login-box-msg">Sign in to start your session</p>
                 <form action="../User/Authentication" method="post">
                     <div class="input-group mb-3">
-                        <input name="Email"type="email" class="form-control" placeholder="Email">
+                        <input name="Email" type="email" class="form-control" placeholder="Email">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -65,7 +65,7 @@
                     <a href="#" class="btn btn-block btn-primary">
                         <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
                     </a>
-                    <a href="#" class="btn btn-block btn-danger">
+                    <a href="#" class="btn btn-block btn-danger"  data-onsuccess="onSignIn">
                         <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
                     </a>
                 </div>
@@ -87,5 +87,27 @@
     <script src="~/terz/LTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="~/terz/LTE/dist/js/adminlte.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <script>
+        function onSignIn(googleUser) {
+            var profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+        }
+
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log('User signed out.');
+            });
+        }
+    </script>
+
+    <meta name="google-signin-client_id" content="1015304172783-hkhknopevbn6m0kd1t667jl3e20rl1dp.apps.googleusercontent.com">
+    
+    
 </body>
 </html>

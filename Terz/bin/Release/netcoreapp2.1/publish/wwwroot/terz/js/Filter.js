@@ -38,6 +38,8 @@
         var contentInfo = document.createElement("div");
         contentInfo.setAttribute("class", "dropdown-content");
         contentInfo.setAttribute("id", filter.dimension.field);
+        contentInfo.style.overflowY = "auto";
+        contentInfo.style.maxHeight = "300px";
         var input = document.createElement("input");
         input.setAttribute("type", "text");
         input.setAttribute("placeholder", "Search..");

@@ -421,6 +421,48 @@
 
     }
 
+    function clearFilterSelections(df,field) {
+        var alldfs = df.split("&");
+
+        for (var i = 0; i < alldfs.length; i++) {
+
+            var cdf = alldfs[i];
+            var pos = selections.findIndex(i => i.field == field && i.dataFrame == cdf);
+            selections[pos].value = [];
+            applySelections(cdf);
+
+        }
+
+        for (var i = 0; i < AllDFS.length; i++) {
+            var dfNames = AllDFS[i].name.split(",");
+            if (dfNames.length > 1 && dfNames.some(v => alldfs.indexOf(v) !== -1)) {
+                var cdf = AllDFS[i].name;
+                var pos = selections.findIndex(i => i.field == field && i.dataFrame == cdf);
+                selections[pos].value = [];
+                applySelections(cdf);
+            }
+        }
+
+        var cells = document.getElementById(field).childNodes;
+        for (var i = 0; i < cells.length; i++) {
+            if (cells[i].nodeName.toLowerCase() == "a") {
+                cells[i].style.backgroundColor = "white";
+            }
+        }
+
+        reloadGraphs();
+
+
+    }
+
+    function clearAllSelections() {
+        selections = [];
+        for (var i = 0; i < AllDFS.length; i++) {
+            applySelections(AllDFS[i].name);
+        }
+
+    }
+
     function loadUsingDataFrames() {
 
         if (!keepAllData) {
@@ -532,6 +574,7 @@
 
 
     function reloadGraphs() {
+        
         var graphs = document.getElementById("Graphs");
         while (graphs.firstChild) {
             graphs.removeChild(graphs.lastChild);
@@ -540,9 +583,11 @@
         buildIndicators(currentSheet);
         buildGraphs(currentSheet);
         buildTextBlocks(currentSheet);
+        
     }
 
     function reloadSheet() {
+        
         var graphs = document.getElementById("Graphs");
         while (graphs.firstChild) {
             graphs.removeChild(graphs.lastChild);
@@ -556,10 +601,12 @@
         buildIndicators(currentSheet);
         buildGraphs(currentSheet);
         buildTextBlocks(currentSheet);
+       
     }
 
     function changeSheet(sheetOrder) {
         currentSheet = sheetOrder;
+        clearAllSelections();
         reloadSheet();
     }
 

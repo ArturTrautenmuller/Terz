@@ -49,6 +49,7 @@ namespace Terz.Controllers
             Usuario usuario = new Usuario();
             usuario.Load(userId);
             usuario.LoadReports();
+            usuario.Reports.Reverse();
             Models.User.ReportModel reportPageModel = new Models.User.ReportModel();
             reportPageModel.Usuario = usuario;
             return PartialView(reportPageModel);

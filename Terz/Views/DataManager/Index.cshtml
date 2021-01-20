@@ -19,8 +19,41 @@
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 <link rel="stylesheet" href="~/terz/css/DataManager.css" />
 
+<style>
+    .checked {
+        color: orange;
+    }
 
-<br />
+    #overlay {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 2;
+        cursor: pointer;
+    }
+
+    #text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 30px;
+        color: white;
+        transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+    }
+</style>
+
+<div id="overlay">
+
+    <div id="text"><div style="margin-left:22px" class="loader"></div> Enviando...</div>
+</div>
+
 <div id="TableFiles">
     <div class="card">
         <div class="card-header border-0">
@@ -157,19 +190,26 @@
         <button onclick="AddReferencia()">Adicionar Referência</button>
 
     </div>
-   
+
     <!-- AdminLTE App -->
     <script src="~/terz/LTE/dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="~/terz/LTE/dist/js/demo.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
-  
+
 
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
-   
+
     <script>
+        function on() {
+            document.getElementById("overlay").style.display = "block";
+        }
+
+        function off() {
+            document.getElementById("overlay").style.display = "none";
+        }
         function showExpandOptions() {
             if (document.getElementById("ExpandOptions").style.display == "none") {
 
@@ -223,7 +263,8 @@
 
             });
         }
-    function uploadDataFrame() {
+        function uploadDataFrame() {
+            on();
         var formData = new FormData();
         var files = document.getElementById("dfFile").files;
         for (var i = 0; i < files.length; i++) {
@@ -241,8 +282,9 @@
                 contentType: false,
                 processData: false,
                 success: function (data) {
-
+                    off();
                     alert("Enviado Com Sucesso");
+                  
                     location.reload();
                 },
 

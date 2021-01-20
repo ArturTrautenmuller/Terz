@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Terz_DataBaseLayer;
 using Terz_Core;
+using Terz;
 
 namespace Terz_API.Controllers
 {
@@ -28,6 +29,11 @@ namespace Terz_API.Controllers
             if(usuario.Id == null)
             {
                 return "Falha de autenticação, usuario e senha incorretos";
+            }
+
+            if (!Security.CheckReportPermission(usuario.Id, id))
+            {
+                return "no permission";
             }
             string text = System.IO.File.ReadAllText(Location.ConfLocation);
             Conf conf = JsonConvert.DeserializeObject<Conf>(text);
@@ -80,6 +86,11 @@ namespace Terz_API.Controllers
             {
                 return "usuario e senha invalidos";
             }
+
+            if (!Security.CheckReportPermission(usuario.Id, id))
+            {
+                return "no permission";
+            }
             string text = System.IO.File.ReadAllText(Location.ConfLocation);
             Conf conf = JsonConvert.DeserializeObject<Conf>(text);
 
@@ -117,7 +128,52 @@ namespace Terz_API.Controllers
 
             return "ok";
         }
+        [HttpGet]
+        [Route("api/[controller]/{id}/Concat")]
+        public async Task<string> Concat(string id)
+        {
+           
+            string text = System.IO.File.ReadAllText(Location.ConfLocation);
+            Conf conf = JsonConvert.DeserializeObject<Conf>(text);
 
+            string email = Request.Form["email"].ToString();
+            string password = Request.Form["password"].ToString();
+            string table = Request.Form["table"].ToString();
+
+            Usuario usuario = new Usuario();
+            usuario.Auth(email, password);
+
+            if (usuario.Id == null)
+            {
+                return "usuario e senha invalidos";
+            }
+
+            if (!Security.CheckReportPermission(usuario.Id, id))
+            {
+                return "no permission";
+            }
+
+            var file = Request.Form.Files[0];
+            var filePath = Path.Combine(conf.DataFramePath + "/" + id, table+"add.csv");
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(fileStream);
+            }
+
+            DataFrame add = new DataFrame();
+            add.Load(Path.Combine(conf.DataFramePath + "/" + id, table + "add.csv"));
+            System.IO.File.Delete(Path.Combine(conf.DataFramePath + "/" + id, table + "add.csv"));
+            add.Table.RemoveAt(0);
+            string content = "";
+            foreach (string[] line in add.Table)
+            {
+                content += string.Join(";", line) + Environment.NewLine;
+            }
+
+            System.IO.File.AppendAllText(Path.Combine(conf.DataFramePath + "/" + id, table + ".csv"),content);
+
+            return "sucesso";
+        }
 
 
         // GET api/values/5

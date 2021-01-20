@@ -21,18 +21,22 @@
         indicatorDiv.style.borderStyle = "solid";
         indicatorDiv.style.borderRadius = indicator.style.borderRadius+"px";
         indicatorDiv.style.borderColor = indicator.style.borderColor;
-        indicatorDiv.style.borderWidth = indicator.style.borderThickness+"px";
+        indicatorDiv.style.borderWidth = indicator.style.borderThickness + "px";
+        indicatorDiv.style.display = "flex";
 
         indicatorDiv.setAttribute("id", "ind" + indicator.id);
         indicatorDiv.setAttribute("class", "resize-drag");
+
+        var dataDiv = document.createElement("div");
+        dataDiv.style.width = "100%";
 
         var labelTitle = document.createElement("label");
         labelTitle.appendChild(document.createTextNode(indicator.measure.name));
 
         labelTitle.style.color = indicator.style.textColor;
         labelTitle.style.fontSize = indicator.style.fontSize;
-        indicatorDiv.appendChild(labelTitle);
-        indicatorDiv.appendChild(document.createElement("br"));
+        dataDiv.appendChild(labelTitle);
+        dataDiv.appendChild(document.createElement("br"));
         var labelValue = document.createElement("label");
 
         var indValue = EvalueteEx(indicator.measure.expresion, indicator.dataFrameName, null);
@@ -58,9 +62,29 @@
      
         labelValue.style.color = indicator.style.textColor;
         labelValue.style.fontSize = indicator.style.fontSize;
-        indicatorDiv.appendChild(labelValue);
+        dataDiv.appendChild(labelValue);
+        dataDiv.style.textAlign = "center";
+
+        if (indicator["icon"] != null && indicator["icon"] != 'Sem Icone') {
+            dataDiv.style.width = "65%";
+            var iconDiv = document.createElement("div");
+            iconDiv.style.width = "35%";
+            iconDiv.style.textAlign = "center";
+            var icon = document.createElement("i");
+            icon.setAttribute("class", indicator["icon"]);
+            icon.style.color = indicator.style.textColor;
+            icon.style.fontSize = indicator.style.fontSize * 2 + "px";
+            icon.style.marginTop = indicator.style.fontSize + "px";
+            iconDiv.appendChild(icon);
+            indicatorDiv.appendChild(iconDiv);
+        }
+
+
+        indicatorDiv.appendChild(dataDiv);
         indicatorDiv.style.backgroundColor = indicator.style.backgroundColor;
-        indicatorDiv.style.textAlign = "center";
+    
+
+       
 
 
 

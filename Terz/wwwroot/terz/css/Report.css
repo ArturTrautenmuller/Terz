@@ -22,12 +22,12 @@
     border: none;
     cursor: pointer;
     border-radius: 0px;
-    border-bottom: 1px solid #3297a8;
-    border-left: 1px solid #3297a8;
+    border-top: 3px solid #3297a8;
+    background-color: #eee;
 }
 
     .dropbtn:hover, .dropbtn:focus {
-        background-color: #eee;
+        background-color: #ddd;
         color: #3297a8;
     }
 

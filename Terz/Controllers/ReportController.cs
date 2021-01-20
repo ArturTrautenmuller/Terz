@@ -102,7 +102,7 @@ namespace Terz.Controllers
                     avaliacao.Insert();
                 }
 
-                return "ok";
+                return "Avaliação Enviada Com Sucesso";
             }
         }
 
@@ -188,7 +188,7 @@ namespace Terz.Controllers
 
 
 
-            return "ok";
+            return "Relatório Criado Com Sucesso";
         }
 
         public async Task<string> ImportReport([FromQuery(Name = "title")] string title, [FromQuery(Name = "category")] string category)
@@ -217,7 +217,7 @@ namespace Terz.Controllers
 
 
 
-            return "ok";
+            return "Relatório Importado com Sucesso";
         }
     }
 }
