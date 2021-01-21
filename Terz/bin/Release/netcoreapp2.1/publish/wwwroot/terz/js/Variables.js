@@ -7,6 +7,7 @@ var selections = [];
 let usingDataFrames;
 var formatList = ['number', 'real', 'percent'];
 var formatListLabel = ['Numérico', 'Moeda (R$)', 'Percentual (%)'];
+var IconeList = ['Sem Icone','fas fa-address-card','fas fa-dollar-sign'];
 var Orientacoes = ['horizontal', 'vertical'];
 var OrientacoesLabel = ['Horizontal', 'Vertical'];
 var SortTypes = ['numerico','data','mes'];

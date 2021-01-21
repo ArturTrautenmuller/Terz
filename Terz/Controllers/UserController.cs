@@ -178,6 +178,92 @@ namespace Terz.Controllers
             return PartialView(homeView);
         }
 
+        public PartialViewResult GerenciarAcesso([FromQuery(Name = "id")] string id)
+        {
+            string userId = HttpContext.Session.GetString("User");
+
+            if (userId == null || userId == "")
+            {
+                return null;
+            }
+            if (!Security.CheckReportPermission(userId, id))
+            {
+                return null;
+            }
+
+            Terz_DataBaseLayer.Report report = new Report();
+            report.Load(id);
+            report.GetUsuariosAutorizados();
+            return PartialView(report);
+        }
+
+        public string AddAcesso([FromQuery(Name = "id")] string id, [FromQuery(Name = "email")] string email)
+        {
+            string userId = HttpContext.Session.GetString("User");
+
+            if (userId == null || userId == "")
+            {
+                return "not authenticated";
+            }
+            if (!Security.CheckReportPermission(userId, id))
+            {
+                return "no permission";
+            }
+
+            Terz_DataBaseLayer.Report report = new Report();
+            report.Load(id);
+            report.ConcederAcesso(email);
+
+
+
+            return "sucesso";
+        }
+
+        public string RemoveAcesso([FromQuery(Name = "id")] string id, [FromQuery(Name = "email")] string email)
+        {
+            string userId = HttpContext.Session.GetString("User");
+
+            if (userId == null || userId == "")
+            {
+                return "not authenticated";
+            }
+            if (!Security.CheckReportPermission(userId, id))
+            {
+                return "no permission";
+            }
+
+            Terz_DataBaseLayer.Report report = new Report();
+            report.Load(id);
+            report.RemoverAcesso(email);
+
+
+
+            return "sucesso";
+        }
+
+        public string SetPrivado([FromQuery(Name = "id")] string id, [FromQuery(Name = "privado")] string privado)
+        {
+            string userId = HttpContext.Session.GetString("User");
+
+            if (userId == null || userId == "")
+            {
+                return "not authenticated";
+            }
+            if (!Security.CheckReportPermission(userId, id))
+            {
+                return "no permission";
+            }
+
+            Terz_DataBaseLayer.Report report = new Report();
+            report.Load(id);
+            report.SetPrivado(privado);
+
+
+
+            return "sucesso";
+        }
+
+
         public PartialViewResult Authentication()
         {
             string email = Request.Form["Email"].ToString();

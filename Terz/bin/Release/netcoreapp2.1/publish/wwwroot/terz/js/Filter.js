@@ -28,6 +28,13 @@
         }
         var distinctValues = Array.from(new Set(values));
 
+        var alldfs = "";
+        for (var m = 0; m < dfNames.length; m++) {
+            alldfs += dfNames[m] + "&";
+        }
+
+        alldfs = alldfs.slice(0, -1);
+
         var filterBlock = document.createElement('div');
         filterBlock.setAttribute("class", "dropdown");
         var button = document.createElement("button");
@@ -40,6 +47,17 @@
         contentInfo.setAttribute("id", filter.dimension.field);
         contentInfo.style.overflowY = "auto";
         contentInfo.style.maxHeight = "300px";
+
+
+
+        var clearButton = document.createElement("button");
+        clearButton.setAttribute("onclick", "clearFilterSelections('" + alldfs + "','" + filter.dimension.field + "')");
+        clearButton.setAttribute("class", "btn btn-block btn-danger btn-sm");
+        clearButton.style.marginTop = "3px";
+        clearButton.style.marginBottom = "3px";
+        clearButton.appendChild(document.createTextNode("Limpar"));
+        contentInfo.appendChild(clearButton);
+
         var input = document.createElement("input");
         input.setAttribute("type", "text");
         input.setAttribute("placeholder", "Search..");
@@ -53,14 +71,8 @@
             cell.appendChild(document.createTextNode(distinctValues[k]));
             cell.setAttribute("href", "#" + distinctValues[k]);
             
-            var alldfs = "";
-            for (var m = 0; m < dfNames.length; m++) {
-                alldfs += dfNames[m] + "&";
-            }
 
 
-
-            alldfs = alldfs.slice(0, -1);
             cell.setAttribute("id", alldfs + "," + filter.dimension.field + "," + distinctValues[k]);
             cell.setAttribute("onclick", "filterValue('" + alldfs + "," + filter.dimension.field + "," + distinctValues[k] + "')");
             contentInfo.appendChild(cell);

@@ -17,9 +17,11 @@ namespace Terz_DataBaseLayer
         public int Rank { get; set; }
         public int Ativo { get; set; }
         public int MaxSize { get; set; }
+        public string Privado { get; set; }
         public List<Visualizacao> Visualizacoes { get; set; }
         public List<Avaliacao> Avaliacoes { get; set; }
         public List<Referencia> Referencias { get; set; }
+        public List<string> UsuariosAutorizados { get; set; }
 
         public void Load(string Id)
         {
@@ -37,6 +39,8 @@ namespace Terz_DataBaseLayer
                 this.Rank = Convert.ToInt32(myReader.GetValue(6));
                 this.Ativo = Convert.ToInt32(myReader.GetValue(7));
                 this.MaxSize = Convert.ToInt32(myReader.GetValue(8));
+                object privado = myReader.GetValue(9);
+                this.Privado = ((privado == null) ? "0" : privado.ToString());
 
                 myReader.Close();
                 Base.connection.Close();
@@ -46,6 +50,44 @@ namespace Terz_DataBaseLayer
             myReader.Close();
             Base.connection.Close();
 
+        }
+
+        public void ConcederAcesso(string email)
+        {
+            Base.Init();
+            var sql = $"INSERT INTO `acesso` (`email`, `report_id`) VALUES ('{email}', '{this.Id}')";
+            Base.sqlCommand(sql);
+        }
+
+        public void RemoverAcesso(string email)
+        {
+            Base.Init();
+            var sql = $"DELETE FROM acesso WHERE email = '{email}' AND report_id = '{this.Id}'";
+            Base.sqlCommand(sql);
+        }
+
+        public void SetPrivado(string privado)
+        {
+            Base.Init();
+            var sql = $"UPDATE report SET privado = '{privado}' WHERE id = '{this.Id}'";
+            Base.sqlCommand(sql);
+        }
+
+        public void GetUsuariosAutorizados()
+        {
+            Base.Init();
+            this.UsuariosAutorizados = new List<string>();
+            var sql = "select email from acesso where report_id = '" + this.Id + "'";
+            MySqlDataReader myReader = Base.select(sql);
+            while (myReader.Read())
+            {
+               
+                this.UsuariosAutorizados.Add(Convert.ToString(myReader.GetValue(0)));
+
+            }
+
+            myReader.Close();
+            Base.connection.Close();
         }
 
         public void getViews()

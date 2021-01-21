@@ -28,14 +28,23 @@ namespace Terz.Controllers
             report.Load(id);
             report.getAvaliations();
             report.getViews();
+            report.GetUsuariosAutorizados();
             reportView.Report = report;
             Usuario usuario = new Usuario();
             usuario.Load(report.UserId);
+
 
             if(report.Ativo == 0 && report.UserId != userId)
             {
                 return null;
             }
+
+            if(report.Privado == "1" && report.UserId != userId && !report.UsuariosAutorizados.Contains(usuario.Email))
+            {
+                return null;
+            }
+
+            
 
             reportView.Usuario = usuario;
 

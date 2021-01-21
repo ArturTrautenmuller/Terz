@@ -197,8 +197,9 @@
                         <a href="../Report?id=@report.Id"><i class="fas fa-eye"></i> Visualizar Aplicativo</a>
                         <a href="../QueryEditor?id=@report.Id"><i class="fa fa-edit"></i> Editor de Consulta</a>
                         <a href="../Query?id=@report.Id"><i class="fas fa-eye"></i> Visualizar Consulta</a>
+                        <a href="#" onclick="GerenciarAcesso(@report.Id)"><i class="fas fa-shield-alt"></i> Gerenciar Acessos</a>
                         <a href="../User/ExportApp?id=@report.Id"><i class="fas fa-download"></i> Download</a>
-                       <a href="#" onclick="DeleteReport(@report.Id)"><i class="fas fa-trash"></i> Remover</a>
+                        <a href="#" onclick="DeleteReport(@report.Id)"><i class="fas fa-trash"></i> Remover</a>
                     </div>
                 </div>
 
@@ -212,6 +213,33 @@
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
             <script>
+
+                function GerenciarAcesso(id) {
+                    var form;
+                    $.ajax(
+                        {
+                            type: 'POST',
+                            url: '../User/GerenciarAcesso?id=' + id,
+                            dataType: 'html',
+                            cache: false,
+                            async: true,
+
+                            success: function (data) {
+                                form = data;
+                                bootbox.confirm(form, function (result) {
+                                    if (result) {
+
+                                        console.log("App -> Gerenciamento");
+                                    }
+
+                                });
+
+                            },
+
+
+                        });
+                }
+
                 function dropdown(id) {
                     document.getElementById("links-"+id).classList.toggle("show");
                 }

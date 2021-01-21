@@ -1,0 +1,147 @@
+﻿@model Terz_DataBaseLayer.Report
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@if (Model.Privado == "1")
+{
+    <input onclick="tornarPublico()"  type="radio" id="publico" value="0" name="Nprivado" />
+    <label for="publico">Público</label>
+    <input onclick="tornarPrivado()" type="radio" id="privado" value="1" name="Nprivado" checked />
+    <label for="privado">Privado</label>
+}
+
+else
+{
+    <input onclick="tornarPublico()"  type="radio" id="publico" value="0" name="Nprivado" checked />
+    <label for="publico">Público</label>
+    <input onclick="tornarPrivado()"  type="radio" id="privado" value="1" name="Nprivado" />
+    <label for="privado">Privado</label>
+}
+
+<div id="emails">
+    <label>E-mails Autorizados: </label>
+    <br />
+    @foreach(string email in Model.UsuariosAutorizados)
+    {
+        <div id="d-@email">
+            <label  style="width:300px">@email</label>
+             <a  style="margin-left:15px; color:dodgerblue; text-decoration:none" onclick="removeAcesso('@email')" href="#"><i class="fas fa-trash"></i></a>
+        </div>
+    }
+
+</div>
+<div style="display:flex">
+    <input type="text" id="novoEmail" style="width:300px;" class="form-control" /><button onclick="addAcesso()" style="width:180px" class="btn btn-block btn-success btn-sm">Adicionar</button>
+</div>
+
+<script>
+
+    function addAcesso() {
+        var novoEmail = document.getElementById("novoEmail").value;
+        if (novoEmail == null || novoEmail == "") return;
+         $.ajax(
+                {
+                 type: 'POST',
+                 url: '../User/AddAcesso?id=@Model.Id&email=' + novoEmail,
+                    dataType: 'html',
+                    cache: false,
+                    async: true,
+
+                 success: function (data) {
+
+                     var eDiv = document.createElement("div");
+                     eDiv.setAttribute("id", "d-" + novoEmail);
+                     document.getElementById("novoEmail").value = "";
+                     var emailLabel = document.createElement("label");
+                     emailLabel.style.width = "300px";
+                     emailLabel.innerHTML = novoEmail;
+                     eDiv.appendChild(emailLabel);
+                     var deleteEmail = document.createElement("a");
+                     deleteEmail.style.marginLeft = "15px";
+                     deleteEmail.style.color = "dodgerblue";
+                     deleteEmail.style.textDecoration = "none";
+                     deleteEmail.setAttribute("onclick", "removeAcesso('" + novoEmail + "')");
+                     deleteEmail.setAttribute("href", "#");
+                     var icon = document.createElement("i");
+                     icon.setAttribute("class", "fas fa-trash");
+                     deleteEmail.appendChild(icon);
+                     eDiv.appendChild(deleteEmail);
+                     document.getElementById("emails").appendChild(eDiv);
+                    
+
+                     console.log("app -> addAcesso");
+
+                    },
+
+
+
+
+                });
+    }
+
+    function removeAcesso(email) {
+         $.ajax(
+                {
+                    type: 'POST',
+                    url: '../User/RemoveAcesso?id=@Model.Id&email=' + email,
+                    dataType: 'html',
+                    cache: false,
+                    async: true,
+
+                 success: function (data) {
+                     document.getElementById("d-" + email).remove();
+                        console.log("app -> removeAcesso");
+
+                    },
+
+
+
+
+                });
+    }
+    function tornarPrivado() {
+        if (document.getElementById("privado").checked) {
+            $.ajax(
+                {
+                    type: 'POST',
+                    url: '../User/SetPrivado?id=@Model.Id&privado=1',
+                    dataType: 'html',
+                    cache: false,
+                    async: true,
+
+                    success: function (data) {
+                        console.log("app -> privado");
+
+                    },
+
+
+
+
+                });
+        }
+    }
+
+    function tornarPublico() {
+        if (document.getElementById("publico").checked) {
+            $.ajax(
+                {
+                    type: 'POST',
+                    url: '../User/SetPrivado?id=@Model.Id&privado=0',
+                    dataType: 'html',
+                    cache: false,
+                    async: true,
+
+                    success: function (data) {
+                        console.log("app -> público");
+
+                    },
+
+
+
+
+                });
+        }
+    }
+
+</script>

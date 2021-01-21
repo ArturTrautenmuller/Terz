@@ -63,7 +63,7 @@ using Terz.Models;
             WriteLiteral("<div id=\"GraphCreate\">\r\n    <label>Titulo:</label><br>\r\n    <input class=\"form-control\" style=\"width:250px\" id=\"TitleAdd\" type=\"text\" ><br>\r\n    <label>Tipo:</label><br>\r\n    <select class=\"form-control\" style=\"width:250px\" id=\"TipoAdd\">\r\n        ");
             EndContext();
             BeginContext(247, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "01cd8a44fa754844ae170a5e27bec281", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "531d5bb591eb4504b5f901e41f2b0b8e", async() => {
                 BeginContext(267, 5, true);
                 WriteLiteral("Barra");
                 EndContext();
@@ -85,7 +85,7 @@ using Terz.Models;
             WriteLiteral("\r\n        ");
             EndContext();
             BeginContext(291, 35, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b0f9dbd2a3bf403784c2ef0e0b492b26", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "aa71e16116d04b4ca301cfa0366607b3", async() => {
                 BeginContext(312, 5, true);
                 WriteLiteral("Linha");
                 EndContext();
@@ -107,7 +107,7 @@ using Terz.Models;
             WriteLiteral("\r\n        ");
             EndContext();
             BeginContext(336, 36, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1cc1b578205241edb6ca53104ed972d0", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0d2ae71c98d94d16bc6b8749a34a05c5", async() => {
                 BeginContext(357, 6, true);
                 WriteLiteral("Arvore");
                 EndContext();
@@ -129,7 +129,7 @@ using Terz.Models;
             WriteLiteral("\r\n        ");
             EndContext();
             BeginContext(382, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "43e7e661b5a0476ea5d9b15ecd6a4e77", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c2655dd76e4146808b0d7ad3f5a8440d", async() => {
                 BeginContext(402, 5, true);
                 WriteLiteral("Pizza");
                 EndContext();
@@ -151,7 +151,7 @@ using Terz.Models;
             WriteLiteral("\r\n        ");
             EndContext();
             BeginContext(426, 37, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5dff3feb55e143a381d4505fa99c4c1b", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dcd28cd96e8e4d978c364749f186ac5e", async() => {
                 BeginContext(448, 6, true);
                 WriteLiteral("Tabela");
                 EndContext();
@@ -173,7 +173,7 @@ using Terz.Models;
             WriteLiteral("\r\n        ");
             EndContext();
             BeginContext(473, 37, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "77fbc1baaeb343b583ab950fc2d8d293", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6f0848b0148a4f5da00f313344c28c19", async() => {
                 BeginContext(496, 5, true);
                 WriteLiteral("Bolha");
                 EndContext();
@@ -195,7 +195,7 @@ using Terz.Models;
             WriteLiteral("\r\n        ");
             EndContext();
             BeginContext(520, 33, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "63ebbc3346d14618bf7a39cddec2e320", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7665a7dcbfa54455ba9d35244479b195", async() => {
                 BeginContext(540, 4, true);
                 WriteLiteral("Mapa");
                 EndContext();
@@ -217,7 +217,7 @@ using Terz.Models;
             WriteLiteral("\r\n        ");
             EndContext();
             BeginContext(563, 50, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4785d4815d804f0786899ef77fd837b5", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d15dedd2bfe54bd5bc9ba0db63d77cc1", async() => {
                 BeginContext(586, 18, true);
                 WriteLiteral("Diagrama de Sankey");
                 EndContext();
@@ -239,7 +239,7 @@ using Terz.Models;
             WriteLiteral("\r\n        ");
             EndContext();
             BeginContext(623, 40, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "90df898f4be04a52bc2af10677f3607d", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e78d13a15a514479bfcdc265b81ea899", async() => {
                 BeginContext(643, 11, true);
                 WriteLiteral("Organograma");
                 EndContext();
@@ -261,7 +261,7 @@ using Terz.Models;
             WriteLiteral("\r\n        ");
             EndContext();
             BeginContext(673, 48, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "29fcd470148148b5964304b08276a991", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "76f582ad5ffd43dc9d6fc1490b3fd91e", async() => {
                 BeginContext(698, 14, true);
                 WriteLiteral("Linha do Tempo");
                 EndContext();
