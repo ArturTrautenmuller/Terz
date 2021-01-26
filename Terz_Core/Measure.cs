@@ -10,6 +10,7 @@ namespace Terz_Core
         public string Name { get; set; }
         public string Expresion { get; set; }
         public string NumberFormat { get; set; }
+        public string Color { get; set; }
 
     }
 }

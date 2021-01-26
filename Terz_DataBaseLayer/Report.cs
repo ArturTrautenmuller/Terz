@@ -175,7 +175,7 @@ namespace Terz_DataBaseLayer
             this.Ativo = 1;
             this.MaxSize = 10;
             
-            var sql = "INSERT INTO `report` (`id`, `user_id`, `titulo`, `imagem`,`id_categoria`,`score`,`ranque`,`ativo`,`max_size`) VALUES (NULL, '" + this.UserId+"', '"+this.Titulo+"', '"+this.Imagem+"','"+this.CategoriaId+"','0','0','"+this.Ativo+"','"+this.MaxSize+"')";
+            var sql = "INSERT INTO `report` (`id`, `user_id`, `titulo`, `imagem`,`id_categoria`,`score`,`ranque`,`ativo`,`max_size`,`privado`) VALUES (NULL, '" + this.UserId+"', '"+this.Titulo+"', '"+this.Imagem+"','"+this.CategoriaId+"','0','0','"+this.Ativo+"','"+this.MaxSize+"','0')";
 
             this.Id = Convert.ToString(Base.sqlCommandAndGetId(sql));
 

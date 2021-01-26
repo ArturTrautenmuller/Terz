@@ -14,6 +14,7 @@ namespace Terz_Core
         public List<Dimension> Dimensions { get; set; }
         public List<Measure> Measures { get; set; }
         public Sort Sort { get; set; }
+        public string ExecuteMode { get; set; }
 
 
     }

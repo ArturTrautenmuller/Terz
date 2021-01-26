@@ -282,8 +282,9 @@ namespace Terz.Controllers
             }
             else
             {
-         
-                return PartialView("~/Views/Home/Login.cshtml");
+                Terz.Models.Home.LoginView loginView = new Models.Home.LoginView();
+                loginView.IncorretPassword = true;
+                return PartialView("~/Views/Home/Login.cshtml",loginView);
             }
        
 
@@ -363,7 +364,7 @@ namespace Terz.Controllers
 
             Report report = new Report();
             report.Load(id);
-            report.Ativo = 0;
+            report.Ativo = 0; 
             report.setAtivo();
 
             return "Relatório desativado";

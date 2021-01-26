@@ -1,9 +1,10 @@
 ﻿@model Terz.Models.Home.HomeView
 
-<label>Nome do Relatório</label>
-<input id="Title" type="text" />
+<label>Nome do Relatório: </label>
+<input class="form-control" id="Title" type="text" />
 <br />
-<select data-trigger="" name="choices-single-defaul" id="category">
+<label>Categoria: </label>
+<select class="form-control" data-trigger="" name="choices-single-defaul" id="category">
     <option value="0" placeholder="">CATEGORY</option>
     @foreach (Terz_DataBaseLayer.Category category in Model.Categories.Categories)
     {

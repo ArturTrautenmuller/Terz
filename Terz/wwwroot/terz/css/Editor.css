@@ -68,3 +68,19 @@
     border-left-width:5px;
     border-bottom:none;
 }
+
+.textBlock {
+    border-radius: 0px;
+    border-left-color: lightblue;
+    border-left-width: 5px;
+    border-top-color: lightblue;
+    border-top-width: 1px;
+    border-bottom-color: lightblue;
+    border-bottom-width: 1px;
+    border-right-color: lightblue;
+    border-right-width: 1px;
+}
+
+select {
+    font-family: 'FontAwesome', 'Second Font name';
+}

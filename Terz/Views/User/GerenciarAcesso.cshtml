@@ -6,22 +6,22 @@
 @if (Model.Privado == "1")
 {
     <input onclick="tornarPublico()"  type="radio" id="publico" value="0" name="Nprivado" />
-    <label for="publico">Público</label>
+    <label for="publico"><i class="fas fa-users"></i> Público</label>
     <input onclick="tornarPrivado()" type="radio" id="privado" value="1" name="Nprivado" checked />
-    <label for="privado">Privado</label>
+    <label for="privado"><i class="fas fa-user-lock"></i> Privado</label>
 }
 
 else
 {
     <input onclick="tornarPublico()"  type="radio" id="publico" value="0" name="Nprivado" checked />
-    <label for="publico">Público</label>
+    <label for="publico"><i class="fas fa-users"></i> Público</label>
     <input onclick="tornarPrivado()"  type="radio" id="privado" value="1" name="Nprivado" />
-    <label for="privado">Privado</label>
+    <label for="privado"><i class="fas fa-user-lock"></i> Privado</label>
 }
 
 <div id="emails">
     <label>E-mails Autorizados: </label>
-    <br />
+    <hr />
     @foreach(string email in Model.UsuariosAutorizados)
     {
         <div id="d-@email">
@@ -31,6 +31,7 @@ else
     }
 
 </div>
+<hr />
 <div style="display:flex">
     <input type="text" id="novoEmail" style="width:300px;" class="form-control" /><button onclick="addAcesso()" style="width:180px" class="btn btn-block btn-success btn-sm">Adicionar</button>
 </div>

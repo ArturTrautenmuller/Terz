@@ -69,7 +69,9 @@ namespace Terz.Controllers
 
         public PartialViewResult Login()
         {
-            return PartialView();
+            Terz.Models.Home.LoginView loginView = new Models.Home.LoginView();
+            loginView.IncorretPassword = false; 
+            return PartialView(loginView);
         }
 
         public PartialViewResult Cadastro()

@@ -110,6 +110,11 @@ namespace Terz.Controllers
             return PartialView();
         }
 
+        public PartialViewResult TextExp()
+        {
+            return PartialView();
+        }
+
         public PartialViewResult AddIndicador()
         {
             return PartialView();

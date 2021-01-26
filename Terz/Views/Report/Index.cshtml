@@ -13,6 +13,7 @@
 
 <link rel="stylesheet" href="~/terz/LTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="~/terz/LTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+
 <!-- Theme style -->
 
 
@@ -54,7 +55,7 @@
 
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
-        
+
         <div class="navbar-header">
 
 
@@ -64,7 +65,7 @@
         </div>
         <div class="collapse navbar-collapse navbar-right" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li><a href="../terz/Query?id=@Model.Id" style="color:gray;text-decoration:none; margin-left:10px" ><i class="fas fa-search"></i> Query</a></li>
+                <li><a href="../terz/Query?id=@Model.Id" style="color:gray;text-decoration:none; margin-left:10px"><i class="fas fa-search"></i> Query</a></li>
                 <li><a href="#" style="color:gray;text-decoration:none; margin-left:10px" onclick="ShowInfo()">Sobre</a></li>
                 <li><a href="#" style="color:gray;text-decoration:none; margin-left:10px" onclick="ShowReference()">Referencias</a></li>
                 <li><a href="#" style="color:gray;text-decoration:none" onclick="AvaliatePage()">Avaliar</a></li>
@@ -173,6 +174,14 @@
 <script src="~/terz/LTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="~/terz/LTE/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 <script src="~/terz/LTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/maps.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/geodata/worldLow.js"></script>
+<script src="https://covid.amCharts.com/data/js/world_timeline.js"></script>
+<script src="https://covid.amCharts.com/data/js/total_timeline.js"></script>
 <!-- AdminLTE App -->
 
 
@@ -181,6 +190,8 @@
 <script src="~/terz/js/Filter.js"></script>
 <script src="~/terz/js/Indicator.js"></script>
 <script src="~/terz/js/Graph.js"></script>
+<script src="~/terz/js/MapTimeLine.js"></script>
+<script src="~/terz/js/Radar.js"></script>
 <script src="~/terz/js/TextBlock.js"></script>
 <script>
     function on() {
@@ -500,14 +511,14 @@
                             }
                             group["table"] = table;
                             AllDFS.push(group);
-                        } 
+                        }
 
 
                         res = pattern.exec(expression);
                     }
 
                 }
-            
+
 
 
                 for (var j = 0; j < reportData.config.sheets[i].graphs.length; j++) {
@@ -548,7 +559,7 @@
                             res = pattern.exec(expression);
                         }
                     }
-                    
+
                 }
 
 
@@ -574,7 +585,7 @@
 
 
     function reloadGraphs() {
-        
+
         var graphs = document.getElementById("Graphs");
         while (graphs.firstChild) {
             graphs.removeChild(graphs.lastChild);
@@ -583,11 +594,11 @@
         buildIndicators(currentSheet);
         buildGraphs(currentSheet);
         buildTextBlocks(currentSheet);
-        
+
     }
 
     function reloadSheet() {
-        
+
         var graphs = document.getElementById("Graphs");
         while (graphs.firstChild) {
             graphs.removeChild(graphs.lastChild);
@@ -601,7 +612,7 @@
         buildIndicators(currentSheet);
         buildGraphs(currentSheet);
         buildTextBlocks(currentSheet);
-       
+
     }
 
     function changeSheet(sheetOrder) {

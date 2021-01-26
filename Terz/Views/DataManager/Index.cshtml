@@ -92,8 +92,8 @@
                                     @( ((double)((Convert.ToDouble(dataFrameInfo.Size)) / (1024 * 1024))).ToString("0.00") )  MB
                                 </td>
                                 <td class="cell100 column3">
-                                    <a href="#" onclick="mudarNome('@dataFrameInfo.Name')">Renomear</a>
-                                    <a href="#" onclick=" deletarDataFrame('@dataFrameInfo.Name')">Excluir</a>
+                                    <a href="#" onclick="mudarNome('@dataFrameInfo.Name')"><i class="fas fa-pen-square"></i></a>
+                                    <a href="#" onclick=" deletarDataFrame('@dataFrameInfo.Name')" style="margin-left:10px"><i class="fas fa-trash"></i></a>
                                 </td>
 
 
@@ -105,7 +105,7 @@
                     <tr>
                         <td class="cell100 column1"></td>
                         <td class="cell100 column2"><label> @( ((double)((Convert.ToDouble(Model.DataFrameInfos.Sum(d => d.Size))) / (1024 * 1024))).ToString("0.00") ) /@Model.Report.MaxSize MB </label></td>
-                        <td class="cell100 column3"><button onclick="showExpandOptions()">Expandir</button></td>
+                        <td class="cell100 column3"><button class="btn btn-block btn-primary" onclick="showExpandOptions()">Expandir</button></td>
                     </tr>
 
                 </tbody>
@@ -122,9 +122,10 @@
             <option value="5" id="eo5">800 MB 5 créditos/dia</option>
             <option value="6" id="eo6">1000 MB 6 créditos/dia</option>
         </select>
-
-        <button onclick="Expand()">Confirmar</button>
-        <button onclick="showExpandOptions()">Cancelar</button>
+        <div style="display:flex">
+            <button class="btn btn-block btn-success" style="width:200px;height:38px;margin-top:8px" onclick="Expand()">Confirmar</button>
+            <button class="btn btn-block btn-secondary" style="width:200px; margin-left:15px" onclick="showExpandOptions()">Cancelar</button>
+        </div>
     </div>
 
     <label for="dfFile">Enviar DataFrames</label>
@@ -133,8 +134,8 @@
             <input type="file" class="custom-file-input" id="dfFile" multiple>
             <label class="custom-file-label" for="exampleInputFile">Escolher Arquivos</label>
         </div>
-        <div class="input-group-append" onclick="uploadDataFrame()">
-            <span class="input-group-text" id="">Upload</span>
+        <div class="input-group-append" >
+            <button class="btn btn-block btn-success" onclick="uploadDataFrame()" id="">Enviar</button>
         </div>
     </div>
 
@@ -173,8 +174,8 @@
                                         <input id="tr-@referencia.Id" type="text" style="display:none;width:80%" value="@referencia.Descricao" onchange="carregarReferencia('@referencia.Id')" />
                                     </td>
                                     <td class="cell100 column2">
-                                        <a href="#" onclick="mudarReferencia('@referencia.Id')">Renomear</a>
-                                        <a href="#" onclick=" deletarReferencia('@referencia.Id')">Excluir</a>
+                                        <a href="#" onclick="mudarReferencia('@referencia.Id')"><i class="fas fa-pen-square"></i></a>
+                                        <a href="#" onclick=" deletarReferencia('@referencia.Id')" style="margin-left:10px"><i class="fas fa-trash"></i></a>
                                     </td>
 
 
@@ -187,7 +188,7 @@
                 </table>
             </div>
         </div>
-        <button onclick="AddReferencia()">Adicionar Referência</button>
+        <button class="btn btn-block btn-success" style="width:230px" onclick="AddReferencia()">Adicionar Referência</button>
 
     </div>
 

@@ -61,6 +61,10 @@
                 case 'sankey': { buildSankeyChart(graph); break; }
                 case 'org': { buildOrgChart(graph); break; }
                 case 'timeline': { buildTimeLineChart(graph); break; }
+                case 'linedate': { buildLineDateChart(graph); break; }
+                case 'maptimeline': { buildMapTimeLineChart(graph); break; }
+                case 'radarcalendar': { buildCalendarRadarChart(graph); break; }
+
                 default: break;
 
 
@@ -155,8 +159,8 @@ function buildBarChart(graph) {
             }
             if (graph.sort.type == 'data') {
                 sort = function (a, b) {
-                    var ad = new Date(a["x"]);
-                    var bd = new Date(b["x"]);
+                    var ad = new Date(fixData(a["x"]));
+                    var bd = new Date(fixData(b["x"]));
                    
                     return ad - bd;
 
@@ -167,6 +171,22 @@ function buildBarChart(graph) {
                 sort = function (a, b) {
                     var ad = MonthToInt[a["x"].toLowerCase()];
                     var bd = MonthToInt[b["x"].toLowerCase()];
+
+                    return ad - bd;
+
+                };
+            }
+            if (graph.sort.type == 'mesano') {
+                sort = function (a, b) {
+
+                    var a_mes = MonthToInt[a["x"].split(" ")[0].toLowerCase()];
+                    var a_ano = a["x"].split(" ")[1];
+
+                    var b_mes = MonthToInt[b["x"].split(" ")[0].toLowerCase()];
+                    var b_ano = b["x"].split(" ")[1];
+
+                    var ad = parseInt(a_ano) + 12 * parseInt(a_mes);
+                    var bd = parseInt(b_ano) + 12 * parseInt(b_mes);
 
                     return ad - bd;
 
@@ -183,8 +203,8 @@ function buildBarChart(graph) {
             }
             if (graph.sort.type == 'data') {
                 sort = function (a, b) {
-                    var ad = new Date(a["x"]);
-                    var bd = new Date(b["x"]);
+                    var ad = new Date(fixData(a["x"]));
+                    var bd = new Date(fixData(b["x"]));
                    
                     return bd - ad;
 
@@ -195,6 +215,23 @@ function buildBarChart(graph) {
                 sort = function (a, b) {
                     var ad = MonthToInt[a["x"].toLowerCase()];
                     var bd = MonthToInt[b["x"].toLowerCase()];
+
+                    return bd - ad;
+
+                };
+            }
+
+            if (graph.sort.type == 'mesano') {
+                sort = function (a, b) {
+
+                    var a_mes = MonthToInt[a["x"].split(" ")[0].toLowerCase()];
+                    var a_ano = a["x"].split(" ")[1];
+
+                    var b_mes = MonthToInt[b["x"].split(" ")[0].toLowerCase()];
+                    var b_ano = b["x"].split(" ")[1];
+
+                    var ad = parseInt(a_ano) + 12 * parseInt(a_mes);
+                    var bd = parseInt(b_ano) + 12 * parseInt(b_mes);
 
                     return bd - ad;
 
@@ -380,10 +417,10 @@ function buildTimeLineChart(graph) {
     var objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
     for (var i = 1; i < objData.length; i++) {
         var row = objData[i];
-        var iData = row[2].split('/');
-        var fData = row[3].split('/');
-        row[2] = new Date(parseInt(iData[2]), parseInt(iData[1]), parseInt(iData[0]));
-        row[3] = new Date(parseInt(fData[2]), parseInt(fData[1]), parseInt(fData[0]));
+       // var iData = row[2].split('/');
+       // var fData = row[3].split('/');
+        row[2] = new Date(fixData(row[2]));
+        row[3] = new Date(fixData(row[3]));
         var nRow = []
         for (var j = 0; j < row.length - 1; j++) {
             nRow.push(row[j]);
@@ -602,6 +639,58 @@ function buildPieChart(graph){
         .select("#g" + graph.id)
         .render();
 }
+var dadosLine;
+function buildLineDateChart(graph) {
+    am4core.ready(function () {
+
+        // Themes begin
+        am4core.useTheme(am4themes_animated);
+        // Themes end
+
+        var chart = am4core.create("g" + graph.id, am4charts.XYChart);
+
+        var dados = [];
+        var expressions = [];
+        var dimensions = [];
+        var measureNames = [];
+        dimensions.push(graph.dimensions[0].field);
+
+        expressions.push(graph.measures[0].expresion);
+        measureNames.push(graph.measures[0].name);
+
+        var objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
+        for (var i = 1; i < objData.length; i++) {
+            var date = new Date(fixData(objData[i][0]));
+            var value = parseFloat(objData[i][1])
+            dados.push({ date: date, value: value });
+        }
+
+        chart.data = dados.sort(compare);
+        dadosLine = dados.sort(compare);
+
+        // Create axes
+        var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+        dateAxis.renderer.minGridDistance = 60;
+
+        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+        // Create series
+        var series = chart.series.push(new am4charts.LineSeries());
+        series.dataFields.valueY = "value";
+        series.dataFields.dateX = "date";
+        series.tooltipText = "{value}"
+
+        series.tooltip.pointerOrientation = "vertical";
+
+        chart.cursor = new am4charts.XYCursor();
+        chart.cursor.snapToSeries = series;
+        chart.cursor.xAxis = dateAxis;
+
+        //chart.scrollbarY = new am4core.Scrollbar();
+        chart.scrollbarX = new am4core.Scrollbar();
+
+    });
+}
 
 function buildLineChart(graph) {
     var data = [];
@@ -668,8 +757,8 @@ function buildLineChart(graph) {
             }
             if (graph.sort.type == 'data') {
                 sort = function (a, b) {
-                    var ad = new Date(a["x"]);
-                    var bd = new Date(b["x"]);
+                    var ad = new Date(fixData(a["x"]));
+                    var bd = new Date(fixData(b["x"]));
                    
                     return ad - bd;
 
@@ -680,6 +769,22 @@ function buildLineChart(graph) {
                 sort = function (a, b) {
                     var ad = MonthToInt[a];
                     var bd = MonthToInt[b];
+
+                    return ad - bd;
+
+                };
+            }
+            if (graph.sort.type == 'mesano') {
+                sort = function (a, b) {
+
+                    var a_mes = MonthToInt[a["x"].split(" ")[0].toLowerCase()];
+                    var a_ano = a["x"].split(" ")[1];
+
+                    var b_mes = MonthToInt[b["x"].split(" ")[0].toLowerCase()];
+                    var b_ano = b["x"].split(" ")[1];
+
+                    var ad = parseInt(a_ano) + 12 * parseInt(a_mes);
+                    var bd = parseInt(b_ano) + 12 * parseInt(b_mes);
 
                     return ad - bd;
 
@@ -696,8 +801,8 @@ function buildLineChart(graph) {
             }
             if (graph.sort.type == 'data') {
                 sort = function (a, b) {
-                    var ad = new Date(a["x"]);
-                    var bd = new Date(b["x"]);
+                    var ad = new Date(fixData(a["x"]));
+                    var bd = new Date(fixData(b["x"]));
                    
                     return bd - ad;
 
@@ -708,6 +813,22 @@ function buildLineChart(graph) {
                 sort = function (a, b) {
                     var ad = MonthToInt[a];
                     var bd = MonthToInt[b];
+
+                    return bd - ad;
+
+                };
+            }
+            if (graph.sort.type == 'mesano') {
+                sort = function (a, b) {
+
+                    var a_mes = MonthToInt[a["x"].split(" ")[0].toLowerCase()];
+                    var a_ano = a["x"].split(" ")[1];
+
+                    var b_mes = MonthToInt[b["x"].split(" ")[0].toLowerCase()];
+                    var b_ano = b["x"].split(" ")[1];
+
+                    var ad = parseInt(a_ano) + 12 * parseInt(a_mes);
+                    var bd = parseInt(b_ano) + 12 * parseInt(b_mes);
 
                     return bd - ad;
 

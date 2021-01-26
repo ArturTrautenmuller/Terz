@@ -50,12 +50,12 @@
                                 keyword = Model.currentKeyWord.Remove(Model.currentKeyWord.Length - 1, 1).Substring(1);
                             }
                         }
-                        <input id="search" type="text" placeholder="What are you looking for?" value="@keyword" />
+                        <input id="search" type="text" placeholder="O que está procurando?" value="@keyword" />
                     </div>
                     <div class="input-field second-wrap">
                         <div class="input-select">
                             <select data-trigger="" name="choices-single-defaul" id="category">
-                                <option value="0" placeholder="">CATEGORY</option>
+                                <option value="0" placeholder="">Categoria</option>
                                 @foreach (Terz_DataBaseLayer.Category category in Model.Categories.Categories)
                                 {
                                     if (category.Id == Model.currentCategory)
@@ -71,7 +71,7 @@
                         </div>
                     </div>
                     <div class="input-field third-wrap">
-                        <button class="btn-search" type="button" onclick="filterReport()">SEARCH</button>
+                        <button class="btn-search" type="button" onclick="filterReport()">Pesquisar</button>
                     </div>
                 </div>
 

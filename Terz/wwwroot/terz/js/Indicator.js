@@ -63,7 +63,7 @@
         labelValue.style.color = indicator.style.textColor;
         labelValue.style.fontSize = indicator.style.fontSize;
         dataDiv.appendChild(labelValue);
-        dataDiv.style.textAlign = "center";
+       // dataDiv.style.textAlign = "center";
 
         if (indicator["icon"] != null && indicator["icon"] != 'Sem Icone') {
             dataDiv.style.width = "65%";
