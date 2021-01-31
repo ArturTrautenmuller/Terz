@@ -64,6 +64,11 @@
                 case 'linedate': { buildLineDateChart(graph); break; }
                 case 'maptimeline': { buildMapTimeLineChart(graph); break; }
                 case 'radarcalendar': { buildCalendarRadarChart(graph); break; }
+                case 'pyramid': { buildPyramidChart(graph); break; }
+                case 'compare': { buildCompareChart(graph); break; }
+                case 'gaugi': { buildGaugiChart(graph); break; }
+                case 'variance': { buildVarianceChart(graph); break; }
+                case 'waterfall': { buildWaterFallChart(graph); break; }
 
                 default: break;
 
@@ -99,9 +104,39 @@ function buildBarChart(graph) {
     for (var i = 0; i < graph.measures.length; i++) {
         expressions.push(graph.measures[i].expresion);
     }
-    console.log(expressions);
-    console.log(dimensions);
-    var objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
+    var objData;
+
+
+    if (graph.executeMode == "1" || graph.executeMode == null) {
+
+        objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
+    }
+    else {
+        var tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == graph.dataFrameName.join(",") })[0].table));
+        objData = [];
+        var h = [];
+        for (var j = 0; j < dimensions.length; j++) {
+            h.push(dimensions[j]);
+        }
+        for (var j = 0; j < expressions.length; j++) {
+            h.push(expressions[j]);
+        }
+        objData.push(h);
+        for (var i = 1; i < tempDf.length; i++) {
+            var row = [];
+            for (var j = 0; j < dimensions.length; j++) {
+                var pos = tempDf[0].indexOf(dimensions[j]);
+                row.push(tempDf[i][pos]);
+            }
+            for (var j = 0; j < measures.length; j++) {
+                var pos = tempDf[0].indexOf(measures[j]);
+                row.push(parseFloat(tempDf[i][pos]));
+            }
+            objData.push(row);
+        }
+    }
+
+
 
     for (var l = 0; l < graph.measures.length; l++) {
         measureNames.push(graph.measures[l].name);
@@ -116,6 +151,17 @@ function buildBarChart(graph) {
 
             data.push(bar);
         }
+    }
+
+    var colors = {};
+    for (var k = 0; k < graph.measures.length; k++) {
+        colors[graph.measures[k].name] = graph.measures[k].color;
+    }
+
+    function assignColor(d) {
+        if (colors[d] == null || colors[d] == "") return "grey";
+        return colors[d];
+
     }
 
     var sort;
@@ -284,6 +330,13 @@ function buildBarChart(graph) {
             groupBy: "id",
             x: x,
             y: y,
+            shapeConfig: {
+                Bar: {
+                    fill: function (d) {
+                        return assignColor(d.id);
+                    }
+                }
+            },
             xSort: xSort,
             ySort: ySort,
             
@@ -342,7 +395,39 @@ function buildBubbleChart(graph) {
     }
 
 
-    var objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
+    var objData;
+
+
+    if (graph.executeMode == "1" || graph.executeMode == null) {
+
+        objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
+    }
+    else {
+        var tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == graph.dataFrameName.join(",") })[0].table));
+        objData = [];
+        var h = [];
+        for (var j = 0; j < dimensions.length; j++) {
+            h.push(dimensions[j]);
+        }
+        for (var j = 0; j < expressions.length; j++) {
+            h.push(expressions[j]);
+        }
+        objData.push(h);
+        for (var i = 1; i < tempDf.length; i++) {
+            var row = [];
+            for (var j = 0; j < dimensions.length; j++) {
+                var pos = tempDf[0].indexOf(dimensions[j]);
+                row.push(tempDf[i][pos]);
+            }
+            for (var j = 0; j < measures.length; j++) {
+                var pos = tempDf[0].indexOf(measures[j]);
+                row.push(parseFloat(tempDf[i][pos]));
+            }
+            objData.push(row);
+        }
+    }
+
+
     sData2 = objData;
     var dataTable = [];
     var header = [];
@@ -472,7 +557,38 @@ function buildOrgChart(graph) {
         measureNames.push("Label");
     }
 
-    var objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
+    var objData;
+
+
+    if (graph.executeMode == "1" || graph.executeMode == null) {
+
+        objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
+    }
+    else {
+        var tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == graph.dataFrameName.join(",") })[0].table));
+        objData = [];
+        var h = [];
+        for (var j = 0; j < dimensions.length; j++) {
+            h.push(dimensions[j]);
+        }
+        for (var j = 0; j < expressions.length; j++) {
+            h.push(expressions[j]);
+        }
+        objData.push(h);
+        for (var i = 1; i < tempDf.length; i++) {
+            var row = [];
+            for (var j = 0; j < dimensions.length; j++) {
+                var pos = tempDf[0].indexOf(dimensions[j]);
+                row.push(tempDf[i][pos]);
+            }
+            for (var j = 0; j < measures.length; j++) {
+                var pos = tempDf[0].indexOf(measures[j]);
+                row.push(parseFloat(tempDf[i][pos]));
+            }
+            objData.push(row);
+        }
+    }
+
     for (var i = 1; i < objData.length; i++) {
         var row = objData[i];
         if (row[2] == 0) {
@@ -525,7 +641,38 @@ function buildMapChart(graph) {
         measureNames.push(graph.measures[1].name);
     }
 
-    var objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
+    var objData;
+
+
+    if (graph.executeMode == "1" || graph.executeMode == null) {
+
+        objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
+    }
+    else {
+        var tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == graph.dataFrameName.join(",") })[0].table));
+        objData = [];
+        var h = [];
+        for (var j = 0; j < dimensions.length; j++) {
+            h.push(dimensions[j]);
+        }
+        for (var j = 0; j < expressions.length; j++) {
+            h.push(expressions[j]);
+        }
+        objData.push(h);
+        for (var i = 1; i < tempDf.length; i++) {
+            var row = [];
+            for (var j = 0; j < dimensions.length; j++) {
+                var pos = tempDf[0].indexOf(dimensions[j]);
+                row.push(tempDf[i][pos]);
+            }
+            for (var j = 0; j < measures.length; j++) {
+                var pos = tempDf[0].indexOf(measures[j]);
+                row.push(parseFloat(tempDf[i][pos]));
+            }
+            objData.push(row);
+        }
+    }
+
     objData[0][0] = dimNames[0];
     objData[0][1] = measureNames[0];
     if (graph.measures.length > 1) {
@@ -569,7 +716,37 @@ function buildSankeyChart(graph) {
     expressions.push(graph.measures[0].expresion);
     measureNames.push(graph.measures[0].name);
 
-    var objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
+    var objData;
+
+
+    if (graph.executeMode == "1" || graph.executeMode == null) {
+
+        objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
+    }
+    else {
+        var tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == graph.dataFrameName.join(",") })[0].table));
+        objData = [];
+        var h = [];
+        for (var j = 0; j < dimensions.length; j++) {
+            h.push(dimensions[j]);
+        }
+        for (var j = 0; j < expressions.length; j++) {
+            h.push(expressions[j]);
+        }
+        objData.push(h);
+        for (var i = 1; i < tempDf.length; i++) {
+            var row = [];
+            for (var j = 0; j < dimensions.length; j++) {
+                var pos = tempDf[0].indexOf(dimensions[j]);
+                row.push(tempDf[i][pos]);
+            }
+            for (var j = 0; j < measures.length; j++) {
+                var pos = tempDf[0].indexOf(measures[j]);
+                row.push(parseFloat(tempDf[i][pos]));
+            }
+            objData.push(row);
+        }
+    }
     for (var i = 1; i < objData.length; i++) {
         dataTable.push(objData[i]);
     }
@@ -612,7 +789,38 @@ function buildPieChart(graph){
     expressions.push(graph.measures[0].expresion);
     measureNames.push(graph.measures[0].name);
    
-    var objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
+    var objData;
+
+
+    if (graph.executeMode == "1" || graph.executeMode == null) {
+
+        objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
+    }
+    else {
+        var tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == graph.dataFrameName.join(",") })[0].table));
+        objData = [];
+        var h = [];
+        for (var j = 0; j < dimensions.length; j++) {
+            h.push(dimensions[j]);
+        }
+        for (var j = 0; j < expressions.length; j++) {
+            h.push(expressions[j]);
+        }
+        objData.push(h);
+        for (var i = 1; i < tempDf.length; i++) {
+            var row = [];
+            for (var j = 0; j < dimensions.length; j++) {
+                var pos = tempDf[0].indexOf(dimensions[j]);
+                row.push(tempDf[i][pos]);
+            }
+            for (var j = 0; j < measures.length; j++) {
+                var pos = tempDf[0].indexOf(measures[j]);
+                row.push(parseFloat(tempDf[i][pos]));
+            }
+            objData.push(row);
+        }
+    }
+
     for (var i = 1; i < objData.length; i++) {
         var row = {};
         row[dimensions[0]] = objData[i][0];
@@ -658,7 +866,38 @@ function buildLineDateChart(graph) {
         expressions.push(graph.measures[0].expresion);
         measureNames.push(graph.measures[0].name);
 
-        var objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
+        var objData;
+
+
+        if (graph.executeMode == "1" || graph.executeMode == null) {
+
+            objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
+        }
+        else {
+            var tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == graph.dataFrameName.join(",") })[0].table));
+            objData = [];
+            var h = [];
+            for (var j = 0; j < dimensions.length; j++) {
+                h.push(dimensions[j]);
+            }
+            for (var j = 0; j < expressions.length; j++) {
+                h.push(expressions[j]);
+            }
+            objData.push(h);
+            for (var i = 1; i < tempDf.length; i++) {
+                var row = [];
+                for (var j = 0; j < dimensions.length; j++) {
+                    var pos = tempDf[0].indexOf(dimensions[j]);
+                    row.push(tempDf[i][pos]);
+                }
+                for (var j = 0; j < measures.length; j++) {
+                    var pos = tempDf[0].indexOf(measures[j]);
+                    row.push(parseFloat(tempDf[i][pos]));
+                }
+                objData.push(row);
+            }
+        }
+
         for (var i = 1; i < objData.length; i++) {
             var date = new Date(fixData(objData[i][0]));
             var value = parseFloat(objData[i][1])
@@ -703,7 +942,37 @@ function buildLineChart(graph) {
     }
     console.log(expressions);
     console.log(dimensions);
-    var objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
+    var objData;
+
+
+    if (graph.executeMode == "1" || graph.executeMode == null) {
+
+        objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
+    }
+    else {
+        var tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == graph.dataFrameName.join(",") })[0].table));
+        objData = [];
+        var h = [];
+        for (var j = 0; j < dimensions.length; j++) {
+            h.push(dimensions[j]);
+        }
+        for (var j = 0; j < expressions.length; j++) {
+            h.push(expressions[j]);
+        }
+        objData.push(h);
+        for (var i = 1; i < tempDf.length; i++) {
+            var row = [];
+            for (var j = 0; j < dimensions.length; j++) {
+                var pos = tempDf[0].indexOf(dimensions[j]);
+                row.push(tempDf[i][pos]);
+            }
+            for (var j = 0; j < measures.length; j++) {
+                var pos = tempDf[0].indexOf(measures[j]);
+                row.push(parseFloat(tempDf[i][pos]));
+            }
+            objData.push(row);
+        }
+    }
 
     for (var l = 0; l < graph.measures.length; l++) {
         measureNames.push(graph.measures[l].name);
@@ -718,6 +987,17 @@ function buildLineChart(graph) {
 
             data.push(bar);
         }
+    }
+
+    var colors = {};
+    for (var k = 0; k < graph.measures.length; k++) {
+        colors[graph.measures[k].name] = graph.measures[k].color; 
+    }
+
+    function assignColor(d) {
+        if (colors[d] == null || colors[d] == "") return "grey";
+        return colors[d];
+        
     }
 
     var sort;
@@ -853,6 +1133,13 @@ function buildLineChart(graph) {
             groupBy: "id",
             x: "x",
             y: "y",
+            shapeConfig: {
+                Line: {
+                    stroke: function (d) {
+                        return assignColor(d.id);
+                    }
+                }
+            },
             xConfig: {
                 title: graph.dimensions[0].name,
                 titleConfig: {
@@ -894,7 +1181,37 @@ function buildTreeMap(graph) {
     }
     
 
-    var objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
+    var objData;
+
+
+    if (graph.executeMode == "1" || graph.executeMode == null) {
+
+        objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
+    }
+    else {
+        var tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == graph.dataFrameName.join(",") })[0].table));
+        objData = [];
+        var h = [];
+        for (var j = 0; j < dimensions.length; j++) {
+            h.push(dimensions[j]);
+        }
+        for (var j = 0; j < expressions.length; j++) {
+            h.push(expressions[j]);
+        }
+        objData.push(h);
+        for (var i = 1; i < tempDf.length; i++) {
+            var row = [];
+            for (var j = 0; j < dimensions.length; j++) {
+                var pos = tempDf[0].indexOf(dimensions[j]);
+                row.push(tempDf[i][pos]);
+            }
+            for (var j = 0; j < measures.length; j++) {
+                var pos = tempDf[0].indexOf(measures[j]);
+                row.push(parseFloat(tempDf[i][pos]));
+            }
+            objData.push(row);
+        }
+    }
    
     //{"Group": "Store", "Sub-Group": "Convenience Store", "Number of Stores": 100, year: 2018},
     for (var i = 1; i < objData.length; i++) {
@@ -944,7 +1261,37 @@ function buildTable(graph) {
     }
 
 
-    var objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
+    var objData;
+
+
+    if (graph.executeMode == "1" || graph.executeMode == null) {
+
+        objData = EvalueteEx(expressions, graph.dataFrameName, dimensions);
+    }
+    else {
+        var tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == graph.dataFrameName.join(",") })[0].table));
+        objData = [];
+        var h = [];
+        for (var j = 0; j < dimensions.length; j++) {
+            h.push(dimensions[j]);
+        }
+        for (var j = 0; j < expressions.length; j++) {
+            h.push(expressions[j]);
+        }
+        objData.push(h);
+        for (var i = 1; i < tempDf.length; i++) {
+            var row = [];
+            for (var j = 0; j < dimensions.length; j++) {
+                var pos = tempDf[0].indexOf(dimensions[j]);
+                row.push(tempDf[i][pos]);
+            }
+            for (var j = 0; j < measures.length; j++) {
+                var pos = tempDf[0].indexOf(measures[j]);
+                row.push(parseFloat(tempDf[i][pos]));
+            }
+            objData.push(row);
+        }
+    }
 
     var card = document.createElement("div");
     card.setAttribute("class", "card");

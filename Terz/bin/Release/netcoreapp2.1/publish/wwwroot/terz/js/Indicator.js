@@ -63,20 +63,24 @@
         labelValue.style.color = indicator.style.textColor;
         labelValue.style.fontSize = indicator.style.fontSize;
         dataDiv.appendChild(labelValue);
-        dataDiv.style.textAlign = "center";
+      
 
-        if (indicator["icon"] != null && indicator["icon"] != 'Sem Icone') {
-            dataDiv.style.width = "65%";
+        if (indicator["icon"] != null && indicator["icon"] != 'Sem Icone' && indicator["icon"] != "") {
+            dataDiv.style.width = "75%";
             var iconDiv = document.createElement("div");
-            iconDiv.style.width = "35%";
+            iconDiv.style.width = "25%";
             iconDiv.style.textAlign = "center";
             var icon = document.createElement("i");
             icon.setAttribute("class", indicator["icon"]);
             icon.style.color = indicator.style.textColor;
             icon.style.fontSize = indicator.style.fontSize * 2 + "px";
             icon.style.marginTop = indicator.style.fontSize + "px";
+           // icon.style.marginRight = (indicator.style.fontSize/5 + 20) + "px";
             iconDiv.appendChild(icon);
             indicatorDiv.appendChild(iconDiv);
+        }
+        else {
+              dataDiv.style.textAlign = "center";
         }
 
 

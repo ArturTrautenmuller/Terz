@@ -816,3 +816,49 @@ function fulljoin(a, b) {
     });
     return result;
 }
+
+
+
+
+function fixData(data) {
+    var dmy = data.split(" ")[0];
+    var hms;
+    if (data.split(" ")[1] == null || data.split(" ")[1] == "") {
+        hms = "00:00:00";
+    }
+    else {
+        hms = data.split(" ")[1];
+    }
+
+    var d, m, y;
+    if (dmy.includes("/")) {
+        var arrayDMY = dmy.split("/");
+        d = arrayDMY[0];
+        m = arrayDMY[1];
+        y = arrayDMY[2];
+
+        dmy = y + "-" + m + "-" + d;
+    }
+
+    return dmy + " " + hms;
+}
+
+function compare(a, b) {
+
+    var keyA = a.date,
+        keyB = b.date;
+    // Compare the 2 dates
+    if (keyA < keyB) return -1;
+    if (keyA > keyB) return 1;
+    return 0;
+}
+
+function compareMapDate(a, b) {
+
+    var keyA = new Date(a.date),
+        keyB = new Date(b.date);
+    // Compare the 2 dates
+    if (keyA < keyB) return -1;
+    if (keyA > keyB) return 1;
+    return 0;
+}

@@ -5,9 +5,33 @@
     }
 
     var textBlock = reportData.config.sheets.filter(function (x) { return x.order == currentSheet })[0].textBlocks.filter(function (y) { return y.id == id })[0];
+
+    var titleLabel = document.createElement("label");
+    titleLabel.innerHTML = "Título:";
+    document.getElementById("Settings").appendChild(titleLabel);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    var titleExp = document.createElement("input");
+    titleExp.setAttribute("id", "Title");
+    titleExp.setAttribute("type", "text");
+    titleExp.setAttribute("onchange", "updateTextBlockConfig('" + id + "')");
+    titleExp.setAttribute("class", "form-control");
+    titleExp.value = textBlock.title;
+    document.getElementById("Settings").appendChild(titleExp);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
     var textLabel = document.createElement("label");
     textLabel.innerHTML = "Texto:";
     document.getElementById("Settings").appendChild(textLabel);
+    var expBut = document.createElement("button");
+    var iExp = document.createElement("i");
+    iExp.setAttribute("class", "fas fa-code");
+    iExp.style.color = "#21bfb2";
+    iExp.style.fontSize = "20px";
+    expBut.style.border = "none";
+    expBut.style.marginLeft = "10px";
+    expBut.appendChild(iExp);
+    expBut.setAttribute("onclick", "ExpText('" + id + "')");
+    document.getElementById("Settings").appendChild(expBut);
     document.getElementById("Settings").appendChild(document.createElement("br"));
     var textArea = document.createElement("textarea");
     textArea.setAttribute("id", "textarea");
@@ -227,7 +251,13 @@ function buildIndicatorSettings(id) {
     metricaLi.appendChild(measureExpLabel);
    // document.getElementById("Settings").appendChild(document.createElement("br"));
     var expBut = document.createElement("button");
-    expBut.appendChild(document.createTextNode("F(x)"));
+    var iExp = document.createElement("i");
+    iExp.setAttribute("class", "fas fa-code");
+    iExp.style.color = "#21bfb2";
+    iExp.style.fontSize = "20px";
+    expBut.style.border = "none";
+    expBut.style.marginLeft = "10px";
+    expBut.appendChild(iExp);
     expBut.setAttribute("onclick", "ExpIndicator('" + id + "')");
     metricaLi.appendChild(expBut);
     var measureExp = document.createElement("input");
@@ -276,14 +306,18 @@ function buildIndicatorSettings(id) {
     var iconeDiv = document.createElement("div");
     var iconeLabel = document.createElement("label");
     iconeLabel.innerHTML = "Icone:";
-
-
     iconeDiv.appendChild(iconeLabel);
+    var iButton = document.createElement("button");
+    iButton.style.marginLeft = "10px";
+    iButton.setAttribute("onclick", "IconSelector('" + id + "')");
+    iButton.appendChild(document.createTextNode("Selecionar na Lista"));
+    iconeDiv.appendChild(iButton);
+
+
     iconeDiv.appendChild(document.createElement("br"));
-    var selectIcone = document.createElement("select");
-
-
-    for (var i = 0; i < IconeList.length; i++) {
+    var selectIcone = document.createElement("input");
+   
+    /*for (var i = 0; i < IconeList.length; i++) {
         var selectIconeOption = document.createElement("option");
         var innerIcon = document.createElement("i");
         innerIcon.setAttribute("class", IconeList[i]);
@@ -296,8 +330,14 @@ function buildIndicatorSettings(id) {
             selectIconeOption.selected = "selected";
         }
         selectIcone.appendChild(selectIconeOption);
-    }
+    }*/
     selectIcone.setAttribute("id", "Icone");
+    if (indicator["icon"] == null) {
+        selectIcone.value = "";
+    }
+    else {
+        selectIcone.value = indicator["icon"];
+    }
     selectIcone.setAttribute("class", "form-control");
     selectIcone.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
     iconeDiv.appendChild(selectIcone);
@@ -516,7 +556,7 @@ function buildIndicatorSettings(id) {
 }
 
 
-function buildGraphSettings(id) {
+function buildGraphSettings(id,openTab) {
     var content = document.getElementById("Settings");
     while (content.firstChild) {
         content.removeChild(content.lastChild);
@@ -537,7 +577,9 @@ function buildGraphSettings(id) {
     geralButton.appendChild(document.createTextNode("Geral"));
     // dimButton.setAttribute("class", "btn btn-primary dropdown-toggle");
     geralButton.setAttribute("type", "button");
-   // geralLi.style.display = "none";
+    if (openTab != "1" && openTab != null) {
+         geralLi.style.display = "none";
+    }
     geralDiv.appendChild(geralButton);
 
     //Nome
@@ -552,7 +594,26 @@ function buildGraphSettings(id) {
     nameExp.setAttribute("class", "form-control");
     nameExp.value = graph.title;
     geralLi.appendChild(nameExp);
-    geralLi.appendChild(document.createElement("br"));
+    geralLi.appendChild(document.createElement("hr"));
+
+   
+        var checkExecute = document.createElement("input");
+        checkExecute.setAttribute("type", "checkbox");
+        checkExecute.setAttribute("id", "ExecuteMode");
+        checkExecute.style.width = "16px";
+        checkExecute.style.height = "16px";
+        if (graph.executeMode == "1" || graph.executeMode == null) {
+            checkExecute.checked = true;
+        }
+        checkExecute.setAttribute("onchange", "updateGraphConfig('" + id + "')");
+        geralLi.appendChild(checkExecute);
+        var checkExecuteLabel = document.createElement("label");
+        checkExecuteLabel.appendChild(document.createTextNode(" Executar Expressão"));
+        checkExecuteLabel.style.marginLeft = "10px";
+        geralLi.appendChild(checkExecuteLabel);
+        geralLi.appendChild(document.createElement("hr"));
+    
+
 
     var selectDFDiv = document.createElement("div");
     var selectDFLabel = document.createElement("label");
@@ -560,6 +621,8 @@ function buildGraphSettings(id) {
 
     selectDFDiv.appendChild(selectDFLabel);
     selectDFDiv.appendChild(document.createElement("br"));
+
+
    
 
 
@@ -655,7 +718,10 @@ function buildGraphSettings(id) {
     dimensoesButton.appendChild(document.createTextNode("Dimensões"));
     // dimButton.setAttribute("class", "btn btn-primary dropdown-toggle");
     dimensoesButton.setAttribute("type", "button");
-    dimensoeslLi.style.display = "none";
+    if (openTab != "2") {
+        dimensoeslLi.style.display = "none";
+    }
+    
     dimensoesDiv.appendChild(dimensoesButton);
 
     for (var i = 0; i < graph.dimensions.length; i++) {
@@ -745,7 +811,10 @@ function buildGraphSettings(id) {
     MedidasButton.appendChild(document.createTextNode("Métricas"));
     // dimButton.setAttribute("class", "btn btn-primary dropdown-toggle");
     MedidasButton.setAttribute("type", "button");
-    MedidaslLi.style.display = "none";
+    if (openTab != "3") {
+        MedidaslLi.style.display = "none";
+    }
+  
     MedidasDiv.appendChild(MedidasButton);
 
     for (var i = 0; i < graph.measures.length; i++) {
@@ -790,7 +859,13 @@ function buildGraphSettings(id) {
        // measureNameLi.appendChild(document.createElement("br"));
 
         var expBut = document.createElement("button");
-        expBut.appendChild(document.createTextNode("F(x)"));
+        var iExp = document.createElement("i");
+        iExp.setAttribute("class", "fas fa-code");
+        iExp.style.color = "#21bfb2";
+        iExp.style.fontSize = "20px";
+        expBut.style.border = "none";
+        expBut.style.marginLeft = "10px";
+        expBut.appendChild(iExp);
         expBut.setAttribute("onclick", "ExpMeasure('" + id + "','" + measure.id + "')");
         measureNameLi.appendChild(expBut);
         var measureFieldExp = document.createElement("input");
@@ -803,6 +878,21 @@ function buildGraphSettings(id) {
         measureFieldExp.value = measure.expresion;
         measureNameLi.appendChild(measureFieldExp);
        // measureNameLi.appendChild(document.createElement("br"));
+        var mcLabel = document.createElement("label");
+        mcLabel.innerHTML = "Cor:";
+        measureNameLi.appendChild(mcLabel);
+        measureNameLi.appendChild(document.createElement("br"));
+        var mcExp = document.createElement("input");
+        mcExp.setAttribute("id", "MeasureColor" + measure.id);
+        mcExp.setAttribute("type", "color");
+        mcExp.setAttribute("onchange", "updateGraphConfig('" + id + "')");
+        mcExp.setAttribute("class", "form-control");
+        mcExp.value = measure.color;
+        measureNameLi.appendChild(mcExp);
+        measureNameLi.appendChild(document.createElement("br"));
+
+
+
         //formato
 
         var selectFormatDiv = document.createElement("div");
@@ -868,7 +958,10 @@ function buildGraphSettings(id) {
     LayoutButton.appendChild(document.createTextNode("Estilo"));
     // dimButton.setAttribute("class", "btn btn-primary dropdown-toggle");
     LayoutButton.setAttribute("type", "button");
-    LayoutLi.style.display = "none";
+    if (openTab != "4") {
+        LayoutLi.style.display = "none";
+    }
+   
     LayoutDiv.appendChild(LayoutButton);
 
 
@@ -1093,7 +1186,7 @@ function addDimension(graphId) {
     dimension["field"] = "";
 
     reportData.config.sheets[sheetPos].graphs[graphPos].dimensions.push(dimension);
-    buildGraphSettings(graphId);
+    buildGraphSettings(graphId,"2");
 
 
 }
@@ -1103,7 +1196,7 @@ function deleteDimension(graphId, dimId) {
     var graphPos = reportData.config.sheets[sheetPos].graphs.map(function (e) { return e.id; }).indexOf(graphId);
     var dimPos = reportData.config.sheets[sheetPos].graphs[graphPos].dimensions.map(function (e) { return e.id; }).indexOf(dimId);
     reportData.config.sheets[sheetPos].graphs[graphPos].dimensions.splice(dimPos, 1);
-    buildGraphSettings(graphId);
+    buildGraphSettings(graphId,"2");
 }
 
 function addMeasure(graphId) {
@@ -1116,7 +1209,7 @@ function addMeasure(graphId) {
     measure["expresion"] = "";
 
     reportData.config.sheets[sheetPos].graphs[graphPos].measures.push(measure);
-    buildGraphSettings(graphId);
+    buildGraphSettings(graphId,"3");
 }
 
 function deleteMeasure(graphId, measureId) {
@@ -1124,7 +1217,7 @@ function deleteMeasure(graphId, measureId) {
     var graphPos = reportData.config.sheets[sheetPos].graphs.map(function (e) { return e.id; }).indexOf(graphId);
     var measurePos = reportData.config.sheets[sheetPos].graphs[graphPos].measures.map(function (e) { return e.id; }).indexOf(measureId);
     reportData.config.sheets[sheetPos].graphs[graphPos].measures.splice(measurePos, 1);
-    buildGraphSettings(graphId);
+    buildGraphSettings(graphId,"3");
 }
 
 function deleteIndicator(id) {

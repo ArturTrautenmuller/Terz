@@ -18,4 +18,8 @@
     <ProjectReference Include="..\Terz_DataBaseLayer\Terz_DataBaseLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\terz\css\lib\control\" />
+  </ItemGroup>
+
 </Project>

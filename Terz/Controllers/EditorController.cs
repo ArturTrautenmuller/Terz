@@ -129,6 +129,11 @@ namespace Terz.Controllers
         {
             return PartialView();
         }
+
+        public PartialViewResult EditIcon()
+        {
+            return PartialView();
+        }
     }
 
     

@@ -105,6 +105,11 @@
 <script src="~/terz/js/Graph.js"></script>
 <script src="~/terz/js/MapTimeLine.js"></script>
 <script src="~/terz/js/Radar.js"></script>
+<script src="~/terz/js/Pyramid.js"></script>
+<script src="~/terz/js/CompareChart.js"></script>
+<script src="~/terz/js/Gaugi.js"></script>
+<script src="~/terz/js/Variance.js"></script>
+<script src="~/terz/js/Waterfall.js"></script>
 <script src="~/terz/js/Settings.js"></script>
 <script src="~/terz/js/TextBlock.js"></script>
 <script type="module">
@@ -222,6 +227,38 @@
 
                             document.getElementById("Expression").value = document.getElementById("indExp").value;
                             updateIndicatorConfig(id);
+
+
+                        }
+
+                    });
+
+                },
+
+
+
+
+            });
+    }
+
+    function IconSelector(id) {
+        var form;
+        $.ajax(
+            {
+                type: 'POST',
+                url: 'Editor/EditIcon',
+                dataType: 'html',
+                cache: false,
+                async: true,
+
+                success: function (data) {
+                    form = data;
+                    bootbox.confirm(form, function (result) {
+                        if (result) {
+
+                            document.getElementById("Icone").value = document.getElementById("indicatorIcon").value;
+                            updateIndicatorConfig(id);
+                           
 
 
                         }

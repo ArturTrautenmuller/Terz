@@ -306,14 +306,18 @@ function buildIndicatorSettings(id) {
     var iconeDiv = document.createElement("div");
     var iconeLabel = document.createElement("label");
     iconeLabel.innerHTML = "Icone:";
-
-
     iconeDiv.appendChild(iconeLabel);
+    var iButton = document.createElement("button");
+    iButton.style.marginLeft = "10px";
+    iButton.setAttribute("onclick", "IconSelector('" + id + "')");
+    iButton.appendChild(document.createTextNode("Selecionar na Lista"));
+    iconeDiv.appendChild(iButton);
+
+
     iconeDiv.appendChild(document.createElement("br"));
-    var selectIcone = document.createElement("select");
-
-
-    for (var i = 0; i < IconeList.length; i++) {
+    var selectIcone = document.createElement("input");
+   
+    /*for (var i = 0; i < IconeList.length; i++) {
         var selectIconeOption = document.createElement("option");
         var innerIcon = document.createElement("i");
         innerIcon.setAttribute("class", IconeList[i]);
@@ -326,8 +330,14 @@ function buildIndicatorSettings(id) {
             selectIconeOption.selected = "selected";
         }
         selectIcone.appendChild(selectIconeOption);
-    }
+    }*/
     selectIcone.setAttribute("id", "Icone");
+    if (indicator["icon"] == null) {
+        selectIcone.value = "";
+    }
+    else {
+        selectIcone.value = indicator["icon"];
+    }
     selectIcone.setAttribute("class", "form-control");
     selectIcone.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
     iconeDiv.appendChild(selectIcone);
@@ -546,7 +556,7 @@ function buildIndicatorSettings(id) {
 }
 
 
-function buildGraphSettings(id) {
+function buildGraphSettings(id,openTab) {
     var content = document.getElementById("Settings");
     while (content.firstChild) {
         content.removeChild(content.lastChild);
@@ -567,7 +577,9 @@ function buildGraphSettings(id) {
     geralButton.appendChild(document.createTextNode("Geral"));
     // dimButton.setAttribute("class", "btn btn-primary dropdown-toggle");
     geralButton.setAttribute("type", "button");
-   // geralLi.style.display = "none";
+    if (openTab != "1" && openTab != null) {
+         geralLi.style.display = "none";
+    }
     geralDiv.appendChild(geralButton);
 
     //Nome
@@ -584,7 +596,7 @@ function buildGraphSettings(id) {
     geralLi.appendChild(nameExp);
     geralLi.appendChild(document.createElement("hr"));
 
-    if (['maptimeline','radarcalendar'].includes(graph.objectType)) {
+   
         var checkExecute = document.createElement("input");
         checkExecute.setAttribute("type", "checkbox");
         checkExecute.setAttribute("id", "ExecuteMode");
@@ -600,7 +612,7 @@ function buildGraphSettings(id) {
         checkExecuteLabel.style.marginLeft = "10px";
         geralLi.appendChild(checkExecuteLabel);
         geralLi.appendChild(document.createElement("hr"));
-    }
+    
 
 
     var selectDFDiv = document.createElement("div");
@@ -706,7 +718,10 @@ function buildGraphSettings(id) {
     dimensoesButton.appendChild(document.createTextNode("Dimensões"));
     // dimButton.setAttribute("class", "btn btn-primary dropdown-toggle");
     dimensoesButton.setAttribute("type", "button");
-    dimensoeslLi.style.display = "none";
+    if (openTab != "2") {
+        dimensoeslLi.style.display = "none";
+    }
+    
     dimensoesDiv.appendChild(dimensoesButton);
 
     for (var i = 0; i < graph.dimensions.length; i++) {
@@ -796,7 +811,10 @@ function buildGraphSettings(id) {
     MedidasButton.appendChild(document.createTextNode("Métricas"));
     // dimButton.setAttribute("class", "btn btn-primary dropdown-toggle");
     MedidasButton.setAttribute("type", "button");
-    MedidaslLi.style.display = "none";
+    if (openTab != "3") {
+        MedidaslLi.style.display = "none";
+    }
+  
     MedidasDiv.appendChild(MedidasButton);
 
     for (var i = 0; i < graph.measures.length; i++) {
@@ -940,7 +958,10 @@ function buildGraphSettings(id) {
     LayoutButton.appendChild(document.createTextNode("Estilo"));
     // dimButton.setAttribute("class", "btn btn-primary dropdown-toggle");
     LayoutButton.setAttribute("type", "button");
-    LayoutLi.style.display = "none";
+    if (openTab != "4") {
+        LayoutLi.style.display = "none";
+    }
+   
     LayoutDiv.appendChild(LayoutButton);
 
 
@@ -1165,7 +1186,7 @@ function addDimension(graphId) {
     dimension["field"] = "";
 
     reportData.config.sheets[sheetPos].graphs[graphPos].dimensions.push(dimension);
-    buildGraphSettings(graphId);
+    buildGraphSettings(graphId,"2");
 
 
 }
@@ -1175,7 +1196,7 @@ function deleteDimension(graphId, dimId) {
     var graphPos = reportData.config.sheets[sheetPos].graphs.map(function (e) { return e.id; }).indexOf(graphId);
     var dimPos = reportData.config.sheets[sheetPos].graphs[graphPos].dimensions.map(function (e) { return e.id; }).indexOf(dimId);
     reportData.config.sheets[sheetPos].graphs[graphPos].dimensions.splice(dimPos, 1);
-    buildGraphSettings(graphId);
+    buildGraphSettings(graphId,"2");
 }
 
 function addMeasure(graphId) {
@@ -1188,7 +1209,7 @@ function addMeasure(graphId) {
     measure["expresion"] = "";
 
     reportData.config.sheets[sheetPos].graphs[graphPos].measures.push(measure);
-    buildGraphSettings(graphId);
+    buildGraphSettings(graphId,"3");
 }
 
 function deleteMeasure(graphId, measureId) {
@@ -1196,7 +1217,7 @@ function deleteMeasure(graphId, measureId) {
     var graphPos = reportData.config.sheets[sheetPos].graphs.map(function (e) { return e.id; }).indexOf(graphId);
     var measurePos = reportData.config.sheets[sheetPos].graphs[graphPos].measures.map(function (e) { return e.id; }).indexOf(measureId);
     reportData.config.sheets[sheetPos].graphs[graphPos].measures.splice(measurePos, 1);
-    buildGraphSettings(graphId);
+    buildGraphSettings(graphId,"3");
 }
 
 function deleteIndicator(id) {

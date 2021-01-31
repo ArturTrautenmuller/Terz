@@ -64,3 +64,5 @@ C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Razor\Views\Quer
 C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Razor\Views\QueryEditor\Index.g.cshtml.cs
 C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Razor\Views\Query\Index.g.cshtml.cs
 C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Razor\Views\User\GerenciarAcesso.g.cshtml.cs
+C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Razor\Views\Editor\EditIcon.g.cshtml.cs
+C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Razor\Views\Editor\TextExp.g.cshtml.cs

@@ -1,23 +1,35 @@
-﻿<div id="GraphCreate">
-    <label>Titulo:</label><br>
-    <input class="form-control" style="width:250px" id="TitleAdd" type="text" ><br>
-    <label>Tipo:</label><br>
-    <select class="form-control" style="width:250px" id="TipoAdd">
-        <option value="bar">Barra</option>
-        <option value="line">Linha</option>
-        <option value="tree">Arvore</option>
-        <option value="pie">Pizza</option>
-        <option value="table">Tabela</option>
-        <option value="bubble">Bolha</option>
-        <option value="map">Mapa</option>
-        <option value="sankey">Diagrama de Sankey</option>
-        <option value="org">Organograma</option>
-        <option value="timeline">Linha do Tempo</option>
-        <option value="linedate">Série Temporal</option>
-        <option value="maptimeline">Mapa Temporal</option>
-        <option value="radarcalendar">Radar</option>
+﻿<link rel="stylesheet" type="text/css" href="~/terz/css/lib/control/iconselect.css">
+<script type="text/javascript" src="~/terz/lib/control/iconselect.js"></script>
 
-    </select>
+<script type="text/javascript" src="~/terz/lib/iscroll.js"></script>
+
+
+
+
+<div id="GraphCreate">
+    <label>Titulo:</label><br>
+    <input class="form-control" style="width:250px" id="TitleAdd" type="text"><br>
+    <label>Tipo:</label><br>
+    <div id="my-icon-select"></div>
+    <input type="text" id="TipoAdd" class="form-control" style="width:250px;display:none" value="bar" />
+
+    <!--
+        <select class="form-control" style="width:250px" id="TipoAdd">
+            <option value="bar">Barra</option>
+            <option value="line">Linha</option>
+            <option value="tree">Arvore</option>
+            <option value="pie">Pizza</option>
+            <option value="table">Tabela</option>
+            <option value="bubble">Bolha</option>
+            <option value="map">Mapa</option>
+            <option value="sankey">Diagrama de Sankey</option>
+            <option value="org">Organograma</option>
+            <option value="timeline">Linha do Tempo</option>
+            <option value="linedate">Série Temporal</option>
+            <option value="maptimeline">Mapa Temporal</option>
+            <option value="radarcalendar">Radar</option>
+
+        </select>-->
     <br>
     <hr>
     <label>Data Frame:</label><br>
@@ -43,4 +55,52 @@
         selectDFOption.value = reportData.dataFrames[i].name;
         document.getElementById("DataFrameAdd").appendChild(selectDFOption);
     }
+</script>
+<script>
+
+    var iconSelect;
+
+    
+
+        iconSelect = new IconSelect("my-icon-select",
+            {
+                'selectedIconWidth': 88,
+                'selectedIconHeight': 88,
+                'selectedBoxPadding': 5,
+                'iconsWidth': 88,
+                'iconsHeight': 88,
+                'boxIconSpace': 3,
+                'vectoralIconNumber': 6,
+                'horizontalIconNumber': 3
+            });
+
+        var icons = [];
+        icons.push({ 'iconFilePath': 'images/icons/bar.png', 'iconValue': 'bar' });
+        icons.push({ 'iconFilePath': 'images/icons/line.svg', 'iconValue': 'line' });
+        icons.push({ 'iconFilePath': 'images/icons/tree.svg', 'iconValue': 'tree' });
+        icons.push({ 'iconFilePath': 'images/icons/pie.jpg', 'iconValue': 'pie' });
+        icons.push({ 'iconFilePath': 'images/icons/bubble.png', 'iconValue': 'bubble' });
+        icons.push({ 'iconFilePath': 'images/icons/table.png', 'iconValue': 'table' });
+        icons.push({ 'iconFilePath': 'images/icons/map.png', 'iconValue': 'map' });
+        icons.push({ 'iconFilePath': 'images/icons/sankey.png', 'iconValue': 'sankey' });
+        icons.push({ 'iconFilePath': 'images/icons/org.jpg', 'iconValue': 'org' });
+        icons.push({ 'iconFilePath': 'images/icons/timeline.png', 'iconValue': 'timeline' });
+        icons.push({ 'iconFilePath': 'images/icons/linedate.svg', 'iconValue': 'linedate' });
+        icons.push({ 'iconFilePath': 'images/icons/maptimeline.png', 'iconValue': 'maptimeline' });
+        icons.push({ 'iconFilePath': 'images/icons/radarcalendar.png', 'iconValue': 'radarcalendar' });
+        icons.push({ 'iconFilePath': 'images/icons/pyramid.png', 'iconValue': 'pyramid' });
+        icons.push({ 'iconFilePath': 'images/icons/compare.png', 'iconValue': 'compare' });
+        icons.push({ 'iconFilePath': 'images/icons/gaugi.png', 'iconValue': 'gaugi' });
+        icons.push({ 'iconFilePath': 'images/icons/variance.png', 'iconValue': 'variance' });
+        icons.push({ 'iconFilePath': 'images/icons/waterfall.png', 'iconValue': 'waterfall' });
+
+
+        iconSelect.refresh(icons);
+
+        document.getElementById('my-icon-select').addEventListener('changed', function (e) {
+            document.getElementById("TipoAdd").value = iconSelect.getSelectedValue();
+        });
+
+ 
+
 </script>
