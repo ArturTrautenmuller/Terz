@@ -13,5 +13,6 @@ namespace Terz_Core
         public List<Indicator> Indicators { get; set; }
         public List<Filter> Filters { get; set; }
         public List<TextBlock> TextBlocks { get; set; }
+        public Style Style { get; set; }
     }
 }

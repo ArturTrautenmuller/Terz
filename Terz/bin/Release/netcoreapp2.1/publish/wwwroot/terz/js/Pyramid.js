@@ -22,7 +22,7 @@ function buildPyramidChart(graph) {
         var reducedDf = [];
 
 
-        dimensions.push(graph.dimensions[0].field);
+        dimensions.push(getUsingField(graph.dataFrameName, graph.dimensions[0].field));
         dimNames.push(graph.dimensions[0].name);
         
         measures.push(graph.measures[0].expresion);
@@ -110,6 +110,10 @@ function buildPyramidChart(graph) {
             return colorList[0];
            
         });
+        maleSeries.columns.template.events.on("hit", function (ev) {
+            var cValue = ev.target.dataItem._dataContext["age"];
+            filterFromGraph(graph.dataFrameName, dimensions[0], cValue);
+        }, this);
         maleSeries.columns.template.tooltipText = expressions[0] + ", " + dimNames[0] + " {categoryY}: {valueX} ({valueX.percent.formatNumber('#.0')}%)";
         //maleSeries.sequencedInterpolation = true;
 
@@ -144,6 +148,10 @@ function buildPyramidChart(graph) {
         femaleSeries.columns.template.tooltipText = expressions[1] + ", " + dimNames[0] + " {categoryY}: {valueX} ({valueX.percent.formatNumber('#.0')}%)";
         femaleSeries.dataFields.categoryY = "age";
         femaleSeries.interpolationDuration = 1000;
+        femaleSeries.columns.template.events.on("hit", function (ev) {
+            var cValue = ev.target.dataItem._dataContext["age"];
+            filterFromGraph(graph.dataFrameName, dimensions[0], cValue);
+        }, this);
         femaleSeries.columns.template.adapter.add("fill", function (fill, target) {
 
             return colorList[1];

@@ -21,7 +21,7 @@
         var dimNames = [];
         var reducedDf = [];
 
-        dimensions.push(graph.dimensions[0].field);
+        dimensions.push(getUsingField(graph.dataFrameName, graph.dimensions[0].field));
         dimNames.push(graph.dimensions[0].name);
 
 
@@ -85,6 +85,15 @@
         var series = chart.series.push(new am4charts.ColumnSeries());
         series.dataFields.valueY = expressions[0];
         series.dataFields.categoryX = dimNames[0];
+        series.columns.template.events.on("hit", function (ev) {
+            var cValue = ev.target.dataItem._dataContext[dimNames[0]];
+            filterFromGraph(graph.dataFrameName, dimensions[0], cValue);
+        }, this);
+        series.columns.template.adapter.add("fill", function (fill, target) {
+
+            return am4core.color(graph.measures[0].color);
+
+        });
 
         // Add series for showing variance arrows
         var series2 = chart.series.push(new am4charts.ColumnSeries());

@@ -1,4 +1,6 @@
-﻿function buildCompareChart(graph) {
+﻿
+var clickedObj;
+function buildCompareChart(graph) {
     am4core.ready(function () {
 
         // Themes begin
@@ -21,7 +23,7 @@
         var dimNames = [];
         var reducedDf = [];
 
-        dimensions.push(graph.dimensions[0].field);
+        dimensions.push(getUsingField(graph.dataFrameName, graph.dimensions[0].field));
         dimNames.push(graph.dimensions[0].name);
    
         measures.push(graph.measures[0].expresion);
@@ -105,6 +107,11 @@
         series.columns.template.column.cornerRadiusTopLeft = 10;
         series.columns.template.column.cornerRadiusTopRight = 10;
         series.columns.template.column.fillOpacity = 0.8;
+
+        series.columns.template.events.on("hit", function (ev) {
+            var cValue = ev.target.dataItem._dataContext[dimNames[0]];
+            filterFromGraph(graph.dataFrameName, dimensions[0], cValue);
+        }, this);
 
         // on hover, make corner radiuses bigger
         var hoverState = series.columns.template.column.states.create("hover");

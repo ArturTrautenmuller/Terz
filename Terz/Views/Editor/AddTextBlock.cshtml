@@ -1,12 +1,26 @@
 ﻿<label>Texto:</label><br>
-<textarea id="TextAdd"  class="form-control" style="width:250px"></textarea><br>
+<textarea id="TextAdd" class="form-control" style="width:250px"></textarea><br>
 <hr>
-<label>Largura:</label><br>
-<input class="form-control" style="width:250px" id="WidthAdd" type="text" value="170"><br>
-<label>Altura:</label><br>
-<input class="form-control" style="width:250px" id="HeightAdd" type="text" value="60"><br>
-<label>X:</label><br>
-<input id="XAdd" type="text" value="0" class="form-control" style="width:250px"><br>
-<label>Y:</label><br>
-<input id="YAdd" class="form-control" style="width:250px" type="text" value="0"><br>
+<div style="display:flex;width:250px">
+    <div style="width:45%">
+        <label>Largura:</label><br>
+        <input class="form-control" id="WidthAdd" type="number" step="1" min="1" value="400"><br>
+    </div>
+    <div style="width:45%;margin-left:5%">
+        <label>Altura:</label><br>
+        <input class="form-control" id="HeightAdd" type="number" step="1" min="1" value="400"><br>
+    </div>
+</div>
+
+<div style="display:flex;width:250px">
+    <div style="width:45%">
+        <label>X:</label><br>
+        <input class="form-control" id="XAdd" type="number" step="1" min="1" value="0"><br>
+    </div>
+    <div style="width:45%;margin-left:5%">
+        <label>Y:</label><br>
+        <input class="form-control" id="YAdd" type="number" step="1" min="1" value="0"><br>
+    </div>
+    <hr>
+</div>
 

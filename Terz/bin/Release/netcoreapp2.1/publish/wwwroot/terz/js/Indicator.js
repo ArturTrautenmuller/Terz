@@ -86,6 +86,9 @@
 
         indicatorDiv.appendChild(dataDiv);
         indicatorDiv.style.backgroundColor = indicator.style.backgroundColor;
+        if (indicator.navigateTo != null && indicator.navigateTo != "" && indicator.navigateTo != "0" && !window.location.href.includes('Editor')) {
+            indicatorDiv.setAttribute("onclick", "changeSheet('" + indicator.navigateTo + "')");
+        }
     
 
        

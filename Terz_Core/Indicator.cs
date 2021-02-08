@@ -11,6 +11,7 @@ namespace Terz_Core
         public List<string> DataFrameName { get; set; }
         public Measure Measure { get; set; }
         public string Icon { get; set; }
+        public string NavigateTo { get; set; }
 
     }
 }

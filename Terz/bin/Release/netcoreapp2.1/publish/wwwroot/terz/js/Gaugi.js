@@ -20,9 +20,9 @@
         var dimNames = [];
         var reducedDf = [];
 
-        dimensions.push(graph.dimensions[0].field);
+        dimensions.push(getUsingField(graph.dataFrameName, graph.dimensions[0].field));
         dimNames.push(graph.dimensions[0].name);
-        dimensions.push(graph.dimensions[1].field);
+        dimensions.push(getUsingField(graph.dataFrameName, graph.dimensions[1].field));
         dimNames.push(graph.dimensions[1].name);
 
         measures.push(graph.measures[0].expresion);

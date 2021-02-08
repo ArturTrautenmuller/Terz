@@ -26,5 +26,7 @@ namespace Terz_Core
         public string IconColor { get; set; }
         public string IconSize { get; set; }
 
+        public string ColorList { get; set; }
+
     }
 }

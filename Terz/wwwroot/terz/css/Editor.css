@@ -1,12 +1,25 @@
 ﻿#Sheet{
-    margin-bottom:30px;
-    width:80%;
-    float:left;
+   
+    width:100%;
+    
+    height:560px;
+    
 }
-#Settings{
-    width:18%;
-    float:right;
-    margin-right:20px;
+
+#SheetContainer {
+    margin-bottom: 30px;
+    width: 78%;
+    float: left;
+    height: 560px;
+    max-height:560px;
+  
+}
+
+#Settings {
+    width: 20%;
+    float: right;
+    margin-right: 20px;
+    overscroll-behavior: none;
 }
 
 .menuButton {
@@ -84,3 +97,24 @@
 select {
     font-family: 'FontAwesome', 'Second Font name';
 }
+
+
+/* width */
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }

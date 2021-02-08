@@ -36,31 +36,44 @@
     <select class="form-control" style="width:250px" id="DataFrameAdd"></select><br>
     <hr>
 
-    <label>Largura:</label><br>
-    <input class="form-control" style="width:250px" id="WidthAdd" type="text" value="400"><br>
-    <label>Altura:</label><br>
-    <input class="form-control" style="width:250px" id="HeightAdd" type="text" value="400"><br>
-    <label>X:</label><br>
-    <input class="form-control" style="width:250px" id="XAdd" type="text" value="0"><br>
-    <label>Y:</label><br>
-    <input class="form-control" style="width:250px" id="YAdd" type="text" value="0"><br>
-    <hr>
+    <div style="display:flex;width:250px">
+        <div style="width:45%">
+            <label>Largura:</label><br>
+            <input class="form-control" id="WidthAdd" type="number" step="1" min="1" value="400"><br>
+        </div>
+        <div style="width:45%;margin-left:5%">
+            <label>Altura:</label><br>
+            <input class="form-control" id="HeightAdd" type="number" step="1" min="1" value="400"><br>
+        </div>
+    </div>
 
-</div>
+    <div style="display:flex;width:250px">
+        <div style="width:45%">
+            <label>X:</label><br>
+            <input class="form-control"  id="XAdd" type="number" step="1" min="1" value="0"><br>
+        </div>
+        <div style="width:45%;margin-left:5%">
+            <label>Y:</label><br>
+            <input class="form-control"  id="YAdd" type="number" step="1" min="1" value="0"><br>
+        </div>
+        <hr>
+     </div>
 
-<script>
-    for (var i = 0; i < reportData.dataFrames.length; i++) {
-        var selectDFOption = document.createElement("option");
-        selectDFOption.innerHTML = reportData.dataFrames[i].name;
-        selectDFOption.value = reportData.dataFrames[i].name;
-        document.getElementById("DataFrameAdd").appendChild(selectDFOption);
-    }
-</script>
-<script>
+    </div>
 
-    var iconSelect;
+    <script>
+        for (var i = 0; i < reportData.dataFrames.length; i++) {
+            var selectDFOption = document.createElement("option");
+            selectDFOption.innerHTML = reportData.dataFrames[i].name;
+            selectDFOption.value = reportData.dataFrames[i].name;
+            document.getElementById("DataFrameAdd").appendChild(selectDFOption);
+        }
+    </script>
+    <script>
 
-    
+        var iconSelect;
+
+
 
         iconSelect = new IconSelect("my-icon-select",
             {
@@ -101,6 +114,6 @@
             document.getElementById("TipoAdd").value = iconSelect.getSelectedValue();
         });
 
- 
 
-</script>
+
+    </script>

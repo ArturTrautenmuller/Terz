@@ -132,6 +132,17 @@
 
     </div>
 </div>
+<script>
+
+    var defaultDocumentHeight = document.body.scrollHeight;
+    window.onscroll = function (oEvent) {
+        if (document.body.scrollHeight > defaultDocumentHeight) {
+            document.getElementById("Filters").style.marginTop = (window.scrollY) + "px";
+        }
+    }
+
+
+</script>
 
 <script>
     /* When the user clicks on the button,
@@ -445,8 +456,10 @@
 
             var cdf = alldfs[i];
             var pos = selections.findIndex(i => i.field == field && i.dataFrame == cdf);
-            selections[pos].value = [];
-            applySelections(cdf);
+            if (pos >= 0) {
+                selections[pos].value = [];
+                applySelections(cdf);
+            }
 
         }
 
@@ -455,8 +468,10 @@
             if (dfNames.length > 1 && dfNames.some(v => alldfs.indexOf(v) !== -1)) {
                 var cdf = AllDFS[i].name;
                 var pos = selections.findIndex(i => i.field == field && i.dataFrame == cdf);
-                selections[pos].value = [];
-                applySelections(cdf);
+                if (pos >= 0) {
+                    selections[pos].value = [];
+                    applySelections(cdf);
+                }
             }
         }
 
@@ -470,6 +485,12 @@
         reloadGraphs();
 
 
+    }
+
+    function filterFromGraph(df, field, value) {
+        clearFilterSelections(df.join('&'), field);
+        var filterString = df.join('&') + ',' + field + ',' + value;
+        filterValue(filterString);
     }
 
     function clearAllSelections() {

@@ -12,8 +12,8 @@ function buildMapTimeLineChart(graph) {
         var dimNames = [];
         var reducedDf = [];
 
-        dimensions.push(graph.dimensions[0].field);
-        dimensions.push(graph.dimensions[1].field);
+        dimensions.push(getUsingField(graph.dataFrameName, graph.dimensions[0].field));
+        dimensions.push(getUsingField(graph.dataFrameName, graph.dimensions[1].field));
         dimNames.push(graph.dimensions[0].name);
         dimNames.push(graph.dimensions[1].name);
 
@@ -299,7 +299,11 @@ function buildMapTimeLineChart(graph) {
             polygonTemplate.setStateOnChildren = true;
             polygonTemplate.tooltipPosition = "fixed";
 
-            polygonTemplate.events.on("hit", handleCountryHit);
+          //  polygonTemplate.events.on("hit", handleCountryHit);
+            polygonTemplate.events.on("hit", function (ev) {
+                var cValue = ev.target.dataItem._dataContext.id;
+                filterFromGraph(graph.dataFrameName, dimensions[1], cValue);
+            }, this);
             polygonTemplate.events.on("over", handleCountryOver);
             polygonTemplate.events.on("out", handleCountryOut);
 

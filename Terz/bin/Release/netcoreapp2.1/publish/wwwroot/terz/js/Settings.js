@@ -95,7 +95,31 @@
     yExp.value = textBlock.style.y;
     document.getElementById("Settings").appendChild(yExp);
     document.getElementById("Settings").appendChild(document.createElement("br"));
+    
+
+    //Cor de Fundo
+
+    var bcLabel = document.createElement("label");
+    bcLabel.innerHTML = "Cor de Fundo:";
+    document.getElementById("Settings").appendChild(bcLabel);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    var bcExp = document.createElement("input");
+    bcExp.setAttribute("id", "BackgroundColor");
+    bcExp.setAttribute("type", "color");
+    bcExp.setAttribute("onchange", "updateTextBlockConfig('" + id + "')");
+    bcExp.setAttribute("class", "form-control");
+    if (textBlock.style.backgroundColor == null || textBlock.style.backgroundColor == "") {
+        bcExp.value = "#ffffff";
+    }
+    else {
+        bcExp.value = textBlock.style.backgroundColor;
+    }
+    
+    document.getElementById("Settings").appendChild(bcExp);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
     document.getElementById("Settings").appendChild(document.createElement("hr"));
+
     var deleteButton = document.createElement("button");
     deleteButton.innerHTML = "Remover";
     deleteButton.setAttribute("class", "btn btn-block btn-danger btn-sm");
@@ -506,6 +530,29 @@ function buildIndicatorSettings(id) {
     borrExp.setAttribute("class", "form-control");
     borrExp.value = indicator.style.borderRadius;
     layoutLi.appendChild(borrExp);
+    layoutLi.appendChild(document.createElement("br"));
+
+    // Navigation
+    var navLabel = document.createElement("label");
+    navLabel.innerHTML = "Navegar Para:";
+    layoutLi.appendChild(navLabel);
+    layoutLi.appendChild(document.createElement("br"));
+    var navExp = document.createElement("input");
+    navExp.setAttribute("id", "Navigation");
+    navExp.setAttribute("type", "number");
+    navExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
+    navExp.setAttribute("class", "form-control");
+    if (indicator.navigateTo == null || indicator.navigateTo == "") {
+        navExp.value = "0";
+    }
+    else {
+        navExp.value = indicator.navigateTo;
+    }
+    navExp.step = "1";
+    navExp.min = "0";
+    navExp.max = "128";
+    
+    layoutLi.appendChild(navExp);
     layoutLi.appendChild(document.createElement("br"));
 
     layoutDiv.appendChild(layoutLi);
@@ -1017,6 +1064,48 @@ function buildGraphSettings(id,openTab) {
     yExp.value = graph.style.y;
     LayoutLi.appendChild(yExp);
     LayoutLi.appendChild(document.createElement("br"));
+
+    // BackgroundColor
+    var bcLabel = document.createElement("label");
+    bcLabel.innerHTML = "Cor de Fundo:";
+    LayoutLi.appendChild(bcLabel);
+    LayoutLi.appendChild(document.createElement("br"));
+    var bcExp = document.createElement("input");
+    bcExp.setAttribute("id", "BackgroundColor");
+    bcExp.setAttribute("type", "color");
+    bcExp.setAttribute("onchange", "updateGraphConfig('" + id + "')");
+    bcExp.setAttribute("class", "form-control");
+    if (graph.style.backgroundColor == null || graph.style.backgroundColor == "") {
+        bcExp.value = "#ffffff";
+    }
+    else {
+        bcExp.value = graph.style.backgroundColor;
+    }
+    
+    LayoutLi.appendChild(bcExp);
+    LayoutLi.appendChild(document.createElement("br"));
+
+    // ColorList
+    var clLabel = document.createElement("label");
+    clLabel.innerHTML = "Palheta de Cores:";
+    LayoutLi.appendChild(clLabel);
+    LayoutLi.appendChild(document.createElement("br"));
+    var clExp = document.createElement("input");
+    clExp.setAttribute("id", "ColorList");
+    clExp.setAttribute("type", "text");
+    clExp.setAttribute("onchange", "updateGraphConfig('" + id + "')");
+    clExp.setAttribute("class", "form-control");
+    if (graph.style.colorList == null) {
+        clExp.value = "";
+    }
+    else {
+        clExp.value = graph.style.colorList;
+    }
+    
+    LayoutLi.appendChild(clExp);
+    LayoutLi.appendChild(document.createElement("br"));
+
+
     if (graph.objectType == 'map') {
         var regionLabel = document.createElement("label");
         regionLabel.innerHTML = "Região:";
@@ -1274,6 +1363,30 @@ function buildSheetSettings(id) {
     nameExp.value = sheet.name;
     document.getElementById("Settings").appendChild(nameExp);
     document.getElementById("Settings").appendChild(document.createElement("br"));
+
+    // BackgroundColor
+    var bcLabel = document.createElement("label");
+    bcLabel.innerHTML = "Cor de Fundo:";
+    document.getElementById("Settings").appendChild(bcLabel);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    var bcExp = document.createElement("input");
+    bcExp.setAttribute("id", "BackgroundColor");
+    bcExp.setAttribute("type", "color");
+    bcExp.setAttribute("onchange", "updateSheetConfig('" + id + "')");
+    bcExp.setAttribute("class", "form-control");
+    if (sheet.style == null) {
+        sheet.style = {};
+    }
+    if (sheet.style.backgroundColor == null || sheet.style.backgroundColor == "") {
+        bcExp.value = "#ffffff";
+    }
+    else {
+        bcExp.value = sheet.style.backgroundColor;
+    }
+
+    document.getElementById("Settings").appendChild(bcExp);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
     var deleteButton = document.createElement("button");
     deleteButton.setAttribute("class", "btn btn-block btn-danger btn-sm");
     deleteButton.setAttribute("onclick", "deleteSheet('" + id + "')");

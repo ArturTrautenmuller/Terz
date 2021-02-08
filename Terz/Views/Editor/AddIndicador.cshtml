@@ -1,28 +1,40 @@
 ﻿<label>Data Frame:</label><br>
-<select id="DataFrameAdd" class="form-control" style="width:250px">
-    
-</select><br>
+<select id="DataFrameAdd" class="form-control" style="width:250px"></select><br>
 <hr>
 <label>Nome da Métrica:</label><br>
-<input id="MeasureNameAdd" type="text" class="form-control" style="width:250px" ><br>
+<input id="MeasureNameAdd" type="text" class="form-control" style="width:250px"><br>
 <label>Expressão:</label><br>
-<input id="ExpressionAdd" type="text" class="form-control" style="width:250px" ><br>
+<input id="ExpressionAdd" type="text" class="form-control" style="width:250px"><br>
 <hr>
-<label>Largura:</label><br>
-<input class="form-control" style="width:250px" id="WidthAdd" type="text" value="170" ><br>
-<label>Altura:</label><br>
-<input class="form-control" style="width:250px" id="HeightAdd" type="text" value="60"><br>
-<label>X:</label><br>
-<input id="XAdd" type="text" value="0" class="form-control" style="width:250px"><br>
-<label>Y:</label><br>
-<input id="YAdd" class="form-control" style="width:250px" type="text" value="0"><br>
+<div style="display:flex;width:250px">
+    <div style="width:45%">
+        <label>Largura:</label><br>
+        <input class="form-control" id="WidthAdd" type="number" step="1" min="1" value="400"><br>
+    </div>
+    <div style="width:45%;margin-left:5%">
+        <label>Altura:</label><br>
+        <input class="form-control" id="HeightAdd" type="number" step="1" min="1" value="400"><br>
+    </div>
+</div>
+
+<div style="display:flex;width:250px">
+    <div style="width:45%">
+        <label>X:</label><br>
+        <input class="form-control" id="XAdd" type="number" step="1" min="1" value="0"><br>
+    </div>
+    <div style="width:45%;margin-left:5%">
+        <label>Y:</label><br>
+        <input class="form-control" id="YAdd" type="number" step="1" min="1" value="0"><br>
+    </div>
+    <hr>
+</div>
 <hr>
 <label>Cor de Fundo:</label><br>
 <input id="BackgroundColorAdd" type="color" value="#ff0000" class="form-control" style="width:250px"><br>
 <label>Cor de Texto:</label><br>
 <input id="TextColorAdd" type="color" value="#ffffff" class="form-control" style="width:250px"><br>
 <label>Tamanho da Fonte:</label><br>
-<input id="FontSizeAdd" type="text" value="18" class="form-control" style="width:250px" ><br>
+<input id="FontSizeAdd" type="text" value="18" class="form-control" style="width:250px"><br>
 
 <script>
     for (var i = 0; i < reportData.dataFrames.length; i++) {

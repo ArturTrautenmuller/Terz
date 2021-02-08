@@ -24,6 +24,10 @@
         textBlockDiv.style.borderBottomRightRadius = "7px";
         textBlockDiv.style.paddingLeft = "5px";
 
+        if (textBlock.style.backgroundColor != null && textBlock.style.backgroundColor != "") {
+            textBlockDiv.style.backgroundColor = textBlock.style.backgroundColor;
+        }
+
         textBlockDiv.setAttribute("id", "txt" + textBlock.id);
         textBlockDiv.setAttribute("class", "resize-drag");
 

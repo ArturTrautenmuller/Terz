@@ -8,6 +8,19 @@
     else {
         gLenght = graphs.length;
     }
+    if (sheet.style != null) {
+        if (sheet.style.backgroundColor != null) {
+            document.getElementsByTagName("body")[0].style.backgroundColor = sheet.style.backgroundColor;
+        }
+        else {
+            document.getElementsByTagName("body")[0].style.backgroundColor = "#ffffff";
+        }
+    }
+   
+    else {
+        document.getElementsByTagName("body")[0].style.backgroundColor = "#ffffff";
+    }
+    
 
     for (var i = 0; i < gLenght; i++) {
         var graph = graphs[i];
@@ -40,8 +53,10 @@
         if (['bubble', 'sankey', 'org','timeline'].includes(graph.objectType)) {
             graphDiv.style.height = "90%";
         }
-
-        
+       /* if (['bar', 'pie', 'line', 'network', 'table', 'bubble', 'sankey', 'timeline', 'linedate', 'pyramid', 'compare', 'gaugi', 'variance', 'waterfall'].includes(graph.objectType)) {
+           
+        }*/
+        graphContainer.style.backgroundColor = graph.style.backgroundColor;
 
         graphContainer.appendChild(graphDiv);
 
@@ -100,7 +115,7 @@ function buildBarChart(graph) {
     var measureNames = [];
     var expressions = [];
     var dimensions = [];
-    dimensions.push(graph.dimensions[0].field);
+    dimensions.push(getUsingField(graph.dataFrameName, graph.dimensions[0].field));
     for (var i = 0; i < graph.measures.length; i++) {
         expressions.push(graph.measures[i].expresion);
     }
@@ -364,6 +379,9 @@ function buildBarChart(graph) {
     //    .data(data)
         .select("#g" + graph.id)
         .groupPadding(40)
+        .on("click", function (d) {
+            filterFromGraph(graph.dataFrameName, getUsingField(graph.dataFrameName, graph.dimensions[0].field), d.x);
+        })
         .stacked(graph.style.stack)
         .render();
     
@@ -390,7 +408,7 @@ function buildBubbleChart(graph) {
         measureNames.push(graph.measures[i].name);
     }
     for (var i = 0; i < graph.dimensions.length; i++) {
-        dimensions.push(graph.dimensions[i].field);
+        dimensions.push(getUsingField(graph.dataFrameName, graph.dimensions[i].field));
         dimNames.push(graph.dimensions[i].name);
     }
 
@@ -462,7 +480,10 @@ function buildBubbleChart(graph) {
    
     function drawSeriesChart() {
 
-
+        var backgroundColor = 'white';
+        if (graph.style.backgroundColor != null && graph.style.backgroundColor != "") {
+            backgroundColor = graph.style.backgroundColor;
+        }
 
         var data = google.visualization.arrayToDataTable(dataTable);
 
@@ -470,7 +491,9 @@ function buildBubbleChart(graph) {
             title: graph.title,
             hAxis: { title: measureNames[0] },
             vAxis: { title: measureNames[1] },
-            bubble: { textStyle: { fontSize: 11 } }
+            bubble: { textStyle: { fontSize: 11 } },
+            backgroundColor: backgroundColor
+
         };
 
         var chart = new google.visualization.BubbleChart(document.getElementById("g" + graph.id));
@@ -486,13 +509,13 @@ function buildTimeLineChart(graph) {
     var measureNames = [];
     var dimNames = [];
 
-    dimensions.push(graph.dimensions[0].field);
+    dimensions.push(getUsingField(graph.dataFrameName, graph.dimensions[0].field));
     dimNames.push(graph.dimensions[0].name);
-    dimensions.push(graph.dimensions[1].field);
+    dimensions.push(getUsingField(graph.dataFrameName, graph.dimensions[1].field));
     dimNames.push(graph.dimensions[1].name);
-    dimensions.push(graph.dimensions[2].field);
+    dimensions.push(getUsingField(graph.dataFrameName, graph.dimensions[2].field));
     dimNames.push(graph.dimensions[2].name);
-    dimensions.push(graph.dimensions[3].field);
+    dimensions.push(getUsingField(graph.dataFrameName, graph.dimensions[3].field));
     dimNames.push(graph.dimensions[3].name);
 
     expressions.push("0");
@@ -530,7 +553,12 @@ function buildTimeLineChart(graph) {
         dataTable.addColumn({ type: 'date', id: dimNames[3] });
         dataTable.addRows(dataTableC);
 
-        chart.draw(dataTable);
+        var backgroundColor = 'white';
+        if (graph.style.backgroundColor != null && graph.style.backgroundColor != "") {
+            backgroundColor = graph.style.backgroundColor;
+        }
+
+        chart.draw(dataTable, { backgroundColor: backgroundColor });
     }
 }
 
@@ -543,9 +571,9 @@ function buildOrgChart(graph) {
     var measureNames = [];
     var dimNames = [];
 
-    dimensions.push(graph.dimensions[0].field);
+    dimensions.push(getUsingField(graph.dataFrameName, graph.dimensions[0].field));
     dimNames.push(graph.dimensions[0].name);
-    dimensions.push(graph.dimensions[1].field);
+    dimensions.push(getUsingField(graph.dataFrameName, graph.dimensions[1].field));
     dimNames.push(graph.dimensions[1].name);
 
     if (graph.measures.length > 0) {
@@ -614,11 +642,15 @@ function buildOrgChart(graph) {
 
         // Create the chart.
         var chart = new google.visualization.OrgChart(document.getElementById("g" + graph.id));
+
+        var backgroundColor = 'white';
+        if (graph.style.backgroundColor != null && graph.style.backgroundColor != "") {
+            backgroundColor = graph.style.backgroundColor;
+        }
         // Draw the chart, setting the allowHtml option to true for the tooltips.
-        chart.draw(data, { 'allowHtml': true });
+        chart.draw(data, { 'allowHtml': true, backgroundColor: backgroundColor });
     }
 }
-
 
 function buildMapChart(graph) {
     google.charts.load('current', {
@@ -631,7 +663,7 @@ function buildMapChart(graph) {
     var dimensions = [];
     var measureNames = [];
     var dimNames = [];
-    dimensions.push(graph.dimensions[0].field);
+    dimensions.push(getUsingField(graph.dataFrameName, graph.dimensions[0].field));
     dimNames.push(graph.dimensions[0].name);
     expressions.push(graph.measures[0].expresion);
     measureNames.push(graph.measures[0].name);
@@ -683,18 +715,57 @@ function buildMapChart(graph) {
 
     google.charts.setOnLoadCallback(drawRegionsMap);
 
+    function selectHandler() {
+        alert(id);
+        var selection = chart.getSelection();
+        var message = '';
+        for (var i = 0; i < selection.length; i++) {
+            var item = selection[i];
+            if (item.row != null && item.column != null) {
+                var str = data.getFormattedValue(item.row, item.column);
+                message += '{row:' + item.row + ',column:' + item.column + '} = ' + str + '\n';
+            } else if (item.row != null) {
+                var str = data.getFormattedValue(item.row, 0);
+                message += '{row:' + item.row + ', column:none}; value (col 0) = ' + str + '\n';
+            } else if (item.column != null) {
+                var str = data.getFormattedValue(0, item.column);
+                message += '{row:none, column:' + item.column + '}; value (row 0) = ' + str + '\n';
+            }
+        }
+        if (message == '') {
+            message = 'nothing';
+        }
+        alert('You selected ' + message);
+    }
+
     function drawRegionsMap() {
         var data = google.visualization.arrayToDataTable(objData);
 
-        var options = {};
+        var colors = ['green'];
+        if (graph.measures[0].color != null && graph.measures[0].color != "") {
+            colors[0] = graph.measures[0].color;
+        }
+        var backgroundColor = 'white';
+        if (graph.style.backgroundColor != null && graph.style.backgroundColor != "") {
+            backgroundColor = graph.style.backgroundColor;
+        }
+
+        var options = {
+            colorAxis: { colors: colors },
+            backgroundColor: backgroundColor
+        };
 
         if (graph.style.region != "" && graph.style.region != null) {
             options["region"] = graph.style.region;
         }
 
+
+
         var chart = new google.visualization.GeoChart(document.getElementById("g" + graph.id));
 
+        google.visualization.events.addListener(chart, 'select', selectHandler);
         chart.draw(data, options);
+        
     }
 }
 
@@ -707,10 +778,10 @@ function buildSankeyChart(graph) {
     var measureNames = [];
     var dimNames = [];
 
-    dimensions.push(graph.dimensions[0].field);
+    dimensions.push(getUsingField(graph.dataFrameName, graph.dimensions[0].field));
     dimNames.push(graph.dimensions[0].name);
 
-    dimensions.push(graph.dimensions[1].field);
+    dimensions.push(getUsingField(graph.dataFrameName, graph.dimensions[1].field));
     dimNames.push(graph.dimensions[1].name);
 
     expressions.push(graph.measures[0].expresion);
@@ -758,10 +829,13 @@ function buildSankeyChart(graph) {
         data.addColumn('string', dimNames[1]);
         data.addColumn('number', measureNames[0]);
         data.addRows(dataTable);
-
+        var backgroundColor = 'white';
+        if (graph.style.backgroundColor != null && graph.style.backgroundColor != "") {
+            backgroundColor = graph.style.backgroundColor;
+        }
         // Sets chart options.
         var options = {
-           
+            backgroundColor: backgroundColor
         };
 
         // Instantiates and draws our chart, passing in some options.
@@ -783,8 +857,10 @@ function buildPieChart(graph){
     var data = [];
     var expressions = [];
     var dimensions = [];
+    var dimNames = [];
     var measureNames = [];
-    dimensions.push(graph.dimensions[0].field);
+    dimensions.push(getUsingField(graph.dataFrameName, graph.dimensions[0].field));
+    dimNames.push(graph.dimensions[0].name);
    
     expressions.push(graph.measures[0].expresion);
     measureNames.push(graph.measures[0].name);
@@ -821,7 +897,22 @@ function buildPieChart(graph){
         }
     }
 
+    var colorList = ['#2323FA', '#E62F19', '#FAEA67', '#14E34E', '#8CA3FF'];
+    if (graph.style.colorList != null && graph.style.colorList != "") {
+        var colorsGraph = graph.style.colorList.split(',');
+        colorList = colorsGraph.concat(colorList);
+    }
+
+
+
+    var colorDim = {};
+    var cIndex = 0;
+
     for (var i = 1; i < objData.length; i++) {
+        if (colorDim[objData[i][0]] == null) {
+            colorDim[objData[i][0]] = colorList[(cIndex % colorList.length)];
+            cIndex++;
+        }
         var row = {};
         row[dimensions[0]] = objData[i][0];
         row[measureNames[0]] = objData[i][1];
@@ -832,6 +923,11 @@ function buildPieChart(graph){
         .config({
             data: data,
             groupBy: dimensions[0],
+            shapeConfig: {
+                fill: function (d) {
+                    return colorDim[d[dimensions[0]]];
+                }
+            },
             value: function (d) {
                 return d[measureNames[0]];
             },
@@ -845,6 +941,9 @@ function buildPieChart(graph){
             }
         })
         .select("#g" + graph.id)
+        .on("click", function (d) {
+            filterFromGraph(graph.dataFrameName, getUsingField(graph.dataFrameName, graph.dimensions[0].field), d[dimensions[0]]);
+        })
         .render();
 }
 var dadosLine;
@@ -861,7 +960,7 @@ function buildLineDateChart(graph) {
         var expressions = [];
         var dimensions = [];
         var measureNames = [];
-        dimensions.push(graph.dimensions[0].field);
+        dimensions.push(getUsingField(graph.dataFrameName, graph.dimensions[0].field));
 
         expressions.push(graph.measures[0].expresion);
         measureNames.push(graph.measures[0].name);
@@ -917,7 +1016,11 @@ function buildLineDateChart(graph) {
         var series = chart.series.push(new am4charts.LineSeries());
         series.dataFields.valueY = "value";
         series.dataFields.dateX = "date";
-        series.tooltipText = "{value}"
+        series.tooltipText = "{value}";
+        if (graph.measures[0].color != null && graph.measures[0].color != "") {
+            series.propertyFields.stroke = am4core.color(graph.measures[0].color);
+            series.propertyFields.fill = am4core.color(graph.measures[0].color);
+        }
 
         series.tooltip.pointerOrientation = "vertical";
 
@@ -936,7 +1039,7 @@ function buildLineChart(graph) {
     var measureNames = [];
     var expressions = [];
     var dimensions = [];
-    dimensions.push(graph.dimensions[0].field);
+    dimensions.push(getUsingField(graph.dataFrameName, graph.dimensions[0].field));
     for (var i = 0; i < graph.measures.length; i++) {
         expressions.push(graph.measures[i].expresion);
     }
@@ -1164,9 +1267,12 @@ function buildLineChart(graph) {
         })
         //    .data(data)
         .select("#g" + graph.id)
+        .on("click", function (d) {
+            filterFromGraph(graph.dataFrameName, getUsingField(graph.dataFrameName, graph.dimensions[0].field), d.x);
+        })
         .render();
 }
-
+var cdim;
 function buildTreeMap(graph) {
     var data = [];
     var measureNames = [];
@@ -1176,7 +1282,7 @@ function buildTreeMap(graph) {
     expressions.push(graph.measures[0].expresion);
     measureNames.push(graph.measures[0].name);
     for (var i = 0; i < graph.dimensions.length; i++) {
-        dimensions.push(graph.dimensions[i].field);
+        dimensions.push(getUsingField(graph.dataFrameName, graph.dimensions[i].field));
         dimNames.push(graph.dimensions[i].name);
     }
     
@@ -1214,7 +1320,23 @@ function buildTreeMap(graph) {
     }
    
     //{"Group": "Store", "Sub-Group": "Convenience Store", "Number of Stores": 100, year: 2018},
+    var colorList = ['#2323FA', '#E62F19', '#FAEA67', '#14E34E', '#8CA3FF'];
+    if (graph.style.colorList != null && graph.style.colorList != "") {
+        var colorsGraph = graph.style.colorList.split(',');
+        colorList = colorsGraph.concat(colorList);
+    }
+
+
+
+    var colorDim = {};
+    var cIndex = 0;
     for (var i = 1; i < objData.length; i++) {
+        if (colorDim[objData[i][0]] == null) {
+            colorDim[objData[i][0]] = colorList[(cIndex % colorList.length)];
+            cIndex++;
+        }
+
+
         var obj = {};
         for (var j = 0; j < dimNames.length; j++) {
             obj[dimNames[j]] = objData[i][j];
@@ -1222,10 +1344,17 @@ function buildTreeMap(graph) {
         obj[measureNames[0]] = objData[i][objData[i].length - 1];
         data.push(obj);
     }
+
+    cdim = colorDim;
     new d3plus.Treemap()
         .config({
             data: data,
             groupBy: dimNames,
+            shapeConfig: {
+                fill: function (d) {
+                    return colorDim[d[dimNames[0]]];
+                }
+            },
             sum: function (d) {
                 return d[measureNames[0]];
             },
@@ -1238,6 +1367,9 @@ function buildTreeMap(graph) {
           //  tile: d3.treemapDice
         })
         .select("#g" + graph.id)
+        .on("click", function (d) {
+            filterFromGraph(graph.dataFrameName, getUsingField(graph.dataFrameName, graph.dimensions[graph.dimensions.length - 1].field), d[dimNames[dimNames.length - 1]]);
+        })
         .render();
   
 
@@ -1251,7 +1383,7 @@ function buildTable(graph) {
     var dimNames = [];
     
     for (var i = 0; i < graph.dimensions.length; i++) {
-        dimensions.push(graph.dimensions[i].field);
+        dimensions.push(getUsingField(graph.dataFrameName, graph.dimensions[i].field));
         dimNames.push(graph.dimensions[i].name);
     }
 
@@ -1335,6 +1467,8 @@ function buildTable(graph) {
             var td = document.createElement("td");
             if (j < dimensions.length) {
                 td.appendChild(document.createTextNode(objData[i][j]));
+                td.setAttribute("onclick", "filterFromGraph(['" + graph.dataFrameName.join("','") + "'],'" + getUsingField(graph.dataFrameName, graph.dimensions[j].field) + "','" + objData[i][j] + "')");
+              //  td.setAttribute("onclick", "filterFromGraph(['\'' + graph.dataFrameName.split('\',\'') + '\''],'" + getUsingField(graph.dataFrameName, graph.dimensions[j].field) + "','" + objData[i][j] + "')");
             }
             else {
                
@@ -1376,5 +1510,34 @@ function buildTable(graph) {
        
     });
 
+
+}
+
+
+function getUsingField(df, field) {
+    try {
+        var fieldList = field.split('->');
+        for (var i = 0; i < fieldList.length; i++) {
+            if (i == fieldList.length - 1) {
+                return fieldList[i];
+            }
+            var tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == df.join(",") })[0].table));
+            var values = [];
+            var pos = tempDf[0].indexOf(fieldList[i]);
+            for (var j = 1; j < tempDf.length; j++) {
+                values.push(tempDf[j][pos]);
+               
+            }
+
+            var distinctValues = Array.from(new Set(values));
+            if (distinctValues.length > 1) {
+                return fieldList[i];
+            }
+
+        }
+    }
+    catch (err) {
+        return field.split('->')[0];
+    }
 
 }
