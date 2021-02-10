@@ -160,58 +160,94 @@
             <!-- /.sidebar -->
         </aside>
         <div class="content-wrapper" id="Conteudo" style="padding-left:10px">
-            <button class="ButtonNovo" onclick="novoRelatorio()"><i class="fas fa-plus"></i> Novo Relatório</button>
-            <button class="ButtonNovo" onclick="importarRelatorio()"><i class="fas fa-upload"></i> Importar Relatório</button>
-
-            @foreach (Terz_DataBaseLayer.Report report in Model.Usuario.Reports)
-            {
-            <div class="ReportDiv">
-
-
-                @if (report.Imagem == "" || report.Imagem == null)
-                {
-                    <img onclick="EditReport('@report.Id')" width="130" height="100" class="FotoPerfil" src="~/terz/images/app.png" />
-                }
-                else
-                {
-                    <img onclick="EditReport('@report.Id')" width="130" height="100" class="FotoPerfil" src="@report.Imagem" />
-                }
-                <label style="width:500px" class="LabelDesc">@report.Titulo</label>
-                
-                @if (report.Ativo == 1)
-                {
-                    <label style="margin-left:200px; font-size:26px"><a href="#" onclick="desativarRelatorio(@report.Id)"><i class="fas fa-toggle-on"></i></a></label>
-                }
-                else
-                {
-                    <label style="margin-left:200px; font-size:26px"><a href="#" onclick="ativarRelatorio(@report.Id)"><i class="fas fa-toggle-off"></i></a></label>
-                }
-
-                
-
-                <div class="dropdown">
-                    <button onclick="dropdown('@report.Id')" class="dropbtn"><i class="fas fa-ellipsis-v"></i></button>
-                    <div id="links-@report.Id" class="dropdown-content">
-                        <a href="../Editor?id=@report.Id"><i class="fa fa-edit"></i> Editor</a>
-                        <a href="../DataManager?id=@report.Id"><i class="fas fa-table"></i> Gerenciador De Dados </a>
-                        <a href="../Report?id=@report.Id"><i class="fas fa-eye"></i> Visualizar Aplicativo</a>
-                        <a href="../QueryEditor?id=@report.Id"><i class="fa fa-edit"></i> Editor de Consulta</a>
-                        <a href="../Query?id=@report.Id"><i class="fas fa-eye"></i> Visualizar Consulta</a>
-                        <a href="#" onclick="GerenciarAcesso(@report.Id)"><i class="fas fa-shield-alt"></i> Gerenciar Acessos</a>
-                        <a href="../User/ExportApp?id=@report.Id"><i class="fas fa-download"></i> Download</a>
-                        <a href="#" onclick="DeleteReport(@report.Id)"><i class="fas fa-trash"></i> Remover</a>
+            <div style="display:flex">
+                <button class="ButtonNovo" onclick="novoRelatorio()"><i class="fas fa-plus"></i> Novo Relatório</button>
+                <button class="ButtonNovo" onclick="importarRelatorio()"><i class="fas fa-upload"></i> Importar Relatório</button>
+                <div style="width:230px;margin-left:300px;margin-top:10px" class="input-group input-group-sm">
+                    <input onchange="pesquisar()" style="height:30px" id="pesquisarInput" class="form-control form-control-navbar" type="search" placeholder="Pesquisar" aria-label="Search">
+                    <div style="height:30px" class="input-group-append">
+                        <button onclick="pesquisar()" style="font-size:17px" class="btn btn-navbar">
+                            <i class="fas fa-search"></i>
+                        </button>
                     </div>
                 </div>
 
-
             </div>
-            }
 
+            @{
+                int l = 0;
+            }
+            @foreach (Terz_DataBaseLayer.Report report in Model.Usuario.Reports)
+            {
+                <div name="reportList" class="ReportDiv">
+
+                    @{l++;}
+                    @if (report.Imagem == "" || report.Imagem == null)
+                    {
+                        <img onclick="EditReport('@report.Id')" width="130" height="100" class="FotoPerfil" src="~/terz/images/app.png" />
+                    }
+                    else
+                    {
+                        <img onclick="EditReport('@report.Id')" width="130" height="100" class="FotoPerfil" src="@report.Imagem" />
+                    }
+                    <label style="width:500px" class="LabelDesc">@report.Titulo</label>
+
+                    @if (report.Ativo == 1)
+                    {
+                        <label style="margin-left:200px; font-size:26px"><a href="#" onclick="desativarRelatorio(@report.Id)"><i class="fas fa-toggle-on"></i></a></label>
+                    }
+                    else
+                    {
+                        <label style="margin-left:200px; font-size:26px"><a href="#" onclick="ativarRelatorio(@report.Id)"><i class="fas fa-toggle-off"></i></a></label>
+                    }
+
+
+
+                    <div class="dropdown">
+                        <button onclick="dropdown('@report.Id')" class="dropbtn"><i class="fas fa-ellipsis-v"></i></button>
+                        <div id="links-@report.Id" class="dropdown-content">
+                            <a href="../Editor?id=@report.Id"><i class="fa fa-edit"></i> Editor</a>
+                            <a href="../DataManager?id=@report.Id"><i class="fas fa-table"></i> Gerenciador De Dados </a>
+                            <a href="../Report?id=@report.Id"><i class="fas fa-eye"></i> Visualizar Aplicativo</a>
+                            <a href="../QueryEditor?id=@report.Id"><i class="fa fa-edit"></i> Editor de Consulta</a>
+                            <a href="../Query?id=@report.Id"><i class="fas fa-eye"></i> Visualizar Consulta</a>
+                            <a href="#" onclick="GerenciarAcesso(@report.Id)"><i class="fas fa-shield-alt"></i> Gerenciar Acessos</a>
+                            <a href="../User/ExportApp?id=@report.Id"><i class="fas fa-download"></i> Download</a>
+                            <a href="#" onclick="DeleteReport(@report.Id)"><i class="fas fa-trash"></i> Remover</a>
+                        </div>
+                    </div>
+
+
+                </div>
+            }
+           
 
 
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+            <script>
+                function pesquisar() {
+                    var search = document.getElementById("pesquisarInput").value;
+                    var r_list = document.getElementsByName("reportList");
+                    if (search == "") {
+                        for (var i = 0; i < r_list.length; i++) {
+                            r_list[i].style.display = "block";
+                        }
+                    }
+                    else {
+                        for (var i = 0; i < r_list.length; i++) {
+                            if (r_list[i].childNodes[3].innerHTML.toLowerCase().includes(search.toLowerCase())) {
+                                r_list[i].style.display = "block";
+                            }
+                            else {
+                                r_list[i].style.display = "none";
+                            }
+                        }
+                       // document.getElementsByName("reportList")[0].childNodes[3].innerHTML
+                    }
+                }
+            </script>
             <script>
 
                 function GerenciarAcesso(id) {
@@ -241,7 +277,7 @@
                 }
 
                 function dropdown(id) {
-                    document.getElementById("links-"+id).classList.toggle("show");
+                    document.getElementById("links-" + id).classList.toggle("show");
                 }
 
                 // Close the dropdown if the user clicks outside of it
@@ -334,7 +370,7 @@
                                 async: true,
 
                                 success: function (data) {
-                                    
+
                                     location.reload();
 
                                 },

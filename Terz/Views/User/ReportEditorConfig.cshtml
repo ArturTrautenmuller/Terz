@@ -19,8 +19,8 @@
             color: lightseagreen;
         }
 </style>
-<label>Report Name</label><br />
-<input type="text" id="appName" value="@Model.Titulo" />
+<label>Nome do Relatório</label><br />
+<input class="form-control" type="text" id="appName" value="@Model.Titulo" />
 <input  type="file" id="ImagemApp" style="visibility:hidden; display:none" onchange="readURL(this);"><br /><br />
 @if (Model.Imagem == "" || Model.Imagem == null)
 {

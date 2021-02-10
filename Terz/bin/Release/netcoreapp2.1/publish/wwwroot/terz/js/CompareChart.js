@@ -11,6 +11,11 @@ function buildCompareChart(graph) {
         var chart = am4core.create("g" + graph.id, am4charts.XYChart);
         chart.scrollbarX = new am4core.Scrollbar();
 
+
+ 
+
+
+
         // Add data
         chart.data = [];
 
@@ -80,6 +85,129 @@ function buildCompareChart(graph) {
             }
 
         }
+
+        var sort;
+        if (graph.sort.axis == 'mea') {
+
+            if (graph.sort.option == 'crescente') {
+                if (graph.sort.type == 'numerico') {
+                    sort = function (a, b) {
+
+                        return a[expressions[0]] - b[expressions[0]];
+
+                    };
+                }
+            }
+            if (graph.sort.option == 'decrescente') {
+                if (graph.sort.type == 'numerico') {
+                    sort = function (a, b) {
+
+                        return b[expressions[0]] - a[expressions[0]];
+
+                    };
+                }
+            }
+
+
+
+
+        }
+        else if (graph.sort.axis == 'dim') {
+            if (graph.sort.option == 'crescente') {
+                if (graph.sort.type == 'numerico') {
+                    sort = function (a, b) {
+
+                        return a[dimNames[0]] - b[dimNames[0]];
+
+                    };
+                }
+                if (graph.sort.type == 'data') {
+                    sort = function (a, b) {
+                        var ad = new Date(fixData(a[dimNames[0]]));
+                        var bd = new Date(fixData(b[dimNames[0]]));
+
+                        return ad - bd;
+
+                    };
+                }
+
+                if (graph.sort.type == 'mes') {
+                    sort = function (a, b) {
+                        var ad = MonthToInt[a[dimNames[0]].toLowerCase()];
+                        var bd = MonthToInt[b[dimNames[0]].toLowerCase()];
+
+                        return ad - bd;
+
+                    };
+                }
+                if (graph.sort.type == 'mesano') {
+                    sort = function (a, b) {
+
+                        var a_mes = MonthToInt[a[dimNames[0]].split(" ")[0].toLowerCase()];
+                        var a_ano = a[dimNames[0]].split(" ")[1];
+
+                        var b_mes = MonthToInt[b[dimNames[0]].split(" ")[0].toLowerCase()];
+                        var b_ano = b[dimNames[0]].split(" ")[1];
+
+                        var ad = parseInt(a_ano) + 12 * parseInt(a_mes);
+                        var bd = parseInt(b_ano) + 12 * parseInt(b_mes);
+
+                        return ad - bd;
+
+                    };
+                }
+            }
+            if (graph.sort.option == 'decrescente') {
+                if (graph.sort.type == 'numerico') {
+                    sort = function (a, b) {
+
+                        return b[dimNames[0]] - a[dimNames[0]];
+
+                    };
+                }
+                if (graph.sort.type == 'data') {
+                    sort = function (a, b) {
+                        var ad = new Date(fixData(a[dimNames[0]]));
+                        var bd = new Date(fixData(b[dimNames[0]]));
+
+                        return bd - ad;
+
+                    };
+                }
+
+                if (graph.sort.type == 'mes') {
+                    sort = function (a, b) {
+                        var ad = MonthToInt[a[dimNames[0]].toLowerCase()];
+                        var bd = MonthToInt[b[dimNames[0]].toLowerCase()];
+
+                        return bd - ad;
+
+                    };
+                }
+
+                if (graph.sort.type == 'mesano') {
+                    sort = function (a, b) {
+
+                        var a_mes = MonthToInt[a[dimNames[0]].split(" ")[0].toLowerCase()];
+                        var a_ano = a[dimNames[0]].split(" ")[1];
+
+                        var b_mes = MonthToInt[b[dimNames[0]].split(" ")[0].toLowerCase()];
+                        var b_ano = b[dimNames[0]].split(" ")[1];
+
+                        var ad = parseInt(a_ano) + 12 * parseInt(a_mes);
+                        var bd = parseInt(b_ano) + 12 * parseInt(b_mes);
+
+                        return bd - ad;
+
+                    };
+                }
+            }
+        }
+
+        if (graph.sort.option != "none") {
+            chart.data = chart.data.sort(sort);
+        }
+
 
 
         // Create axes

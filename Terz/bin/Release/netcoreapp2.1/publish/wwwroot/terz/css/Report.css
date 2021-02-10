@@ -1,7 +1,7 @@
 ﻿#Filters{
     width:20%;
    margin-left:10px;
-   height:1000px;
+   
     float:left;
     
 }
@@ -378,3 +378,23 @@
 .navbar-nav li a:hover, .navbar-nav li.active a {
     color: red !important;
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }

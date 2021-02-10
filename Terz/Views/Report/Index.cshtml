@@ -330,6 +330,12 @@
     }
 
     function buildSheetMenu() {
+
+        var content = document.getElementById("sheetList");
+        while (content.firstChild) {
+            content.removeChild(content.lastChild);
+        }
+
         var sheets = reportData.config.sheets;
         for (var i = 0; i < sheets.length; i++) {
             var liSheet = document.createElement("li");
@@ -338,7 +344,13 @@
             aSheet.setAttribute("href", "#");
             aSheet.setAttribute("onclick", "changeSheet('" + sheets[i].order + "')");
             aSheet.style.fontFamily = "Arial";
+            aSheet.style.paddingTop = "5px";
+            aSheet.style.paddingBottom = "5px";
+            if (sheets[i].order == currentSheet) {
+                aSheet.style.backgroundColor = "#28b9e0";
+            }
             liSheet.appendChild(aSheet);
+            
             document.getElementById("sheetList").appendChild(liSheet);
 
         }
@@ -635,6 +647,7 @@
         while (filters.firstChild) {
             filters.removeChild(filters.lastChild);
         }
+        buildSheetMenu();
         buildFilter(currentSheet);
         buildIndicators(currentSheet);
         buildGraphs(currentSheet);

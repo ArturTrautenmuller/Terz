@@ -23,6 +23,7 @@
         textBlockDiv.style.borderTopRightRadius = "7px";
         textBlockDiv.style.borderBottomRightRadius = "7px";
         textBlockDiv.style.paddingLeft = "5px";
+        textBlockDiv.style.overflowY = "auto";
 
         if (textBlock.style.backgroundColor != null && textBlock.style.backgroundColor != "") {
             textBlockDiv.style.backgroundColor = textBlock.style.backgroundColor;
@@ -78,8 +79,12 @@
             title.appendChild(document.createTextNode(textBlock.title));
             textBlockDiv.appendChild(title);
         }
-       
-        textBlockDiv.appendChild(document.createTextNode(contentText));
+
+        var lines = contentText.replace(/\r?\n/g, '<br />').split('<br />');
+        for (var l = 0; l < lines.length; l++) {
+            textBlockDiv.appendChild(document.createTextNode(lines[l]));
+            textBlockDiv.appendChild(document.createElement("br"));
+        }
 
                
 

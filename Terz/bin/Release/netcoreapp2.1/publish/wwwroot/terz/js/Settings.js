@@ -44,58 +44,90 @@
 
     document.getElementById("Settings").appendChild(document.createElement("hr"));
     //Largura
+
+    var row1 = document.createElement("div");
+    row1.style.display = "flex";
+    var largDiv = document.createElement("div");
+    largDiv.style.width = "45%";
+
     var widthLabel = document.createElement("label");
     widthLabel.innerHTML = "Largura:";
-    document.getElementById("Settings").appendChild(widthLabel);
-    document.getElementById("Settings").appendChild(document.createElement("br"));
+    largDiv.appendChild(widthLabel);
+    largDiv.appendChild(document.createElement("br"));
     var widthExp = document.createElement("input");
     widthExp.setAttribute("id", "Width");
-    widthExp.setAttribute("type", "text");
+    widthExp.setAttribute("type", "number");
+    widthExp.step = "1";
+    widthExp.min = "1";
     widthExp.setAttribute("onchange", "updateTextBlockConfig('" + id + "')");
     widthExp.setAttribute("class", "form-control");
     widthExp.value = textBlock.style.width;
-    document.getElementById("Settings").appendChild(widthExp);
-    document.getElementById("Settings").appendChild(document.createElement("br"));
+    largDiv.appendChild(widthExp);
+    largDiv.appendChild(document.createElement("br"));
+    row1.appendChild(largDiv);
     //Altura
+    var alturaDiv = document.createElement("div");
+    alturaDiv.style.width = "45%";
+    alturaDiv.style.marginLeft = "5%";
+
     var heightLabel = document.createElement("label");
     heightLabel.innerHTML = "Altura:";
-    document.getElementById("Settings").appendChild(heightLabel);
-    document.getElementById("Settings").appendChild(document.createElement("br"));
+    alturaDiv.appendChild(heightLabel);
+    alturaDiv.appendChild(document.createElement("br"));
     var heightExp = document.createElement("input");
     heightExp.setAttribute("id", "Height");
-    heightExp.setAttribute("type", "text");
+    heightExp.setAttribute("type", "number");
+    heightExp.step = "1";
+    heightExp.min = "1";
     heightExp.setAttribute("onchange", "updateTextBlockConfig('" + id + "')");
     heightExp.setAttribute("class", "form-control");
     heightExp.value = textBlock.style.height;
-    document.getElementById("Settings").appendChild(heightExp);
-    document.getElementById("Settings").appendChild(document.createElement("br"));
+    alturaDiv.appendChild(heightExp);
+    alturaDiv.appendChild(document.createElement("br"));
+    row1.appendChild(alturaDiv);
+    document.getElementById("Settings").appendChild(row1);
     // X
+    var row2 = document.createElement("div");
+    row2.style.display = "flex";
+    var xDiv = document.createElement("div");
+    xDiv.style.width = "45%";
+
     var xLabel = document.createElement("label");
     xLabel.innerHTML = "X:";
-    document.getElementById("Settings").appendChild(xLabel);
-    document.getElementById("Settings").appendChild(document.createElement("br"));
+    xDiv.appendChild(xLabel);
+    xDiv.appendChild(document.createElement("br"));
     var xExp = document.createElement("input");
     xExp.setAttribute("id", "X");
-    xExp.setAttribute("type", "text");
+    xExp.setAttribute("type", "number");
+    xExp.step = "1";
+    xExp.min = "1";
     xExp.setAttribute("onchange", "updateTextBlockConfig('" + id + "')");
     xExp.setAttribute("class", "form-control");
     xExp.value = textBlock.style.x;
-    document.getElementById("Settings").appendChild(xExp);
-    document.getElementById("Settings").appendChild(document.createElement("br"));
+    xDiv.appendChild(xExp);
+    xDiv.appendChild(document.createElement("br"));
+    row2.appendChild(xDiv);
     // Y
+    var yDiv = document.createElement("div");
+    yDiv.style.width = "45%";
+    yDiv.style.marginLeft = "5%";
+
     var yLabel = document.createElement("label");
     yLabel.innerHTML = "Y:";
-    document.getElementById("Settings").appendChild(yLabel);
-    document.getElementById("Settings").appendChild(document.createElement("br"));
+    yDiv.appendChild(yLabel);
+    yDiv.appendChild(document.createElement("br"));
     var yExp = document.createElement("input");
     yExp.setAttribute("id", "Y");
-    yExp.setAttribute("type", "text");
+    yExp.setAttribute("type", "number");
+    yExp.step = "1";
+    yExp.min = "1";
     yExp.setAttribute("onchange", "updateTextBlockConfig('" + id + "')");
     yExp.setAttribute("class", "form-control");
     yExp.value = textBlock.style.y;
-    document.getElementById("Settings").appendChild(yExp);
-    document.getElementById("Settings").appendChild(document.createElement("br"));
-    
+    yDiv.appendChild(yExp);
+    yDiv.appendChild(document.createElement("br"));
+    row2.appendChild(yDiv);
+    document.getElementById("Settings").appendChild(row2);
 
     //Cor de Fundo
 
@@ -159,6 +191,8 @@ function buildIndicatorSettings(id) {
    
     selectDFDiv.appendChild(selectDFLabel);
     selectDFDiv.appendChild(document.createElement("br"));
+    selectDFDiv.style.maxHeight = "300px";
+    selectDFDiv.style.overflowY = "auto";
 
    
 
@@ -392,145 +426,219 @@ function buildIndicatorSettings(id) {
     layoutDiv.appendChild(layoutButton);
 
     //Largura
+
+    var row1 = document.createElement("div");
+    row1.style.display = "flex";
+    var largDiv = document.createElement("div");
+    largDiv.style.width = "45%";
+
+
     var widthLabel = document.createElement("label");
     widthLabel.innerHTML = "Largura:";
-    layoutLi.appendChild(widthLabel);
-    layoutLi.appendChild(document.createElement("br"));
+    largDiv.appendChild(widthLabel);
+    largDiv.appendChild(document.createElement("br"));
     var widthExp = document.createElement("input");
     widthExp.setAttribute("id", "Width");
-    widthExp.setAttribute("type", "text");
+    widthExp.setAttribute("type", "number");
+    widthExp.step = "1";
+    widthExp.min = "1";
     widthExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
     widthExp.setAttribute("class", "form-control");
     widthExp.value = indicator.style.width;
-    layoutLi.appendChild(widthExp);
-    layoutLi.appendChild(document.createElement("br"));
+    largDiv.appendChild(widthExp);
+    largDiv.appendChild(document.createElement("br"));
+    row1.appendChild(largDiv);
     //Altura
+    var altDiv = document.createElement("div");
+    altDiv.style.width = "45%";
+    altDiv.style.marginLeft = "5%";
+
     var heightLabel = document.createElement("label");
     heightLabel.innerHTML = "Altura:";
-    layoutLi.appendChild(heightLabel);
-    layoutLi.appendChild(document.createElement("br"));
+    altDiv.appendChild(heightLabel);
+    altDiv.appendChild(document.createElement("br"));
     var heightExp = document.createElement("input");
     heightExp.setAttribute("id", "Height");
-    heightExp.setAttribute("type", "text");
+    heightExp.setAttribute("type", "number");
+    heightExp.step = "1";
+    heightExp.min = "1";
     heightExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
     heightExp.setAttribute("class", "form-control");
     heightExp.value = indicator.style.height;
-    layoutLi.appendChild(heightExp);
-    layoutLi.appendChild(document.createElement("br"));
+    altDiv.appendChild(heightExp);
+    altDiv.appendChild(document.createElement("br"));
+    row1.appendChild(altDiv);
+    layoutLi.appendChild(row1);
     // X
+
+    var row2 = document.createElement("div");
+    row2.style.display = "flex";
+    var xDiv = document.createElement("div");
+    xDiv.style.width = "45%";
+
     var xLabel = document.createElement("label");
     xLabel.innerHTML = "X:";
-    layoutLi.appendChild(xLabel);
-    layoutLi.appendChild(document.createElement("br"));
+    xDiv.appendChild(xLabel);
+    xDiv.appendChild(document.createElement("br"));
     var xExp = document.createElement("input");
     xExp.setAttribute("id", "X");
-    xExp.setAttribute("type", "text");
+    xExp.setAttribute("type", "number");
+    xExp.step = "1";
+    xExp.min = "1";
     xExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
     xExp.setAttribute("class", "form-control");
     xExp.value = indicator.style.x;
-    layoutLi.appendChild(xExp);
-    layoutLi.appendChild(document.createElement("br"));
+    xDiv.appendChild(xExp);
+    xDiv.appendChild(document.createElement("br"));
+    row2.appendChild(xDiv);
     // Y
+    var yDiv = document.createElement("div");
+    yDiv.style.width = "45%";
+    yDiv.style.marginLeft = "5%";
+
     var yLabel = document.createElement("label");
     yLabel.innerHTML = "Y:";
-    layoutLi.appendChild(yLabel);
-    layoutLi.appendChild(document.createElement("br"));
+    yDiv.appendChild(yLabel);
+    yDiv.appendChild(document.createElement("br"));
     var yExp = document.createElement("input");
     yExp.setAttribute("id", "Y");
-    yExp.setAttribute("type", "text");
+    yExp.setAttribute("type", "number");
+    yExp.step = "1";
+    yExp.min = "1";
     yExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
     yExp.setAttribute("class", "form-control");
     yExp.value = indicator.style.y;
-    layoutLi.appendChild(yExp);
-    layoutLi.appendChild(document.createElement("br"));
+    yDiv.appendChild(yExp);
+    yDiv.appendChild(document.createElement("br"));
+    row2.appendChild(yDiv);
+    layoutLi.appendChild(row2);
 
     layoutLi.appendChild(document.createElement("hr"));
 
     //Cor de Fundo
+    var row3 = document.createElement("div");
+    row3.style.display = "flex";
+    var cfDiv = document.createElement("div");
+    cfDiv.style.width = "45%";
 
     var bcLabel = document.createElement("label");
     bcLabel.innerHTML = "Cor de Fundo:";
-    layoutLi.appendChild(bcLabel);
-    layoutLi.appendChild(document.createElement("br"));
+    cfDiv.appendChild(bcLabel);
+    cfDiv.appendChild(document.createElement("br"));
     var bcExp = document.createElement("input");
     bcExp.setAttribute("id", "BackgroundColor");
     bcExp.setAttribute("type", "color");
     bcExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
     bcExp.setAttribute("class", "form-control");
     bcExp.value = indicator.style.backgroundColor;
-    layoutLi.appendChild(bcExp);
-    layoutLi.appendChild(document.createElement("br"));
+    cfDiv.appendChild(bcExp);
+    cfDiv.appendChild(document.createElement("br"));
+    row3.appendChild(cfDiv);
     //Cor de Texto
+    var ctDiv = document.createElement("div");
+    ctDiv.style.width = "45%";
+    ctDiv.style.marginLeft = "5%";
 
     var tcLabel = document.createElement("label");
     tcLabel.innerHTML = "Cor de Texto:";
-    layoutLi.appendChild(tcLabel);
-    layoutLi.appendChild(document.createElement("br"));
+    ctDiv.appendChild(tcLabel);
+    ctDiv.appendChild(document.createElement("br"));
     var tcExp = document.createElement("input");
     tcExp.setAttribute("id", "TextColor");
     tcExp.setAttribute("type", "color");
     tcExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
     tcExp.setAttribute("class", "form-control");
     tcExp.value = indicator.style.textColor;
-    layoutLi.appendChild(tcExp);
-    layoutLi.appendChild(document.createElement("br"));
+    ctDiv.appendChild(tcExp);
+    ctDiv.appendChild(document.createElement("br"));
+    row3.appendChild(ctDiv);
+    layoutLi.appendChild(row3);
 
     // FontSize
+    var row4 = document.createElement("div");
+    row4.style.display = "flex";
+    var fsDiv = document.createElement("div");
+    fsDiv.style.width = "45%";
+
     var fsLabel = document.createElement("label");
-    fsLabel.innerHTML = "Tamanho da Fonte:";
-    layoutLi.appendChild(fsLabel);
-    layoutLi.appendChild(document.createElement("br"));
+    fsLabel.innerHTML = "Fonte:";
+    fsDiv.appendChild(fsLabel);
+    fsDiv.appendChild(document.createElement("br"));
     var fsExp = document.createElement("input");
     fsExp.setAttribute("id", "FontSize");
-    fsExp.setAttribute("type", "text");
+    fsExp.setAttribute("type", "number");
+    fsExp.step = "1";
+    fsExp.min = "10";
     fsExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
     fsExp.setAttribute("class", "form-control");
     fsExp.value = indicator.style.fontSize;
-    layoutLi.appendChild(fsExp);
-    layoutLi.appendChild(document.createElement("br"));
+    fsDiv.appendChild(fsExp);
+    fsDiv.appendChild(document.createElement("br"));
+    row4.appendChild(fsDiv);
 
     //Cor da Borda
+    var cbDiv = document.createElement("div");
+    cbDiv.style.width = "45%";
+    cbDiv.style.marginLeft = "5%";
 
     var borcLabel = document.createElement("label");
     borcLabel.innerHTML = "Cor da Borda:";
-    layoutLi.appendChild(borcLabel);
-    layoutLi.appendChild(document.createElement("br"));
+    cbDiv.appendChild(borcLabel);
+    cbDiv.appendChild(document.createElement("br"));
     var borcExp = document.createElement("input");
     borcExp.setAttribute("id", "BorderColor");
     borcExp.setAttribute("type", "color");
     borcExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
     borcExp.setAttribute("class", "form-control");
     borcExp.value = indicator.style.borderColor;
-    layoutLi.appendChild(borcExp);
-    layoutLi.appendChild(document.createElement("br"));
+    cbDiv.appendChild(borcExp);
+    cbDiv.appendChild(document.createElement("br"));
+    row4.appendChild(cbDiv);
+    layoutLi.appendChild(row4);
 
     // Espessura da Borda
+    var row5 = document.createElement("div");
+    row5.style.display = "flex";
+    var ebDiv = document.createElement("div");
+    ebDiv.style.width = "45%";
+
     var bortLabel = document.createElement("label");
-    bortLabel.innerHTML = "Espessura da Borda:";
-    layoutLi.appendChild(bortLabel);
-    layoutLi.appendChild(document.createElement("br"));
+    bortLabel.innerHTML = "Espessura:";
+    ebDiv.appendChild(bortLabel);
+    ebDiv.appendChild(document.createElement("br"));
     var bortExp = document.createElement("input");
     bortExp.setAttribute("id", "BordeThickness");
-    bortExp.setAttribute("type", "text");
+    bortExp.setAttribute("type", "number");
+    bortExp.step = "1";
+    bortExp.min = "0";
     bortExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
     bortExp.setAttribute("class", "form-control");
     bortExp.value = indicator.style.borderThickness;
-    layoutLi.appendChild(bortExp);
-    layoutLi.appendChild(document.createElement("br"));
+    ebDiv.appendChild(bortExp);
+    ebDiv.appendChild(document.createElement("br"));
+    row5.appendChild(ebDiv);
 
     // Raio da Borda
+    var rbDiv = document.createElement("div");
+    rbDiv.style.width = "45%";
+    rbDiv.style.marginLeft = "5%";
+
     var borrLabel = document.createElement("label");
     borrLabel.innerHTML = "Raio da Borda:";
-    layoutLi.appendChild(borrLabel);
-    layoutLi.appendChild(document.createElement("br"));
+    rbDiv.appendChild(borrLabel);
+    rbDiv.appendChild(document.createElement("br"));
     var borrExp = document.createElement("input");
     borrExp.setAttribute("id", "BordeRadius");
-    borrExp.setAttribute("type", "text");
+    borrExp.setAttribute("type", "number");
+    borrExp.step = "1";
+    borrExp.min = "0";
     borrExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
     borrExp.setAttribute("class", "form-control");
     borrExp.value = indicator.style.borderRadius;
-    layoutLi.appendChild(borrExp);
-    layoutLi.appendChild(document.createElement("br"));
+    rbDiv.appendChild(borrExp);
+    rbDiv.appendChild(document.createElement("br"));
+    row5.appendChild(rbDiv);
+    layoutLi.appendChild(row5);
 
     // Navigation
     var navLabel = document.createElement("label");
@@ -668,6 +776,8 @@ function buildGraphSettings(id,openTab) {
 
     selectDFDiv.appendChild(selectDFLabel);
     selectDFDiv.appendChild(document.createElement("br"));
+    selectDFDiv.style.maxHeight = "300px";
+    selectDFDiv.style.overflowY = "auto";
 
 
    
@@ -1013,59 +1123,92 @@ function buildGraphSettings(id,openTab) {
 
 
     //Largura
+    var row1 = document.createElement("div");
+    row1.style.display = "flex";
+    var largDiv = document.createElement("div");
+    largDiv.style.width = "45%";
+
     var widthLabel = document.createElement("label");
     widthLabel.innerHTML = "Largura:";
-    LayoutLi.appendChild(widthLabel);
-    LayoutLi.appendChild(document.createElement("br"));
+    largDiv.appendChild(widthLabel);
+    largDiv.appendChild(document.createElement("br"));
     var widthExp = document.createElement("input");
     widthExp.setAttribute("id", "Width");
-    widthExp.setAttribute("type", "text");
+    widthExp.setAttribute("type", "number");
+    widthExp.step = "1";
+    widthExp.min = "1";
     widthExp.setAttribute("onchange", "updateGraphConfig('" + id + "')");
     widthExp.setAttribute("class", "form-control");
     widthExp.value = graph.style.width;
-    LayoutLi.appendChild(widthExp);
-    LayoutLi.appendChild(document.createElement("br"));
+    largDiv.appendChild(widthExp);
+    largDiv.appendChild(document.createElement("br"));
+    row1.appendChild(largDiv);
     //Altura
+    var alturaDiv = document.createElement("div");
+    alturaDiv.style.width = "45%";
+    alturaDiv.style.marginLeft = "5%";
+
     var heightLabel = document.createElement("label");
     heightLabel.innerHTML = "Altura:";
-    LayoutLi.appendChild(heightLabel);
-    LayoutLi.appendChild(document.createElement("br"));
+    alturaDiv.appendChild(heightLabel);
+    alturaDiv.appendChild(document.createElement("br"));
     var heightExp = document.createElement("input");
     heightExp.setAttribute("id", "Height");
-    heightExp.setAttribute("type", "text");
+    heightExp.setAttribute("type", "number");
+    heightExp.step = "1";
+    heightExp.min = "1";
     heightExp.setAttribute("onchange", "updateGraphConfig('" + id + "')");
     heightExp.setAttribute("class", "form-control");
     heightExp.value = graph.style.height;
-    LayoutLi.appendChild(heightExp);
-    LayoutLi.appendChild(document.createElement("br"));
+    alturaDiv.appendChild(heightExp);
+    alturaDiv.appendChild(document.createElement("br"));
+    row1.appendChild(alturaDiv);
+    LayoutLi.appendChild(row1);
     // X
+    var row2 = document.createElement("div");
+    row2.style.display = "flex";
+    var xDiv = document.createElement("div");
+    xDiv.style.width = "45%";
+
     var xLabel = document.createElement("label");
     xLabel.innerHTML = "X:";
-    LayoutLi.appendChild(xLabel);
-    LayoutLi.appendChild(document.createElement("br"));
+    xDiv.appendChild(xLabel);
+    xDiv.appendChild(document.createElement("br"));
     var xExp = document.createElement("input");
     xExp.setAttribute("id", "X");
-    xExp.setAttribute("type", "text");
+    xExp.setAttribute("type", "number");
+    xExp.step = "1";
+    xExp.min = "1";
     xExp.setAttribute("onchange", "updateGraphConfig('" + id + "')");
     xExp.setAttribute("class", "form-control");
     xExp.value = graph.style.x;
-    LayoutLi.appendChild(xExp);
-    LayoutLi.appendChild(document.createElement("br"));
+    xDiv.appendChild(xExp);
+    xDiv.appendChild(document.createElement("br"));
+    row2.appendChild(xDiv);
     // Y
+    var yDiv = document.createElement("div");
+    yDiv.style.width = "45%";
+    yDiv.style.marginLeft = "5%";
+
     var yLabel = document.createElement("label");
     yLabel.innerHTML = "Y:";
-    LayoutLi.appendChild(yLabel);
-    LayoutLi.appendChild(document.createElement("br"));
+    yDiv.appendChild(yLabel);
+    yDiv.appendChild(document.createElement("br"));
     var yExp = document.createElement("input");
     yExp.setAttribute("id", "Y");
-    yExp.setAttribute("type", "text");
+    yExp.setAttribute("type", "number");
+    yExp.step = "1";
+    yExp.min = "1";
     yExp.setAttribute("onchange", "updateGraphConfig('" + id + "')");
     yExp.setAttribute("class", "form-control");
     yExp.value = graph.style.y;
-    LayoutLi.appendChild(yExp);
-    LayoutLi.appendChild(document.createElement("br"));
+    yDiv.appendChild(yExp);
+    yDiv.appendChild(document.createElement("br"));
+    row2.appendChild(yDiv);
+    LayoutLi.appendChild(row2);
 
     // BackgroundColor
+
     var bcLabel = document.createElement("label");
     bcLabel.innerHTML = "Cor de Fundo:";
     LayoutLi.appendChild(bcLabel);
@@ -1106,7 +1249,7 @@ function buildGraphSettings(id,openTab) {
     LayoutLi.appendChild(document.createElement("br"));
 
 
-    if (graph.objectType == 'map') {
+    if (['map'].includes(graph.objectType)) {
         var regionLabel = document.createElement("label");
         regionLabel.innerHTML = "Região:";
         LayoutLi.appendChild(regionLabel);
@@ -1123,7 +1266,7 @@ function buildGraphSettings(id,openTab) {
         LayoutLi.appendChild(document.createElement("br"));
     }
     
-    if (graph.objectType == 'bar') {
+    if (['bar'].includes(graph.objectType)) {
         LayoutLi.appendChild(document.createElement("hr"));
         var selectOrientationDiv = document.createElement("div");
         var selectOrientationLabel = document.createElement("label");
@@ -1157,9 +1300,12 @@ function buildGraphSettings(id,openTab) {
             checkstack.checked = "checked";
         }
         checkstack.setAttribute("onchange", "updateGraphConfig('" + id + "')");
+        checkstack.style.width = "16px";
+        checkstack.style.height = "16px";
         LayoutLi.appendChild(checkstack);
 
         var checkstackLabel = document.createElement("label");
+        checkstackLabel.style.marginLeft = "10px";
         checkstackLabel.innerHTML = " Empilhar";
         LayoutLi.appendChild(checkstackLabel);
 
