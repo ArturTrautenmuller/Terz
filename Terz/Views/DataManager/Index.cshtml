@@ -104,8 +104,25 @@
 
                     <tr>
                         <td class="cell100 column1"></td>
-                        <td class="cell100 column2"><label> @( ((double)((Convert.ToDouble(Model.DataFrameInfos.Sum(d => d.Size))) / (1024 * 1024))).ToString("0.00") ) /@Model.Report.MaxSize MB </label></td>
-                        <td class="cell100 column3"><button class="btn btn-block btn-primary" onclick="showExpandOptions()">Expandir</button></td>
+                        <td class="cell100 column2">
+                            @if (Model.Enterprise)
+                            {
+                                <label> @( ((double)((Convert.ToDouble(Model.DataFrameInfos.Sum(d => d.Size))) / (1024 * 1024))).ToString("0.00") ) </label>
+                            }
+                            else
+                            {
+                                <label> @( ((double)((Convert.ToDouble(Model.DataFrameInfos.Sum(d => d.Size))) / (1024 * 1024))).ToString("0.00") ) /@Model.Report.MaxSize MB </label>
+                            }
+
+
+                        </td>
+                        <td class="cell100 column3">
+                            @if (!Model.Enterprise)
+                            {
+                                <button class="btn btn-block btn-primary" onclick="showExpandOptions()">Expandir</button>
+                            }
+                        
+                        </td>
                     </tr>
 
                 </tbody>

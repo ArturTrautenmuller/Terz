@@ -164,6 +164,7 @@ namespace Terz_DataBaseLayer
 
         public bool canReciveUpload(long totalsize)
         {
+
             long maxSizeBytes = this.MaxSize * 1024 * 1024;
             if (totalsize > maxSizeBytes) return false;
             else return true;

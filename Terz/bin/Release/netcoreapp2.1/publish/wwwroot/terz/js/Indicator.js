@@ -29,6 +29,7 @@
 
         var dataDiv = document.createElement("div");
         dataDiv.style.width = "100%";
+        dataDiv.style.marginTop = "5px";
 
         var labelTitle = document.createElement("label");
         labelTitle.appendChild(document.createTextNode(indicator.measure.name));

@@ -27,6 +27,7 @@ namespace Terz.Controllers
             }
             Models.DataManager.DataManagerView dataManagerView = new Models.DataManager.DataManagerView();
             dataManagerView.Id = id;
+           
             List<Models.DataManager.DataFrameInfo> dataFrameInfos = new List<Models.DataManager.DataFrameInfo>();
             string text = System.IO.File.ReadAllText(Location.ConfLocation);
             Conf conf = JsonConvert.DeserializeObject<Conf>(text);
@@ -46,7 +47,7 @@ namespace Terz.Controllers
             dataManagerView.Report = new Report();
             dataManagerView.Report.Load(id);
             dataManagerView.Report.getReference();
-            
+            dataManagerView.Enterprise = conf.Enterprise;
             return PartialView(dataManagerView);
         }
         public string AddReferencia(Terz_DataBaseLayer.Referencia referencia)
@@ -147,7 +148,18 @@ namespace Terz.Controllers
             Report report = new Report();
             report.Load(id);
 
-            bool canUpload = report.canReciveUpload(dirSize + filesSize - repetedFilesSize);
+            bool canUpload = false;
+
+            if (conf.Enterprise)
+            {
+                canUpload = true;
+            }
+            else
+            {
+                canUpload = report.canReciveUpload(dirSize + filesSize - repetedFilesSize);
+            }
+
+
             if (!canUpload)
             {
                 return "não há espaço suficiente para subir esses arquivos";

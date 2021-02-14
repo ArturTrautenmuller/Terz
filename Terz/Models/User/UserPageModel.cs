@@ -9,6 +9,7 @@ namespace Terz.Models.User
     public class UserPageModel
     {
        public Usuario Usuario { get; set; }
+       public bool Enterprise { get; set; }
 
     }
 }

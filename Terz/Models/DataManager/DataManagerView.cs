@@ -11,5 +11,6 @@ namespace Terz.Models.DataManager
         public string Id { get; set; }
         public List<DataFrameInfo> DataFrameInfos { get; set; }
         public Terz_DataBaseLayer.Report Report { get; set; }
+        public bool Enterprise { get; set; }
     }
 }

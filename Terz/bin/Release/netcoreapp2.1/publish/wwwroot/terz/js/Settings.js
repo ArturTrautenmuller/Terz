@@ -367,6 +367,11 @@ function buildIndicatorSettings(id) {
     iconeDiv.appendChild(iconeLabel);
     var iButton = document.createElement("button");
     iButton.style.marginLeft = "10px";
+    //margin-left: 10px;background-color:white;border:none;font-weight:bold;color:gray
+    iButton.style.backgroundColor = "white";
+    iButton.style.border = "none";
+    iButton.style.fontWeight = "bold";
+    iButton.style.color = "gray";
     iButton.setAttribute("onclick", "IconSelector('" + id + "')");
     iButton.appendChild(document.createTextNode("Selecionar na Lista"));
     iconeDiv.appendChild(iButton);

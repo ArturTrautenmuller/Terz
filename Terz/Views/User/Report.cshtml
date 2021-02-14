@@ -45,26 +45,29 @@
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <!-- Messages Dropdown Menu -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="@Url.Action("Index","Creditos")">
-                        <i class="fas fa-dollar-sign"></i>
-                        @Model.Usuario.Creditos Créditos
-                    </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Sair
-                    </a>
-                </li>
-                <!-- Notifications Dropdown Menu -->
+                @if (!Model.Enterprise)
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="@Url.Action("Index", "Creditos")">
+                            <i class="fas fa-dollar-sign"></i>
+                            @Model.Usuario.Creditos Créditos
+                        </a>
+                    </li>
+                }
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Sair
+                        </a>
+                    </li>
+                    <!-- Notifications Dropdown Menu -->
 
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-                        <i class="fas fa-th-large"></i>
-                    </a>
-                </li>
-            </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                            <i class="fas fa-th-large"></i>
+                        </a>
+                    </li>
+                </ul>
         </nav>
         <!-- /.navbar -->
         <!-- Main Sidebar Container -->
@@ -100,7 +103,7 @@
 
                         </li>
                         <li class="nav-item has-treeview">
-                            <a href="@Url.Action("Report","User")"  style="font-size:16px" class="nav-link">
+                            <a href="@Url.Action("Report","User")" style="font-size:16px" class="nav-link">
                                 <i class="fas fa-chart-area"></i>
                                 <p>
                                     Meus Relatórios
@@ -111,7 +114,7 @@
                         </li>
 
                         <li class="nav-item has-treeview">
-                            <a href="@Url.Action("Perfil","User")"  style="font-size:16px" class="nav-link">
+                            <a href="@Url.Action("Perfil","User")" style="font-size:16px" class="nav-link">
                                 <i class="fas fa-user"></i>
                                 <p>
                                     Perfil
@@ -120,40 +123,43 @@
                             </a>
 
                         </li>
-                        <li class="nav-item has-treeview">
-                            <a href="@Url.Action("Index","Creditos")"  style="font-size:16px" class="nav-link">
-                                <i class="far fa-money-bill-alt"></i>
-                                <p>
-                                    Comprar Créditos
+                        @if (!Model.Enterprise)
+                        {
+                            <li class="nav-item has-treeview">
+                                <a href="@Url.Action("Index", "Creditos")" style="font-size:16px" class="nav-link">
+                                    <i class="far fa-money-bill-alt"></i>
+                                    <p>
+                                        Comprar Créditos
 
-                                </p>
-                            </a>
+                                    </p>
+                                </a>
 
-                        </li>
-                        <li class="nav-item has-treeview">
-                            <a href="http://terzanalytics.com/processing/Home/Login"  style="font-size:16px" class="nav-link">
-                                <i class="fas fa-cogs"></i>
-                                <p>
-                                    Processing|ETL
+                            </li>
+                        }
+                            <li class="nav-item has-treeview">
+                                <a href="http://terzanalytics.com/processing/Home/Login" style="font-size:16px" class="nav-link">
+                                    <i class="fas fa-cogs"></i>
+                                    <p>
+                                        Processing|ETL
 
-                                </p>
-                            </a>
+                                    </p>
+                                </a>
 
-                        </li>
-                        <li class="nav-item has-treeview">
-                            <a href="@Url.Action("Index","Documentation")"  style="font-size:16px" class="nav-link">
-                                <i class="fas fa-file-alt"></i>
-                                <p>
-                                    Documentação
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="@Url.Action("Index","Documentation")" style="font-size:16px" class="nav-link">
+                                    <i class="fas fa-file-alt"></i>
+                                    <p>
+                                        Documentação
 
-                                </p>
-                            </a>
+                                    </p>
+                                </a>
 
-                        </li>
+                            </li>
 
 
 
-                    </ul>
+                        </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
             </div>

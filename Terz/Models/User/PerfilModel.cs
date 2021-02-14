@@ -9,5 +9,6 @@ namespace Terz.Models.User
     public class PerfilModel
     {
         public Usuario Usuario { get; set; }
+        public bool Enterprise { get; set; }
     }
 }

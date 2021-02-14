@@ -336,7 +336,9 @@
             content.removeChild(content.lastChild);
         }
 
-        var sheets = reportData.config.sheets;
+        var sheets = reportData.config.sheets.sort(function (a, b) {
+            return parseInt(a.order) - parseInt(b.order);
+        });
         for (var i = 0; i < sheets.length; i++) {
             var liSheet = document.createElement("li");
             var aSheet = document.createElement("a");

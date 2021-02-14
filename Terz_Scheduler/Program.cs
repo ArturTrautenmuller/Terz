@@ -13,7 +13,7 @@ namespace Terz_Scheduler
 {
     class Program
     {
-        public static async Task ConsultaPagamentoAsync()
+        public static async System.Threading.Tasks.Task ConsultaPagamentoAsync()
         {
 
             ComprasCollection comprasCollection = new ComprasCollection();
@@ -40,8 +40,14 @@ namespace Terz_Scheduler
         }
         static void Main(string[] args)
         {
-            var consultaPagamento = Task.Run(() => ConsultaPagamentoAsync());
-            consultaPagamento.Wait();
+            string text = System.IO.File.ReadAllText(Location.ConfLocation);
+            Conf conf = JsonConvert.DeserializeObject<Conf>(text);
+
+            if (!conf.Enterprise)
+            {
+                var consultaPagamento = System.Threading.Tasks.Task.Run(() => ConsultaPagamentoAsync());
+                consultaPagamento.Wait();
+            }
 
 
 
@@ -76,59 +82,64 @@ namespace Terz_Scheduler
                 report.setScore();
 
                 // storage
-                Expansao expansao = new Expansao();
-                expansao.Load(report.Id);
-
-                Usuario usuario = new Usuario();
-                usuario.Load(report.UserId);
-                if(usuario.Creditos < expansao.Consumo && expansao.Consumo != 0)
+                if (!conf.Enterprise)
                 {
-                    expansao.Delete();
-                    report.MaxSize = 10;
-                    report.Expandir();
+                     Expansao expansao = new Expansao();
+                     expansao.Load(report.Id);
 
-                    string text = System.IO.File.ReadAllText(Location.ConfLocation);
-                    Conf conf = JsonConvert.DeserializeObject<Conf>(text);
-
-                    long dirSize = Operations.getFolderSize(conf.DataFramePath + "/" + report.Id);
-
-                    if(dirSize > report.MaxSize * 1024 * 1024)
+                     Usuario usuario = new Usuario();
+                     usuario.Load(report.UserId);
+               
+                    if (usuario.Creditos < expansao.Consumo && expansao.Consumo != 0)
                     {
-                        System.IO.DirectoryInfo di = new DirectoryInfo(conf.DataFramePath + "/" + report.Id);
-                        foreach (FileInfo file in di.GetFiles())
+                        expansao.Delete();
+                        report.MaxSize = 10;
+                        report.Expandir();
+
+                       
+
+                        long dirSize = Operations.getFolderSize(conf.DataFramePath + "/" + report.Id);
+
+                        if (dirSize > report.MaxSize * 1024 * 1024)
                         {
-                            file.Delete();
+                            System.IO.DirectoryInfo di = new DirectoryInfo(conf.DataFramePath + "/" + report.Id);
+                            foreach (FileInfo file in di.GetFiles())
+                            {
+                                file.Delete();
+                            }
                         }
                     }
-                }
-                else
-                {
-                    usuario.Creditos -= expansao.Consumo;
-                    usuario.MudaCreditos();
+                    else
+                    {
+                        usuario.Creditos -= expansao.Consumo;
+                        usuario.MudaCreditos();
 
+                    }
                 }
-
 
             }
 
             List<Report> reportsAtivos = reports.Reports.Where(r => r.Ativo == 1).ToList();
-            foreach(Report report in reportsAtivos)
+            if (!conf.Enterprise)
             {
-                //consumir creditos
-
-                Usuario usuario = new Usuario();
-                usuario.Load(report.UserId);
-
-                if (usuario.Creditos <= 0)
+                foreach (Report report in reportsAtivos)
                 {
-                    usuario.LoadReports();
-                    usuario.DesativaReports();
-                }
+                    //consumir creditos
 
-                else if (report.Ativo == 1)
-                {
-                    usuario.Creditos--;
-                    usuario.MudaCreditos();
+                    Usuario usuario = new Usuario();
+                    usuario.Load(report.UserId);
+
+                    if (usuario.Creditos <= 0)
+                    {
+                        usuario.LoadReports();
+                        usuario.DesativaReports();
+                    }
+
+                    else if (report.Ativo == 1)
+                    {
+                        usuario.Creditos--;
+                        usuario.MudaCreditos();
+                    }
                 }
             }
 

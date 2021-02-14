@@ -21,8 +21,11 @@ namespace Terz.Controllers
             usuario.LoadReports();
             Models.User.UserPageModel userPageModel = new Models.User.UserPageModel();
             userPageModel.Usuario = usuario;
+            string text = System.IO.File.ReadAllText(Location.ConfLocation);
+            Conf conf = JsonConvert.DeserializeObject<Conf>(text);
 
-            
+            userPageModel.Enterprise = conf.Enterprise;
+
 
 
             return PartialView(userPageModel);
@@ -52,6 +55,11 @@ namespace Terz.Controllers
             usuario.Reports.Reverse();
             Models.User.ReportModel reportPageModel = new Models.User.ReportModel();
             reportPageModel.Usuario = usuario;
+
+            string text = System.IO.File.ReadAllText(Location.ConfLocation);
+            Conf conf = JsonConvert.DeserializeObject<Conf>(text);
+
+            reportPageModel.Enterprise = conf.Enterprise;
             return PartialView(reportPageModel);
         }
 
@@ -79,6 +87,11 @@ namespace Terz.Controllers
             usuario.LoadReports();
             Models.User.PerfilModel perfilModel = new Models.User.PerfilModel();
             perfilModel.Usuario = usuario;
+
+            string text = System.IO.File.ReadAllText(Location.ConfLocation);
+            Conf conf = JsonConvert.DeserializeObject<Conf>(text);
+            perfilModel.Enterprise = conf.Enterprise;
+
             return PartialView(perfilModel);
         }
 

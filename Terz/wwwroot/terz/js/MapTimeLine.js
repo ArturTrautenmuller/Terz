@@ -99,6 +99,7 @@ function buildMapTimeLineChart(graph) {
         total_timeline = total_timeline.sort(compareMapDate);
         world_timeline = world_timeline.sort(compareMapDate);
 
+
         am4core.useTheme(am4themes_animated);
         // Themes end
 

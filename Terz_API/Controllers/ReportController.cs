@@ -49,7 +49,17 @@ namespace Terz_API.Controllers
             Report report = new Report();
             report.Load(id);
 
-            bool canUpload = report.canReciveUpload(dirSize + filesSize - repetedFilesSize);
+            bool canUpload = false;
+
+            if (conf.Enterprise)
+            {
+                canUpload = true;
+            }
+            else
+            {
+                canUpload = report.canReciveUpload(dirSize + filesSize - repetedFilesSize);
+            }
+
             if (!canUpload)
             {
                 return "não há espaço suficiente para subir esses arquivos";

@@ -199,6 +199,45 @@
         document.getElementById("overlay").style.display = "none";
     }
 
+    function rebaixarSheet(order) {
+
+        if (parseInt(order) >= reportData.config.sheets.length) return;
+
+        var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(order.toString());
+        var previousSheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf((parseInt(order) + 1).toString());
+        reportData.config.sheets[sheetPos].order = (parseInt(order) + 1).toString();
+        reportData.config.sheets[previousSheetPos].order = order.toString();
+
+        if (order.toString() == currentSheet) {
+            currentSheet = (parseInt(order) + 1).toString();
+        }
+        if ((parseInt(order) + 1).toString() == currentSheet) {
+            currentSheet = order.toString();
+        }
+
+
+        buildSheetMenu();
+        
+    }
+
+    function promoverSheet(order) {
+        if (order == '1') return;
+
+        var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(order.toString());
+        var nextSheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf((parseInt(order) - 1).toString());
+        reportData.config.sheets[sheetPos].order = (parseInt(order) - 1).toString();
+        reportData.config.sheets[nextSheetPos].order = order.toString();
+
+        if (order.toString() == currentSheet) {
+            currentSheet = (parseInt(order) - 1).toString();
+        }
+        if ((parseInt(order) - 1).toString() == currentSheet) {
+            currentSheet = order.toString();
+        }
+
+        buildSheetMenu();
+    }
+
     function ExpMeasure(graphId, measureId) {
         var form;
         $.ajax(
@@ -491,6 +530,74 @@
 
 
             });
+    }
+
+    function copyGraph(id) {
+        var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+        var graphPos = reportData.config.sheets[sheetPos].graphs.map(function (e) { return e.id; }).indexOf(id);
+
+        var cGraph = JSON.parse(JSON.stringify(reportData.config.sheets[sheetPos].graphs[graphPos]));
+        cGraph.id = Date.now().toString();
+        cGraph.style.id = Date.now().toString();
+        cGraph.style.x = 10;
+        cGraph.style.y = 10;
+
+        reportData.config.sheets[sheetPos].graphs.push(cGraph);
+
+        reloadSheet();
+        setObjEvents();
+
+
+
+    }
+
+    function copyIndicator(id) {
+        var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+        var indicatorPos = reportData.config.sheets[sheetPos].indicators.map(function (e) { return e.id; }).indexOf(id);
+
+        var cIndicator = JSON.parse(JSON.stringify(reportData.config.sheets[sheetPos].indicators[indicatorPos]));
+        cIndicator.id = Date.now().toString();
+        cIndicator.style.id = Date.now().toString();
+        cIndicator.style.x = 10;
+        cIndicator.style.y = 10;
+
+        reportData.config.sheets[sheetPos].indicators.push(cIndicator);
+
+        reloadSheet();
+        setObjEvents();
+
+
+
+    }
+
+    function copyTextBlock(id) {
+        var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+        var textBlockPos = reportData.config.sheets[sheetPos].textBlocks.map(function (e) { return e.id; }).indexOf(id);
+
+        var cTextBlock = JSON.parse(JSON.stringify(reportData.config.sheets[sheetPos].textBlocks[textBlockPos]));
+        cTextBlock.id = Date.now().toString();
+        cTextBlock.style.id = Date.now().toString();
+        cTextBlock.style.x = 10;
+        cTextBlock.style.y = 10;
+
+        reportData.config.sheets[sheetPos].textBlocks.push(cTextBlock);
+
+        reloadSheet();
+        setObjEvents();
+
+
+
+    }
+
+    function copySheet(id) {
+        var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(id);
+        var cSheet = JSON.parse(JSON.stringify(reportData.config.sheets[sheetPos]));
+        cSheet.id = Date.now().toString();
+        cSheet.order = (reportData.config.sheets.length + 1).toString();
+
+        reportData.config.sheets.push(cSheet);
+        buildSheetMenu();
+
     }
 
     function AddSheet() {
@@ -869,10 +976,12 @@
             content.removeChild(content.lastChild);
         }
 
-        var sheets = reportData.config.sheets;
+        var sheets = reportData.config.sheets.sort(function (a, b) {
+            return parseInt(a.order) - parseInt(b.order);
+        });
         for (var i = 0; i < sheets.length; i++) {
             var liSheet = document.createElement("li");
-            liSheet.style.width = "200px";
+            liSheet.style.width = "300px";
             var divSheet = document.createElement("div");
             divSheet.style.display = "flex";
             var aSheet = document.createElement("a");
@@ -894,6 +1003,27 @@
             editbutton.setAttribute("onclick", "buildSheetSettings('" + sheets[i].id + "')");
 
             divSheet.appendChild(editbutton);
+
+            var promote = document.createElement("a");
+            promote.setAttribute("onclick", "promoverSheet(" + sheets[i].order + ")");
+            promote.setAttribute("href", "#");
+            promote.style.textDecoration = "none";
+            promote.style.fontSize = "18px";
+            var iPromote = document.createElement("i");
+            iPromote.setAttribute("class", "fas fa-chevron-up");
+            promote.appendChild(iPromote);
+            divSheet.appendChild(promote);
+
+            var decline = document.createElement("a");
+            decline.setAttribute("onclick", "rebaixarSheet(" + sheets[i].order + ")");
+            decline.setAttribute("href", "#");
+            decline.style.textDecoration = "none";
+            decline.style.fontSize = "18px";
+            decline.style.marginLeft = "5px";
+            var iDecline = document.createElement("i");
+            iDecline.setAttribute("class", "fas fa-chevron-down");
+            decline.appendChild(iDecline);
+            divSheet.appendChild(decline);
             liSheet.appendChild(divSheet);
             document.getElementById("sheetList").appendChild(liSheet);
 

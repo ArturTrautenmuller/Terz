@@ -15,6 +15,9 @@ function EvalueteEx(expressions, dataframe, fields) {
         var tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == dataframe.join(",") })[0].table));
        
         console.log(tempDf);
+
+        var t1 = performance.now();
+
         var reducedDf = [];
         reducedDf.push(fields);
         for (var i = 1; i < tempDf.length; i++) {
@@ -26,9 +29,14 @@ function EvalueteEx(expressions, dataframe, fields) {
             reducedDf.push(row);
         }
 
+        var t2 = performance.now();
+        
+
         let set = new Set(reducedDf.map(JSON.stringify));
         var distinctDf = Array.from(set).map(JSON.parse);
-       
+
+        var t3 = performance.now();
+        
 
         for (var j = 1; j < distinctDf.length; j++) {
             
@@ -49,11 +57,19 @@ function EvalueteEx(expressions, dataframe, fields) {
             }
            
         }
+        var t4 = performance.now();
+        
 
         for (var m = 0; m < expressions.length; m++) {
             distinctDf[0].push(expressions[m]);
         }
         
+        var t5 = performance.now();
+        console.log('performace: ' + expressions[0]);
+        console.log('t1 ' + (t2 - t1) + ' ms.');
+        console.log('t2 ' + (t3 - t2) + ' ms.');
+        console.log('t3 ' + (t4 - t3) + ' ms.');
+        console.log('t4 ' + (t5 - t4) + ' ms.');
 
         return distinctDf;
 

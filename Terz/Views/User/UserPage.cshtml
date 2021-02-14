@@ -39,12 +39,15 @@
             <!-- SEARCH FORM -->
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
+                @if (!Model.Enterprise)
+                {
                 <li class="nav-item dropdown">
-                    <a class="nav-link" href="@Url.Action("Index","Creditos")">
+                    <a class="nav-link" href="@Url.Action("Index", "Creditos")">
                         <i class="fas fa-dollar-sign"></i>
                         @Model.Usuario.Creditos Créditos
                     </a>
                 </li>
+                }
                 <!-- Messages Dropdown Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="#">
@@ -113,41 +116,44 @@
                             </a>
 
                         </li>
-                        <li class="nav-item has-treeview">
-                            <a href="@Url.Action("Index","Creditos")" class="nav-link">
-                                <i class="far fa-money-bill-alt"></i>
-                                <p>
-                                    Comprar Créditos
+                        @if (!Model.Enterprise)
+                        {
+                            <li class="nav-item has-treeview">
+                                <a href="@Url.Action("Index", "Creditos")" class="nav-link">
+                                    <i class="far fa-money-bill-alt"></i>
+                                    <p>
+                                        Comprar Créditos
 
-                                </p>
-                            </a>
+                                    </p>
+                                </a>
 
-                        </li>
-                        <li class="nav-item has-treeview">
-                            <a href="http://terzanalytics.com/processing/Home/Login" class="nav-link">
-                                <i class="fas fa-cogs"></i>
-                                <p>
-                                    Processing|ETL
+                            </li>
+                        }
+                            <li class="nav-item has-treeview">
+                                <a href="http://terzanalytics.com/processing/Home/Login" class="nav-link">
+                                    <i class="fas fa-cogs"></i>
+                                    <p>
+                                        Processing|ETL
 
-                                </p>
-                            </a>
+                                    </p>
+                                </a>
 
-                        </li>
-                        <li class="nav-item has-treeview">
-                            <a href="@Url.Action("Index","Documentation")" class="nav-link">
-                                <i class="fas fa-file-alt"></i>
-                                <p>
-                                    Documentação
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="@Url.Action("Index","Documentation")" class="nav-link">
+                                    <i class="fas fa-file-alt"></i>
+                                    <p>
+                                        Documentação
 
-                                </p>
-                            </a>
+                                    </p>
+                                </a>
 
-                        </li>
-
-
+                            </li>
 
 
-                    </ul>
+
+
+                        </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
             </div>

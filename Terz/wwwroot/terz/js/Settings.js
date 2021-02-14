@@ -152,6 +152,14 @@
 
     document.getElementById("Settings").appendChild(document.createElement("hr"));
 
+    var copyButton = document.createElement("button");
+    copyButton.setAttribute("class", "btn btn-block btn-default btn-sm");
+    copyButton.innerHTML = "Duplicar";
+    copyButton.setAttribute("onclick", "copyTextBlock('" + id + "')");
+    document.getElementById("Settings").appendChild(copyButton);
+
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
     var deleteButton = document.createElement("button");
     deleteButton.innerHTML = "Remover";
     deleteButton.setAttribute("class", "btn btn-block btn-danger btn-sm");
@@ -707,6 +715,15 @@ function buildIndicatorSettings(id) {
     
 
     document.getElementById("Settings").appendChild(document.createElement("hr"));
+
+    var copyButton = document.createElement("button");
+    copyButton.setAttribute("class", "btn btn-block btn-default btn-sm");
+    copyButton.innerHTML = "Duplicar";
+    copyButton.setAttribute("onclick", "copyIndicator('" + id + "')");
+    document.getElementById("Settings").appendChild(copyButton);
+
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
     var deleteButton = document.createElement("button");
     deleteButton.innerHTML = "Remover";
     deleteButton.setAttribute("class", "btn btn-block btn-danger btn-sm");
@@ -899,9 +916,30 @@ function buildGraphSettings(id,openTab) {
         dimButton.style.marginTop = "10";
         dimButton.setAttribute("class", "btn btn-block btn-secondary btn-sm");
         dimButton.appendChild(document.createTextNode(dimension.name));
-        var span = document.createElement("span");
-        span.setAttribute("class", "caret");
-        dimButton.appendChild(span);
+        
+
+        var orderUp = document.createElement("a");
+        orderUp.style.float = "right";
+        orderUp.style.marginRight = "5px";
+        orderUp.style.fontSize = "16px";
+        orderUp.setAttribute("onclick", "promoverDimensionGraph('" + graph.id + "'," + i + ")");
+        var upIcon = document.createElement("i");
+        upIcon.setAttribute("class", "fas fa-chevron-up");
+        orderUp.appendChild(upIcon);
+        dimButton.appendChild(orderUp);
+
+        var orderDown = document.createElement("a");
+        orderDown.style.float = "right";
+        orderDown.style.marginRight = "5px";
+        orderDown.style.fontSize = "16px";
+        orderDown.setAttribute("onclick", "rebaixarDimensionGraph('" + graph.id + "'," + i + ")");
+        var downIcon = document.createElement("i");
+        downIcon.setAttribute("class", "fas fa-chevron-down");
+        orderDown.appendChild(downIcon);
+        dimButton.appendChild(orderDown);
+
+
+
         dimDiv.appendChild(dimButton);
        // var ulDim = document.createElement("ul");
         // ulDim.setAttribute("class", "dropdown-menu");
@@ -992,9 +1030,33 @@ function buildGraphSettings(id,openTab) {
         measureButton.style.width = "250";
         measureButton.style.marginTop = "10";
         measureButton.appendChild(document.createTextNode(measure.name));
-        var span = document.createElement("span");
-        span.setAttribute("class", "caret");
-        measureButton.appendChild(span);
+        
+
+        var orderUp = document.createElement("a");
+        orderUp.style.float = "right";
+        orderUp.style.marginRight = "5px";
+        orderUp.style.fontSize = "16px";
+        orderUp.setAttribute("onclick", "promoverMeasureGraph('" + graph.id + "'," + i + ")");
+        var upIcon = document.createElement("i");
+        upIcon.setAttribute("class", "fas fa-chevron-up");
+        orderUp.appendChild(upIcon);
+        measureButton.appendChild(orderUp);
+
+        var orderDown = document.createElement("a");
+        orderDown.style.float = "right";
+        orderDown.style.marginRight = "5px";
+        orderDown.style.fontSize = "16px";
+        orderDown.setAttribute("onclick", "rebaixarMeasureGraph('" + graph.id + "'," + i + ")");
+        var downIcon = document.createElement("i");
+        downIcon.setAttribute("class", "fas fa-chevron-down");
+        orderDown.appendChild(downIcon);
+        measureButton.appendChild(orderDown);
+
+
+
+
+
+
         measureDiv.appendChild(measureButton);
       //  var ulMeasure = document.createElement("ul");
         //ulMeasure.style.display = "none";
@@ -1408,6 +1470,15 @@ function buildGraphSettings(id,openTab) {
    
 
     document.getElementById("Settings").appendChild(document.createElement("hr"));
+
+    var copyButton = document.createElement("button");
+    copyButton.setAttribute("class", "btn btn-block btn-default btn-sm");
+    copyButton.innerHTML = "Duplicar";
+    copyButton.setAttribute("onclick", "copyGraph('" + id + "')");
+    document.getElementById("Settings").appendChild(copyButton);
+
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
     var deleteButton = document.createElement("button");
     deleteButton.setAttribute("class", "btn btn-block btn-danger btn-sm");
     deleteButton.innerHTML = "Remover";
@@ -1538,6 +1609,14 @@ function buildSheetSettings(id) {
     document.getElementById("Settings").appendChild(bcExp);
     document.getElementById("Settings").appendChild(document.createElement("br"));
 
+    var copyButton = document.createElement("button");
+    copyButton.setAttribute("class", "btn btn-block btn-default btn-sm");
+    copyButton.innerHTML = "Duplicar";
+    copyButton.setAttribute("onclick", "copySheet('" + id + "')");
+    document.getElementById("Settings").appendChild(copyButton);
+
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
     var deleteButton = document.createElement("button");
     deleteButton.setAttribute("class", "btn btn-block btn-danger btn-sm");
     deleteButton.setAttribute("onclick", "deleteSheet('" + id + "')");
@@ -1588,9 +1667,28 @@ function buildFilterSettings() {
         filterButton.setAttribute("type", "button");
       //  filterButton.setAttribute("data-toggle", "dropdown");
         filterButton.appendChild(document.createTextNode(filter.dimension.name));
-        var span = document.createElement("span");
-        span.setAttribute("class", "caret");
-        filterButton.appendChild(span);
+
+        var orderUp = document.createElement("a");
+        orderUp.style.float = "right";
+        orderUp.style.marginRight = "5px";
+        orderUp.style.fontSize = "16px";
+        orderUp.setAttribute("onclick", "promoverFilter(" + i + ")");
+        var upIcon = document.createElement("i");
+        upIcon.setAttribute("class", "fas fa-chevron-up");
+        orderUp.appendChild(upIcon);
+        filterButton.appendChild(orderUp);
+
+        var orderDown = document.createElement("a");
+        orderDown.style.float = "right";
+        orderDown.style.marginRight = "5px";
+        orderDown.style.fontSize = "16px";
+        orderDown.setAttribute("onclick", "rebaixarFilter(" + i + ")");
+        var downIcon = document.createElement("i");
+        downIcon.setAttribute("class", "fas fa-chevron-down");
+        orderDown.appendChild(downIcon);
+        filterButton.appendChild(orderDown);
+
+
         filterDiv.appendChild(filterButton);
         var ulFilter = document.createElement("ul");
         ulFilter.style.display = "none";
@@ -1783,5 +1881,77 @@ function promoverDFGraph(id, order) {
         loadUsingDataFrames();
         updateGraphConfig(id);
         buildGraphSettings(id);
+    }
+}
+
+function rebaixarMeasureGraph(id, order) {
+    var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+    var graphPos = reportData.config.sheets[sheetPos].graphs.map(function (e) { return e.id; }).indexOf(id);
+    if (reportData.config.sheets[sheetPos].graphs[graphPos].measures.length - 1 > order) {
+        var temp = JSON.parse(JSON.stringify(reportData.config.sheets[sheetPos].graphs[graphPos].measures[order + 1]));
+        reportData.config.sheets[sheetPos].graphs[graphPos].measures[order + 1] = JSON.parse(JSON.stringify(reportData.config.sheets[sheetPos].graphs[graphPos].measures[order]));
+        reportData.config.sheets[sheetPos].graphs[graphPos].measures[order] = temp;
+        updateGraphConfig(id);
+        buildGraphSettings(id,"3");
+    }
+}
+
+function promoverMeasureGraph(id, order) {
+    var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+    var graphPos = reportData.config.sheets[sheetPos].graphs.map(function (e) { return e.id; }).indexOf(id);
+    if (order > 0) {
+        var temp = JSON.parse(JSON.stringify(reportData.config.sheets[sheetPos].graphs[graphPos].measures[order - 1]));
+        reportData.config.sheets[sheetPos].graphs[graphPos].measures[order - 1] = JSON.parse(JSON.stringify(reportData.config.sheets[sheetPos].graphs[graphPos].measures[order]));
+        reportData.config.sheets[sheetPos].graphs[graphPos].measures[order] = temp;
+        updateGraphConfig(id);
+        buildGraphSettings(id, "3");
+    }
+}
+
+function rebaixarDimensionGraph(id, order) {
+    var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+    var graphPos = reportData.config.sheets[sheetPos].graphs.map(function (e) { return e.id; }).indexOf(id);
+    if (reportData.config.sheets[sheetPos].graphs[graphPos].dimensions.length - 1 > order) {
+        var temp = JSON.parse(JSON.stringify(reportData.config.sheets[sheetPos].graphs[graphPos].dimensions[order + 1]));
+        reportData.config.sheets[sheetPos].graphs[graphPos].dimensions[order + 1] = JSON.parse(JSON.stringify(reportData.config.sheets[sheetPos].graphs[graphPos].dimensions[order]));
+        reportData.config.sheets[sheetPos].graphs[graphPos].dimensions[order] = temp;
+        updateGraphConfig(id);
+        buildGraphSettings(id, "2");
+    }
+}
+
+function promoverDimensionGraph(id, order) {
+    var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+    var graphPos = reportData.config.sheets[sheetPos].graphs.map(function (e) { return e.id; }).indexOf(id);
+    if (order > 0) {
+        var temp = JSON.parse(JSON.stringify(reportData.config.sheets[sheetPos].graphs[graphPos].dimensions[order - 1]));
+        reportData.config.sheets[sheetPos].graphs[graphPos].dimensions[order - 1] = JSON.parse(JSON.stringify(reportData.config.sheets[sheetPos].graphs[graphPos].dimensions[order]));
+        reportData.config.sheets[sheetPos].graphs[graphPos].dimensions[order] = temp;
+        updateGraphConfig(id);
+        buildGraphSettings(id, "2");
+    }
+}
+
+
+
+function rebaixarFilter(order) {
+    var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+    if (reportData.config.sheets[sheetPos].filters.length - 1 > order) {
+        var temp = JSON.parse(JSON.stringify(reportData.config.sheets[sheetPos].filters[order + 1]));
+        reportData.config.sheets[sheetPos].filters[order + 1] = JSON.parse(JSON.stringify(reportData.config.sheets[sheetPos].filters[order]));
+        reportData.config.sheets[sheetPos].filters[order] = temp;
+
+        buildFilterSettings();
+    }
+}
+
+function promoverFilter(order) {
+    var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+    if (order > 0) {
+        var temp = JSON.parse(JSON.stringify(reportData.config.sheets[sheetPos].filters[order - 1]));
+        reportData.config.sheets[sheetPos].filters[order - 1] = JSON.parse(JSON.stringify(reportData.config.sheets[sheetPos].filters[order]));
+        reportData.config.sheets[sheetPos].filters[order] = temp;
+
+        buildFilterSettings();
     }
 }
