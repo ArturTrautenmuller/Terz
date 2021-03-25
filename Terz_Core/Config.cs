@@ -7,6 +7,8 @@ namespace Terz_Core
     public class Config
     {
         public List<Sheet> Sheets { get; set; }
+        public Odag Odag { get; set; }
+
         
 
 

@@ -17,3 +17,7 @@ C:\Users\artur\source\repos\Terz\Terz_API\bin\Debug\netcoreapp2.1\Terz_DataBaseL
 C:\Users\artur\source\repos\Terz\Terz_API\bin\Debug\netcoreapp2.1\Terz_Core.pdb
 C:\Users\artur\source\repos\Terz\Terz_API\bin\Debug\netcoreapp2.1\Terz_DataBaseLayer.pdb
 C:\Users\artur\source\repos\Terz\Terz_API\obj\Debug\netcoreapp2.1\Terz_API.csproj.CopyComplete
+C:\Users\artur\source\repos\Terz\Terz_API\bin\Debug\netcoreapp2.1\Terz.Views.dll
+C:\Users\artur\source\repos\Terz\Terz_API\bin\Debug\netcoreapp2.1\Terz.Views.pdb
+C:\Users\artur\source\repos\Terz\Terz_API\bin\Debug\netcoreapp2.1\Terz.dll
+C:\Users\artur\source\repos\Terz\Terz_API\bin\Debug\netcoreapp2.1\Terz.pdb

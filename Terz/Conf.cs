@@ -26,7 +26,7 @@ namespace Terz
         public string DataFramePath { get; set; }
         public string ImagePath {get;set;}
         public string QueryConfigPath { get; set; }
-
+        public string OdagConfigPath { get; set; }
         public bool Enterprise { get; set; }
          
     }

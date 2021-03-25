@@ -1,0 +1,43 @@
+﻿var reportData;
+var DataFrames;
+var AllDFS;
+var Groups = [];
+var currentSheet = "1";
+var selections = [];
+let usingDataFrames;
+var formatList = ['number', 'real', 'percent'];
+var formatListLabel = ['Numérico', 'Moeda (R$)', 'Percentual (%)'];
+var IconeList = ['Sem Icone', 'fas fa-address-card', 'fas fa-dollar-sign'];
+var IconeCode = ['f111', 'f2bb', 'f155'];
+var Orientacoes = ['horizontal', 'vertical'];
+var OrientacoesLabel = ['Horizontal', 'Vertical'];
+var SortTypes = ['numerico','data','mes','mesano'];
+var SortTypesLabel = ['Numérico','Data','Mês','Mês Ano'];
+var SortOptions = ['none','crescente','decrescente'];
+var SortOptionsLabel = ['Nenhum', 'Crescente', 'Decrescente'];
+var SortAxis = ['dim', 'mea'];
+var SortAxisLabel = ['Dimensão', 'Medida'];
+var keepAllData = true;
+var browseData;
+var browseConfig;
+var version;
+
+var QueryConfig;
+var QueryCurrentSheet = "1";
+var QuerySelections = [];
+var QueryData = [];
+
+
+var MonthToInt = {};
+MonthToInt["jan"] = 1;
+MonthToInt["fev"] = 2;
+MonthToInt["mar"] = 3;
+MonthToInt["abr"] = 4;
+MonthToInt["mai"] = 5;
+MonthToInt["jun"] = 6;
+MonthToInt["jul"] = 7;
+MonthToInt["ago"] = 8;
+MonthToInt["set"] = 9;
+MonthToInt["out"] = 10;
+MonthToInt["nov"] = 11;
+MonthToInt["dez"] = 12;

@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "6163f4062579601ab68076a07d0ccb0c40262158"
+    "signature": "5e5bb11825da01b0ba43240dacca714f1e92c9f6"
   },
   "compilationOptions": {
     "defines": [
@@ -28,6 +28,7 @@
           "Microsoft.AspNetCore.Razor.Design": "2.1.2",
           "Microsoft.NETCore.App": "2.1.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.1.9",
+          "Terz": "1.0.0",
           "Terz_Core": "1.0.0",
           "Terz_DataBaseLayer": "1.0.0"
         },
@@ -52,6 +53,21 @@
         },
         "compile": {
           "lib/netstandard2.0/BouncyCastle.Crypto.dll": {}
+        }
+      },
+      "Confluent.Kafka/1.1.0": {
+        "dependencies": {
+          "System.Memory": "4.5.3",
+          "librdkafka.redist": "1.1.0"
+        },
+        "runtime": {
+          "lib/netcoreapp2.1/Confluent.Kafka.dll": {
+            "assemblyVersion": "1.1.0.0",
+            "fileVersion": "1.1.0.0"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp2.1/Confluent.Kafka.dll": {}
         }
       },
       "Google.Protobuf/3.6.1": {
@@ -109,6 +125,95 @@
         },
         "compile": {
           "lib/netstandard2.0/K4os.Hash.xxHash.dll": {}
+        }
+      },
+      "librdkafka.redist/1.1.0": {
+        "runtimeTargets": {
+          "runtimes/linux-x64/native/alpine-librdkafka.so": {
+            "rid": "linux-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-x64/native/centos7-librdkafka.so": {
+            "rid": "linux-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-x64/native/debian9-librdkafka.so": {
+            "rid": "linux-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-x64/native/librdkafka.so": {
+            "rid": "linux-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/osx-x64/native/librdkafka.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/librdkafka.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/librdkafkacpp.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/libzstd.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/msvcp120.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "12.0.21005.1"
+          },
+          "runtimes/win-x64/native/msvcr120.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "12.0.21005.1"
+          },
+          "runtimes/win-x64/native/zlib.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "1.2.8.0"
+          },
+          "runtimes/win-x86/native/librdkafka.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x86/native/librdkafkacpp.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x86/native/libzstd.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x86/native/msvcp120.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "12.0.21005.1"
+          },
+          "runtimes/win-x86/native/msvcr120.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "12.0.21005.1"
+          },
+          "runtimes/win-x86/native/zlib.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "1.2.8.0"
+          }
         }
       },
       "Microsoft.AspNetCore.Razor.Design/2.1.2": {},
@@ -888,7 +993,28 @@
           "ref/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
         }
       },
+      "Terz/1.0.0": {
+        "dependencies": {
+          "Confluent.Kafka": "1.1.0",
+          "Microsoft.NETCore.App": "2.1.0",
+          "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.1.9",
+          "MySql.Data": "8.0.20",
+          "Newtonsoft.Json": "12.0.3",
+          "Terz_Core": "1.0.0",
+          "Terz_DataBaseLayer": "1.0.0"
+        },
+        "runtime": {
+          "Terz.dll": {}
+        },
+        "compile": {
+          "Terz.dll": {}
+        }
+      },
       "Terz_Core/1.0.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.3",
+          "Terz_DataBaseLayer": "1.0.0"
+        },
         "runtime": {
           "Terz_Core.dll": {}
         },
@@ -3823,6 +3949,13 @@
       "path": "bouncycastle.netcore/1.8.3",
       "hashPath": "bouncycastle.netcore.1.8.3.nupkg.sha512"
     },
+    "Confluent.Kafka/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Cn2taQAubMqGSZuLReLPxC/6saoZPuLZYxzV/HvtrjkSN+wr7jsUh/clwLSrJQXInOsalivRrozVjVQ3X5cxVQ==",
+      "path": "confluent.kafka/1.1.0",
+      "hashPath": "confluent.kafka.1.1.0.nupkg.sha512"
+    },
     "Google.Protobuf/3.6.1": {
       "type": "package",
       "serviceable": true,
@@ -3850,6 +3983,13 @@
       "sha512": "sha512-jCfNP0inx1sGcP3KSbpiDEH3km2e1sVBjMfKo+V92jr1dL4ZYgA1uhRMl1wAtdGZcbObXIikKqtVlgx3j/CW6g==",
       "path": "k4os.hash.xxhash/1.0.6",
       "hashPath": "k4os.hash.xxhash.1.0.6.nupkg.sha512"
+    },
+    "librdkafka.redist/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-7TvVpQVm/mE1afa2rFK1G8VI0730DPkX+aiiRmxqI9U3wvEEZ6sPt8omFZCP9aZNQFr2Py/2butNRQUANNtfyA==",
+      "path": "librdkafka.redist/1.1.0",
+      "hashPath": "librdkafka.redist.1.1.0.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Razor.Design/2.1.2": {
       "type": "package",
@@ -4151,6 +4291,11 @@
       "sha512": "sha512-Zm2BdeanuncYs3NhCj4c9e1x3EXFzFBVv2wPEc/Dj4ZbI9R8ecLSR5frAsx4zJCPBtKQreQ7Q/KxJEohJZbfzA==",
       "path": "system.xml.xpath.xmldocument/4.0.1",
       "hashPath": "system.xml.xpath.xmldocument.4.0.1.nupkg.sha512"
+    },
+    "Terz/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "Terz_Core/1.0.0": {
       "type": "project",
