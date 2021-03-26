@@ -1,0 +1,96 @@
+﻿@model Terz.Models.Odag.OdagPageView
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div>
+    @foreach (Terz_Core.OdagValues odagValues in Model.OdagValuesCollection.OdagValues)
+    {
+        <div class="dropdown" style="padding-top: 10px;">
+            <button onclick="showOdagOptions('@odagValues.Name')" class="dropbtn" style="width: 220px; height: 40px;">@odagValues.Name</button>
+            <div class="dropdown-content" id="Odag-@odagValues.Name" style="overflow-y: auto; max-height: 300px;">
+                <button onclick="clearOdagFilterSelections('@odagValues.Name')" class="btn btn-block btn-danger btn-sm" style="margin-top: 3px; margin-bottom: 3px;">Limpar</button>
+                <input type="text" placeholder="Search.." id="InputOdag-@odagValues.Name" onkeyup="filterOdagFunction('@odagValues.Name')">
+                @foreach (string value in odagValues.Values)
+                {
+                    <a href="#@value" id="@odagValues.Name,@value" onclick="filterOdagValue('@odagValues.Name,@value')">@value</a>
+                }
+
+
+                
+            </div>
+        </div>
+    }
+
+
+</div>
+
+
+<script>
+    var OdagSelections = {};
+    OdagSelections["odagValues"] = [];
+
+    function showOdagOptions(name) {
+        
+        document.getElementById("Odag-"+name).classList.toggle("show");
+    }
+
+    function clearOdagFilterSelections(name) {
+        var pos = OdagSelections.odagValues.findIndex(i => i.name == name);
+        OdagSelections.odagValues[pos].values = [];
+
+        var cells = document.getElementById("Odag-"+name).childNodes;
+        for (var i = 0; i < cells.length; i++) {
+            if (cells[i].nodeName.toLowerCase() == "a") {
+                cells[i].style.backgroundColor = "white";
+            }
+        }
+    }
+
+    function filterOdagFunction(name) {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById("InputOdag-" + name);
+        filter = input.value.toUpperCase();
+        div = document.getElementById("Odag-"+name);
+        a = div.getElementsByTagName("a");
+        for (i = 0; i < a.length; i++) {
+            txtValue = a[i].textContent || a[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                a[i].style.display = "";
+            } else {
+                a[i].style.display = "none";
+            }
+        }
+    }
+
+    function filterOdagValue(cellValue) {
+        var odagName = cellValue.split(",")[0];
+        var value = cellValue.split(",")[1];
+
+        if (document.getElementById(cellValue).style.backgroundColor == 'green') {
+            document.getElementById(cellValue).style.backgroundColor = 'white';
+
+            var pos = OdagSelections.odagValues.findIndex(i => i.name == odagName);
+            var posValue = OdagSelections.odagValues[pos].values.indexOf(value);
+            OdagSelections.odagValues[pos].values.splice(posValue, 1);
+
+            
+
+        }
+        else {
+            document.getElementById(cellValue).style.backgroundColor = 'green';
+            
+            if (OdagSelections.odagValues.filter(function (x) { return x.name == odagName }).length > 0) {
+                var pos = OdagSelections.odagValues.findIndex(i => i.name == odagName);
+                OdagSelections.odagValues[pos].values.push(value);
+
+            }
+            else {
+
+                var odagValue = { name: odagName, values: [] };
+                odagValue.values.push(value);
+                OdagSelections.odagValues.push(odagValue);
+            }
+        }
+    }
+</script>

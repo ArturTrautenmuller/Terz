@@ -724,40 +724,120 @@
             });
 
 
-        }
+    }
+
+
+
+    function LoadOdag() {
+         var form;
+        $.ajax(
+            {
+                type: 'POST',
+                url: 'Odag/OdagPage?id=@Model.Id',
+                dataType: 'html',
+                cache: false,
+                async: true,
+
+                success: function (data) {
+                    form = data;
+                    bootbox.confirm(form, function (result) {
+                        if (result) {
+
+                            GetReportData(OdagSelections,true);
+
+                        }
+                    });
+
+                },
+
+
+            });
+    }
+
     function LoadData() {
         if (!keepAllData) {
-            GetReportData();
+
+             $.ajax(
+            {
+                type: 'POST',
+                 url: 'Odag/VerifiyOdag?id=@Model.Id',
+                dataType: 'html',
+                cache: false,
+                async: true,
+                success: function (data) {
+
+                    if (data == "enabled") {
+                        LoadOdag();
+                    }
+                    else {
+                        GetReportData(null,false);
+                    }
+
+                        
+
+
+                   
+                }
+
+            });
+
+
+
+
+            
         }
         else {
             init();
         }
     }
 
-    function GetReportData(){
+    function GetReportData(odagSelections,isOdag){
 
         on();
-        $.ajax(
+
+
+        if (isOdag) {
+             $.ajax(
             {
                 type: 'POST',
-                url: 'Report/GetReportData?id=@Model.Id',
+                url: 'Report/GetReportFilteredData?id=@Model.Id',
                 dataType: 'json',
                 cache: false,
+                contentType: "application/json; charset=utf-8",
                 async: true,
-                success: function (data) {
+                     success: function (data) {
 
-                    reportData = data;
-
-
-
-
+                     reportData = data;
                     init();
                     off();
-                }
+                    
+                     },
+                     data: JSON.stringify(odagSelections)
 
             });
+        }
+        else {
+            $.ajax(
+                {
+                    type: 'POST',
+                    url: 'Report/GetReportData?id=@Model.Id',
+                    dataType: 'json',
+                    cache: false,
+                    async: true,
+                    success: function (data) {
+
+                        reportData = data;
 
 
+
+
+                        init();
+                        off();
+                    }
+
+                });
+
+        }
     }
 
         verifyVersion();

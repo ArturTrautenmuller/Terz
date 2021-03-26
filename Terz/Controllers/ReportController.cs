@@ -167,6 +167,61 @@ namespace Terz.Controllers
             return reportData;
         }
 
+        public Models.Report.ReportData GetReportFilteredData([FromQuery(Name = "id")] string id,[FromBody] OdagValuesCollection odagValuesCollection)
+        {
+
+            string text = System.IO.File.ReadAllText(Location.ConfLocation);
+            Conf conf = JsonConvert.DeserializeObject<Conf>(text);
+
+            Models.Report.ReportData reportData = new Models.Report.ReportData();
+            string configFile = conf.ConfigPath + "/" + id + "/config.json";
+            string configText = System.IO.File.ReadAllText(configFile);
+
+            reportData.Config = JsonConvert.DeserializeObject<Config>(configText);
+
+            List<string> df_names = new List<string>();
+            foreach (Sheet sheet in reportData.Config.Sheets)
+            {
+                foreach (Indicator indicator in sheet.Indicators)
+                {
+                    df_names.AddRange(indicator.DataFrameName);
+                }
+
+                foreach (Graph graph in sheet.Graphs)
+                {
+                    df_names.AddRange(graph.DataFrameName);
+                }
+            }
+
+            List<DataFrame> dataFrames = new List<DataFrame>();
+            string[] df_files = System.IO.Directory.GetFiles(conf.DataFramePath + "/" + id);
+            foreach (string df in df_files)
+            {
+                if (df_names.Contains(System.IO.Path.GetFileNameWithoutExtension(df)))
+                {
+
+                    DataFrame dataFrame = new DataFrame();
+                    List<OdagField> odagFields = reportData.Config.Odag.OdagFields.Where(o => o.DataFrames.Contains(System.IO.Path.GetFileNameWithoutExtension(df))).ToList();
+                    
+                    if (odagFields.Count == 0)
+                    {
+                        dataFrame.Load(df);
+                    }
+                    else
+                    {
+                        List<OdagValues> odagValues = odagValuesCollection.OdagValues.Where(o => odagFields.Select(f => f.Name).Contains(o.Name)).ToList();
+                        dataFrame.LoadFiltered(df, odagFields, odagValues);
+                    }
+                   
+                    dataFrames.Add(dataFrame);
+                }
+            }
+
+            reportData.DataFrames = dataFrames;
+
+            return reportData;
+        }
+
         public string CreateReport([FromQuery(Name = "title")] string title, [FromQuery(Name = "category")] string category)
         {
             string userId = HttpContext.Session.GetString("User");

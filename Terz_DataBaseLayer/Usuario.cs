@@ -18,6 +18,7 @@ namespace Terz_DataBaseLayer
         public string Funcao { get; set; }
         public int Creditos { get; set; }
         public List<Report> Reports { get; set; }
+        public List<Report> SharedReports { get; set; }
         public List<Processo> Processos { get; set; }
         public List<Task> Tasks { get; set; }
 
@@ -105,6 +106,35 @@ namespace Terz_DataBaseLayer
             this.Reports.ForEach(r => r.getViews());
             this.Reports.ForEach(r => r.getAvaliations());
             this.Reports.ForEach(r => r.getReference());
+        }
+
+        public void LoadSharedReports()
+        {
+            this.SharedReports = new List<Report>();
+            Base.Init();
+            var sql = $"select r.* from acesso a left join report r on r.id = a.report_id  where a.email = '{this.Email}'";
+            MySqlDataReader myReader = Base.select(sql);
+            while (myReader.Read())
+            {
+                Report report = new Report();
+
+                report.Id = Convert.ToString(myReader.GetValue(0));
+                report.UserId = Convert.ToString(myReader.GetValue(1));
+                report.Titulo = myReader.GetString(2);
+                report.Imagem = myReader.GetString(3);
+                report.CategoriaId = Convert.ToString(myReader.GetValue(4));
+                report.Score = Convert.ToInt32(myReader.GetValue(5));
+                report.Rank = Convert.ToInt32(myReader.GetValue(6));
+                report.Ativo = Convert.ToInt32(myReader.GetValue(7));
+
+                this.SharedReports.Add(report);
+
+            }
+
+            myReader.Close();
+            Base.connection.Close();
+
+            
         }
 
         public void DesativaReports()

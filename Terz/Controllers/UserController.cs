@@ -63,6 +63,23 @@ namespace Terz.Controllers
             return PartialView(reportPageModel);
         }
 
+        public PartialViewResult SharedReport()
+        {
+            string userId = HttpContext.Session.GetString("User");
+            Usuario usuario = new Usuario();
+            usuario.Load(userId);
+            usuario.LoadSharedReports();
+            usuario.SharedReports.Reverse();
+            Models.User.ReportModel reportPageModel = new Models.User.ReportModel();
+            reportPageModel.Usuario = usuario;
+
+            string text = System.IO.File.ReadAllText(Location.ConfLocation);
+            Conf conf = JsonConvert.DeserializeObject<Conf>(text);
+
+            reportPageModel.Enterprise = conf.Enterprise;
+            return PartialView(reportPageModel);
+        }
+
         public string DeleteReport([FromQuery(Name = "id")] string id)
         {
             string userId = HttpContext.Session.GetString("User");

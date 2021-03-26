@@ -41,4 +41,10 @@ namespace Terz_Core
         public string Name { get; set; }
         public List<string> Values { get; set; } 
     }
+
+    public class OdagFilteredValues
+    {
+        public string Field { get; set; }
+        public List<string> Values { get; set; }
+    }
 }

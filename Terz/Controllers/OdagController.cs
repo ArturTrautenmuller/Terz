@@ -57,5 +57,40 @@ namespace Terz.Controllers
 
             return "Odag processado com sucesso";
         }
+
+        public PartialViewResult OdagPage([FromQuery(Name = "id")] string id)
+        {
+
+            string text = System.IO.File.ReadAllText(Location.ConfLocation);
+            Conf conf = JsonConvert.DeserializeObject<Conf>(text);
+
+            string OdagTextData = System.IO.File.ReadAllText(Path.Combine(conf.OdagConfigPath,id,"config.json"));
+            Models.Odag.OdagPageView odagPageView = new Models.Odag.OdagPageView();
+            odagPageView.OdagValuesCollection = JsonConvert.DeserializeObject<OdagValuesCollection>(OdagTextData);
+
+            string configFile = conf.ConfigPath + "/" + id + "/config.json";
+            string configText = System.IO.File.ReadAllText(configFile);
+
+            odagPageView.Odag =  JsonConvert.DeserializeObject<Config>(configText).Odag;
+
+            return PartialView(odagPageView);
+        }
+
+        public string VerifiyOdag([FromQuery(Name = "id")] string id)
+        {
+            string text = System.IO.File.ReadAllText(Location.ConfLocation);
+            Conf conf = JsonConvert.DeserializeObject<Conf>(text);
+            string configFile = conf.ConfigPath + "/" + id + "/config.json";
+            string configText = System.IO.File.ReadAllText(configFile);
+            Odag odag = JsonConvert.DeserializeObject<Config>(configText).Odag;
+            if (odag.Active)
+            {
+                return "enabled";
+            }
+            else
+            {
+                return "disabled";
+            }
+        }
     }
 }

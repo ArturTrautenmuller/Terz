@@ -66,7 +66,7 @@ using Terz.Models;
             WriteLiteral("        ");
             EndContext();
             BeginContext(340, 38, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7bce62362fa14bbc9e22d061b182d904", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d3c278d7700a421bafb20f0f49015d92", async() => {
                 BeginContext(364, 5, false);
 #line 11 "C:\Users\artur\source\repos\Terz\Terz\Views\QueryEditor\AddField.cshtml"
                           Write(field);
@@ -107,7 +107,7 @@ using Terz.Models;
             WriteLiteral("</select>\r\n\r\n<label>Selecione o Formato:</label>\r\n<br />\r\n<select class=\"form-control\" style=\"width:200px\" id=\"FieldFormat\">\r\n    ");
             EndContext();
             BeginContext(517, 38, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b3724c5f7dd04ae896c3ef90fc980799", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "df3bb8014111426a881d0b7bd75129d8", async() => {
                 BeginContext(540, 6, true);
                 WriteLiteral("Nenhum");
                 EndContext();
@@ -129,7 +129,7 @@ using Terz.Models;
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(561, 37, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0cdf8a85d12f466eb504b713d0b3b8b5", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "997172cd2dc0425ea42f643ac6832e2b", async() => {
                 BeginContext(582, 7, true);
                 WriteLiteral("Real R$");
                 EndContext();
@@ -151,7 +151,7 @@ using Terz.Models;
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(604, 47, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8dee0c76dc1149cc8ba097136199cd89", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e1a2e9b3f34f4cc99d7dc2903d3898ee", async() => {
                 BeginContext(628, 14, true);
                 WriteLiteral("Percentual (%)");
                 EndContext();
@@ -173,7 +173,7 @@ using Terz.Models;
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(657, 39, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "baf0abb0590e432aac78740cbfbc1658", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bad3fd44926c467f89d2163b94648213", async() => {
                 BeginContext(680, 7, true);
                 WriteLiteral("Decimal");
                 EndContext();

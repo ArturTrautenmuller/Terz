@@ -24,6 +24,54 @@ namespace Terz_Core
 
         }
 
+        public void LoadFiltered(string filePath,List<OdagField> odagFields,List<OdagValues> odagValues)
+        {
+
+            List<OdagFilteredValues> odagFilteredValues = new List<OdagFilteredValues>();
+            foreach(OdagField odagField in odagFields)
+            {
+                OdagFilteredValues odagFiltered = new OdagFilteredValues();
+                odagFiltered.Field = odagField.Field;
+                odagFiltered.Values = odagValues.FirstOrDefault(v => v.Name == odagField.Name).Values;
+                odagFilteredValues.Add(odagFiltered);
+            }
+
+            this.Name = System.IO.Path.GetFileNameWithoutExtension(filePath);
+            this.Table = new List<string[]>();
+            var lines = System.IO.File.ReadAllLines(filePath);
+            List<string> sLines = lines.ToList();
+
+            string[] header = sLines[0].Split(',');
+            this.Table.Add(header);
+
+            for(int i = 1; i < sLines.Count ;i++)
+            {
+                string[] row = sLines[i].Split(',');
+                if (IncludeRow(header.ToList(), row.ToList(), odagFilteredValues))
+                {
+                    this.Table.Add(row);
+                }
+                
+            }
+
+
+        }
+
+        public bool IncludeRow(List<string> header,List<string> row, List<OdagFilteredValues> odagFilterdValues)
+        {
+            
+            foreach(OdagFilteredValues odagFiltered in odagFilterdValues)
+            {
+                int pos = header.IndexOf(odagFiltered.Field);
+                if (!odagFiltered.Values.Contains(row[pos]))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         public List<string> getColumn(string ColumnName)
         {
             List<string> column = new List<string>();

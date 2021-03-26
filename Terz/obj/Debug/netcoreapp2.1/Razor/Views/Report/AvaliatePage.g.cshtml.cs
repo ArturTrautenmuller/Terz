@@ -58,7 +58,7 @@ using Terz.Models;
         public async override global::System.Threading.Tasks.Task ExecuteAsync()
         {
             BeginContext(0, 54, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "6b452dd0ca22498eaa37c38aa01da22b", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "c4451ce1be584748a5d4dbb15e3a59b1", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -77,7 +77,7 @@ using Terz.Models;
             WriteLiteral("\r\n<div id=\"Rating\" style=\"height:200px;\">\r\n    <link href=\"//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css\" rel=\"stylesheet\">\r\n\r\n    <!-- RATING - Form -->\r\n    ");
             EndContext();
             BeginContext(233, 2234, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5b74edeba57f4943bc7495bcd2ec5ae5", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "735f9b437e0b4e9aaf9083bbe851e964", async() => {
                 BeginContext(304, 2156, true);
                 WriteLiteral(@"
         <fieldset class=""form-group"">
