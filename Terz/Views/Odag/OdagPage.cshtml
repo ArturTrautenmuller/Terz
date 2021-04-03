@@ -4,10 +4,13 @@
 *@
 
 <div>
+    <div style="margin-top:10px;margin-bottom:25px">
+        <label style="width:100%;text-align:center;color:#b5b5b5">Selecione os Valores Correspondentes</label>
+    </div>
     @foreach (Terz_Core.OdagValues odagValues in Model.OdagValuesCollection.OdagValues)
     {
-        <div class="dropdown" style="padding-top: 10px;">
-            <button onclick="showOdagOptions('@odagValues.Name')" class="dropbtn" style="width: 220px; height: 40px;">@odagValues.Name</button>
+        <div class="dropdown" style="padding-top: 10px;width:100%">
+            <button onclick="showOdagOptions('@odagValues.Name')" class="dropbtn" style="width:100%; height: 40px; text-align:center">@odagValues.Name</button>
             <div class="dropdown-content" id="Odag-@odagValues.Name" style="overflow-y: auto; max-height: 300px;">
                 <button onclick="clearOdagFilterSelections('@odagValues.Name')" class="btn btn-block btn-danger btn-sm" style="margin-top: 3px; margin-bottom: 3px;">Limpar</button>
                 <input type="text" placeholder="Search.." id="InputOdag-@odagValues.Name" onkeyup="filterOdagFunction('@odagValues.Name')">

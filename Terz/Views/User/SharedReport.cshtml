@@ -195,7 +195,7 @@
             }
             @foreach (Terz_DataBaseLayer.Report report in Model.Usuario.SharedReports)
             {
-                <div name="reportList" class="ReportDiv">
+                <div name="reportList" class="ReportDiv" onclick="goToReport('@report.Id')">
 
                     @{l++;}
                     @if (report.Imagem == "" || report.Imagem == null)
@@ -220,6 +220,10 @@
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
             <script>
+                function goToReport(id) {
+                    window.location.href = "terz/Report?id=" + id;
+                }
+
                 function pesquisar() {
                     var search = document.getElementById("pesquisarInput").value;
                     var r_list = document.getElementsByName("reportList");

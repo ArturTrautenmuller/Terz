@@ -948,6 +948,7 @@ function buildPieChart(graph){
 }
 var dadosLine;
 function buildLineDateChart(graph) {
+    document.getElementById("g" + graph.id).style.height = Math.floor(graph.style.height * 0.9) + "px";
     am4core.ready(function () {
 
         // Themes begin
@@ -1346,6 +1347,9 @@ function buildTreeMap(graph) {
     }
 
     cdim = colorDim;
+
+    document.getElementById("g" + graph.id).style.height = Math.floor(graph.style.height * 0.9) + "px";
+
     new d3plus.Treemap()
         .config({
             data: data,

@@ -123,7 +123,7 @@
 
                 </div>
             }
-            <button id="CarregaButton" onclick="loadReports()" style="margin-left:70px">Carregar Mais...</button>
+            <button id="CarregaButton" onclick="loadReports()" class="btn btn-block btn-default" style="margin-left:70px;height:32px;width:200px">Carregar Mais...</button>
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -138,7 +138,7 @@
               $.ajax(
             {
                       type: 'POST',
-                      url: 'Home/MoreReports?category=@Model.currentCategory&rank=' + maxRank + "&keyword=" + keyword,
+                      url: 'terz/Home/MoreReports?category=@Model.currentCategory&rank=' + maxRank + "&keyword=" + keyword,
                 dataType: 'html',
                 cache: false,
                 async: true,

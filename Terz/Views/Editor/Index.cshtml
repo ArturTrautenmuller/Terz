@@ -1028,15 +1028,20 @@
         var sheets = reportData.config.sheets.sort(function (a, b) {
             return parseInt(a.order) - parseInt(b.order);
         });
+        var sheetBody = document.createElement("div");
+        sheetBody.style.overflowY = "auto";
+        sheetBody.style.maxHeight = "450px";
         for (var i = 0; i < sheets.length; i++) {
             var liSheet = document.createElement("li");
             liSheet.style.width = "300px";
+            liSheet.style.borderBottom = "1px solid black";
             var divSheet = document.createElement("div");
             divSheet.style.display = "flex";
             var aSheet = document.createElement("a");
             aSheet.setAttribute("class", "btn btn-block btn-secondary btn-sm");
             aSheet.style.marginLeft = "10px";
-            aSheet.style.width = "140px";
+            aSheet.style.width = "200px";
+            
             aSheet.appendChild(document.createTextNode(sheets[i].name));
             aSheet.setAttribute("href", "#");
             aSheet.setAttribute("onclick", "changeSheet('" + sheets[i].order + "')");
@@ -1074,9 +1079,11 @@
             decline.appendChild(iDecline);
             divSheet.appendChild(decline);
             liSheet.appendChild(divSheet);
-            document.getElementById("sheetList").appendChild(liSheet);
+            sheetBody.appendChild(liSheet)
+            
 
         }
+        document.getElementById("sheetList").appendChild(sheetBody);
 
         var liAddSheet = document.createElement("li");
         var buttonSheet = document.createElement("button");
@@ -1085,7 +1092,7 @@
         buttonSheet.setAttribute("onclick", "AddSheet()");
         buttonSheet.setAttribute("class", "btn btn-block btn-info btn-sm");
         buttonSheet.style.margin = "10px";
-        buttonSheet.style.width = "180px";
+        buttonSheet.style.width = "90%";
         liAddSheet.appendChild(buttonSheet);
         document.getElementById("sheetList").appendChild(liAddSheet);
 
