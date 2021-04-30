@@ -1819,6 +1819,33 @@ function addFilter() {
     buildFilterSettings();
 }
 
+function deleteOdagFilter(name) {
+
+    var filterPos = reportData.config.odag.odagFields.map(function (e) { return e.name; }).indexOf(name);
+    reportData.config.odag.odagFields.splice(filterPos, 1);
+    eraseSettings();
+    buildOdagSettings();
+
+}
+
+function addOdagFilter() {
+
+   
+
+
+    var odagField = {};
+    odagField["name"] = "Novo Filtro";
+    odagField["field"] = "";
+    odagField["dataFrames"] = [];
+    odagField["maxvalues"] = 1;
+
+    if (reportData.config.odag.odagFields == null) {
+        reportData.config.odag.odagFields = [];
+    }
+
+    reportData.config.odag.odagFields.push(odagField);
+    buildOdagSettings();
+}
 
 function showContent(obj) {
     obj.classList.toggle("active");
@@ -1945,7 +1972,7 @@ function rebaixarFilter(order) {
     }
 }
 
-function promoverFilter(order) {
+function promoverOdagFilter(order) {
     var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
     if (order > 0) {
         var temp = JSON.parse(JSON.stringify(reportData.config.sheets[sheetPos].filters[order - 1]));
@@ -1954,4 +1981,230 @@ function promoverFilter(order) {
 
         buildFilterSettings();
     }
+}
+
+function rebaixarOdagFilter(order) {
+
+    if (reportData.config.odag.odagFields.length - 1 > order) {
+        var temp = JSON.parse(JSON.stringify(reportData.config.odag.odagFields[order + 1]));
+        reportData.config.odag.odagFields[order + 1] = JSON.parse(JSON.stringify(reportData.config.odag.odagFields[order]));
+        reportData.config.odag.odagFields[order] = temp;
+
+        buildOdagSettings();
+    }
+}
+
+function promoverFilter(order) {
+    
+    if (order > 0) {
+        var temp = JSON.parse(JSON.stringify(reportData.config.odag.odagFields[order - 1]));
+        reportData.config.odag.odagFields[order - 1] = JSON.parse(JSON.stringify(reportData.config.odag.odagFields[order]));
+        reportData.config.odag.odagFields[order] = temp;
+
+        buildOdagSettings();
+    }
+}
+
+
+function buildOdagSettings() {
+    eraseSettings();
+    if (reportData.config.odag == null) {
+        var odag = { active: false, odagFields: [] };
+        reportData.config.odag = odag;
+    }
+
+    var checkActive = document.createElement("input");
+    checkActive.type = "checkbox";
+    checkActive.style.fontSize = "18px";
+   
+    checkActive.setAttribute("id", "OdagActive");
+    checkActive.setAttribute("onchange","setOdagActive()");
+
+    if (reportData.config.odag.active) {
+        checkActive.checked = "checked";
+    }
+
+    var chackActiveLabel = document.createElement("label");
+    chackActiveLabel.appendChild(document.createTextNode("ODAG Habilitado"));
+    chackActiveLabel.style.marginLeft = "6px";
+
+    document.getElementById("Settings").appendChild(checkActive);
+    document.getElementById("Settings").appendChild(chackActiveLabel);
+    document.getElementById("Settings").appendChild(document.createElement("hr"));
+
+
+    var filters = reportData.config.odag.odagFields;
+    var fLenght;
+    if (filters == null) {
+        fLenght = 0;
+    }
+    else {
+        fLenght = filters.length;
+    }
+    for (var i = 0; i < fLenght; i++) {
+
+        var filter = filters[i];
+        var filterDiv = document.createElement("div");
+        filterDiv.setAttribute("class", "dropdown");
+        var filterButton = document.createElement("button");
+        filterButton.setAttribute("onclick", "showContent(this)");
+        // filterButton.setAttribute("class", "btn btn-primary dropdown-toggle");
+        filterButton.style.width = "250";
+        filterButton.style.marginTop = "10";
+        filterButton.setAttribute("class", "btn btn-block btn-secondary btn-sm");
+        filterButton.setAttribute("type", "button");
+        //  filterButton.setAttribute("data-toggle", "dropdown");
+        filterButton.appendChild(document.createTextNode(filter.name));
+
+        var orderUp = document.createElement("a");
+        orderUp.style.float = "right";
+        orderUp.style.marginRight = "5px";
+        orderUp.style.fontSize = "16px";
+        orderUp.setAttribute("onclick", "promoverOdagFilter(" + i + ")");
+        var upIcon = document.createElement("i");
+        upIcon.setAttribute("class", "fas fa-chevron-up");
+        orderUp.appendChild(upIcon);
+        filterButton.appendChild(orderUp);
+
+        var orderDown = document.createElement("a");
+        orderDown.style.float = "right";
+        orderDown.style.marginRight = "5px";
+        orderDown.style.fontSize = "16px";
+        orderDown.setAttribute("onclick", "rebaixarOdagFilter(" + i + ")");
+        var downIcon = document.createElement("i");
+        downIcon.setAttribute("class", "fas fa-chevron-down");
+        orderDown.appendChild(downIcon);
+        filterButton.appendChild(orderDown);
+
+
+        filterDiv.appendChild(filterButton);
+        var ulFilter = document.createElement("ul");
+        ulFilter.style.display = "none";
+        //   ulFilter.setAttribute("class", "dropdown-menu");
+
+        var selectDFDiv = document.createElement("div");
+        var selectDFLabel = document.createElement("label");
+        selectDFLabel.innerHTML = "Data Frame:";
+
+
+        selectDFDiv.appendChild(selectDFLabel);
+        selectDFDiv.appendChild(document.createElement("br"));
+        var selectDFDivBody = document.createElement("div");
+        //
+        selectDFDivBody.style.overflowY = "auto";
+        selectDFDivBody.style.maxHeight = "250px";
+
+        //
+
+        for (var j = 0; j < reportData.dataFrames.length; j++) {
+            var checkDF = document.createElement("input");
+            checkDF.type = "checkbox";
+            checkDF.value = reportData.dataFrames[j].name;
+            checkDF.setAttribute("name", "DataFrame" + filter.name);
+
+            if (filter.dataFrames.includes(reportData.dataFrames[j].name)) {
+                checkDF.checked = "checked";
+            }
+            selectDFDivBody.appendChild(checkDF);
+            var dfLabel = document.createElement("label");
+            dfLabel.append(document.createTextNode(reportData.dataFrames[j].name));
+            selectDFDivBody.appendChild(dfLabel);
+            selectDFDivBody.appendChild(document.createElement("br"));
+
+        }
+
+
+        selectDFDiv.append(selectDFDivBody);
+        ulFilter.appendChild(selectDFDiv);
+        ulFilter.appendChild(document.createElement("br"));
+
+
+        var filterNameLi = document.createElement("li");
+        var filterNameLabel = document.createElement("label");
+        filterNameLabel.innerHTML = "Nome:";
+        filterNameLi.appendChild(filterNameLabel);
+        filterNameLi.appendChild(document.createElement("br"));
+        var filterNameExp = document.createElement("input");
+        filterNameExp.setAttribute("id", "OdagName" + filter.name);
+        filterNameExp.setAttribute("type", "text");
+        //filterNameExp.setAttribute("onchange", "updateFilterConfig('" + filter.id + "')");
+        filterNameExp.setAttribute("class", "form-control");
+        filterNameExp.value = filter.name;
+        filterNameLi.appendChild(filterNameExp);
+        filterNameLi.appendChild(document.createElement("br"));
+        var filterFieldLabel = document.createElement("label");
+        filterFieldLabel.innerHTML = "Campo:";
+        filterNameLi.appendChild(filterFieldLabel);
+        filterNameLi.appendChild(document.createElement("br"));
+        var filterFieldExp = document.createElement("input");
+        filterFieldExp.setAttribute("id", "OdagField" + filter.name);
+        filterFieldExp.setAttribute("type", "text");
+        //filterFieldExp.setAttribute("onchange", "updateFilterConfig('" + filter.id + "')");
+        filterFieldExp.setAttribute("class", "form-control");
+        filterFieldExp.value = filter.field;
+        filterNameLi.appendChild(filterFieldExp);
+        filterNameLi.appendChild(document.createElement("br"));
+
+        var filterMaxValueLabel = document.createElement("label");
+        filterMaxValueLabel.innerHTML = "Máximo de Valores:";
+        filterNameLi.appendChild(filterMaxValueLabel);
+        filterNameLi.appendChild(document.createElement("br"));
+        var filterMaxValueExp = document.createElement("input");
+        filterMaxValueExp.setAttribute("id", "OdagMaxValue" + filter.name);
+        filterMaxValueExp.setAttribute("type", "number");
+        filterMaxValueExp.step = 1;
+        //filterFieldExp.setAttribute("onchange", "updateFilterConfig('" + filter.id + "')");
+        filterMaxValueExp.setAttribute("class", "form-control");
+        if (filter.maxValues == null || filter.maxValues == 0) {
+            filterMaxValueExp.value = 1;
+        }
+        else {
+            filterMaxValueExp.value = filter.maxValues;
+        }
+        
+        filterNameLi.appendChild(filterMaxValueExp);
+        filterNameLi.appendChild(document.createElement("br"));
+
+
+
+        ulFilter.appendChild(filterNameLi);
+
+        var applyButton = document.createElement("button");
+        applyButton.append(document.createTextNode("Aplicar"));
+        applyButton.setAttribute("class", "btn btn-block btn-info btn-sm");
+        applyButton.setAttribute("onclick", "updateOdagConfig('" + filter.name + "')");
+        ulFilter.appendChild(applyButton);
+        ulFilter.appendChild(document.createElement("br"));
+
+
+        var deleteButton = document.createElement("button");
+        deleteButton.innerHTML = "Remover";
+        deleteButton.setAttribute("class", "btn btn-block btn-danger btn-sm");
+        deleteButton.setAttribute("onclick", "deleteOdagFilter('" + filter.name + "')");
+        ulFilter.appendChild(deleteButton);
+        filterDiv.appendChild(ulFilter);
+        document.getElementById("Settings").appendChild(filterDiv);
+    }
+
+    var addfilterButton = document.createElement("button");
+    addfilterButton.innerHTML = "Novo Filtro";
+    addfilterButton.setAttribute("onclick", "addOdagFilter()");
+    addfilterButton.style.width = "250";
+    addfilterButton.style.marginTop = "10";
+    addfilterButton.setAttribute("class", "btn btn-block btn-info btn-sm");
+    document.getElementById("Settings").appendChild(addfilterButton);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
+    var processButton = document.createElement("button");
+    processButton.innerHTML = "Processar ODAG";
+    processButton.setAttribute("onclick", "processOdag()");
+    processButton.style.width = "250";
+    processButton.style.marginTop = "10";
+    processButton.setAttribute("class", "btn btn-block btn-primary btn-sm");
+    document.getElementById("Settings").appendChild(processButton);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
+
+
+
 }

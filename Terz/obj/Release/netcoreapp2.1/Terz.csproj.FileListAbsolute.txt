@@ -66,3 +66,5 @@ C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Razor\Views\Quer
 C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Razor\Views\User\GerenciarAcesso.g.cshtml.cs
 C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Razor\Views\Editor\EditIcon.g.cshtml.cs
 C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Razor\Views\Editor\TextExp.g.cshtml.cs
+C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Razor\Views\Odag\OdagPage.g.cshtml.cs
+C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Razor\Views\User\SharedReport.g.cshtml.cs

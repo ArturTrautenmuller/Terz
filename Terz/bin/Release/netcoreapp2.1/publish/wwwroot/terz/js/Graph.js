@@ -83,7 +83,8 @@
                 case 'compare': { buildCompareChart(graph); break; }
                 case 'gaugi': { buildGaugiChart(graph); break; }
                 case 'variance': { buildVarianceChart(graph); break; }
-                case 'waterfall': { buildWaterFallChart(graph); break; }
+                case 'waterfall': { buildWaterFallChart(graph); break; } 
+                case 'linedatecompare': { buildLineDateCompareChart(graph); break; } 
 
                 default: break;
 
@@ -948,6 +949,7 @@ function buildPieChart(graph){
 }
 var dadosLine;
 function buildLineDateChart(graph) {
+    document.getElementById("g" + graph.id).style.height = Math.floor(graph.style.height * 0.9) + "px";
     am4core.ready(function () {
 
         // Themes begin
@@ -1346,6 +1348,9 @@ function buildTreeMap(graph) {
     }
 
     cdim = colorDim;
+
+    document.getElementById("g" + graph.id).style.height = Math.floor(graph.style.height * 0.9) + "px";
+
     new d3plus.Treemap()
         .config({
             data: data,

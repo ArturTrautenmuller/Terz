@@ -83,7 +83,8 @@
                 case 'compare': { buildCompareChart(graph); break; }
                 case 'gaugi': { buildGaugiChart(graph); break; }
                 case 'variance': { buildVarianceChart(graph); break; }
-                case 'waterfall': { buildWaterFallChart(graph); break; }
+                case 'waterfall': { buildWaterFallChart(graph); break; } 
+                case 'linedatecompare': { buildLineDateCompareChart(graph); break; } 
 
                 default: break;
 

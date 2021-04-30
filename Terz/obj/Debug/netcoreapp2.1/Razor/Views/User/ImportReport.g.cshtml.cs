@@ -55,7 +55,7 @@ using Terz.Models;
             WriteLiteral("\r\n<label>Nome do Relatório</label>\r\n<input class=\"form-control\" id=\"Title\" type=\"text\" />\r\n<br />\r\n<select data-trigger=\"\" class=\"form-control\" name=\"choices-single-defaul\" id=\"category\">\r\n    ");
             EndContext();
             BeginContext(227, 50, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0447c3a8497942a5b99dafce25a627cf", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "95eb132a1b6147ce9dc3ba0fd36321bc", async() => {
                 BeginContext(260, 8, true);
                 WriteLiteral("CATEGORY");
                 EndContext();
@@ -87,7 +87,7 @@ using Terz.Models;
             WriteLiteral("        ");
             EndContext();
             BeginContext(378, 58, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9beb9f5d73d54710b58a1b1ce7eddbaa", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8cd64473facc4e828246e6b1734935a4", async() => {
                 BeginContext(408, 18, false);
 #line 10 "C:\Users\artur\source\repos\Terz\Terz\Views\User\ImportReport.cshtml"
                                 Write(category.Descricao);

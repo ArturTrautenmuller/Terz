@@ -102,6 +102,7 @@ function buildMapTimeLineChart(graph) {
 
         am4core.useTheme(am4themes_animated);
         // Themes end
+        document.getElementById("g" + graph.id).style.height = Math.floor(graph.style.height * 0.9) + "px";
 
         am4core.ready(function () {
             

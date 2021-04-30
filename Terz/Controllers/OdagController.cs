@@ -78,19 +78,28 @@ namespace Terz.Controllers
 
         public string VerifiyOdag([FromQuery(Name = "id")] string id)
         {
-            string text = System.IO.File.ReadAllText(Location.ConfLocation);
-            Conf conf = JsonConvert.DeserializeObject<Conf>(text);
-            string configFile = conf.ConfigPath + "/" + id + "/config.json";
-            string configText = System.IO.File.ReadAllText(configFile);
-            Odag odag = JsonConvert.DeserializeObject<Config>(configText).Odag;
-            if (odag.Active)
+            try
             {
-                return "enabled";
+                string text = System.IO.File.ReadAllText(Location.ConfLocation);
+                Conf conf = JsonConvert.DeserializeObject<Conf>(text);
+                string configFile = conf.ConfigPath + "/" + id + "/config.json";
+                string configText = System.IO.File.ReadAllText(configFile);
+                Odag odag = JsonConvert.DeserializeObject<Config>(configText).Odag;
+                if (odag.Active)
+                {
+                    return "enabled";
+                }
+                else
+                {
+                    return "disabled";
+                }
             }
-            else
+            catch(Exception e)
             {
                 return "disabled";
             }
         }
+
+        
     }
 }

@@ -1,4 +1,5 @@
 ﻿function buildWaterFallChart(graph) {
+    document.getElementById("g" + graph.id).style.height = Math.floor(graph.style.height * 0.9) + "px";
     am4core.ready(function () {
 
         // Themes begin
