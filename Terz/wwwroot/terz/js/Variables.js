@@ -27,7 +27,8 @@ var QueryCurrentSheet = "1";
 var QuerySelections = [];
 var QueryData = [];
 
-
+var ExpandedGraph = "";
+var ExpandedGraphStyle;
 var MonthToInt = {};
 MonthToInt["jan"] = 1;
 MonthToInt["fev"] = 2;

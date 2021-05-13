@@ -10,6 +10,7 @@ namespace Terz_Core
         public Style Style { get; set; }
         public List<string> DataFrameName {get; set;}
         public Dimension Dimension { get; set; }
+        public string DefaultValues { get; set; }
         public bool MultiValue { get; set; }
 
 }

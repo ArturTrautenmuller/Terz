@@ -324,10 +324,45 @@
         loadUsingDataFrames();
         buildSheetMenu();
         buildFilter(currentSheet);
+       
         buildIndicators(currentSheet);
         buildGraphs(currentSheet);
         buildTextBlocks(currentSheet);
+        applyDefaultFilters(currentSheet);
 
+    }
+
+    function applyDefaultFilters(sheetOrder) {
+        var sheet = reportData.config.sheets.filter(function (x) { return x.order == sheetOrder })[0];
+        var filters = sheet.filters;
+        var fLenght;
+        if (filters == null) {
+            fLenght = 0;
+        }
+        else {
+            fLenght = filters.length;
+        }
+        for (var i = 0; i < fLenght; i++) {
+            var filter = filters[i];
+            if (filter.defaultValues != null && filter.defaultValues != "") {
+                var filter = filters[i];
+                var dfNames = filter.dataFrameName;
+                var alldfs = "";
+                for (var m = 0; m < dfNames.length; m++) {
+                    alldfs += dfNames[m] + "&";
+                }
+
+                alldfs = alldfs.slice(0, -1);
+                var values = filter.defaultValues.split(';');
+                for (var j = 0; j < values.length; j++) {
+                    var cellValue = alldfs + ',' + filter.dimension.field + ',' + values[j];
+                    filterValue(cellValue);
+                }
+            }
+
+
+
+        }
     }
 
     function buildSheetMenu() {
@@ -636,7 +671,80 @@
         buildIndicators(currentSheet);
         buildGraphs(currentSheet);
         buildTextBlocks(currentSheet);
+        hideNonExpandedObjects();
 
+    }
+
+    function expandGraph(id) {
+        selectExpandGraph(id);
+        reloadGraphs();
+    }
+
+    function restoreGraph() {
+        restoreExpandGraphStyle();
+        reloadGraphs();
+    }
+
+
+    function selectExpandGraph(id) {
+        ExpandedGraph = id;
+        var sheet = reportData.config.sheets.filter(function (x) { return x.order == currentSheet })[0];
+        ExpandedGraphStyle = JSON.parse(JSON.stringify(sheet.graphs.filter(function (x) { return x.id == id })[0].style));
+        var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+        var graphPos = reportData.config.sheets[sheetPos].graphs.map(function (e) { return e.id; }).indexOf(id);
+
+        reportData.config.sheets[sheetPos].graphs[graphPos].style.width = "960";
+        reportData.config.sheets[sheetPos].graphs[graphPos].style.height = "560";
+        reportData.config.sheets[sheetPos].graphs[graphPos].style.x = "10";
+        reportData.config.sheets[sheetPos].graphs[graphPos].style.y = "10";
+    }
+
+    function restoreExpandGraphStyle() {
+        var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+        var graphPos = reportData.config.sheets[sheetPos].graphs.map(function (e) { return e.id; }).indexOf(ExpandedGraph);
+
+        reportData.config.sheets[sheetPos].graphs[graphPos].style = JSON.parse(JSON.stringify(ExpandedGraphStyle));
+
+        ExpandedGraph = "";
+
+    }
+
+    function hideNonExpandedObjects() {
+        if (ExpandedGraph == "") return;
+
+        var sheet = reportData.config.sheets.filter(function (x) { return x.order == currentSheet })[0];
+        var graphs = sheet.graphs;
+        var indicators = sheet.indicators;
+        var textBlocks = sheet.textBlocks;
+
+        var gIds = graphs.map(function (g) {
+            return g.id;
+        });
+
+        var iIds = indicators.map(function (i) {
+            return i.id;
+        });
+
+        var tIds = textBlocks.map(function (t) {
+            return t.id;
+        });
+
+        if (!gIds.includes(ExpandedGraph)) return;
+
+        for (var i = 0; i < iIds.length; i++) {
+            document.getElementById("ind" + iIds[i]).style.display = "none";
+        }
+
+        for (var i = 0; i < tIds.length; i++) {
+            document.getElementById("txt" + tIds[i]).style.display = "none";
+        }
+
+        for (var i = 0; i < gIds.length; i++) {
+            if (gIds[i] != ExpandedGraph)
+                 document.getElementById("gc" + gIds[i]).style.display = "none";
+        }
+
+        
     }
 
     function reloadSheet() {
@@ -651,10 +759,13 @@
             filters.removeChild(filters.lastChild);
         }
         buildSheetMenu();
+
         buildFilter(currentSheet);
         buildIndicators(currentSheet);
         buildGraphs(currentSheet);
         buildTextBlocks(currentSheet);
+        hideNonExpandedObjects();
+        applyDefaultFilters(currentSheet);
 
     }
 

@@ -1755,6 +1755,25 @@ function buildFilterSettings() {
         filterNameLi.appendChild(filterFieldExp);
         filterNameLi.appendChild(document.createElement("br"));
 
+        var filterDValuesLabel = document.createElement("label");
+        filterDValuesLabel.innerHTML = "Valores Iniciais:";
+        filterNameLi.appendChild(filterDValuesLabel);
+        filterNameLi.appendChild(document.createElement("br"));
+        var filterDValuesExp = document.createElement("input");
+        filterDValuesExp.setAttribute("id", "filterDValues" + filter.id);
+        filterDValuesExp.setAttribute("type", "text");
+        //filterFieldExp.setAttribute("onchange", "updateFilterConfig('" + filter.id + "')");
+        filterDValuesExp.setAttribute("class", "form-control");
+        if (filter.defaultValues == null) {
+            filterDValuesExp.value = "";
+        }
+        else {
+            filterDValuesExp.value = filter.defaultValues;
+        }
+        
+        filterNameLi.appendChild(filterDValuesExp);
+        filterNameLi.appendChild(document.createElement("br"));
+
 
 
         ulFilter.appendChild(filterNameLi);

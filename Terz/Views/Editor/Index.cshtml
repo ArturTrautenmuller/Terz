@@ -682,6 +682,7 @@
 
         reportData.config.sheets[sheetPos].filters[filterPos].dimension.name = document.getElementById("filterName" + id).value;
         reportData.config.sheets[sheetPos].filters[filterPos].dimension.field = document.getElementById("filterField" + id).value;
+        reportData.config.sheets[sheetPos].filters[filterPos].defaultValues = document.getElementById("filterDValues" + id).value;
         buildFilterSettings();
     }
 
