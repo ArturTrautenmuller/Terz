@@ -136,7 +136,11 @@ namespace Terz.Controllers
            
             reportData.Config = JsonConvert.DeserializeObject<Config>(configText);
 
-            List<string> df_names = new List<string>();
+            for (int i = 0; i < reportData.Config.Sheets.Count; i++)
+            {
+                if (reportData.Config.Sheets[i].variableInputs == null) reportData.Config.Sheets[i].variableInputs = new List<VariableInput>();
+            }
+                List<string> df_names = new List<string>();
             foreach (Sheet sheet in reportData.Config.Sheets)
             {
                 foreach (Indicator indicator in sheet.Indicators)

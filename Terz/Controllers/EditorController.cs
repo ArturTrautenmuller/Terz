@@ -30,7 +30,7 @@ namespace Terz.Controllers
             editorView.Id = id;
             return PartialView(editorView);
         }
-        public string UploadConfig([FromQuery(Name = "id")] string id , Config config)
+        public string UploadConfig([FromQuery(Name = "id")] string id , ContentJson contentJson)
         {
             string userId = HttpContext.Session.GetString("User");
 
@@ -42,6 +42,9 @@ namespace Terz.Controllers
             {
                 return "no permission";
             }
+
+            Config config = JsonConvert.DeserializeObject<Config>(contentJson.ContentJsonText);
+
             string text = System.IO.File.ReadAllText(Location.ConfLocation);
             Conf conf = JsonConvert.DeserializeObject<Conf>(text);
             string configFile = conf.ConfigPath + "/" + id + "/config.json";
@@ -60,6 +63,7 @@ namespace Terz.Controllers
 
                 if (config.Sheets[i].Filters == null) config.Sheets[i].Filters = new List<Filter>();
                 if (config.Sheets[i].TextBlocks == null) config.Sheets[i].TextBlocks = new List<TextBlock>();
+                if (config.Sheets[i].variableInputs == null) config.Sheets[i].variableInputs = new List<VariableInput>();
             }
 
 
@@ -111,6 +115,26 @@ namespace Terz.Controllers
         }
 
         public PartialViewResult TextExp()
+        {
+            return PartialView();
+        }
+
+        public PartialViewResult VarLabelExp()
+        {
+            return PartialView();
+        }
+
+        public PartialViewResult VarValueExp()
+        {
+            return PartialView();
+        }
+
+        public PartialViewResult VarIndLabelExp()
+        {
+            return PartialView();
+        }
+
+        public PartialViewResult VarIndValueExp()
         {
             return PartialView();
         }

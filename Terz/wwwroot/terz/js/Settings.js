@@ -1,4 +1,220 @@
-﻿function buildTextBlockSettings(id) {
+﻿function buildVariableInputSettings(id) {
+    var content = document.getElementById("Settings");
+    while (content.firstChild) {
+        content.removeChild(content.lastChild);
+    }
+
+    var varInput = reportData.config.sheets.filter(function (x) { return x.order == currentSheet })[0].variableInputs.filter(function (y) { return y.id == id })[0];
+
+    var titleLabel = document.createElement("label");
+    titleLabel.innerHTML = "Título:";
+    document.getElementById("Settings").appendChild(titleLabel);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    var titleExp = document.createElement("input");
+    titleExp.setAttribute("id", "Title");
+    titleExp.setAttribute("type", "text");
+    titleExp.setAttribute("onchange", "updateVarInputConfig('" + id + "')");
+    titleExp.setAttribute("class", "form-control");
+    titleExp.value = varInput.title;
+    document.getElementById("Settings").appendChild(titleExp);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
+    var varLabel = document.createElement("label");
+    varLabel.innerHTML = "Variável:";
+    document.getElementById("Settings").appendChild(varLabel);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    var varExp = document.createElement("input");
+    varExp.setAttribute("id", "Variable");
+    varExp.setAttribute("type", "text");
+    varExp.setAttribute("onchange", "updateVarInputConfig('" + id + "')");
+    varExp.setAttribute("class", "form-control");
+    varExp.value = varInput.variable;
+    document.getElementById("Settings").appendChild(varExp);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
+
+    var selectTypeDiv = document.createElement("div");
+    var selectTypeLabel = document.createElement("label");
+    selectTypeLabel.innerHTML = "Tipo:";
+
+    selectTypeDiv.appendChild(selectTypeLabel);
+    selectTypeDiv.appendChild(document.createElement("br"));
+    var selectType = document.createElement("select");
+    for (var i = 0; i < VarInputType.length; i++) {
+        var selectTypeOption = document.createElement("option");
+        selectTypeOption.innerHTML = VarInputTypeLabel[i];
+        selectTypeOption.value = VarInputType[i];
+        if (varInput.objectType == null) {
+            varInput.objectType = "text";
+        }
+        if (varInput.objectType == VarInputType[i]) {
+            selectTypeOption.selected = "selected";
+        }
+        selectType.appendChild(selectTypeOption);
+    }
+
+
+
+    selectType.setAttribute("id", "ObjectType");
+    selectType.setAttribute("onchange", "updateVarInputConfig('" + id + "')");
+    selectType.setAttribute("class", "form-control");
+    selectTypeDiv.appendChild(selectType);
+    document.getElementById("Settings").appendChild(selectTypeDiv);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
+    var labelsLabel = document.createElement("label");
+    labelsLabel.innerHTML = "Valores (Rótulo):";
+    document.getElementById("Settings").appendChild(labelsLabel);
+    var expBut = document.createElement("button");
+    var iExp = document.createElement("i");
+    iExp.setAttribute("class", "fas fa-code");
+    iExp.style.color = "#21bfb2";
+    iExp.style.fontSize = "20px";
+    expBut.style.border = "none";
+    expBut.style.marginLeft = "10px";
+    expBut.appendChild(iExp);
+    expBut.setAttribute("onclick", "ExpVarLabel('" + id + "')");
+    document.getElementById("Settings").appendChild(expBut);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    var labelsExp = document.createElement("input");
+    labelsExp.setAttribute("id", "Labels");
+    labelsExp.setAttribute("type", "text");
+    labelsExp.setAttribute("onchange", "updateVarInputConfig('" + id + "')");
+    labelsExp.setAttribute("class", "form-control");
+    labelsExp.value = varInput.labels;
+    document.getElementById("Settings").appendChild(labelsExp);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
+    var valuesLabel = document.createElement("label");
+    valuesLabel.innerHTML = "Valores:";
+    document.getElementById("Settings").appendChild(valuesLabel);
+    var expBut2 = document.createElement("button");
+    var iExp2 = document.createElement("i");
+    iExp2.setAttribute("class", "fas fa-code");
+    iExp2.style.color = "#21bfb2";
+    iExp2.style.fontSize = "20px";
+    expBut2.style.border = "none";
+    expBut2.style.marginLeft = "10px";
+    expBut2.appendChild(iExp2);
+    expBut2.setAttribute("onclick", "ExpVarValue('" + id + "')");
+    document.getElementById("Settings").appendChild(expBut2);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+    var valuesExp = document.createElement("input");
+    valuesExp.setAttribute("id", "Values");
+    valuesExp.setAttribute("type", "text");
+    valuesExp.setAttribute("onchange", "updateVarInputConfig('" + id + "')");
+    valuesExp.setAttribute("class", "form-control");
+    valuesExp.value = varInput.values;
+    document.getElementById("Settings").appendChild(valuesExp);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
+    //Largura
+
+    var row1 = document.createElement("div");
+    row1.style.display = "flex";
+    var largDiv = document.createElement("div");
+    largDiv.style.width = "45%";
+
+    var widthLabel = document.createElement("label");
+    widthLabel.innerHTML = "Largura:";
+    largDiv.appendChild(widthLabel);
+    largDiv.appendChild(document.createElement("br"));
+    var widthExp = document.createElement("input");
+    widthExp.setAttribute("id", "Width");
+    widthExp.setAttribute("type", "number");
+    widthExp.step = "1";
+    widthExp.min = "1";
+    widthExp.setAttribute("onchange", "updateVarInputConfig('" + id + "')");
+    widthExp.setAttribute("class", "form-control");
+    widthExp.value = varInput.style.width;
+    largDiv.appendChild(widthExp);
+    largDiv.appendChild(document.createElement("br"));
+    row1.appendChild(largDiv);
+    //Altura
+    var alturaDiv = document.createElement("div");
+    alturaDiv.style.width = "45%";
+    alturaDiv.style.marginLeft = "5%";
+
+    var heightLabel = document.createElement("label");
+    heightLabel.innerHTML = "Altura:";
+    alturaDiv.appendChild(heightLabel);
+    alturaDiv.appendChild(document.createElement("br"));
+    var heightExp = document.createElement("input");
+    heightExp.setAttribute("id", "Height");
+    heightExp.setAttribute("type", "number");
+    heightExp.step = "1";
+    heightExp.min = "1";
+    heightExp.setAttribute("onchange", "updateVarInputConfig('" + id + "')");
+    heightExp.setAttribute("class", "form-control");
+    heightExp.value = varInput.style.height;
+    alturaDiv.appendChild(heightExp);
+    alturaDiv.appendChild(document.createElement("br"));
+    row1.appendChild(alturaDiv);
+    document.getElementById("Settings").appendChild(row1);
+    // X
+    var row2 = document.createElement("div");
+    row2.style.display = "flex";
+    var xDiv = document.createElement("div");
+    xDiv.style.width = "45%";
+
+    var xLabel = document.createElement("label");
+    xLabel.innerHTML = "X:";
+    xDiv.appendChild(xLabel);
+    xDiv.appendChild(document.createElement("br"));
+    var xExp = document.createElement("input");
+    xExp.setAttribute("id", "X");
+    xExp.setAttribute("type", "number");
+    xExp.step = "1";
+    xExp.min = "1";
+    xExp.setAttribute("onchange", "updateVarInputConfig('" + id + "')");
+    xExp.setAttribute("class", "form-control");
+    xExp.value = varInput.style.x;
+    xDiv.appendChild(xExp);
+    xDiv.appendChild(document.createElement("br"));
+    row2.appendChild(xDiv);
+    // Y
+    var yDiv = document.createElement("div");
+    yDiv.style.width = "45%";
+    yDiv.style.marginLeft = "5%";
+
+    var yLabel = document.createElement("label");
+    yLabel.innerHTML = "Y:";
+    yDiv.appendChild(yLabel);
+    yDiv.appendChild(document.createElement("br"));
+    var yExp = document.createElement("input");
+    yExp.setAttribute("id", "Y");
+    yExp.setAttribute("type", "number");
+    yExp.step = "1";
+    yExp.min = "1";
+    yExp.setAttribute("onchange", "updateVarInputConfig('" + id + "')");
+    yExp.setAttribute("class", "form-control");
+    yExp.value = varInput.style.y;
+    yDiv.appendChild(yExp);
+    yDiv.appendChild(document.createElement("br"));
+    row2.appendChild(yDiv);
+    document.getElementById("Settings").appendChild(row2);
+
+    document.getElementById("Settings").appendChild(document.createElement("hr"));
+
+    var copyButton = document.createElement("button");
+    copyButton.setAttribute("class", "btn btn-block btn-default btn-sm");
+    copyButton.innerHTML = "Duplicar";
+    copyButton.setAttribute("onclick", "copyVarInput('" + id + "')");
+    document.getElementById("Settings").appendChild(copyButton);
+
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
+    var deleteButton = document.createElement("button");
+    deleteButton.innerHTML = "Remover";
+    deleteButton.setAttribute("class", "btn btn-block btn-danger btn-sm");
+    deleteButton.setAttribute("onclick", "deleteVarInput('" + id + "')");
+    document.getElementById("Settings").appendChild(deleteButton);
+
+
+}
+
+
+function buildTextBlockSettings(id) {
     var content = document.getElementById("Settings");
     while (content.firstChild) {
         content.removeChild(content.lastChild);
@@ -135,9 +351,12 @@
     bcLabel.innerHTML = "Cor de Fundo:";
     document.getElementById("Settings").appendChild(bcLabel);
     document.getElementById("Settings").appendChild(document.createElement("br"));
+    var bcDiv = document.createElement("div");
+    bcDiv.style.display = "flex";
+
     var bcExp = document.createElement("input");
     bcExp.setAttribute("id", "BackgroundColor");
-    bcExp.setAttribute("type", "color");
+    bcExp.setAttribute("type", "text");
     bcExp.setAttribute("onchange", "updateTextBlockConfig('" + id + "')");
     bcExp.setAttribute("class", "form-control");
     if (textBlock.style.backgroundColor == null || textBlock.style.backgroundColor == "") {
@@ -146,8 +365,25 @@
     else {
         bcExp.value = textBlock.style.backgroundColor;
     }
-    
-    document.getElementById("Settings").appendChild(bcExp);
+
+    bcExp.style.width = "65%";
+    bcDiv.appendChild(bcExp);
+
+    var bctExp = document.createElement("input");
+    bctExp.setAttribute("id", "BackgroundColorPicker");
+    bctExp.setAttribute("type", "color");
+    bctExp.setAttribute("onchange", "changeColor('BackgroundColorPicker','BackgroundColor')");
+    bctExp.setAttribute("class", "form-control");
+    if (textBlock.style.backgroundColor == null || textBlock.style.backgroundColor == "") {
+        bctExp.value = "#ffffff";
+    }
+    else {
+        bctExp.value = textBlock.style.backgroundColor;
+    }
+    bctExp.style.width = "30%";
+    bctExp.style.marginLeft = "3px";
+    bcDiv.appendChild(bctExp);
+    document.getElementById("Settings").appendChild(bcDiv);
     document.getElementById("Settings").appendChild(document.createElement("br"));
 
     document.getElementById("Settings").appendChild(document.createElement("hr"));
@@ -538,13 +774,28 @@ function buildIndicatorSettings(id) {
     bcLabel.innerHTML = "Cor de Fundo:";
     cfDiv.appendChild(bcLabel);
     cfDiv.appendChild(document.createElement("br"));
+    var bcDiv = document.createElement("div");
+    bcDiv.style.display = "flex";
     var bcExp = document.createElement("input");
     bcExp.setAttribute("id", "BackgroundColor");
-    bcExp.setAttribute("type", "color");
+    bcExp.setAttribute("type", "text");
     bcExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
     bcExp.setAttribute("class", "form-control");
     bcExp.value = indicator.style.backgroundColor;
-    cfDiv.appendChild(bcExp);
+    bcExp.style.width = "75%";
+    bcDiv.appendChild(bcExp);
+
+    var bctExp = document.createElement("input");
+    bctExp.setAttribute("id", "BackgroundColorPicker");
+    bctExp.setAttribute("type", "color");
+    bctExp.setAttribute("onchange", "changeColor('BackgroundColorPicker','BackgroundColor')");
+    bctExp.setAttribute("class", "form-control");
+    bctExp.value = indicator.style.backgroundColor;
+    bctExp.style.width = "25%";
+    bcDiv.appendChild(bctExp);
+
+
+    cfDiv.appendChild(bcDiv);
     cfDiv.appendChild(document.createElement("br"));
     row3.appendChild(cfDiv);
     //Cor de Texto
@@ -555,14 +806,29 @@ function buildIndicatorSettings(id) {
     var tcLabel = document.createElement("label");
     tcLabel.innerHTML = "Cor de Texto:";
     ctDiv.appendChild(tcLabel);
+    var tcDiv = document.createElement("div");
+    tcDiv.style.display = "flex";
     ctDiv.appendChild(document.createElement("br"));
     var tcExp = document.createElement("input");
     tcExp.setAttribute("id", "TextColor");
-    tcExp.setAttribute("type", "color");
+    tcExp.setAttribute("type", "text");
     tcExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
     tcExp.setAttribute("class", "form-control");
     tcExp.value = indicator.style.textColor;
-    ctDiv.appendChild(tcExp);
+    tcExp.style.width = "75%";
+    tcDiv.appendChild(tcExp);
+
+    var tctExp = document.createElement("input");
+    tctExp.setAttribute("id", "TextColorPicker");
+    tctExp.setAttribute("type", "color");
+    tctExp.setAttribute("onchange", "changeColor('TextColorPicker','TextColor')");
+    tctExp.setAttribute("class", "form-control");
+    tctExp.value = indicator.style.textColor;
+    tctExp.style.width = "25%";
+    tcDiv.appendChild(tctExp);
+
+
+    ctDiv.appendChild(tcDiv);
     ctDiv.appendChild(document.createElement("br"));
     row3.appendChild(ctDiv);
     layoutLi.appendChild(row3);
@@ -598,13 +864,28 @@ function buildIndicatorSettings(id) {
     borcLabel.innerHTML = "Cor da Borda:";
     cbDiv.appendChild(borcLabel);
     cbDiv.appendChild(document.createElement("br"));
+    var borcDiv = document.createElement("div");
+    borcDiv.style.display = "flex";
+
     var borcExp = document.createElement("input");
     borcExp.setAttribute("id", "BorderColor");
-    borcExp.setAttribute("type", "color");
+    borcExp.setAttribute("type", "text");
     borcExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
     borcExp.setAttribute("class", "form-control");
     borcExp.value = indicator.style.borderColor;
-    cbDiv.appendChild(borcExp);
+    borcExp.style.width = "75%";
+    borcDiv.appendChild(borcExp);
+
+    var borctExp = document.createElement("input");
+    borctExp.setAttribute("id", "BorderColorPicker");
+    borctExp.setAttribute("type", "color");
+    borctExp.setAttribute("onchange", "changeColor('BorderColorPicker','BorderColor')");
+    borctExp.setAttribute("class", "form-control");
+    borctExp.value = indicator.style.borderColor;
+    borctExp.style.width = "25%";
+    borcDiv.appendChild(borctExp);
+
+    cbDiv.appendChild(borcDiv);
     cbDiv.appendChild(document.createElement("br"));
     row4.appendChild(cbDiv);
     layoutLi.appendChild(row4);
@@ -672,46 +953,72 @@ function buildIndicatorSettings(id) {
     navExp.step = "1";
     navExp.min = "0";
     navExp.max = "128";
-    
     layoutLi.appendChild(navExp);
+
+    //Variables
+    var varNameLabel = document.createElement("label");
+    varNameLabel.innerHTML = "Definir Variávies (Nome):";
+    layoutLi.appendChild(varNameLabel);
+    var expBut2 = document.createElement("button");
+    var iExp2 = document.createElement("i");
+    iExp2.setAttribute("class", "fas fa-code");
+    iExp2.style.color = "#21bfb2";
+    iExp2.style.fontSize = "20px";
+    expBut2.style.border = "none";
+    expBut2.style.marginLeft = "10px";
+    expBut2.appendChild(iExp2);
+    expBut2.setAttribute("onclick", "ExpIndVarLabel('" + id + "')");
+    layoutLi.appendChild(expBut2);
+    layoutLi.appendChild(document.createElement("br"));
+    var varNameExp = document.createElement("input");
+    varNameExp.setAttribute("id", "SetVarsName");
+    varNameExp.setAttribute("type", "text");
+    varNameExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
+    varNameExp.setAttribute("class", "form-control");
+    if (indicator.setVarsName == null) {
+        varNameExp.value = "";
+    }
+    else {
+        varNameExp.value = indicator.setVarsName;
+    }
+
+    layoutLi.appendChild(varNameExp);
+    layoutLi.appendChild(document.createElement("br"));
+
+
+    var varContentLabel = document.createElement("label");
+    varContentLabel.innerHTML = "Definir Variávies (Valor):";
+    layoutLi.appendChild(varContentLabel);
+    var expBut3 = document.createElement("button");
+    var iExp3 = document.createElement("i");
+    iExp3.setAttribute("class", "fas fa-code");
+    iExp3.style.color = "#21bfb2";
+    iExp3.style.fontSize = "20px";
+    expBut3.style.border = "none";
+    expBut3.style.marginLeft = "10px";
+    expBut3.appendChild(iExp3);
+    expBut3.setAttribute("onclick", "ExpIndVarValue('" + id + "')");
+    layoutLi.appendChild(expBut3);
+    layoutLi.appendChild(document.createElement("br"));
+    var varContentExp = document.createElement("input");
+    varContentExp.setAttribute("id", "SetVarsContent");
+    varContentExp.setAttribute("type", "text");
+    varContentExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
+    varContentExp.setAttribute("class", "form-control");
+    if (indicator.setVarsContent == null) {
+        varContentExp.value = "";
+    }
+    else {
+        varContentExp.value = indicator.setVarsContent;
+    }
+
+    layoutLi.appendChild(varContentExp);
     layoutLi.appendChild(document.createElement("br"));
 
     layoutDiv.appendChild(layoutLi);
     document.getElementById("Settings").appendChild(layoutDiv);
 
-    //Icone
-    /*
-
-    // Cor do Icone
    
-    var iconColorLabel = document.createElement("label");
-    iconColorLabel.innerHTML = "Cor do Icone:";
-    document.getElementById("Settings").appendChild(iconColorLabel);
-    document.getElementById("Settings").appendChild(document.createElement("br"));
-    var iconColorExp = document.createElement("input");
-    iconColorExp.setAttribute("id", "IconColor");
-    iconColorExp.setAttribute("type", "color");
-    iconColorExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
-    iconColorExp.setAttribute("class", "form-control");
-    iconColorExp.value = indicator.style.iconColor;
-    document.getElementById("Settings").appendChild(iconColorExp);
-    document.getElementById("Settings").appendChild(document.createElement("br"));
-
-
-    // Icon Size
-    var iconSizeLabel = document.createElement("label");
-    iconSizeLabel.innerHTML = "Tamanho do Icone:";
-    document.getElementById("Settings").appendChild(iconSizeLabel);
-    document.getElementById("Settings").appendChild(document.createElement("br"));
-    var iconSizeExp = document.createElement("input");
-    iconSizeExp.setAttribute("id", "IconSize");
-    iconSizeExp.setAttribute("type", "text");
-    iconSizeExp.setAttribute("onchange", "updateIndicatorConfig('" + id + "')");
-    iconSizeExp.setAttribute("class", "form-control");
-    iconSizeExp.value = indicator.style.iconSize;
-    document.getElementById("Settings").appendChild(iconSizeExp);
-    document.getElementById("Settings").appendChild(document.createElement("br"));
-    */
     
 
     document.getElementById("Settings").appendChild(document.createElement("hr"));
@@ -1102,17 +1409,36 @@ function buildGraphSettings(id,openTab) {
         measureFieldExp.value = measure.expresion;
         measureNameLi.appendChild(measureFieldExp);
        // measureNameLi.appendChild(document.createElement("br"));
+
+        
         var mcLabel = document.createElement("label");
         mcLabel.innerHTML = "Cor:";
         measureNameLi.appendChild(mcLabel);
         measureNameLi.appendChild(document.createElement("br"));
+        var mcDiv = document.createElement("div");
+        mcDiv.style.display = "flex";
+
         var mcExp = document.createElement("input");
         mcExp.setAttribute("id", "MeasureColor" + measure.id);
-        mcExp.setAttribute("type", "color");
+        mcExp.setAttribute("type", "text");
         mcExp.setAttribute("onchange", "updateGraphConfig('" + id + "')");
         mcExp.setAttribute("class", "form-control");
         mcExp.value = measure.color;
-        measureNameLi.appendChild(mcExp);
+        mcExp.style.width = "65%";
+        mcDiv.appendChild(mcExp);
+        var mctExp = document.createElement("input");
+        mctExp.setAttribute("id", "MeasureColorPicker" + measure.id);
+        mctExp.setAttribute("type", "color");
+        mctExp.setAttribute("onchange", "changeColor('MeasureColorPicker" + measure.id + "','MeasureColor" + measure.id + "')");
+        mctExp.setAttribute("class", "form-control");
+        if (measure.color.includes("#")) {
+            mctExp.value = measure.color;
+        }
+        mctExp.style.width = "30%";
+        mcExp.style.marginLeft = "3px";
+
+        mcDiv.appendChild(mctExp);
+        measureNameLi.appendChild(mcDiv);
         measureNameLi.appendChild(document.createElement("br"));
 
 
@@ -1275,14 +1601,19 @@ function buildGraphSettings(id,openTab) {
     LayoutLi.appendChild(row2);
 
     // BackgroundColor
+    
+
 
     var bcLabel = document.createElement("label");
     bcLabel.innerHTML = "Cor de Fundo:";
     LayoutLi.appendChild(bcLabel);
     LayoutLi.appendChild(document.createElement("br"));
+    var bcDiv = document.createElement("div");
+    bcDiv.style.display = "flex";
+
     var bcExp = document.createElement("input");
     bcExp.setAttribute("id", "BackgroundColor");
-    bcExp.setAttribute("type", "color");
+    bcExp.setAttribute("type", "text");
     bcExp.setAttribute("onchange", "updateGraphConfig('" + id + "')");
     bcExp.setAttribute("class", "form-control");
     if (graph.style.backgroundColor == null || graph.style.backgroundColor == "") {
@@ -1291,8 +1622,26 @@ function buildGraphSettings(id,openTab) {
     else {
         bcExp.value = graph.style.backgroundColor;
     }
-    
-    LayoutLi.appendChild(bcExp);
+
+    bcExp.style.width = "65%";
+    bcDiv.appendChild(bcExp);
+
+    var bctExp = document.createElement("input");
+    bctExp.setAttribute("id", "BackgroundColorPicker");
+    bctExp.setAttribute("type", "color");
+    bctExp.setAttribute("onchange", "changeColor('BackgroundColorPicker','BackgroundColor')");
+    bctExp.setAttribute("class", "form-control");
+    if (graph.style.backgroundColor == null || graph.style.backgroundColor == "") {
+        bctExp.value = "#ffffff";
+    }
+    else {
+        bctExp.value = graph.style.backgroundColor;
+    }
+    bctExp.style.width = "30%";
+    bctExp.style.marginLeft = "3px";
+    bcDiv.appendChild(bctExp);
+
+    LayoutLi.appendChild(bcDiv);
     LayoutLi.appendChild(document.createElement("br"));
 
     // ColorList
@@ -1544,6 +1893,15 @@ function deleteTextBlock(id) {
     var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
     var textBlockPos = reportData.config.sheets[sheetPos].textBlocks.map(function (e) { return e.id; }).indexOf(id);
     reportData.config.sheets[sheetPos].textBlocks.splice(textBlockPos, 1);
+    eraseSettings();
+    reloadSheet();
+    setObjEvents();
+}
+
+function deleteVarInput(id) {
+    var sheetPos = reportData.config.sheets.map(function (e) { return e.order; }).indexOf(currentSheet);
+    var varInputPos = reportData.config.sheets[sheetPos].variableInputs.map(function (e) { return e.id; }).indexOf(id);
+    reportData.config.sheets[sheetPos].variableInputs.splice(varInputPos, 1);
     eraseSettings();
     reloadSheet();
     setObjEvents();
@@ -1836,6 +2194,25 @@ function addFilter() {
     }
     reportData.config.sheets[sheetPos].filters.push(filter);
     buildFilterSettings();
+}
+
+function addVar() {
+    var _var = {};
+    _var["id"] = Date.now().toString();
+   
+    _var["name"] = "";
+    _var["content"] = "";
+
+    reportData.config.variablePool.push(_var);
+    buildVariableSettings();
+}
+
+function deleteVar(id) {
+
+    var varPos = reportData.config.variablePool.map(function (e) { return e.id; }).indexOf(id);
+    reportData.config.variablePool.splice(varPos, 1);
+    eraseSettings();
+    buildVariableSettings();
 }
 
 function deleteOdagFilter(name) {
@@ -2226,4 +2603,107 @@ function buildOdagSettings() {
 
 
 
+}
+
+
+function buildVariableSettings() {
+    eraseSettings();
+    if (reportData.config.variablePool == null) reportData.config.variablePool = [];
+    var vars = reportData.config.variablePool;
+    var vLenght;
+    if (vars == null) {
+        vLenght = 0;
+    }
+    else {
+        vLenght = vars.length;
+    }
+    for (var i = 0; i < vLenght; i++) {
+
+        var _var = vars[i];
+        var varDiv = document.createElement("div");
+        varDiv.setAttribute("class", "dropdown");
+        var varButton = document.createElement("button");
+        varButton.setAttribute("onclick", "showContent(this)");
+        // filterButton.setAttribute("class", "btn btn-primary dropdown-toggle");
+        varButton.style.width = "250";
+        varButton.style.marginTop = "10";
+        varButton.setAttribute("class", "btn btn-block btn-secondary btn-sm");
+        varButton.setAttribute("type", "button");
+        //  filterButton.setAttribute("data-toggle", "dropdown");
+        varButton.appendChild(document.createTextNode(_var.name));
+
+        
+
+
+        varDiv.appendChild(varButton);
+        var ulFilter = document.createElement("ul");
+        ulFilter.style.display = "none";
+        //   ulFilter.setAttribute("class", "dropdown-menu");
+
+        
+
+
+        var filterNameLi = document.createElement("li");
+        var filterNameLabel = document.createElement("label");
+        filterNameLabel.innerHTML = "Nome:";
+        filterNameLi.appendChild(filterNameLabel);
+        filterNameLi.appendChild(document.createElement("br"));
+        var filterNameExp = document.createElement("input");
+        filterNameExp.setAttribute("id", "VarName" + _var.id);
+        filterNameExp.setAttribute("type", "text");
+        //filterNameExp.setAttribute("onchange", "updateFilterConfig('" + filter.id + "')");
+        filterNameExp.setAttribute("class", "form-control");
+        filterNameExp.value = _var.name;
+        filterNameLi.appendChild(filterNameExp);
+        filterNameLi.appendChild(document.createElement("br"));
+        var filterFieldLabel = document.createElement("label");
+        filterFieldLabel.innerHTML = "Valor:";
+        filterNameLi.appendChild(filterFieldLabel);
+        filterNameLi.appendChild(document.createElement("br"));
+        var filterFieldExp = document.createElement("input");
+        filterFieldExp.setAttribute("id", "VarContent" + _var.id);
+        filterFieldExp.setAttribute("type", "text");
+        //filterFieldExp.setAttribute("onchange", "updateFilterConfig('" + filter.id + "')");
+        filterFieldExp.setAttribute("class", "form-control");
+        filterFieldExp.value = _var.content;
+        filterNameLi.appendChild(filterFieldExp);
+        filterNameLi.appendChild(document.createElement("br"));
+
+        
+        filterNameLi.appendChild(document.createElement("br"));
+
+
+
+        ulFilter.appendChild(filterNameLi);
+
+        var applyButton = document.createElement("button");
+        applyButton.append(document.createTextNode("Aplicar"));
+        applyButton.setAttribute("class", "btn btn-block btn-info btn-sm");
+        applyButton.setAttribute("onclick", "updateVarConfig('" + _var.id + "')");
+        ulFilter.appendChild(applyButton);
+        ulFilter.appendChild(document.createElement("br"));
+
+
+        var deleteButton = document.createElement("button");
+        deleteButton.innerHTML = "Remover";
+        deleteButton.setAttribute("class", "btn btn-block btn-danger btn-sm");
+        deleteButton.setAttribute("onclick", "deleteVar('" + _var.id + "')");
+        ulFilter.appendChild(deleteButton);
+        varDiv.appendChild(ulFilter);
+        document.getElementById("Settings").appendChild(varDiv);
+    }
+
+    var addfilterButton = document.createElement("button");
+    addfilterButton.innerHTML = "Nova Variável";
+    addfilterButton.setAttribute("onclick", "addVar()");
+    addfilterButton.style.width = "250";
+    addfilterButton.style.marginTop = "10";
+    addfilterButton.setAttribute("class", "btn btn-block btn-info btn-sm");
+    document.getElementById("Settings").appendChild(addfilterButton);
+    document.getElementById("Settings").appendChild(document.createElement("br"));
+
+}
+
+function changeColor(picker, text) {
+    document.getElementById(text).value = document.getElementById(picker).value;
 }

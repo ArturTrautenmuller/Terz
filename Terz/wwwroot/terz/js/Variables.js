@@ -17,6 +17,8 @@ var SortOptions = ['none','crescente','decrescente'];
 var SortOptionsLabel = ['Nenhum', 'Crescente', 'Decrescente'];
 var SortAxis = ['dim', 'mea'];
 var SortAxisLabel = ['Dimensão', 'Medida'];
+var VarInputTypeLabel = ['Dropdown', 'Texto'];
+var VarInputType = ['select', 'text'];
 var keepAllData = true;
 var browseData;
 var browseConfig;

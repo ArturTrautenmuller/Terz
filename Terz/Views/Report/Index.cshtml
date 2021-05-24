@@ -210,6 +210,7 @@
 <script src="~/terz/js/Waterfall.js"></script>
 <script src="~/terz/js/LineDateCompareChart.js"></script>
 <script src="~/terz/js/TextBlock.js"></script>
+<script src="~/terz/js/VariableInput.js"></script>
 <script>
     function on() {
         document.getElementById("overlay").style.display = "block";
@@ -328,6 +329,7 @@
         buildIndicators(currentSheet);
         buildGraphs(currentSheet);
         buildTextBlocks(currentSheet);
+        buildVariableInput(currentSheet);
         applyDefaultFilters(currentSheet);
 
     }
@@ -671,6 +673,7 @@
         buildIndicators(currentSheet);
         buildGraphs(currentSheet);
         buildTextBlocks(currentSheet);
+        buildVariableInput(currentSheet);
         hideNonExpandedObjects();
 
     }
@@ -764,6 +767,7 @@
         buildIndicators(currentSheet);
         buildGraphs(currentSheet);
         buildTextBlocks(currentSheet);
+        buildVariableInput(currentSheet);
         hideNonExpandedObjects();
         applyDefaultFilters(currentSheet);
 

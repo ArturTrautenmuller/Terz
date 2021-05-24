@@ -19,8 +19,8 @@
        // indicatorDiv.style.border = "0px solid black";
         // indicatorDiv.style.borderRadius = "7px";
         indicatorDiv.style.borderStyle = "solid";
-        indicatorDiv.style.borderRadius = indicator.style.borderRadius+"px";
-        indicatorDiv.style.borderColor = indicator.style.borderColor;
+        indicatorDiv.style.borderRadius = indicator.style.borderRadius + "px";
+        indicatorDiv.style.borderColor = solveVariables(indicator.style.borderColor);
         indicatorDiv.style.borderWidth = indicator.style.borderThickness + "px";
         indicatorDiv.style.display = "flex";
 
@@ -32,9 +32,10 @@
         dataDiv.style.marginTop = "5px";
 
         var labelTitle = document.createElement("label");
-        labelTitle.appendChild(document.createTextNode(indicator.measure.name));
+        var TitleText = solveVariables(indicator.measure.name);
+        labelTitle.appendChild(document.createTextNode(TitleText));
 
-        labelTitle.style.color = indicator.style.textColor;
+        labelTitle.style.color = solveVariables(indicator.style.textColor);
         labelTitle.style.fontSize = indicator.style.fontSize;
         dataDiv.appendChild(labelTitle);
         dataDiv.appendChild(document.createElement("br"));
@@ -60,8 +61,8 @@
 
         var value = document.createTextNode(indExpression);
         labelValue.appendChild(value);
-     
-        labelValue.style.color = indicator.style.textColor;
+
+        labelValue.style.color = solveVariables(indicator.style.textColor);
         labelValue.style.fontSize = indicator.style.fontSize;
         dataDiv.appendChild(labelValue);
       
@@ -73,7 +74,7 @@
             iconDiv.style.textAlign = "center";
             var icon = document.createElement("i");
             icon.setAttribute("class", indicator["icon"]);
-            icon.style.color = indicator.style.textColor;
+            icon.style.color = solveVariables(indicator.style.textColor);
             icon.style.fontSize = indicator.style.fontSize * 2 + "px";
             icon.style.marginTop = indicator.style.fontSize + "px";
            // icon.style.marginRight = (indicator.style.fontSize/5 + 20) + "px";
@@ -86,9 +87,9 @@
 
 
         indicatorDiv.appendChild(dataDiv);
-        indicatorDiv.style.backgroundColor = indicator.style.backgroundColor;
-        if (indicator.navigateTo != null && indicator.navigateTo != "" && indicator.navigateTo != "0" && !window.location.href.includes('Editor')) {
-            indicatorDiv.setAttribute("onclick", "changeSheet('" + indicator.navigateTo + "')");
+        indicatorDiv.style.backgroundColor = solveVariables(indicator.style.backgroundColor);
+        if (!window.location.href.includes('Editor')) {
+            indicatorDiv.setAttribute("onclick", "indicatorClickEvent('" + sheetOrder + "','" + indicator.id + "')");
         }
     
 
@@ -99,4 +100,34 @@
         document.getElementById("Graphs").appendChild(indicatorDiv);
     }
 
+}
+
+function indicatorClickEvent(sheetOrder,id) {
+    var sheet = reportData.config.sheets.filter(function (x) { return x.order == sheetOrder })[0];
+    var indicators = sheet.indicators;
+    var indicator = indicators.filter(function (x) { return x.id == id })[0];
+
+    var setVar = indicator.setVarsName != null && indicator.setVarsName != "" && indicator.setVarsContent != null && indicator.setVarsContent != "";
+    var navigate = indicator.navigateTo != null && indicator.navigateTo != "" && indicator.navigateTo != "0";
+
+    if (setVar) {
+        var varsName = indicator.setVarsName.split(";");
+        var varsContent = indicator.setVarsContent.split(";");
+
+        if (varsName.length == varsContent.length) {
+
+            for (var i = 0; i < varsName.length; i++) {
+                var varPos = reportData.config.variablePool.map(function (e) { return e.name; }).indexOf(varsName[i]);
+                reportData.config.variablePool[varPos].content = varsContent[i];
+            }
+
+        }
+
+    }
+
+    if (navigate)
+        changeSheet(indicator.navigateTo);
+
+    if (setVar && !navigate)
+        reloadGraphs();
 }

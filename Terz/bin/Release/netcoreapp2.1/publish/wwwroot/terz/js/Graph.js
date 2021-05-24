@@ -42,6 +42,25 @@
             graphTitleLabel.style.fontSize = "18px";
             graphTitleLabel.appendChild(document.createTextNode(graph.title));
             graphTitle.appendChild(graphTitleLabel);
+
+            var expandButton = document.createElement("a");
+            var expandIcon = document.createElement("i");
+            
+
+            if (ExpandedGraph == graph.id) {
+                expandIcon.setAttribute("class", "fas fa-compress-alt");
+                expandButton.setAttribute("onclick", "restoreGraph()");
+            }
+            else {
+                expandIcon.setAttribute("class", "fas fa-expand-alt");
+                expandButton.setAttribute("onclick", "expandGraph('" + graph.id + "')");
+            }
+            expandButton.appendChild(expandIcon);
+            expandButton.style.float = "right";
+            expandButton.style.fontSize = "18px";
+            expandButton.style.marginRight = "12px";
+            graphTitle.appendChild(expandButton);
+
             graphContainer.appendChild(graphTitle);
         }
         var graphDiv = document.createElement("div");

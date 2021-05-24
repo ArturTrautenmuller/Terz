@@ -12,6 +12,8 @@ namespace Terz_Core
         public Measure Measure { get; set; }
         public string Icon { get; set; }
         public string NavigateTo { get; set; }
+        public string SetVarsName { get; set; }
+        public string SetVarsContent { get; set; }
 
     }
 }

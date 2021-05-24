@@ -3,14 +3,22 @@
 function EvalueteEx(expressions, dataframe, fields) {
     if (fields == null) {
 
-
+        expressions = solveVariables(expressions);
         var tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == dataframe.join(",") })[0].table));
    
         var reducedExpression = solve(expressions, tempDf, dataframe.join(","),fields,null);
         return math.eval(reducedExpression);
     }
     else {
-       
+        //solve variables
+
+        for (var e = 0; e < expressions.length; e++) {
+            expressions[e] = solveVariables(expressions[e]);
+        }
+
+        for (var f = 0; f < fields.length; f++) {
+            fields[f] = solveVariables(fields[f]);
+        }
         
         var tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == dataframe.join(",") })[0].table));
        
@@ -76,6 +84,46 @@ function EvalueteEx(expressions, dataframe, fields) {
     }
 
     return 0;
+}
+
+function solveVariables(expression) {
+    if (!expression.includes("var(")) return expression;
+    if (reportData.config.variablePool == null) return expression;
+
+    var returnExpression = expression;
+    let pattern = /(?=var\().+?(?<=\))/g;
+    let res = pattern.exec(expression);
+    while (res != null) {
+        
+        var varExp = res[0];
+
+        var varName = varExp.replace('var(', '').slice(0, -1);
+        var vPos = 0;
+        if (varName.includes(",")) {
+            vPos = parseInt(varName.split(",")[1].trim());
+            varName = varName.split(",")[0].trim();
+
+        }
+
+        var _var = reportData.config.variablePool.filter(function (x) { return x.name == varName });
+        if (_var == null) return expression;
+        if (vPos > 0) {
+            var varContent = _var[0].content.split("&")[vPos - 1];
+        }
+        else {
+            var varContent = _var[0].content;
+        }
+        
+        
+
+        returnExpression = returnExpression.replace(varExp, varContent);
+
+        res = pattern.exec(expression);
+
+    }
+
+    return returnExpression;
+
 }
 
 function applySelectionsOp(name) {

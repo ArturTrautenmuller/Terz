@@ -26,13 +26,13 @@
         textBlockDiv.style.overflowY = "auto";
 
         if (textBlock.style.backgroundColor != null && textBlock.style.backgroundColor != "") {
-            textBlockDiv.style.backgroundColor = textBlock.style.backgroundColor;
+            textBlockDiv.style.backgroundColor = solveVariables(textBlock.style.backgroundColor);
         }
 
         textBlockDiv.setAttribute("id", "txt" + textBlock.id);
         textBlockDiv.setAttribute("class", "resize-drag");
 
-        var contentText = textBlock.text;
+        var contentText = solveVariables(textBlock.text);
 
         let pattern = /(?=\{\<).+?(?<=\>\})/g;
         let res = pattern.exec(contentText);
@@ -76,7 +76,8 @@
         if (textBlock.title != null && textBlock.title != "") {
             var title = document.createElement("h4");
             title.style.fontWeight = "bold";
-            title.appendChild(document.createTextNode(textBlock.title));
+            var TitleText = solveVariables(textBlock.title);
+            title.appendChild(document.createTextNode(TitleText));
             textBlockDiv.appendChild(title);
         }
 
