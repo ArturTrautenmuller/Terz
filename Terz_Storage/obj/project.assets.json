@@ -4990,7 +4990,6 @@
         "framework": ".NETCoreApp,Version=v2.1",
         "dependencies": {
           "Confluent.Kafka": "1.1.0",
-          "Microsoft.NETCore.App": "2.1.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.1.9",
           "MySql.Data": "8.0.20",
           "Newtonsoft.Json": "12.0.3",
@@ -5008,7 +5007,6 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
         "dependencies": {
-          "Microsoft.NETCore.App": "2.1.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.1.9",
           "Terz": "1.0.0",
           "Terz_Core": "1.0.0",
@@ -13584,22 +13582,23 @@
   },
   "packageFolders": {
     "C:\\Users\\artur\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Storage\\Terz_Storage.csproj",
+      "projectUniqueName": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Storage\\Terz_Storage.csproj",
       "projectName": "Terz_Storage",
-      "projectPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Storage\\Terz_Storage.csproj",
+      "projectPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Storage\\Terz_Storage.csproj",
       "packagesPath": "C:\\Users\\artur\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Storage\\obj\\",
+      "outputPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Storage\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
         "C:\\Users\\artur\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -13611,12 +13610,13 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
+          "targetAlias": "netcoreapp2.1",
           "projectReferences": {
-            "C:\\Users\\artur\\source\\repos\\Terz\\Terz_API\\Terz_API.csproj": {
-              "projectPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_API\\Terz_API.csproj"
+            "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_API\\Terz_API.csproj": {
+              "projectPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_API\\Terz_API.csproj"
             },
-            "C:\\Users\\artur\\source\\repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj": {
-              "projectPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj"
+            "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj": {
+              "projectPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj"
             }
           }
         }
@@ -13629,6 +13629,7 @@
     },
     "frameworks": {
       "netcoreapp2.1": {
+        "targetAlias": "netcoreapp2.1",
         "dependencies": {
           "Microsoft.AspNetCore.App": {
             "suppressParent": "All",
@@ -13642,6 +13643,7 @@
             "version": "[2.1.2, )"
           },
           "Microsoft.NETCore.App": {
+            "suppressParent": "All",
             "target": "Package",
             "version": "[2.1.0, )",
             "autoReferenced": true
@@ -13656,10 +13658,16 @@
           }
         },
         "imports": [
-          "net461"
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
         ],
         "assetTargetFallback": true,
-        "warn": true
+        "warn": true,
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

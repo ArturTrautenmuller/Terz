@@ -1299,7 +1299,6 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
         "dependencies": {
-          "Microsoft.NETCore.App": "2.1.0",
           "Newtonsoft.Json": "12.0.3",
           "Terz_Core": "1.0.0",
           "Terz_DataBaseLayer": "1.0.0"
@@ -5028,22 +5027,23 @@
   },
   "packageFolders": {
     "C:\\Users\\artur\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Task_Scheduler\\Terz_Task_Scheduler.csproj",
+      "projectUniqueName": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Task_Scheduler\\Terz_Task_Scheduler.csproj",
       "projectName": "Terz_Task_Scheduler",
-      "projectPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Task_Scheduler\\Terz_Task_Scheduler.csproj",
+      "projectPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Task_Scheduler\\Terz_Task_Scheduler.csproj",
       "packagesPath": "C:\\Users\\artur\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Task_Scheduler\\obj\\",
+      "outputPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Task_Scheduler\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
         "C:\\Users\\artur\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5055,15 +5055,16 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
+          "targetAlias": "netcoreapp2.1",
           "projectReferences": {
-            "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Core\\Terz_Core.csproj": {
-              "projectPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Core\\Terz_Core.csproj"
+            "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Core\\Terz_Core.csproj": {
+              "projectPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Core\\Terz_Core.csproj"
             },
-            "C:\\Users\\artur\\source\\repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj": {
-              "projectPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj"
+            "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj": {
+              "projectPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj"
             },
-            "C:\\Users\\artur\\source\\repos\\Terz\\Terz_ProcessingExecuter\\Terz_ProcessingExecuter.csproj": {
-              "projectPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_ProcessingExecuter\\Terz_ProcessingExecuter.csproj"
+            "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_ProcessingExecuter\\Terz_ProcessingExecuter.csproj": {
+              "projectPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_ProcessingExecuter\\Terz_ProcessingExecuter.csproj"
             }
           }
         }
@@ -5076,18 +5077,26 @@
     },
     "frameworks": {
       "netcoreapp2.1": {
+        "targetAlias": "netcoreapp2.1",
         "dependencies": {
           "Microsoft.NETCore.App": {
+            "suppressParent": "All",
             "target": "Package",
             "version": "[2.1.0, )",
             "autoReferenced": true
           }
         },
         "imports": [
-          "net461"
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
         ],
         "assetTargetFallback": true,
-        "warn": true
+        "warn": true,
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

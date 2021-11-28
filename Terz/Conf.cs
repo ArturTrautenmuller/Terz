@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 namespace Terz
 {
 
+    // Location
     public static class Location
     {
 #if DEBUG
