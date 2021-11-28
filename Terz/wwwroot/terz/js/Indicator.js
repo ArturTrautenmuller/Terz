@@ -11,17 +11,17 @@
     for (var i = 0; i < iLenght; i++) {
         var indicator = indicators[i];
         var indicatorDiv = document.createElement("div");
-        indicatorDiv.style.marginLeft = indicator.style.x;
-        indicatorDiv.style.marginTop = indicator.style.y;
-        indicatorDiv.style.width = indicator.style.width;
-        indicatorDiv.style.height = indicator.style.height;
+        indicatorDiv.style.marginLeft = solveVariables(indicator.style.x);
+        indicatorDiv.style.marginTop = solveVariables(indicator.style.y);
+        indicatorDiv.style.width = solveVariables(indicator.style.width);
+        indicatorDiv.style.height = solveVariables(indicator.style.height);
         indicatorDiv.style.position = "absolute";
        // indicatorDiv.style.border = "0px solid black";
         // indicatorDiv.style.borderRadius = "7px";
         indicatorDiv.style.borderStyle = "solid";
-        indicatorDiv.style.borderRadius = indicator.style.borderRadius + "px";
+        indicatorDiv.style.borderRadius = solveVariables(indicator.style.borderRadius) + "px";
         indicatorDiv.style.borderColor = solveVariables(indicator.style.borderColor);
-        indicatorDiv.style.borderWidth = indicator.style.borderThickness + "px";
+        indicatorDiv.style.borderWidth = solveVariables(indicator.style.borderThickness) + "px";
         indicatorDiv.style.display = "flex";
 
         indicatorDiv.setAttribute("id", "ind" + indicator.id);
@@ -36,7 +36,7 @@
         labelTitle.appendChild(document.createTextNode(TitleText));
 
         labelTitle.style.color = solveVariables(indicator.style.textColor);
-        labelTitle.style.fontSize = indicator.style.fontSize;
+        labelTitle.style.fontSize = solveVariables(indicator.style.fontSize);
         dataDiv.appendChild(labelTitle);
         dataDiv.appendChild(document.createElement("br"));
         var labelValue = document.createElement("label");
@@ -63,7 +63,7 @@
         labelValue.appendChild(value);
 
         labelValue.style.color = solveVariables(indicator.style.textColor);
-        labelValue.style.fontSize = indicator.style.fontSize;
+        labelValue.style.fontSize = solveVariables(indicator.style.fontSize);
         dataDiv.appendChild(labelValue);
       
 
@@ -75,8 +75,8 @@
             var icon = document.createElement("i");
             icon.setAttribute("class", indicator["icon"]);
             icon.style.color = solveVariables(indicator.style.textColor);
-            icon.style.fontSize = indicator.style.fontSize * 2 + "px";
-            icon.style.marginTop = indicator.style.fontSize + "px";
+            icon.style.fontSize = solveVariables(indicator.style.fontSize) * 2 + "px";
+            icon.style.marginTop = solveVariables(indicator.style.fontSize) + "px";
            // icon.style.marginRight = (indicator.style.fontSize/5 + 20) + "px";
             iconDiv.appendChild(icon);
             indicatorDiv.appendChild(iconDiv);

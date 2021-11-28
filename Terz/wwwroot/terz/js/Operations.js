@@ -87,8 +87,22 @@ function EvalueteEx(expressions, dataframe, fields) {
 }
 
 function solveVariables(expression) {
+    if (expression == null) return expression;
+    returnExpression = expression.toString();
+    var i = 0;
+    while (returnExpression.includes("var(")) {
+        returnExpression = solveVariablesBase(returnExpression);
+        i++;
+        if (i > 25) break;
+    }
+
+    return returnExpression;
+}
+function solveVariablesBase(expression) {
+    
+    if (expression == null) return expression;
     if (!expression.includes("var(")) return expression;
-    if (reportData.config.variablePool == null) return expression;
+    if (reportData.config.variablePool == null) return "0";
 
     var returnExpression = expression;
     let pattern = /(?=var\().+?(?<=\))/g;
@@ -106,11 +120,12 @@ function solveVariables(expression) {
         }
 
         var _var = reportData.config.variablePool.filter(function (x) { return x.name == varName });
-        if (_var == null) return expression;
+        if (_var == null) return "0";
         if (vPos > 0) {
             var varContent = _var[0].content.split("&")[vPos - 1];
         }
         else {
+            if (_var[0] == null) return "0";
             var varContent = _var[0].content;
         }
         

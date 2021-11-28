@@ -11,10 +11,10 @@
     for (var i = 0; i < tLenght; i++) {
         var textBlock = textBlocks[i];
         var textBlockDiv = document.createElement("div");
-        textBlockDiv.style.marginLeft = textBlock.style.x;
-        textBlockDiv.style.marginTop = textBlock.style.y;
-        textBlockDiv.style.width = textBlock.style.width;
-        textBlockDiv.style.height = textBlock.style.height;
+        textBlockDiv.style.marginLeft = solveVariables(textBlock.style.x);
+        textBlockDiv.style.marginTop = solveVariables(textBlock.style.y);
+        textBlockDiv.style.width = solveVariables(textBlock.style.width);
+        textBlockDiv.style.height = solveVariables(textBlock.style.height);
         textBlockDiv.style.position = "absolute";
         textBlockDiv.style.borderLeft = "5px solid lightblue";
         textBlockDiv.style.borderBottom = "2px solid lightgrey";

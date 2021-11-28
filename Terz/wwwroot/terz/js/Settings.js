@@ -1431,6 +1431,7 @@ function buildGraphSettings(id,openTab) {
         mctExp.setAttribute("type", "color");
         mctExp.setAttribute("onchange", "changeColor('MeasureColorPicker" + measure.id + "','MeasureColor" + measure.id + "')");
         mctExp.setAttribute("class", "form-control");
+        if (measure.color == null) measure.color = "#cccccc";
         if (measure.color.includes("#")) {
             mctExp.value = measure.color;
         }

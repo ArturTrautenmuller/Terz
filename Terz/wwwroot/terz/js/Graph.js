@@ -2,9 +2,7 @@
     var sheet = reportData.config.sheets.filter(function (x) { return x.order == sheetOrder })[0];
     var graphs = JSON.parse(JSON.stringify(sheet.graphs));
 
-    for (var g = 0; g < graph.measures.length; g++) {
-        graph.measures[g].color = solveVariables(graph.measures[g].color);
-    }
+   
 
     var gLenght;
     if (graphs == null) {
@@ -29,15 +27,18 @@
 
     for (var i = 0; i < gLenght; i++) {
         var graph = graphs[i];
+        for (var g = 0; g < graph.measures.length; g++) {
+            graph.measures[g].color = solveVariables(graph.measures[g].color);
+        }
 
         var graphContainer = document.createElement("div");
         graphContainer.setAttribute("id", "gc" + graph.id);
         graphContainer.style.border = "2px solid lightgrey";
         graphContainer.style.borderRadius = "7px";
-        graphContainer.style.marginLeft = graph.style.x;
-        graphContainer.style.marginTop = graph.style.y;
-        graphContainer.style.width = graph.style.width;
-        graphContainer.style.height = graph.style.height;
+        graphContainer.style.marginLeft = solveVariables(graph.style.x);
+        graphContainer.style.marginTop = solveVariables(graph.style.y);
+        graphContainer.style.width = solveVariables(graph.style.width);
+        graphContainer.style.height = solveVariables(graph.style.height);
         graphContainer.setAttribute("class", "resize-drag");
 
         if (graph.objectType != 'table') {

@@ -68,3 +68,7 @@ C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Razor\Views\Edit
 C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Razor\Views\Editor\TextExp.g.cshtml.cs
 C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Razor\Views\Odag\OdagPage.g.cshtml.cs
 C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Razor\Views\User\SharedReport.g.cshtml.cs
+C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Razor\Views\Editor\VarIndLabelExp.g.cshtml.cs
+C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Razor\Views\Editor\VarIndValueExp.g.cshtml.cs
+C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Razor\Views\Editor\VarLabelExp.g.cshtml.cs
+C:\Users\artur\source\repos\Terz\Terz\obj\Release\netcoreapp2.1\Razor\Views\Editor\VarValueExp.g.cshtml.cs

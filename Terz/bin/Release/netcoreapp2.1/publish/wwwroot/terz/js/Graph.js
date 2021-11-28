@@ -1,6 +1,9 @@
 ﻿function buildGraphs(sheetOrder) {
     var sheet = reportData.config.sheets.filter(function (x) { return x.order == sheetOrder })[0];
-    var graphs = sheet.graphs;
+    var graphs = JSON.parse(JSON.stringify(sheet.graphs));
+
+   
+
     var gLenght;
     if (graphs == null) {
         gLenght = 0;
@@ -24,15 +27,18 @@
 
     for (var i = 0; i < gLenght; i++) {
         var graph = graphs[i];
+        for (var g = 0; g < graph.measures.length; g++) {
+            graph.measures[g].color = solveVariables(graph.measures[g].color);
+        }
 
         var graphContainer = document.createElement("div");
         graphContainer.setAttribute("id", "gc" + graph.id);
         graphContainer.style.border = "2px solid lightgrey";
         graphContainer.style.borderRadius = "7px";
-        graphContainer.style.marginLeft = graph.style.x;
-        graphContainer.style.marginTop = graph.style.y;
-        graphContainer.style.width = graph.style.width;
-        graphContainer.style.height = graph.style.height;
+        graphContainer.style.marginLeft = solveVariables(graph.style.x);
+        graphContainer.style.marginTop = solveVariables(graph.style.y);
+        graphContainer.style.width = solveVariables(graph.style.width);
+        graphContainer.style.height = solveVariables(graph.style.height);
         graphContainer.setAttribute("class", "resize-drag");
 
         if (graph.objectType != 'table') {
@@ -40,7 +46,8 @@
             var graphTitle = document.createElement("div");
             var graphTitleLabel = document.createElement("label");
             graphTitleLabel.style.fontSize = "18px";
-            graphTitleLabel.appendChild(document.createTextNode(graph.title));
+            graphTitleText = solveVariables(graph.title);
+            graphTitleLabel.appendChild(document.createTextNode(graphTitleText));
             graphTitle.appendChild(graphTitleLabel);
 
             var expandButton = document.createElement("a");
@@ -75,7 +82,7 @@
        /* if (['bar', 'pie', 'line', 'network', 'table', 'bubble', 'sankey', 'timeline', 'linedate', 'pyramid', 'compare', 'gaugi', 'variance', 'waterfall'].includes(graph.objectType)) {
            
         }*/
-        graphContainer.style.backgroundColor = graph.style.backgroundColor;
+        graphContainer.style.backgroundColor = solveVariables(graph.style.backgroundColor);
 
         graphContainer.appendChild(graphDiv);
 

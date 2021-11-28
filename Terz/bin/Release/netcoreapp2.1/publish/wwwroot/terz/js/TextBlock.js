@@ -11,10 +11,10 @@
     for (var i = 0; i < tLenght; i++) {
         var textBlock = textBlocks[i];
         var textBlockDiv = document.createElement("div");
-        textBlockDiv.style.marginLeft = textBlock.style.x;
-        textBlockDiv.style.marginTop = textBlock.style.y;
-        textBlockDiv.style.width = textBlock.style.width;
-        textBlockDiv.style.height = textBlock.style.height;
+        textBlockDiv.style.marginLeft = solveVariables(textBlock.style.x);
+        textBlockDiv.style.marginTop = solveVariables(textBlock.style.y);
+        textBlockDiv.style.width = solveVariables(textBlock.style.width);
+        textBlockDiv.style.height = solveVariables(textBlock.style.height);
         textBlockDiv.style.position = "absolute";
         textBlockDiv.style.borderLeft = "5px solid lightblue";
         textBlockDiv.style.borderBottom = "2px solid lightgrey";
@@ -26,13 +26,13 @@
         textBlockDiv.style.overflowY = "auto";
 
         if (textBlock.style.backgroundColor != null && textBlock.style.backgroundColor != "") {
-            textBlockDiv.style.backgroundColor = textBlock.style.backgroundColor;
+            textBlockDiv.style.backgroundColor = solveVariables(textBlock.style.backgroundColor);
         }
 
         textBlockDiv.setAttribute("id", "txt" + textBlock.id);
         textBlockDiv.setAttribute("class", "resize-drag");
 
-        var contentText = textBlock.text;
+        var contentText = solveVariables(textBlock.text);
 
         let pattern = /(?=\{\<).+?(?<=\>\})/g;
         let res = pattern.exec(contentText);
@@ -76,7 +76,8 @@
         if (textBlock.title != null && textBlock.title != "") {
             var title = document.createElement("h4");
             title.style.fontWeight = "bold";
-            title.appendChild(document.createTextNode(textBlock.title));
+            var TitleText = solveVariables(textBlock.title);
+            title.appendChild(document.createTextNode(TitleText));
             textBlockDiv.appendChild(title);
         }
 
