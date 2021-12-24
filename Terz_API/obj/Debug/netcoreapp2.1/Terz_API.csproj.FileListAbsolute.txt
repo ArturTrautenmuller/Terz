@@ -2,7 +2,6 @@ C:\Users\artur\source\repos\Terz\Terz_API\bin\Debug\netcoreapp2.1\Terz_API.deps.
 C:\Users\artur\source\repos\Terz\Terz_API\bin\Debug\netcoreapp2.1\Terz_API.runtimeconfig.json
 C:\Users\artur\source\repos\Terz\Terz_API\bin\Debug\netcoreapp2.1\Terz_API.runtimeconfig.dev.json
 C:\Users\artur\source\repos\Terz\Terz_API\bin\Debug\netcoreapp2.1\Terz_API.dll
-C:\Users\artur\source\repos\Terz\Terz_API\obj\Debug\netcoreapp2.1\Terz_API.csprojAssemblyReference.cache
 C:\Users\artur\source\repos\Terz\Terz_API\obj\Debug\netcoreapp2.1\Terz_API.csproj.CoreCompileInputs.cache
 C:\Users\artur\source\repos\Terz\Terz_API\obj\Debug\netcoreapp2.1\Terz_API.RazorAssemblyInfo.cache
 C:\Users\artur\source\repos\Terz\Terz_API\obj\Debug\netcoreapp2.1\Terz_API.RazorAssemblyInfo.cs
@@ -21,3 +20,11 @@ C:\Users\artur\source\repos\Terz\Terz_API\bin\Debug\netcoreapp2.1\Terz.Views.dll
 C:\Users\artur\source\repos\Terz\Terz_API\bin\Debug\netcoreapp2.1\Terz.Views.pdb
 C:\Users\artur\source\repos\Terz\Terz_API\bin\Debug\netcoreapp2.1\Terz.dll
 C:\Users\artur\source\repos\Terz\Terz_API\bin\Debug\netcoreapp2.1\Terz.pdb
+C:\Users\artur\source\repos\Terz\Terz_API\bin\Debug\netcoreapp2.1\Terz.deps.json
+C:\Users\artur\source\repos\Terz\Terz_API\bin\Debug\netcoreapp2.1\Terz.runtimeconfig.json
+C:\Users\artur\source\repos\Terz\Terz_API\bin\Debug\netcoreapp2.1\Terz.runtimeconfig.dev.json
+C:\Users\artur\source\repos\Terz\Terz_API\bin\Debug\netcoreapp2.1\appsettings.Development.json
+C:\Users\artur\source\repos\Terz\Terz_API\bin\Debug\netcoreapp2.1\appsettings.json
+C:\Users\artur\source\repos\Terz\Terz_API\obj\Debug\netcoreapp2.1\Terz_API.csproj.AssemblyReference.cache
+C:\Users\artur\source\repos\Terz\Terz_API\obj\Debug\netcoreapp2.1\Terz_API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\artur\source\repos\Terz\Terz_API\obj\Debug\netcoreapp2.1\Terz_API.genruntimeconfig.cache

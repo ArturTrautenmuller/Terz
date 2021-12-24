@@ -6,4 +6,5 @@ C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\obj\Debug\netcoreapp2.1\Terz
 C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\bin\Debug\netcoreapp2.1\Terz_DataBaseLayer.pdb
 C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\obj\Debug\netcoreapp2.1\Terz_DataBaseLayer.dll
 C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\obj\Debug\netcoreapp2.1\Terz_DataBaseLayer.pdb
-C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\obj\Debug\netcoreapp2.1\Terz_DataBaseLayer.csprojAssemblyReference.cache
+C:\Users\artur\Source\Repos\Terz\Terz_DataBaseLayer\obj\Debug\netcoreapp2.1\Terz_DataBaseLayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\obj\Debug\netcoreapp2.1\Terz_DataBaseLayer.csproj.AssemblyReference.cache

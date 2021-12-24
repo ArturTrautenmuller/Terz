@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BozpgAHXRzMjBuS2I4eQwy19ZqR3nhBsTFvoU56hhZ9SxjbVE01SMgbny0xTnqjkHCRayfoXBFii595beK1igA==",
+  "dgSpecHash": "2gmqodEBe8021VnHQqnyGwXyn8d6j+4ngU+eB7uhjMv6k5ijaAyeqHDTWd4nBxGNC42R+Xkp6Mil/amyKneq4Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj",
+  "projectFilePath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\artur\\.nuget\\packages\\bouncycastle.netcore\\1.8.3\\bouncycastle.netcore.1.8.3.nupkg.sha512",
     "C:\\Users\\artur\\.nuget\\packages\\google.protobuf\\3.6.1\\google.protobuf.3.6.1.nupkg.sha512",

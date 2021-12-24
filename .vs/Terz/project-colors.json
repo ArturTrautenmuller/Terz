@@ -1,0 +1,21 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Arquivos Diversos",
+      "ColorIndex": -1
+    },
+    "97d1c87d-79d6-4797-be88-340aeb1ac6c2": {
+      "ProjectGuid": "97d1c87d-79d6-4797-be88-340aeb1ac6c2",
+      "DisplayName": "Terz_Core",
+      "ColorIndex": 0
+    },
+    "f7d7c9cc-a69c-4d6f-99e5-0c7f43a69f8b": {
+      "ProjectGuid": "f7d7c9cc-a69c-4d6f-99e5-0c7f43a69f8b",
+      "DisplayName": "Terz",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}

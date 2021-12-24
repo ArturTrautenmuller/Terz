@@ -1,9 +1,10 @@
 C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\bin\Release\netcoreapp2.1\Terz_DataBaseLayer.deps.json
 C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\bin\Release\netcoreapp2.1\Terz_DataBaseLayer.dll
 C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\bin\Release\netcoreapp2.1\Terz_DataBaseLayer.pdb
-C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\obj\Release\netcoreapp2.1\Terz_DataBaseLayer.csprojAssemblyReference.cache
 C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\obj\Release\netcoreapp2.1\Terz_DataBaseLayer.csproj.CoreCompileInputs.cache
 C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\obj\Release\netcoreapp2.1\Terz_DataBaseLayer.AssemblyInfoInputs.cache
 C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\obj\Release\netcoreapp2.1\Terz_DataBaseLayer.AssemblyInfo.cs
 C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\obj\Release\netcoreapp2.1\Terz_DataBaseLayer.dll
 C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\obj\Release\netcoreapp2.1\Terz_DataBaseLayer.pdb
+C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\obj\Release\netcoreapp2.1\Terz_DataBaseLayer.csproj.AssemblyReference.cache
+C:\Users\artur\source\repos\Terz\Terz_DataBaseLayer\obj\Release\netcoreapp2.1\Terz_DataBaseLayer.GeneratedMSBuildEditorConfig.editorconfig

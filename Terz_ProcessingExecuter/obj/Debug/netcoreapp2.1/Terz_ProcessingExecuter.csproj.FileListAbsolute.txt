@@ -8,11 +8,11 @@ C:\Users\artur\source\repos\Terz\Terz_ProcessingExecuter\obj\Debug\netcoreapp2.1
 C:\Users\artur\source\repos\Terz\Terz_ProcessingExecuter\bin\Debug\netcoreapp2.1\Terz_ProcessingExecuter.pdb
 C:\Users\artur\source\repos\Terz\Terz_ProcessingExecuter\bin\Debug\netcoreapp2.1\Terz_Core.dll
 C:\Users\artur\source\repos\Terz\Terz_ProcessingExecuter\bin\Debug\netcoreapp2.1\Terz_DataBaseLayer.dll
-C:\Users\artur\source\repos\Terz\Terz_ProcessingExecuter\bin\Debug\netcoreapp2.1\Microsoft.AspNetCore.Http.Features.dll
 C:\Users\artur\source\repos\Terz\Terz_ProcessingExecuter\bin\Debug\netcoreapp2.1\Terz_Core.pdb
 C:\Users\artur\source\repos\Terz\Terz_ProcessingExecuter\bin\Debug\netcoreapp2.1\Terz_DataBaseLayer.pdb
-C:\Users\artur\source\repos\Terz\Terz_ProcessingExecuter\bin\Debug\netcoreapp2.1\Microsoft.AspNetCore.Http.Features.xml
-C:\Users\artur\source\repos\Terz\Terz_ProcessingExecuter\obj\Debug\netcoreapp2.1\Terz_ProcessingExecuter.csprojAssemblyReference.cache
 C:\Users\artur\source\repos\Terz\Terz_ProcessingExecuter\obj\Debug\netcoreapp2.1\Terz_ProcessingExecuter.csproj.CopyComplete
 C:\Users\artur\source\repos\Terz\Terz_ProcessingExecuter\obj\Debug\netcoreapp2.1\Terz_ProcessingExecuter.dll
 C:\Users\artur\source\repos\Terz\Terz_ProcessingExecuter\obj\Debug\netcoreapp2.1\Terz_ProcessingExecuter.pdb
+C:\Users\artur\source\repos\Terz\Terz_ProcessingExecuter\obj\Debug\netcoreapp2.1\Terz_ProcessingExecuter.csproj.AssemblyReference.cache
+C:\Users\artur\source\repos\Terz\Terz_ProcessingExecuter\obj\Debug\netcoreapp2.1\Terz_ProcessingExecuter.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\artur\source\repos\Terz\Terz_ProcessingExecuter\obj\Debug\netcoreapp2.1\Terz_ProcessingExecuter.genruntimeconfig.cache

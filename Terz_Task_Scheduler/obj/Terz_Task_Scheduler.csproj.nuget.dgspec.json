@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Task_Scheduler\\Terz_Task_Scheduler.csproj": {}
+    "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Task_Scheduler\\Terz_Task_Scheduler.csproj": {}
   },
   "projects": {
-    "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Core\\Terz_Core.csproj": {
+    "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Core\\Terz_Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Core\\Terz_Core.csproj",
+        "projectUniqueName": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Core\\Terz_Core.csproj",
         "projectName": "Terz_Core",
-        "projectPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Core\\Terz_Core.csproj",
+        "projectPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Core\\Terz_Core.csproj",
         "packagesPath": "C:\\Users\\artur\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Core\\obj\\",
+        "outputPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -32,8 +32,8 @@
           "netcoreapp2.1": {
             "targetAlias": "netcoreapp2.1",
             "projectReferences": {
-              "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj": {
-                "projectPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj"
+              "C:\\Users\\artur\\source\\repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj": {
+                "projectPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj"
               }
             }
           }
@@ -48,6 +48,10 @@
         "netcoreapp2.1": {
           "targetAlias": "netcoreapp2.1",
           "dependencies": {
+            "Microsoft.AspNetCore.Http": {
+              "target": "Package",
+              "version": "[2.1.1, )"
+            },
             "Microsoft.NETCore.App": {
               "suppressParent": "All",
               "target": "Package",
@@ -73,14 +77,14 @@
         }
       }
     },
-    "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj": {
+    "C:\\Users\\artur\\source\\repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj",
+        "projectUniqueName": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj",
         "projectName": "Terz_DataBaseLayer",
-        "projectPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj",
+        "projectPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj",
         "packagesPath": "C:\\Users\\artur\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_DataBaseLayer\\obj\\",
+        "outputPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_DataBaseLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -142,14 +146,14 @@
         }
       }
     },
-    "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_ProcessingExecuter\\Terz_ProcessingExecuter.csproj": {
+    "C:\\Users\\artur\\source\\repos\\Terz\\Terz_ProcessingExecuter\\Terz_ProcessingExecuter.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_ProcessingExecuter\\Terz_ProcessingExecuter.csproj",
+        "projectUniqueName": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_ProcessingExecuter\\Terz_ProcessingExecuter.csproj",
         "projectName": "Terz_ProcessingExecuter",
-        "projectPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_ProcessingExecuter\\Terz_ProcessingExecuter.csproj",
+        "projectPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_ProcessingExecuter\\Terz_ProcessingExecuter.csproj",
         "packagesPath": "C:\\Users\\artur\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_ProcessingExecuter\\obj\\",
+        "outputPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_ProcessingExecuter\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -170,11 +174,11 @@
           "netcoreapp2.1": {
             "targetAlias": "netcoreapp2.1",
             "projectReferences": {
-              "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Core\\Terz_Core.csproj": {
-                "projectPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Core\\Terz_Core.csproj"
+              "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Core\\Terz_Core.csproj": {
+                "projectPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Core\\Terz_Core.csproj"
               },
-              "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj": {
-                "projectPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj"
+              "C:\\Users\\artur\\source\\repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj": {
+                "projectPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj"
               }
             }
           }
@@ -214,14 +218,14 @@
         }
       }
     },
-    "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Task_Scheduler\\Terz_Task_Scheduler.csproj": {
+    "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Task_Scheduler\\Terz_Task_Scheduler.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Task_Scheduler\\Terz_Task_Scheduler.csproj",
+        "projectUniqueName": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Task_Scheduler\\Terz_Task_Scheduler.csproj",
         "projectName": "Terz_Task_Scheduler",
-        "projectPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Task_Scheduler\\Terz_Task_Scheduler.csproj",
+        "projectPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Task_Scheduler\\Terz_Task_Scheduler.csproj",
         "packagesPath": "C:\\Users\\artur\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Task_Scheduler\\obj\\",
+        "outputPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Task_Scheduler\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -242,14 +246,14 @@
           "netcoreapp2.1": {
             "targetAlias": "netcoreapp2.1",
             "projectReferences": {
-              "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Core\\Terz_Core.csproj": {
-                "projectPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Core\\Terz_Core.csproj"
+              "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Core\\Terz_Core.csproj": {
+                "projectPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Core\\Terz_Core.csproj"
               },
-              "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj": {
-                "projectPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj"
+              "C:\\Users\\artur\\source\\repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj": {
+                "projectPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_DataBaseLayer\\Terz_DataBaseLayer.csproj"
               },
-              "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_ProcessingExecuter\\Terz_ProcessingExecuter.csproj": {
-                "projectPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_ProcessingExecuter\\Terz_ProcessingExecuter.csproj"
+              "C:\\Users\\artur\\source\\repos\\Terz\\Terz_ProcessingExecuter\\Terz_ProcessingExecuter.csproj": {
+                "projectPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_ProcessingExecuter\\Terz_ProcessingExecuter.csproj"
               }
             }
           }

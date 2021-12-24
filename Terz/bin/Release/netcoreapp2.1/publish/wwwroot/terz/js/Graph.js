@@ -79,6 +79,9 @@
         if (['bubble', 'sankey', 'org','timeline'].includes(graph.objectType)) {
             graphDiv.style.height = "90%";
         }
+        if (['pie'].includes(graph.objectType)) {
+            graphDiv.style.height = solveVariables(graph.style.height - 30);
+        }
        /* if (['bar', 'pie', 'line', 'network', 'table', 'bubble', 'sankey', 'timeline', 'linedate', 'pyramid', 'compare', 'gaugi', 'variance', 'waterfall'].includes(graph.objectType)) {
            
         }*/

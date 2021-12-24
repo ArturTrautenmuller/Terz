@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "yVKIIaeUDHI2Qe5Y7B0sOlaudHeDqSSxFEfvfJS81i/q6DpipAARTxiWAeB7itcbCHEeC2ipO5VIfwuGi4HX1A==",
+  "dgSpecHash": "cJCmP+dO6UcMyWMcvQcAQ/G0mfbW0Fxl2p/0NdE+bU4gfF6wdomgMvauOivZH0UJ6IkKUEyz4I9DksZvQZbAEw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_API\\Terz_API.csproj",
+  "projectFilePath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_API\\Terz_API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\artur\\.nuget\\packages\\bouncycastle.netcore\\1.8.3\\bouncycastle.netcore.1.8.3.nupkg.sha512",
     "C:\\Users\\artur\\.nuget\\packages\\confluent.kafka\\1.1.0\\confluent.kafka.1.1.0.nupkg.sha512",

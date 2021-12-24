@@ -1,5 +1,4 @@
 C:\Users\artur\source\repos\Terz\Tester\bin\Debug\netcoreapp2.1\Terz_Core.dll
-C:\Users\artur\source\repos\Terz\Tester\obj\Debug\netcoreapp2.1\Tester.csprojAssemblyReference.cache
 C:\Users\artur\source\repos\Terz\Tester\obj\Debug\netcoreapp2.1\Tester.csproj.CoreCompileInputs.cache
 C:\Users\artur\source\repos\Terz\Tester\obj\Debug\netcoreapp2.1\Tester.AssemblyInfoInputs.cache
 C:\Users\artur\source\repos\Terz\Tester\obj\Debug\netcoreapp2.1\Tester.AssemblyInfo.cs
@@ -13,6 +12,7 @@ C:\Users\artur\source\repos\Terz\Tester\obj\Debug\netcoreapp2.1\Tester.csproj.Co
 C:\Users\artur\source\repos\Terz\Tester\obj\Debug\netcoreapp2.1\Tester.dll
 C:\Users\artur\source\repos\Terz\Tester\obj\Debug\netcoreapp2.1\Tester.pdb
 C:\Users\artur\source\repos\Terz\Tester\bin\Debug\netcoreapp2.1\Terz_DataBaseLayer.dll
-C:\Users\artur\source\repos\Terz\Tester\bin\Debug\netcoreapp2.1\Microsoft.AspNetCore.Http.Features.dll
 C:\Users\artur\source\repos\Terz\Tester\bin\Debug\netcoreapp2.1\Terz_DataBaseLayer.pdb
-C:\Users\artur\source\repos\Terz\Tester\bin\Debug\netcoreapp2.1\Microsoft.AspNetCore.Http.Features.xml
+C:\Users\artur\source\repos\Terz\Tester\obj\Debug\netcoreapp2.1\Tester.csproj.AssemblyReference.cache
+C:\Users\artur\source\repos\Terz\Tester\obj\Debug\netcoreapp2.1\Tester.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\artur\source\repos\Terz\Tester\obj\Debug\netcoreapp2.1\Tester.genruntimeconfig.cache

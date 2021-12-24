@@ -6,8 +6,14 @@ function EvalueteEx(expressions, dataframe, fields) {
         expressions = solveVariables(expressions);
         var tempDf = JSON.parse(JSON.stringify(usingDataFrames.filter(function (x) { return x.name == dataframe.join(",") })[0].table));
    
-        var reducedExpression = solve(expressions, tempDf, dataframe.join(","),fields,null);
-        return math.eval(reducedExpression);
+        var reducedExpression = solve(expressions, tempDf, dataframe.join(","), fields, null);
+        var res = math.eval(reducedExpression);
+        if (res.toString().includes(".")) {
+            if (res.toString().split(".")[1].length > 2) {
+                res = parseFloat(res.toFixed(2))
+            }
+        }
+        return res;
     }
     else {
         //solve variables
@@ -61,6 +67,11 @@ function EvalueteEx(expressions, dataframe, fields) {
           
             for (var l = 0; l < expressions.length; l++) {
                 var res = math.eval(solve(expressions[l], filterdDf, dataframe.join(","), fields, distinctDf[j]));
+                if (res.toString().includes(".")) {
+                    if (res.toString().split(".")[1].length > 2) {
+                        res = parseFloat(res.toFixed(2))
+                    }
+                }
                 distinctDf[j].push(res);
             }
            

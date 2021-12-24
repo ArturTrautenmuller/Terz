@@ -7,7 +7,6 @@ C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Terz_Cor
 C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Terz_DataBaseLayer.dll
 C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Terz_Core.pdb
 C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Terz_DataBaseLayer.pdb
-C:\Users\artur\source\repos\Terz\Terz_Scheduler\obj\Debug\netcoreapp2.1\Terz_Scheduler.csprojAssemblyReference.cache
 C:\Users\artur\source\repos\Terz\Terz_Scheduler\obj\Debug\netcoreapp2.1\Terz_Scheduler.csproj.CoreCompileInputs.cache
 C:\Users\artur\source\repos\Terz\Terz_Scheduler\obj\Debug\netcoreapp2.1\Terz_Scheduler.AssemblyInfoInputs.cache
 C:\Users\artur\source\repos\Terz\Terz_Scheduler\obj\Debug\netcoreapp2.1\Terz_Scheduler.AssemblyInfo.cs
@@ -17,6 +16,12 @@ C:\Users\artur\source\repos\Terz\Terz_Scheduler\obj\Debug\netcoreapp2.1\Terz_Sch
 C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Terz.Views.dll
 C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Terz.Views.pdb
 C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Terz.dll
-C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Microsoft.AspNetCore.Http.Features.dll
 C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Terz.pdb
-C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Microsoft.AspNetCore.Http.Features.xml
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Terz.deps.json
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Terz.runtimeconfig.json
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\Terz.runtimeconfig.dev.json
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\appsettings.Development.json
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\bin\Debug\netcoreapp2.1\appsettings.json
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\obj\Debug\netcoreapp2.1\Terz_Scheduler.csproj.AssemblyReference.cache
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\obj\Debug\netcoreapp2.1\Terz_Scheduler.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\artur\source\repos\Terz\Terz_Scheduler\obj\Debug\netcoreapp2.1\Terz_Scheduler.genruntimeconfig.cache

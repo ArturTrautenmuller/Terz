@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Query_Plataform\\Terz_Query_Plataform.csproj": {}
+    "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Query_Plataform\\Terz_Query_Plataform.csproj": {}
   },
   "projects": {
-    "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Query_Plataform\\Terz_Query_Plataform.csproj": {
+    "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Query_Plataform\\Terz_Query_Plataform.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Query_Plataform\\Terz_Query_Plataform.csproj",
+        "projectUniqueName": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Query_Plataform\\Terz_Query_Plataform.csproj",
         "projectName": "Terz_Query_Plataform",
-        "projectPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Query_Plataform\\Terz_Query_Plataform.csproj",
+        "projectPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Query_Plataform\\Terz_Query_Plataform.csproj",
         "packagesPath": "C:\\Users\\artur\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Query_Plataform\\obj\\",
+        "outputPath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Query_Plataform\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

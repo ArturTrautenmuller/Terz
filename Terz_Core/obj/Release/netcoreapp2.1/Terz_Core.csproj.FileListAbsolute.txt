@@ -1,9 +1,6 @@
 C:\Users\artur\source\repos\Terz\Terz_Core\bin\Release\netcoreapp2.1\Terz_Core.deps.json
 C:\Users\artur\source\repos\Terz\Terz_Core\bin\Release\netcoreapp2.1\Terz_Core.dll
 C:\Users\artur\source\repos\Terz\Terz_Core\bin\Release\netcoreapp2.1\Terz_Core.pdb
-C:\Users\artur\source\repos\Terz\Terz_Core\bin\Release\netcoreapp2.1\Microsoft.AspNetCore.Http.Features.dll
-C:\Users\artur\source\repos\Terz\Terz_Core\bin\Release\netcoreapp2.1\Microsoft.AspNetCore.Http.Features.xml
-C:\Users\artur\source\repos\Terz\Terz_Core\obj\Release\netcoreapp2.1\Terz_Core.csprojAssemblyReference.cache
 C:\Users\artur\source\repos\Terz\Terz_Core\obj\Release\netcoreapp2.1\Terz_Core.csproj.CoreCompileInputs.cache
 C:\Users\artur\source\repos\Terz\Terz_Core\obj\Release\netcoreapp2.1\Terz_Core.AssemblyInfoInputs.cache
 C:\Users\artur\source\repos\Terz\Terz_Core\obj\Release\netcoreapp2.1\Terz_Core.AssemblyInfo.cs
@@ -12,3 +9,5 @@ C:\Users\artur\source\repos\Terz\Terz_Core\obj\Release\netcoreapp2.1\Terz_Core.d
 C:\Users\artur\source\repos\Terz\Terz_Core\obj\Release\netcoreapp2.1\Terz_Core.pdb
 C:\Users\artur\source\repos\Terz\Terz_Core\bin\Release\netcoreapp2.1\Terz_DataBaseLayer.dll
 C:\Users\artur\source\repos\Terz\Terz_Core\bin\Release\netcoreapp2.1\Terz_DataBaseLayer.pdb
+C:\Users\artur\source\repos\Terz\Terz_Core\obj\Release\netcoreapp2.1\Terz_Core.csproj.AssemblyReference.cache
+C:\Users\artur\source\repos\Terz\Terz_Core\obj\Release\netcoreapp2.1\Terz_Core.GeneratedMSBuildEditorConfig.editorconfig

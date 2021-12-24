@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "xuwdrPu+4x7j3edJIr462BT/AbTD7Bcgs38G06q+xNQXAvaNyBerlx11tE94qyQg0TjrD3OampYpuwYb30vxqw==",
+  "dgSpecHash": "TzzQG4bqbyfr+KL4lKLDdGFJgGlCG0bvhz8dH3+NzfQwvN5GXY3/MBWXtbmq25zANy7tF/qjZSF7r6/v6TC6Tw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Storage\\Terz_Storage.csproj",
+  "projectFilePath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Storage\\Terz_Storage.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\artur\\.nuget\\packages\\bouncycastle.netcore\\1.8.3\\bouncycastle.netcore.1.8.3.nupkg.sha512",
     "C:\\Users\\artur\\.nuget\\packages\\confluent.kafka\\1.1.0\\confluent.kafka.1.1.0.nupkg.sha512",

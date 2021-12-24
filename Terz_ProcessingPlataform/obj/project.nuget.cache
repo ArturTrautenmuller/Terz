@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "QKG6tHkqAfgC/UWMmcQlYmeWaIFHqdQ9AIUNCqbL424NmnGr6645gmcXFteaXOMIe8aYCA2f2D0g5ajTUg0JVg==",
+  "dgSpecHash": "mfPix3t8E6eDVDoaamXrxHO2rhdGaHjj4WShC39cs4hHGB2G6DWYyxKYpjsqTBE4fDSBOdkXkK7P+9Zj8pYSMw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_ProcessingPlataform\\Terz_ProcessingPlataform.csproj",
+  "projectFilePath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_ProcessingPlataform\\Terz_ProcessingPlataform.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\artur\\.nuget\\packages\\bouncycastle.netcore\\1.8.3\\bouncycastle.netcore.1.8.3.nupkg.sha512",
     "C:\\Users\\artur\\.nuget\\packages\\google.protobuf\\3.6.1\\google.protobuf.3.6.1.nupkg.sha512",

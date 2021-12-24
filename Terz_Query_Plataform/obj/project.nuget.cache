@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "cLOko6g2ii0XQkMwpm9XBsBzueGgyzlZMPGd7LkHKjZTDqGtORlnmVHt3xTNkJpSEHEuBJEngXypKrVKbrEqpA==",
+  "dgSpecHash": "42YOtlFZIZ9wKKfi/cEO4b3tlScpdvXGxwOIoXTiB3boaeG/6JSLBlZc/R8Jjg0CVTG27Va5nltzDDM8QYpiCg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\artur\\Source\\Repos\\Terz\\Terz_Query_Plataform\\Terz_Query_Plataform.csproj",
+  "projectFilePath": "C:\\Users\\artur\\source\\repos\\Terz\\Terz_Query_Plataform\\Terz_Query_Plataform.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\artur\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.6\\microsoft.aspnet.webapi.client.5.2.6.nupkg.sha512",
     "C:\\Users\\artur\\.nuget\\packages\\microsoft.aspnetcore\\2.1.1\\microsoft.aspnetcore.2.1.1.nupkg.sha512",
